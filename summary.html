@@ -4,8 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join</title>
+    <link rel="stylesheet" href="style/style.css"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
 </head>
 <body>
     
+    <header>
+        <h1>Kanban Project Management Tool</h1>
+        <button onclick="location.href='help.html'" class="help-button">
+            <img src="./assets/img/help.png" alt="help">
+        </button>
+    </header>
+
+    <nav>
+        <img class="logonav" src="./assets/img/logo-white.svg" alt="logo">
+        <div class="menu">
+            <button onclick="location.href='summary.html'" class="menu-button">
+                <img src="./assets/img/summary.png" alt="Summary">
+                <span>Summary</span>
+            </button>
+            <button onclick="location.href='add_task.html'" class="menu-button">
+                <img src="./assets/img/add-task.png" alt="Add Task">
+                <span>Add Task</span>
+            </button>
+            <button onclick="location.href='board.html'" class="menu-button">
+                <img src="./assets/img/board.png" alt="Board">
+                <span>Board</span>
+            </button>
+            <button onclick="location.href='contacts.html'" class="menu-button">
+                <img src="./assets/img/contacts.png" alt="Contacts">
+                <span>Contacts</span>
+            </button>
+        </div>
+    
+        <div class="legal-policy">
+            <a href="privacy_policy.html">Privacy Policy</a>
+            <a href="legal_notice.html">Legal notice</a>
+        </div>
+    </nav>
+
 </body>
 </html>
