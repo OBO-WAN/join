@@ -1,0 +1,97 @@
+body {
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #F6F7F8;
+    font-family: 'inter';
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    padding-right: 40px;
+    padding-bottom: 20px;
+    padding-left: 348px;
+    background-color: white;
+}
+
+header h1 {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.help-button {
+    background-color: white;
+    cursor: pointer;
+    border: 0;
+    transition: transform 0.2s ease;
+}
+
+.help-button:hover {
+    transform: scale(1.25);
+}
+
+nav {
+    background-color: #2A3647;
+    position: fixed;
+    top: 0;
+    font-size: 16px;
+    font-weight: 400;
+    height: 100vh;
+    width: 232px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logonav {
+    width: 100px;
+    padding: 65px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 200px;
+}
+
+.menu-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #2A3647;
+    border: none;
+    padding: 10px 65px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.menu-button:hover {
+    background-color: #2A3D59;
+}
+
+.menu-button img {
+    width: 24px;
+    height: 24px;
+}
+
+.menu-button span {
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+}
+
+.legal-policy {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 50px;
+}
+
+.legal-policy a {
+    text-decoration: none;
+    color: #CDCDCD;
+}
