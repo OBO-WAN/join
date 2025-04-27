@@ -98,7 +98,18 @@ nav {
     margin-bottom: 50px;
 }
 
-.legal-policy a {
+.legal-policy-button {
     text-decoration: none;
-    color: #CDCDCD;
+    border: none;
+    background-color: #2A3647;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Inter';
+    font-weight: 200;
+    color: white;
+}
+
+.legal-policy-button:hover {
+    color: #29ABE2;
+    transform: scale(1.05);
 }
