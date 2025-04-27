@@ -20,7 +20,7 @@
     <nav>
         <img class="logonav" src="./assets/img/logo-white.svg" alt="logo">
         <div class="menu">
-            <button onclick="location.href='summary.html'" class="menu-button">
+            <button onclick="location.href='summary.html'" class="menu-button active">
                 <img src="./assets/img/summary.png" alt="Summary">
                 <span>Summary</span>
             </button>
@@ -39,8 +39,12 @@
         </div>
     
         <div class="legal-policy">
-            <button onclick="location.href='privacy_policy.html'" class="legal-policy-button">Privacy Policy</button>
-            <button onclick="location.href='legal_notice.html'" class="legal-policy-button">Legal notice</button>
+            <div class="legal-policy-background">
+                <button onclick="location.href='privacy_policy.html'" class="legal-policy-button">Privacy Policy</button>
+            </div>
+            <div class="legal-policy-background">
+                <button onclick="location.href='legal_notice.html'" class="legal-policy-button">Legal notice</button>
+            </div>
         </div>
     </nav>
 
