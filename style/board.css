@@ -12,49 +12,37 @@
     font-weight: bold;
 }
 
-.kanban_board {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-    background: #f4f4f4;
-  }
-  
-  .kanban_column {
-    background: white;
-    border-radius: 8px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    max-height: 80vh;
-    overflow-y: auto;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .kanban_header {
+h3 {
+    color: #43526e;
+    font-weight: bold;
+}
+
+.kanban_container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .kanban_header h2 {
+    gap: 30px;
+}
+
+.kanban_section {
+    width: 252px;
+    display: flex;
+}
+
+.section_header {
+    width: 252px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add_task_btn {
+    height: 25px;
+    width: 25px;
+    border: 2px solid;
+    border-color: #2a3647;
+    border-radius: 6px;
+    color:#2a3647;
+    font-weight: bold;
     font-size: 18px;
-    margin: 0;
-  }
-  
-  .add_task {
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    font-size: 20px;
-    cursor: pointer;
-  }
-  
-  .kanban_tasks {
-    padding: 15px;
-    flex-grow: 1;
-  }
+}
