@@ -20,13 +20,15 @@ h3 {
 .kanban_container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
     gap: 30px;
 }
 
 .kanban_section {
     width: 252px;
     display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .section_header {
@@ -34,6 +36,7 @@ h3 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    min-height: 60px;
 }
 
 .add_task_btn {
@@ -45,4 +48,80 @@ h3 {
     color:#2a3647;
     font-weight: bold;
     font-size: 18px;
+}
+
+.task_container {
+    background-color: white;
+    padding: 16px;
+    border-radius: 16px;
+    margin-bottom: 25px;
+    box-shadow: 0px 0px 10px 3px #00000014;
+}
+
+.task_category {
+    background-color: #0038ff;
+    border-radius: 8px;
+    color: white;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.task_information {
+    width: 220px;
+    height: 65px;
+}
+
+.task_title {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.task_details {
+    font-size: 16px;
+    font-weight: 400;
+    color: #c1c1c1;
+}
+
+.progress_container {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    border-radius: 10px;
+    margin-top: 22px;
+}
+
+.subtasks_progress {
+    font-size: 12px;
+    font-weight: 400;
+    margin-left: 10px;
+}
+
+.progress-bar {
+    height: 8px;
+    width: 128px;
+    background-color: #4589ff;
+    transition: width 0.3s ease;
+    border-radius: 5px;
+    flex-grow: 1;
+}
+
+.responsible_user {
+    color: white;
+    margin-top: 18px;
+}
+
+.user_initials {
+    height: 32px;
+    width: 32px;
+    border-radius: 50px;
+    background-color: #9327ff;
+    font-size: 12px;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
