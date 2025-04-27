@@ -79,6 +79,10 @@ nav {
     background-color: #2A3D59;
 }
 
+.menu-button.active {
+    background-color: #091931;
+}
+
 .menu-button img {
     width: 24px;
     height: 24px;
@@ -88,25 +92,40 @@ nav {
     font-family: 'Inter';
     font-weight: 200;
     font-size: 16px;
-    color: white;
+    color: #CDCDCD;
 }
 
 .legal-policy {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    
     margin-bottom: 50px;
+    width: 100%;
+}
+
+.legal-policy-background {
+    width: 100%;
+    background-color: #2A3647;
+    display: flex;
+    justify-content: center;
+    padding: 8px 0;
+}
+
+.legal-policy-background.active {
+    background-color: #091931;
 }
 
 .legal-policy-button {
-    text-decoration: none;
+    background: none;
     border: none;
-    background-color: #2A3647;
-    cursor: pointer;
-    font-size: 16px;
+    color: #CDCDCD;
     font-family: 'Inter';
     font-weight: 200;
-    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0;
+    transition: color 0.3s, transform 0.2s;
 }
 
 .legal-policy-button:hover {
