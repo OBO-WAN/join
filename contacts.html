@@ -6,9 +6,11 @@
     <title>Join</title>
     <link rel="icon" href="./assets/img/favicon.png">
     <link rel="stylesheet" href="style/style.css"> 
-    
+    <link rel="stylesheet" href="style/contacts.css">
+    <script src="./script/contacts.js"></script>
+
 </head>
-<body>
+<body onload="getContacts()">
     
     <header>
         <h1>Kanban Project Management Tool</h1>
@@ -47,6 +49,134 @@
             </div>
         </div>
     </nav>
+
+    <div class="contacts_main_content">
+        <!--contacts list container-->
+        <div class="contactslist_container">
+            <div class="add_new_contact_section">
+                <button class="add_new_contact_button">
+                    <span class="add_contact_text">Add New Contact</span>
+                    <img src="./assets/icons/contact/addcontact.png" class="add_contact_icon">
+                </button>
+            </div>
+
+        <div class="contacts_list">
+            <div class="contacts_section">
+                <div class="contacts_section_header">
+                    <p id="contacts_section_letter">A</p>
+                </div>
+                    <hr>
+                <div class="contact_card" id="contact_card">
+                    <div class="contact_avatar_section">
+                        <div class="contact_avatar">
+                            <p class="contact_avatar_initials" id="contact_avatar_initials">A</p>
+                            <p class="contact_avatar_initials" id="contact_avatar_initials">C</p>
+                        </div>
+                    </div>
+                    <div class="contact_info_section">
+                        <div id="contact_name"class="contact_name"><span>Alice Cooper</span></div>
+                            <a href="mailto:cooper@gmail.com" class="contact_email" id="contact_email">cooper@gmail.com</a>
+                    </div>
+                </div>
+
+                <div class="contact_card" id="contact_card">
+                    <div class="contact_avatar_section">
+                        <div class="contact_avatar">
+                            <p class="contact_avatar_initials" id="contact_avatar_initials">A</p>
+                            <p class="contact_avatar_initials" id="contact_avatar_initials">C</p>
+                        </div>
+                    </div>
+                    <div class="contact_info_section">
+                        <div id="contact_name"class="contact_name"><span>Alice Cooper</span></div>
+                            <a href="mailto:cooper@gmail.com" class="contact_email" id="contact_email">cooper@gmail.com</a>
+                    </div>
+                </div>
+
+                <div class="contact_card" id="contact_card">
+                    <div class="contact_avatar_section">
+                        <div class="contact_avatar">
+                            <p class="contact_avatar_initials" id="contact_avatar_initials">A</p>
+                            <p class="contact_avatar_initials" id="contact_avatar_initials">C</p>
+                        </div>
+                    </div>
+                    <div class="contact_info_section">
+                        <div id="contact_name"class="contact_name"><span>Alice Cooper</span></div>
+                            <a href="mailto:cooper@gmail.com" class="contact_email" id="contact_email">cooper@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contacts_section">
+                <div class="contacts_section_header">
+                    <p id="contacts_section_letter">B</p>
+                </div>
+                    <hr>
+                <div class="contact_card" id="contact_card">
+                    <div class="contact_avatar_section">
+                        <div class="contact_avatar">
+                            <p class="contact_avatar_initials" id="contact_avatar_initials">A</p>
+                            <p class="contact_avatar_initials" id="contact_avatar_initials">C</p>
+                        </div>
+                    </div>
+                    <div class="contact_info_section">
+                        <div id="contact_name"class="contact_name"><span>Alice Cooper</span></div>
+                            <a href="mailto:cooper@gmail.com" class="contact_email" id="contact_email">cooper@gmail.com</a>
+                    </div>
+                </div>
+
+                <div class="contact_card" id="contact_card">
+                    <div class="contact_avatar_section">
+                        <div class="contact_avatar">
+                            <p class="contact_avatar_initials" id="contact_avatar_initials">A</p>
+                            <p class="contact_avatar_initials" id="contact_avatar_initials">C</p>
+                        </div>
+                    </div>
+                    <div class="contact_info_section">
+                        <div id="contact_name"class="contact_name"><span>Alice Cooper</span></div>
+                            <a href="mailto:cooper@gmail.com" class="contact_email" id="contact_email">cooper@gmail.com</a>
+                    </div>
+                </div>
+
+                <div class="contact_card" id="contact_card">
+                    <div class="contact_avatar_section">
+                        <div class="contact_avatar">
+                            <p class="contact_avatar_initials" id="contact_avatar_initials">A</p>
+                            <p class="contact_avatar_initials" id="contact_avatar_initials">C</p>
+                        </div>
+                    </div>
+                    <div class="contact_info_section">
+                        <div id="contact_name"class="contact_name"><span>Alice Cooper</span></div>
+                            <a href="mailto:cooper@gmail.com" class="contact_email" id="contact_email">cooper@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+        <!--contact view container-->
+    <div class="contacts_view_container">
+        <div class="contact_view_header">   
+            <div class="contacts_view_hl_section">
+                <span class="contacts_view_hl">Contacts</span>
+            </div>    
+            <div class="contacts_view_seperator"></div>
+            <div class="contacts_view_sloagen_section">
+                <span class="contacts_view_sloagen">Better wiht a Team</span>
+            </div>    
+        </div>
+
+        <div class="contact_view_card">
+            <div class="contact_view_avatar_section">
+                <div class="contact_view_avatar">
+                </div>
+            </div>
+            <div class="contact_view_info_section">
+            </div>
+    </div>
+
+
+   
 
 </body>
 </html>
