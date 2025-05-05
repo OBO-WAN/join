@@ -1,0 +1,3 @@
+function getKanbanTemplate(taskIndex) {
+    return ``
+}
