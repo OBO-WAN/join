@@ -1,52 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join</title>
-    <link rel="icon" href="./assets/img/favicon.png">
-    <link rel="stylesheet" href="style/style.css"> 
-    
-</head>
-<body>
-    
-    <header>
-        <h1>Kanban Project Management Tool</h1>
-        <button onclick="location.href='help.html'" class="help-button">
-            <img src="./assets/img/help.png" alt="help">
-        </button>
-    </header>
+    <link rel="icon" href="./assets/img/favicon.png" />
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="style/login.css" />
+  </head>
 
-    <nav>
-        <img class="logonav" src="./assets/img/logo-white.svg" alt="logo">
-        <div class="menu">
-            <button onclick="location.href='summary.html'" class="menu-button">
-                <img src="./assets/img/summary.png" alt="Summary">
-                <span>Summary</span>
-            </button>
-            <button onclick="location.href='add_task.html'" class="menu-button">
-                <img src="./assets/img/add-task.png" alt="Add Task">
-                <span>Add Task</span>
-            </button>
-            <button onclick="location.href='board.html'" class="menu-button">
-                <img src="./assets/img/board.png" alt="Board">
-                <span>Board</span>
-            </button>
-            <button onclick="location.href='contacts.html'" class="menu-button">
-                <img src="./assets/img/contacts.png" alt="Contacts">
-                <span>Contacts</span>
-            </button>
-        </div>
-    
-        <div class="legal-policy">
-            <div class="legal-policy-background">
-                <button onclick="location.href='privacy_policy.html'" class="legal-policy-button">Privacy Policy</button>
-            </div>
-            <div class="legal-policy-background">
-                <button onclick="location.href='legal_notice.html'" class="legal-policy-button">Legal notice</button>
-            </div>
-        </div>
-    </nav>
+  <body id="body_log_in" class="body-log-in">
+    <!-- Logo Animation Overlay -->
+    <div class="animations-logo-overlay" id="animationsLogoOverlay">
+      <div class="animation-join-logo" id="animationJoinLogo">
+        <img src="./assets/img/loginLogo.svg" alt="Join Logo" />
+      </div>
+    </div>
 
-</body>
+    <!-- Static logo after animation -->
+    <div
+      class="animation-finished d-flex hidden"
+      id="animationFinished"
+      style="display: none"
+    >
+      <img src="assets/img/loginLogo.svg" alt="Join Logo" />
+    </div>
+
+    <!-- Main Login Content -->
+    <main class="log-in-main hidden" id="loginMain">
+      <section class="login-form login-container">
+        <div class="headline-vector">
+          <div class="vector-login"></div>
+          <h1>Log in</h1>
+        </div>
+        <form onsubmit="login(); return false;" class="form">
+          <input
+            type="email"
+            id="email"
+            placeholder="Email"
+            class="input-base"
+            required
+          />
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            class="input-base"
+            required
+          />
+
+          <div class="remember-me">
+            <input type="checkbox" id="rememberMe" />
+            <label for="rememberMe">Remember me</label>
+          </div>
+
+          <div class="button-container">
+            <button type="submit" class="button-log-in">Log in</button>
+            <button
+              type="button"
+              class="button-guest-log-in"
+              onclick="guestLogin()"
+            >
+              Guest Log in
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+
+    <!-- Footer for login (hidden initially) -->
+    <footer class="footer-log-in hidden" id="footerLogin">
+      <a href="privacy_policy.html">Privacy Policy</a>
+      <a href="legal_notice.html">Legal Notice</a>
+    </footer>
+
+  
+  </body>
+  <script src="script/login.js"></script>
 </html>
