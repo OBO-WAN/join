@@ -1,5 +1,7 @@
 /* background-color: #47ACE4;*/
 
+
+
 html, body {
     height: 100%; 
     margin: 0;
@@ -41,6 +43,8 @@ a{
     align-items: center;
     position: sticky;
     margin-bottom: 20px;
+    top: 0;
+    background-color: white;
 }
 
 .add_new_contact_button{
@@ -91,23 +95,31 @@ a{
     width: 70%;
     height: 40px;
     display: flex; 
+    margin-bottom: 10px;
+    border-bottom: solid 1px #9e9c9c;
 }
 
-hr {
-    border: none;
-    height: 1px;
-    width: 80%;
-    background-color: #9e9c9c;
+.contacts_section_letter{
+    margin-left: 15px;
 }
+
+.contact_card_section{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 60px;
+}
+
 
 .contact_card{
-    width: 83%;
+    width: 90%;
     height: 70px;
     border-radius: 8px;
     display: flex;
     align-items: center;
-    margin-top: 10px;
-
+    margin-bottom: 30px;
 }
 
 .contact_card:hover{
@@ -122,13 +134,14 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 8px;
 }
 
 .contact_avatar{
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    margin-left: 10px;
+    margin-left: 20px;
     background-color: rgb(31, 88, 245);
     display: flex;
     justify-content: center;
@@ -154,7 +167,7 @@ hr {
 }
 
 .contact_name{
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     margin: 0;
     padding-left: 20px;

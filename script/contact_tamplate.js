@@ -14,9 +14,9 @@ return`
 </div>`
 }*/
 
-function getContactCardTamplate(name, email, initials) {
+function getContactCardTamplate(name, email, initials, idx) {
     return `
-<div class="contact_card">
+<div class="contact_card" onclick="getContact(${idx})">
     <div class="contact_avatar_section">
         <div class="contact_avatar">
             <p class="contact_avatar_initials">${initials[0]}</p>
