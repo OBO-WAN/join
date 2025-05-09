@@ -54,7 +54,22 @@
     <div class="contacts_main_content">
         <!--contacts list container-->
         <div class="contactslist_container">
-            <div class="add_new_contact_section">
+
+            <div id="add_New_contact_ov_section" class="add_new_contact_section" onclick="addNewContactOn()">
+                    <div class="ad_new_contact_ov">
+                        <div class="add_newcontact_entry_section">
+                            <div class="add_newcontact_sloagen_container">
+                                <div class="ov_logo_section">
+                                    <img class="ov_logo" src="./assets/img/logo-white.svg" alt="join logo">
+                                </div>
+                                <div class="ov_hl_section"></div>
+                                <div class="ov_sloagen_section"></div>
+                            </div>
+                            <div class="add_newcontact_entry_container">
+
+                            </div>
+                        </div>
+                    </div>
                 <button class="add_new_contact_button">
                     <span class="add_contact_text">Add New Contact</span>
                     <img src="./assets/icons/contact/addcontact.png" class="add_contact_icon">
@@ -89,7 +104,7 @@
                 <div class="contact_view_avatar_section" >
                     <div class="contact_view_avatar">
                         <p class="contact_view_avatar_initials" id="contact_view_avatar_initials">A</p>
-                        <p class="contact_view_avatar_initials" id="contact_view_avatar_initials">C</p>
+                        <p class="contact_view_avatar_initials" id="contact_view_avatar_initials"></p>
                     </div>
                 </div>
                     <div class="contact_view_head_info_section">
@@ -109,15 +124,15 @@
 
                     <div class="contact_view_card_info_section">
                         <div class="contact_view_card_info_header">
-                            <span class="contact_view_card_info_hl">Contact Information</span>
+                            <span class="contact_view_card_info_hl"></span>
                         </div>
                         <div class="contact_view_mail_section">
                             <p class="contact_view_mail_hl">Email</p>
-                            <a href="mailto:cooper@gmail.com" id="contact_view_mail" class="contact_view_mail">cooper@gmail.com</a>
+                            <a href="mailto:cooper@gmail.com" id="contact_view_mail" class="contact_view_mail"></a>
                         </div>
                         <div class="contact_view_phone_section">
                             <p class="contact_view_phon_hl">Phone</p>
-                            <div class="contact_view_phon_num">+49 144 609 522</div>
+                            <div id="contact_view_phone" class="contact_view_phon_num"></div>
                         </div>
                     </div>
 

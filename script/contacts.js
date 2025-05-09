@@ -7,14 +7,16 @@ function getContacts(data,){
         .then(data => {
             Contacts = data;
             renderContacts(data);
-        
+
+            if (Contacts.length > 0) {
+                renderViewCard(0); 
+            }
         });
       
-    
     return data;
 }
 
-function updateDatabase(data){ //update contact by id
+function updateDatabase(data){ 
     fetch('https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/contacts.json', {
         method: 'PUT',
         headers: {
@@ -59,39 +61,11 @@ function updateDatabase(data){ //update contact by id
 
 }*/
 
-/*function renderContacts(contacts) { 
-    let contactCards = '';
-    sortContacts(contacts); // Kontakte sortieren
-    let oldLetter = ''; // Speichert den vorherigen Buchstaben
-
-    for (let index = 0; index < contacts.length; index++) {
-        const contact = contacts[index];
-        const initials = contact.name
-            .trim()
-            .split(' ')
-            .filter(word => word.length > 0)
-            .map(word => word[0].toUpperCase()); 
-
-        const firstLetter = contact.name.charAt(0).toUpperCase(); // Erster Buchstabe des Namens
-
-        // Wenn der Buchstabe wechselt, füge eine neue Überschrift hinzu
-        if (oldLetter !== firstLetter) {
-            contactCards += `<div class="contacts_section_header">${firstLetter}</div>`;
-            oldLetter = firstLetter; // Aktualisiere den alten Buchstaben
-        }
-
-        // Füge die Kontaktkarte hinzu
-        contactCards += getContactCardTamplate(contact.name, contact.mail, initials, index);
-    }
-
-    // Setze den HTML-Inhalt der Kontaktliste
-    document.getElementById("contact_card_section").innerHTML = contactCards;
-}*/
 
 function renderContacts(contacts) { 
     let contactCards = '';
-    sortContacts(contacts); // Kontakte sortieren
-    let oldLetter = ''; // Speichert den vorherigen Buchstaben
+    sortContacts(contacts); 
+    let oldLetter = ''; 
 
     for (let index = 0; index < contacts.length; index++) {
         const contact = contacts[index];
@@ -101,30 +75,24 @@ function renderContacts(contacts) {
             .filter(word => word.length > 0)
             .map(word => word[0].toUpperCase()); 
 
-        const firstLetter = contact.name.charAt(0).toUpperCase(); // Erster Buchstabe des Namens
-
-        // Wenn der Buchstabe wechselt, füge eine neue Überschrift hinzu
+        const firstLetter = contact.name.charAt(0).toUpperCase(); 
         if (oldLetter !== firstLetter) {
             contactCards += `
                 <div class="contacts_section_header">
                     <p class="contacts_section_letter">${firstLetter}</p>
                 </div>`;
-            oldLetter = firstLetter; // Aktualisiere den alten Buchstaben
+            oldLetter = firstLetter; 
         }
-
-        // Füge die Kontaktkarte hinzu
         contactCards += getContactCardTamplate(contact.name, contact.mail, initials, index);
     }
-
-    // Setze den HTML-Inhalt der Kontaktliste
     document.getElementById("contact_card_section").innerHTML = contactCards;
 }
 
-function sortContacts(contacts){ //sort contacts by name
+function sortContacts(contacts){ 
     contacts.sort((a, b) => a.name.localeCompare(b.name));
 }
 
-function getFirstLetter(name, oldLetter, change){ //get first letter of name
+function getFirstLetter(name, oldLetter, change){ 
 
     const firstLetter = name.charAt(0);
 
@@ -139,7 +107,7 @@ function getFirstLetter(name, oldLetter, change){ //get first letter of name
     return firstLetter;
 }
 
-function getContact(id){ //get contact by id
+function getContact(id){
     console.log(Contacts[id]);
 }
 
@@ -155,6 +123,21 @@ function editContact(id, newContactdata){ //add contact aufrufen + daten vom ang
 
 }
 
-function renderViewCard(contacts){
-     
+function renderViewCard(index) {
+    const contact = Contacts[index]; 
+    document.getElementById("contact_view_avatar_initials").innerText = contact.name
+        .split(' ')
+        .map(word => word[0].toUpperCase())
+        .join('');
+    document.getElementById("contact_view_name").innerText = contact.name;
+    document.getElementById("contact_view_mail").innerText = contact.mail;
+    document.getElementById("contact_view_phone").innerText = contact.phone || 'No phone number available';
+}
+
+function addNewContactOn(){
+    document.getElementById("add_New_contact_ov_section").style.display = "block";
+}
+
+function addNewContactOff(){
+    document.getElementById("add_New_contact_ov_section").style.display = "none";
 }
