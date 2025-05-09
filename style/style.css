@@ -13,20 +13,36 @@
 }
 
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 20px;
-  padding-right: 40px;
-  padding-bottom: 20px;
-  padding-left: 348px;
-  background-color: white;
+  padding: 0 40px 0 348px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 0 20px;
+  }
 }
 
 header h1 {
   font-size: 20px;
   font-weight: 400;
   font-family: "Inter";
+  color: #2a3647;
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 0 20px;
+  }
 }
 
 .help-button {
@@ -82,7 +98,12 @@ nav {
 }
 
 .menu-button.active {
-  background-color: #091931;
+  background-color: #2a3647;
+  /* color: white; */
+}
+
+.menu-button.active img {
+  filter: brightness(0) invert(1); /* makes icons white if needed */
 }
 
 .menu-button img {
@@ -100,7 +121,6 @@ nav {
 .legal-policy {
   display: flex;
   flex-direction: column;
-
   margin-bottom: 50px;
   width: 100%;
 }
@@ -133,4 +153,36 @@ nav {
 .legal-policy-button:hover {
   color: #29abe2;
   transform: scale(1.05);
+}
+
+
+/* === Responsive fixes for mobile view === */
+
+@media (max-width: 768px) {
+  nav {
+    display: none;
+  }
+
+  header {
+    padding: 20px;
+  }
+
+  .logonav {
+    padding: 20px;
+  }
+
+  .menu-button {
+    padding: 10px 20px;
+  }
+}
+
+@media (min-width: 769px) {
+  header {
+    padding-left: 348px;
+  }
+}
+
+/* Global fix to prevent horizontal scroll */
+body {
+  overflow-x: hidden;
 }
