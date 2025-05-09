@@ -12,13 +12,13 @@ a{
     color:  #1baefd;
 }
 
-.contacts_main_content{
+.contacts_main_content {
+    padding-top: 100px; /* Adjust this value to match your header's height */
     height: 100%;
     width: calc(100% - 232px);
     display: flex;
-    height: 100%;
     float: right;
-}
+  }  
 
 /*contacts list container*/
 .contactslist_container{
@@ -372,3 +372,5 @@ hr {
         justify-content: center;
     }   
 }*/
+
+
