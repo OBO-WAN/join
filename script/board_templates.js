@@ -1,11 +1,11 @@
-function getKanbanTemplate(taskIndex) {
+function getKanbanTemplate(task) {
     return `                <div class="task_container">
                     <div class="task">
-                        <div class="task_category user_story">User Story</div>
+                        <div class="task_category ${task.categoryClass}">${task.category}</div>
 
                         <div class="task_information">
-                            <p class="task_title">Contact Form & Imprint</p>
-                            <p class="task_details">Create a contact form and imprint page...</p>
+                            <p class="task_title" id="task_title">${task.title}</p>
+                            <p class="task_details" id="task_details">${task.details}</p>
                         </div>
 
                         <div class="progress_container">
@@ -14,8 +14,8 @@ function getKanbanTemplate(taskIndex) {
                         </div>
 
                         <div class="user_priority_container">
-                            <div class="user_initials">XY</div>
-                            <img src="./assets/icons/priority/priority_medium.png" class="priority_medium">
+                            <div class="user_initials" id="user_initials">${task.initials}</div>
+                            <img src="./assets/icons/priority/priority_${task.priority}.png" class="priority_medium" id="priority">
                         </div>
 
                     </div>

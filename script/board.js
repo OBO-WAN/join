@@ -2,22 +2,58 @@ const BASE_URL = "https://joinstorage-ef266-default-rtdb.europe-west1.firebaseda
 
 let tasks = BASE_URL;
 
-function init() {
+async function loadTasksFromFirebase() {
+    const response = await fetch(`${BASE_URL}tasks.json`);
+    const data = await response.json();
+
+    if (data) {
+        tasks = Object.values(data); // ✅ aus Objekt ein Array machen
+    } else {
+        tasks = []; // Fallback, falls nichts da ist
+    }
+
+    renderCurrentTasks();
+}
+
+async function init() {
+    loadTasksFromFirebase();
     showCurrentBoard();
 }
+
+function renderCurrentTasks() {
+    const container = document.getElementById('inProgressContainer');
+    container.innerHTML = ''; // Leeren vor dem Rendern
+
+    for (let i = 0; i < tasks.length; i++) {
+        const task = tasks[i];
+        const taskHTML = prepareTaskForTemplate(task);
+        container.innerHTML += getKanbanTemplate(taskHTML);
+    }
+}
+
+function prepareTaskForTemplate(task) {
+    return {
+        category: task.category || 'General',
+        categoryClass: (task.category || 'general').toLowerCase().replace(/\s/g, '_'),
+        title: task.task || 'Untitled',
+        details: task.description || '',
+        initials: task.assignedTo || '??',
+        priority: (task.priority || 'low').toLowerCase()
+    };
+}
+
 
 function showCurrentBoard() {
     renderCurrentTasks();
 }
 
-function renderCurrentTasks() {
-    let contentRef = document.getElementById('inProgressContainer');
+async function loadTasksFromFirebase() {
+    const response = await fetch(`${BASE_URL}tasks.json`);
+    const data = await response.json();
+    tasks = Object.values(data); // falls tasks als Objekt gespeichert sind
 
-    contentRef.innerHTML = "";
-
-    for (let taskIndex = 0; taskIndex < tasks.length; taskIndex++) {
-        contentRef.innerHTML += getKanbanTemplate(taskIndex);
-    }
+    console.log(tasks);
+    renderCurrentTasks();
 }
 
 window.addEventListener('DOMContentLoaded', function () {
