@@ -230,6 +230,25 @@ h3 {
   align-items: center;
 }
 
+.user_initials_group {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.user_initials_circle {
+    width: 32px;
+    height: 32px;
+    background-color: #2A3647;
+    color: #9327ff;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
 .priority_high {
   height: 12px;
   width: 17px;
