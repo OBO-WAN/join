@@ -55,18 +55,40 @@
         <!--contacts list container-->
         <div class="contactslist_container">
 
-            <div id="add_New_contact_ov_section" class="add_new_contact_section" onclick="addNewContactOn()">
-                    <div class="ad_new_contact_ov">
-                        <div class="add_newcontact_entry_section">
+            <div  class="add_new_contact_section" onclick="addNewContactOn()">
+                    <div id="add_new_contact_ov_section" class="add_new_contact_ov">
+                        <div class="add_new_contact_ov_container">
                             <div class="add_newcontact_sloagen_container">
                                 <div class="ov_logo_section">
                                     <img class="ov_logo" src="./assets/img/logo-white.svg" alt="join logo">
                                 </div>
-                                <div class="ov_hl_section"></div>
-                                <div class="ov_sloagen_section"></div>
+                                <div class="ov_hl_section"><span class="ov_hl">Add contact</span></div>
+                                <div class="ov_slogan_section"><span class="ov_slogan">Tasks are better wiht a team!</span>
+                                    <div class="ov_sloagen_seperator"></div>
+                                </div>
                             </div>
-                            <div class="add_newcontact_entry_container">
-
+                            <div class="add_new_contact_entry_section">
+                                <div class="add_new_contact_avatar_section">
+                                    <div class="add_new_contact_avatar">
+                                        <img class="ov_avatar" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
+                                    </div>
+                                </div>
+                                <div class="add_new_contact_entry">
+                                    <div  onclick="addNewContactOff()" class="overlay_of_btn_sec"><p class="overlay_of_btn">X</p></div>
+                                    <input id="name_input" class="add_new_contact_input" type="input" placeholder ="  Name" >
+                                    <input id="mail_input" class="add_new_contact_input" type="input" placeholder="  Mail">                                   
+                                    <input id="pohne_input" class="add_new_contact_input" type="input" placeholder="  Phone">
+                                 <div class="add_new_contact_btn_section">
+                                    <button class="cancel_btn">
+                                        <span class="cancel_btn_txt">Cancel X</span>
+                                        
+                                    </button>
+                                    <button class="create_btn" onkeydown="if (event.key === 'Enter')  {createContact();}">
+                                        Create contact 
+                                        <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
+                                    </button>
+                                </div>  
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -113,10 +135,10 @@
                         </div>
                         <div class="contact_view_edit_section">
                             <div class="edtit_section">
-                                <span class="edit_txt">Edit</span>
+                                <span class="edit_txt" onclick="editContact(id) ">Edit</span>
                             </div>
                             <div class="delete_section">
-                                <span class="delete_txt">Delete</span>
+                                <span class="delete_txt" onclick="deleteContact(id)">Delete</span>
                             </div> 
                         </div>
                     </div>
