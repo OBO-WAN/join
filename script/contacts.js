@@ -1,5 +1,6 @@
 let Contacts = [];
 
+
 function getContacts(data,){
     
     fetch('https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/contacts.json')
@@ -88,6 +89,8 @@ function renderContacts(contacts) {
     document.getElementById("contact_card_section").innerHTML = contactCards;
 }
 
+
+
 function sortContacts(contacts){ 
     contacts.sort((a, b) => a.name.localeCompare(b.name));
 }
@@ -119,8 +122,29 @@ function deleteContact(id){
 
 }
 
-function editContact(id, newContactdata){ //add contact aufrufen + daten vom angeklicktem contakt übergeben und rendern
+function openContactDialog(){
+    //index > 0 entspricht Contacs editieren
+    //index <0 entspricht neuen Kontakt erstellen
 
+    document.getElementById("add_new_contact_ov_section").style.display = "flex";
+}
+
+
+function editContact(id, newContactData) {
+    /*addNewContactOn();
+    const contactEdit = Contacts[id];
+     document.getElementById("name_input").value.innerHTML = contactEdit.name;
+     document.getElementById("mail_input").value = contactEdit.mail;
+     document.getElementById("pohne_input").value = contactEdit.phone;
+*/
+    let newData = {
+        name: "test",
+        mail: "szdglsdgfligdlf",
+        phone: "01354/654678"
+    }
+    Contacts[id] = newContactData;
+    // nicht vergessen data put data to Database
+    updateDatabase(Contacts);
 }
 
 function renderViewCard(index) {
@@ -134,10 +158,83 @@ function renderViewCard(index) {
     document.getElementById("contact_view_phone").innerText = contact.phone || 'No phone number available';
 }
 
-function addNewContactOn(){
-    document.getElementById("add_New_contact_ov_section").style.display = "block";
+function addNewContactOff() {
+    console.log("addNewContactOff aufgerufen");
+    document.getElementById("add_new_contact_ov_section").style.display = "none";
 }
 
-function addNewContactOff(){
-    document.getElementById("add_New_contact_ov_section").style.display = "none";
+function addNewContactOn(){
+    document.getElementById("add_new_contact_ov_section").style.display = "flex";
 }
+
+function createContact() {
+    const name = document.getElementById("name_input").value.trim();
+    const mail = document.getElementById("mail_input").value.trim();
+    const phone = document.getElementById("pohne_input").value.trim();
+    if (!name || !mail  || !phone) {
+        alert("Bitte fülle die Felder Name, Mail und Pohne aus.")
+    }
+    if ( emailIsValid(mail) == false)  {
+        alert("Pleas wiret a valid email address.");
+       return;
+    }
+    const newContact = {
+        name: name,
+        mail: mail,
+        phone: phone || "No phone number available" 
+    };
+    Contacts.push(newContact);
+    updateDatabase(Contacts);
+    renderContacts(Contacts);x
+    addNewContactOff();
+    document.getElementById("name_input").value = "";
+    document.getElementById("mail_input").value = "";
+    document.getElementById("pohne_input").value = "";
+    console.log("Neuer Kontakt hinzugefügt:", newContact);
+}
+
+function emailIsValid (email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
+
+function editContact(id) {
+ addNewContactOn(id);
+    const contactEdit = Contacts[id];
+    
+}
+
+function deleteContact(id) {
+    if (id < 0 || id >= Contacts.length) {
+        console.error("Ungültige ID:", id);
+        return;
+    }
+
+    Contacts.splice(id, 1);
+    updateDatabase(Contacts);
+    renderContacts(Contacts);
+
+    if (Contacts.length > 0) {
+        renderViewCard(0); 
+    } else {
+        document.getElementById("contact_view_avatar_initials").innerText = "";
+        document.getElementById("contact_view_name").innerText = "";
+        document.getElementById("contact_view_mail").innerText = "";
+        document.getElementById("contact_view_phone").innerText = "";
+    }
+    alert("Contact deleted");
+}
+
+function contactRandomCollor() {
+    let contactViewAvatar = document.getElementById("contact_view_avatar");
+    let contactAvatar = document.getElementById("contact_avatar");
+    let collors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A133FF', '#33FFA1', '#FFA133', '#FF33FF', '#33FF33', '#FF3333'];
+    let currentColorIndex = 0;
+    const color = collors[currentColorIndex];
+    currentColorIndex = (currentColorIndex + 1) % collors.length;
+    
+
+    contactViewAvatar.innerHTML = `<div class="contact_view_avatar" style="background-color: ${color};">${initials}</div>`;
+    contactAvatar.innerHTML = `<div class="contact_avatar" style="background-color: ${color};">${initials}</div>`;
+return color;
+}
+
