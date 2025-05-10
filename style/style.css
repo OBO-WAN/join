@@ -1,29 +1,29 @@
 * {
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-  margin: 0;
-  padding: 0;
-  font-family: "inter";
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
+    font-family: "inter";
 }
 
 @font-face {
-  font-family: "Inter";
-  src: url("../assets/font/Inter-VariableFont_opsz\,wght.ttf")
+    font-family: "Inter";
+    src: url("../assets/font/Inter-VariableFont_opsz\,wght.ttf")
     format("truetype");
 }
 
 header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 80px;
-  background-color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 40px 0 348px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px 0 348px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 @media (max-width: 768px) {
@@ -33,10 +33,10 @@ header {
 }
 
 header h1 {
-  font-size: 20px;
-  font-weight: 400;
-  font-family: "Inter";
-  color: #2a3647;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: "Inter";
+    color: #2a3647;
 }
 
 @media (max-width: 768px) {
@@ -46,113 +46,137 @@ header h1 {
 }
 
 .help-button {
-  background-color: white;
-  cursor: pointer;
-  border: 0;
-  transition: transform 0.2s ease;
+    background-color: white;
+    cursor: pointer;
+    border: 0;
+    transition: transform 0.2s ease;
 }
 
 .help-button:hover {
-  transform: scale(1.25);
+    transform: scale(1.25);
 }
 
 nav {
-  background-color: #2a3647;
-  position: fixed;
-  top: 0;
-  font-size: 16px;
-  font-weight: 200;
-  height: 100vh;
-  width: 232px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+    background-color: #2a3647;
+    position: fixed;
+    top: 0;
+    font-size: 16px;
+    font-weight: 200;
+    height: 100vh;
+    width: 232px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .logonav {
-  
-  padding: 65px;
+    padding: 65px;
 }
 
 .menu {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-bottom: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 200px;
 }
 
 .menu-button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background-color: #2a3647;
-  border: none;
-  padding: 10px 65px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #2a3647;
+    border: none;
+    padding: 10px 65px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .menu-button:hover {
-  background-color: #2a3d59;
+    background-color: #2a3d59;
 }
 
 .menu-button.active {
-  background-color: #2a3647;
-  /* color: white; */
+    background-color: #091931;
 }
 
 .menu-button.active img {
-  filter: brightness(0) invert(1); /* makes icons white if needed */
+    filter: brightness(0) invert(1);
 }
 
 .menu-button img {
-  width: 24px;
-  height: 24px;
+    width: 24px;
+    height: 24px;
 }
 
 .menu-button span {
-  font-family: "Inter";
-  font-weight: 200;
-  font-size: 16px;
-  color: #cdcdcd;
+    font-family: "Inter";
+    font-weight: 200;
+    font-size: 16px;
+    color: #cdcdcd;
+}
+
+.menu-login {
+    padding-bottom: 400px;
+}
+
+.menu-button-login {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #2a3647;
+    border: none;
+    padding: 10px 79px;
+    cursor: pointer;
+    color: white;
+}
+
+.menu-button-login span {
+    font-family: "Inter";
+    font-weight: 200;
+    font-size: 16px;
+    color: #cdcdcd;
+}
+
+.menu-button-login:hover {
+    background-color: #2a3d59;
 }
 
 .legal-policy {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 50px;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+    width: 100%;
 }
 
 .legal-policy-background {
-  width: 100%;
-  background-color: #2a3647;
-  display: flex;
-  justify-content: center;
-  padding: 8px 0;
+    width: 100%;
+    background-color: #2a3647;
+    display: flex;
+    justify-content: center;
+    padding: 8px 0;
 }
 
 .legal-policy-background.active {
-  background-color: #091931;
+    background-color: #091931;
 }
 
 .legal-policy-button {
-  background: none;
-  border: none;
-  color: #cdcdcd;
-  font-family: "Inter";
-  font-weight: 200;
-  font-size: 16px;
-  cursor: pointer;
-  text-decoration: none;
-  padding: 0;
-  transition: color 0.3s, transform 0.2s;
+    border: none;
+    background: none;
+    font-family: "Inter";
+    color: #cdcdcd;
+    font-size: 16px;
+    font-weight: 200;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.3s, transform 0.2s;
 }
 
 .legal-policy-button:hover {
-  color: #29abe2;
-  transform: scale(1.05);
+    color: #29abe2;
+    transform: scale(1.05);
 }
 
 
@@ -182,7 +206,6 @@ nav {
   }
 }
 
-/* Global fix to prevent horizontal scroll */
 body {
-  overflow-x: hidden;
-}
+    overflow-x: hidden;
+}    
