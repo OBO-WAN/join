@@ -27,7 +27,8 @@ function renderCurrentTasks() {
     for (let i = 0; i < tasks.length; i++) {
         const task = tasks[i];
         const taskHTML = prepareTaskForTemplate(task);
-        container.innerHTML += getKanbanTemplate(taskHTML);
+        let assignedUsersHTML = (task.assignedto || []);
+        container.innerHTML += getKanbanTemplate(taskHTML, assignedUsersHTML);
     }
 }
 
@@ -37,7 +38,7 @@ function prepareTaskForTemplate(task) {
         categoryClass: (task.category || 'general').toLowerCase().replace(/\s/g, '_'),
         title: task.task || 'Untitled',
         details: task.description || '',
-        initials: task.assignedTo || '??',
+        initials: task.assignedTo || [],
         priority: (task.priority || 'low').toLowerCase()
     };
 }
