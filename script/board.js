@@ -1,6 +1,6 @@
 const BASE_URL = "https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/";
 
-let tasks = [];
+let tasks = BASE_URL;
 
 function init() {
     showCurrentBoard();
