@@ -1,4 +1,4 @@
-function getKanbanTemplate(task, assignedUsersHTML) {
+function getKanbanTemplate(task) {
     return `                <div class="task_container">
                     <div class="task">
                         <div class="task_category ${task.categoryClass}">${task.category}</div>
@@ -14,10 +14,7 @@ function getKanbanTemplate(task, assignedUsersHTML) {
                         </div>
 
                         <div class="user_priority_container">
-                            <div class="user_initials_group">
-                                ${assignedUsersHTML}
-                            </div>
-
+                            <div class="user_initials"></div>
                             <img src="./assets/icons/priority/priority_${task.priority}.png" class="priority_medium" id="priority">
                         </div>
 

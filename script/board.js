@@ -7,7 +7,7 @@ async function loadTasksFromFirebase() {
     const data = await response.json();
 
     if (data) {
-        tasks = Object.values(data); // ✅ aus Objekt ein Array machen
+        tasks = Object.values(data); // aus Objekt ein Array machen
     } else {
         tasks = []; // Fallback, falls nichts da ist
     }
@@ -24,10 +24,10 @@ function renderCurrentTasks() {
     const container = document.getElementById('inProgressContainer');
     container.innerHTML = ''; // Leeren vor dem Rendern
 
-    for (let i = 0; i < tasks.length; i++) {
+ for (let i = 0; i < tasks.length; i++) {
         const task = tasks[i];
         const taskHTML = prepareTaskForTemplate(task);
-        let assignedUsersHTML = (task.assignedto || []);
+        let assignedUsersHTML = taskHTML.assignedTo.map(user => `<div class="user_initials_circle">${user.initials}</div>`).join('');
         container.innerHTML += getKanbanTemplate(taskHTML, assignedUsersHTML);
     }
 }
@@ -38,7 +38,7 @@ function prepareTaskForTemplate(task) {
         categoryClass: (task.category || 'general').toLowerCase().replace(/\s/g, '_'),
         title: task.task || 'Untitled',
         details: task.description || '',
-        initials: task.assignedTo || [],
+        assignedTo: task.assignedTo || [],
         priority: (task.priority || 'low').toLowerCase()
     };
 }
