@@ -1,6 +1,6 @@
 .board_container {
   padding-left: 320px;
-  padding-top: 100px; /* Enough space for fixed header */
+  padding-top: 170px; /* Enough space for fixed header */
 }
 
 @media (max-width: 768px) {
