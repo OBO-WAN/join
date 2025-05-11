@@ -18,26 +18,44 @@ async function loadTasksFromFirebase() {
 }
 
 async function init() {
-    await loadTasksFromFirebase();
     await loadUsersFromFirebase();
+    await loadTasksFromFirebase();
+
     showCurrentBoard();
 }
 
 function renderCurrentTasks() {
-    const container = document.getElementById('inProgressContainer');
-    container.innerHTML = '';
 
- for (let i = 0; i < tasks.length; i++) {
+    const statusContainers = proofStatus();
+
+    for (let i = 0; i < tasks.length; i++) {
         const task = tasks[i];
         const taskData = prepareTaskForTemplate(task);
 
           const assignedUsersHTML = taskData.assignedTo.map(user => `
-            <div class="user_initials_circle" style="background-color: ${user.color}; color: white;}>${user.initials}</div>
+            <div class="user_initials_circle" style="background-color: ${user.color}; color: white;"}>${user.initials}</div>
         `).join('');
 
-        container.innerHTML += getKanbanTemplate(taskData, assignedUsersHTML);
+        const container = statusContainers[task.status];
+        if (container) {
+
+            container.innerHTML += getKanbanTemplate(taskData, assignedUsersHTML);
+        }
     }
 }
+
+function proofStatus() {
+    const statusContainers = {
+        toDo: document.getElementById('toDoContainer'),
+        inProgress: document.getElementById('inProgressContainer'),
+        awaitFeedback: document.getElementById('awaitFeedbackContainer'),
+        done: document.getElementById('doneContainer')
+    };
+
+    Object.values(statusContainers).forEach(container => container.innerHTML = '');
+    return statusContainers;
+}
+
 
 function prepareTaskForTemplate(task) {
 
