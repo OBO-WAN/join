@@ -2,6 +2,8 @@ const BASE_URL = "https://joinstorage-ef266-default-rtdb.europe-west1.firebaseda
 
 let tasks = BASE_URL;
 
+let users = [];
+
 async function loadTasksFromFirebase() {
     const response = await fetch(`${BASE_URL}tasks.json`);
     const data = await response.json();
@@ -16,29 +18,43 @@ async function loadTasksFromFirebase() {
 }
 
 async function init() {
-    loadTasksFromFirebase();
+    await loadTasksFromFirebase();
+    await loadUsersFromFirebase();
     showCurrentBoard();
 }
 
 function renderCurrentTasks() {
     const container = document.getElementById('inProgressContainer');
-    container.innerHTML = ''; // Leeren vor dem Rendern
+    container.innerHTML = '';
 
  for (let i = 0; i < tasks.length; i++) {
         const task = tasks[i];
-        const taskHTML = prepareTaskForTemplate(task);
-        let assignedUsersHTML = taskHTML.assignedTo.map(user => `<div class="user_initials_circle">${user.initials}</div>`).join('');
-        container.innerHTML += getKanbanTemplate(taskHTML, assignedUsersHTML);
+        const taskData = prepareTaskForTemplate(task);
+
+          const assignedUsersHTML = taskData.assignedTo.map(user => `
+            <div class="user_initials_circle" style="background-color: ${user.color}; color: white;}>${user.initials}</div>
+        `).join('');
+
+        container.innerHTML += getKanbanTemplate(taskData, assignedUsersHTML);
     }
 }
 
 function prepareTaskForTemplate(task) {
+
+    const assignedTo = (task.assignedTo || []).map(name => {
+
+        const user = users.find(u => u.name === name);
+        const initials = name.split(' ').map(n => n[0]).join('').toUpperCase();
+        const color = user?.color || '#2A3647'; // Fallback-Farbe
+        return { initials, color };
+    });
+
     return {
         category: task.category || 'General',
         categoryClass: (task.category || 'general').toLowerCase().replace(/\s/g, '_'),
         title: task.task || 'Untitled',
         details: task.description || '',
-        assignedTo: task.assignedTo || [],
+        assignedTo,
         priority: (task.priority || 'low').toLowerCase()
     };
 }
@@ -55,6 +71,12 @@ async function loadTasksFromFirebase() {
 
     console.log(tasks);
     renderCurrentTasks();
+}
+
+async function loadUsersFromFirebase() {
+    const response = await fetch(`${BASE_URL}user.json`);
+    const data = await response.json();
+    users = data || [];
 }
 
 window.addEventListener('DOMContentLoaded', function () {
