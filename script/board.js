@@ -28,6 +28,8 @@ function renderCurrentTasks() {
 
     const statusContainers = proofStatus();
 
+    const statusCounts = proofStatusCounts();
+
     for (let i = 0; i < tasks.length; i++) {
         const task = tasks[i];
         const taskData = prepareTaskForTemplate(task);
@@ -40,8 +42,12 @@ function renderCurrentTasks() {
         if (container) {
 
             container.innerHTML += getKanbanTemplate(taskData, assignedUsersHTML);
+            statusCounts[task.status]++;
         }
     }
+    
+    showStatusPlaceholder(statusCounts, statusContainers);
+
 }
 
 function proofStatus() {
@@ -56,6 +62,25 @@ function proofStatus() {
     return statusContainers;
 }
 
+function proofStatusCounts() {
+        const statusCounts = {
+        toDo: 0,
+        inProgress: 0,
+        awaitFeedback: 0,
+        done: 0
+    };
+
+    return statusCounts;
+}
+
+function showStatusPlaceholder(statusCounts, statusContainers) {
+    for (const [status, count] of Object.entries(statusCounts)) {
+        if (count === 0) {
+            const container = statusContainers[status];
+            container.innerHTML = `<div class="no_task_placeholder">No tasks in ${formatStatusText(status)}</div>`;
+        }
+    }
+}
 
 function prepareTaskForTemplate(task) {
 
