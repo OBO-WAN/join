@@ -2,7 +2,6 @@ let Contacts = [];
 
 
 function getContacts(data,){
-    
     fetch('https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/contacts.json')
         .then(response => response.json())
         .then(data => {
@@ -16,6 +15,7 @@ function getContacts(data,){
       
     return data;
 }
+
 
 function updateDatabase(data){ 
     fetch('https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/contacts.json', {
@@ -34,39 +34,11 @@ function updateDatabase(data){
     });
 }
 
-/*function renderContacts(contacts){ 
-        let contactCards = '';
-        sortContacts(contacts);
-        let oldLetter = '';
-        for (let index = 0; index < contacts.length; index++) {
-            const contact = contacts[index];
-            const initials = contact.name
-                .trim()
-                .split(' ')
-                .filter(word => word.length > 0)
-                .map(word => word[0].toUpperCase()); 
-            let change = false;
-            let firstLetter = getFirstLetter(contact.name, oldLetter, change);
-
-            if(change) {
-                //contactCards += `<div class="contact_letter">${firstLetter}</div>`;
-                document.getElementById("contacts_section_letter").innerHTML = firstLetter; // Hole dir den ersten Buchstaben des Namens und stelle ihn in der Sektion dar
-                // Hole dir Id von Separator und stelle den ersten Buchstaben des Namens
-
-            }
-
-            contactCards += getContactCardTamplate(contact.name, contact.mail, initials, index);
-        }
-        
-        document.getElementById("contact_card_section").innerHTML = contactCards;
-
-}*/
-
 
 function renderContacts(contacts) { 
     let contactCards = '';
-    sortContacts(contacts); 
-    let oldLetter = ''; 
+    sortContacts(contacts); // Kontakte sortieren
+    let oldLetter = ''; // Speichert den vorherigen Buchstaben
 
     for (let index = 0; index < contacts.length; index++) {
         const contact = contacts[index];
@@ -76,26 +48,32 @@ function renderContacts(contacts) {
             .filter(word => word.length > 0)
             .map(word => word[0].toUpperCase()); 
 
-        const firstLetter = contact.name.charAt(0).toUpperCase(); 
+        const firstLetter = contact.name.charAt(0).toUpperCase(); // Erster Buchstabe des Namens
+
+        // Wenn der Buchstabe wechselt, füge eine neue Überschrift hinzu
         if (oldLetter !== firstLetter) {
             contactCards += `
                 <div class="contacts_section_header">
                     <p class="contacts_section_letter">${firstLetter}</p>
                 </div>`;
-            oldLetter = firstLetter; 
+            oldLetter = firstLetter;
         }
-        contactCards += getContactCardTamplate(contact.name, contact.mail, initials, index);
+
+
+        contactCards += getContactCardTamplate(contact.name, contact.mail, initials, index)   
     }
+
     document.getElementById("contact_card_section").innerHTML = contactCards;
 }
 
 
-
-function sortContacts(contacts){ 
+function sortContacts(contacts){ //sort contacts by name
     contacts.sort((a, b) => a.name.localeCompare(b.name));
+    Contacts = contacts;
 }
 
-function getFirstLetter(name, oldLetter, change){ 
+
+function getFirstLetter(name, oldLetter, change){ //get first letter of name
 
     const firstLetter = name.charAt(0);
 
@@ -110,44 +88,12 @@ function getFirstLetter(name, oldLetter, change){
     return firstLetter;
 }
 
-function getContact(id){
-    console.log(Contacts[id]);
-}
-
-function addContact(id){
-
-}
-
-function deleteContact(id){
-
-}
-
-function openContactDialog(){
-    //index > 0 entspricht Contacs editieren
-    //index <0 entspricht neuen Kontakt erstellen
-
-    document.getElementById("add_new_contact_ov_section").style.display = "flex";
-}
-
-
-function editContact(id, newContactData) {
-    /*addNewContactOn();
-    const contactEdit = Contacts[id];
-     document.getElementById("name_input").value.innerHTML = contactEdit.name;
-     document.getElementById("mail_input").value = contactEdit.mail;
-     document.getElementById("pohne_input").value = contactEdit.phone;
-*/
-    let newData = {
-        name: "test",
-        mail: "szdglsdgfligdlf",
-        phone: "01354/654678"
-    }
-    Contacts[id] = newContactData;
-    // nicht vergessen data put data to Database
-    updateDatabase(Contacts);
-}
 
 function renderViewCard(index) {
+
+    let tempViewCard = getViewCardTemplate(index);
+    document.getElementById("contactViewCard").innerHTML = tempViewCard;
+
     const contact = Contacts[index]; 
     document.getElementById("contact_view_avatar_initials").innerText = contact.name
         .split(' ')
@@ -156,16 +102,15 @@ function renderViewCard(index) {
     document.getElementById("contact_view_name").innerText = contact.name;
     document.getElementById("contact_view_mail").innerText = contact.mail;
     document.getElementById("contact_view_phone").innerText = contact.phone || 'No phone number available';
+
+       
 }
 
-function addNewContactOff() {
-    console.log("addNewContactOff aufgerufen");
-    document.getElementById("add_new_contact_ov_section").style.display = "none";
+
+function getContact(id){
+    console.log(Contacts[id]);
 }
 
-function addNewContactOn(){
-    document.getElementById("add_new_contact_ov_section").style.display = "flex";
-}
 
 function createContact() {
     const name = document.getElementById("name_input").value.trim();
@@ -173,42 +118,75 @@ function createContact() {
     const phone = document.getElementById("pohne_input").value.trim();
     if (!name || !mail  || !phone) {
         alert("Bitte fülle die Felder Name, Mail und Pohne aus.")
+        return;
     }
     if ( emailIsValid(mail) == false)  {
         alert("Pleas wiret a valid email address.");
-       return;
+        return;
     }
     const newContact = {
         name: name,
         mail: mail,
         phone: phone || "No phone number available" 
     };
+
     Contacts.push(newContact);
     updateDatabase(Contacts);
-    renderContacts(Contacts);x
-    addNewContactOff();
+    renderContacts(Contacts);
+    closeContactDialog();
+
     document.getElementById("name_input").value = "";
     document.getElementById("mail_input").value = "";
     document.getElementById("pohne_input").value = "";
     console.log("Neuer Kontakt hinzugefügt:", newContact);
 }
 
+
+function editContact(id) {
+    let name = document.getElementById("name_input").value;
+    let mail = document.getElementById("mail_input").value;
+    let phone = document.getElementById("pohne_input").value;
+
+    if (!name || !mail  || !phone) {
+        alert("EDIT: Bitte fülle die Felder Name, Mail und Pohne aus.")
+        return;
+    }
+    if ( emailIsValid(mail) == false)  {
+        alert("Pleas wiret a valid email address.");
+        return;
+    }
+    
+    let newContact = {
+        name: name,
+        mail: mail,
+        phone: phone || "No phone number available" 
+    };
+    
+    
+    Contacts[id] = newContact;
+
+    updateDatabase(Contacts);
+    renderContacts(Contacts);
+    renderViewCard(id);
+    closeContactDialog();
+
+    document.getElementById("name_input").value = "";
+    document.getElementById("mail_input").value = "";
+    document.getElementById("pohne_input").value = "";
+    console.log("Kontakt wurde aktualisiert:", newContact);
+}
+
+
 function emailIsValid (email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
 
-function editContact(id) {
- addNewContactOn(id);
-    const contactEdit = Contacts[id];
-    
-}
 
 function deleteContact(id) {
     if (id < 0 || id >= Contacts.length) {
         console.error("Ungültige ID:", id);
         return;
     }
-
     Contacts.splice(id, 1);
     updateDatabase(Contacts);
     renderContacts(Contacts);
@@ -222,19 +200,92 @@ function deleteContact(id) {
         document.getElementById("contact_view_phone").innerText = "";
     }
     alert("Contact deleted");
+    document.getElementById("contactViewCard").innerHTML = "";
 }
 
-function contactRandomCollor() {
-    let contactViewAvatar = document.getElementById("contact_view_avatar");
-    let contactAvatar = document.getElementById("contact_avatar");
-    let collors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A133FF', '#33FFA1', '#FFA133', '#FF33FF', '#33FF33', '#FF3333'];
-    let currentColorIndex = 0;
-    const color = collors[currentColorIndex];
-    currentColorIndex = (currentColorIndex + 1) % collors.length;
-    
 
-    contactViewAvatar.innerHTML = `<div class="contact_view_avatar" style="background-color: ${color};">${initials}</div>`;
-    contactAvatar.innerHTML = `<div class="contact_avatar" style="background-color: ${color};">${initials}</div>`;
-return color;
+function avatarColor() {
+    const colors = [
+        "#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#FFC300", "#DAF7A6",
+        "#581845", "#C70039", "#900C3F", "#1E90FF", "#33A1FF", "#FFD700",
+        "#FF4500", "#00BFFF", "#20B2AA", "#4682B4", "#32CD32", "#228B22",
+        "#2E8B57", "#006400", "#8B4513", "#A0522D", "#696969", "#FF69B4",
+        "#FF1493", "#9400D3", "#4B0082", "#00CED1", "#FFFF00", "#33FFBD"
+    ];
+    const randomIndex = Math.floor(Math.random() * colors.length);
 }
 
+
+function configEditDlgBox(id){
+
+    let kindOFEdit = "editContact";
+    if(id < 0) kindOFEdit = "createContact";
+
+    let btnText ="";
+    let kindOfDlg_Text = "";
+    let functionName = "";
+
+    switch(kindOFEdit){
+        case "editContact":
+                document.getElementById("Kind_Of_Dlg").innerHTML = "Edit contact";
+                btnText = "Save";
+                functionName = "editContact(" + id + ")";
+
+                let oldContactData = Contacts[id];
+
+                document.getElementById("name_input").value = oldContactData.name; // Contacts[id].name;
+                document.getElementById("mail_input").value = oldContactData.mail //Contacts[id].mail;
+                document.getElementById("pohne_input").value = oldContactData.phone; //Contacts[id].phone;
+
+            break;
+
+        case "createContact":
+                document.getElementById("Kind_Of_Dlg").innerHTML = "Add contact";
+                btnText = "Create";
+                functionName = "createContact()";
+            break;
+
+        default:
+            break;
+    }
+
+    let btnHtml = `
+        <button class="create_btn" id="id_Edit_Btn" onclick = "${functionName}">
+            <span id="id_Edit_Btn_Text">${btnText}</span>
+            <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
+        </button>`;
+
+    document.getElementById("id_Edit_Btn").innerHTML = btnHtml;
+
+}
+
+
+function openContactDialog(id){
+    //index > 0 entspricht Contacs editieren
+    //index <0 entspricht neuen Kontakt erstellen
+
+    configEditDlgBox(id);
+
+    document.getElementById("add_new_contact_ov_section").style.display = "flex";
+}
+
+
+function closeContactDialog(){
+
+    document.getElementById("add_new_contact_ov_section").style.display = "none";
+    console.log("closeContactDialog aufgerufen");
+
+    // dialog beim schliesen lleeren
+}
+
+
+
+
+
+
+/*
+TODO:
+
+- Colors of the Wind
+
+*/
