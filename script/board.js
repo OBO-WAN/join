@@ -35,7 +35,7 @@ function renderCurrentTasks() {
         const taskData = prepareTaskForTemplate(task);
 
           const assignedUsersHTML = taskData.assignedTo.map(user => `
-            <div class="user_initials_circle" style="background-color: ${user.color}; color: white;"}>${user.initials}</div>
+            <div class="user_initials_circle" style="background-color: ${user.color}; color: white;">${user.initials}</div>
         `).join('');
 
         const container = statusContainers[task.status];
@@ -77,10 +77,20 @@ function showStatusPlaceholder(statusCounts, statusContainers) {
     for (const [status, count] of Object.entries(statusCounts)) {
         if (count === 0) {
             const container = statusContainers[status];
-            container.innerHTML = `<div class="no_task_placeholder">No tasks in ${formatStatusText(status)}</div>`;
+            container.innerHTML = `<div class="no_task_placeholder">No tasks</div>`;
         }
     }
 }
+
+function showSubtasks() {
+    container.innerHTML = `
+                        <div class="progress_container">
+                            <div class="progress-bar" style="width: 50%;"></div>
+                            <p class="subtasks_progress">1/2 Subtasks</p>
+                        </div>
+`
+}
+
 
 function prepareTaskForTemplate(task) {
 
@@ -100,6 +110,7 @@ function prepareTaskForTemplate(task) {
         assignedTo,
         priority: (task.priority || 'low').toLowerCase()
     };
+
 }
 
 
@@ -121,6 +132,7 @@ async function loadUsersFromFirebase() {
     const data = await response.json();
     users = data || [];
 }
+
 
 window.addEventListener('DOMContentLoaded', function () {
     var searchInput = document.getElementsByClassName('search_input')[0];
