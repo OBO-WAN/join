@@ -1,16 +1,17 @@
 let Contacts = [];
 
 
-function getContacts(data,){
+function getContacts(data){
     fetch('https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/contacts.json')
         .then(response => response.json())
         .then(data => {
             Contacts = data;
             renderContacts(data);
-
+/*
             if (Contacts.length > 0) {
                 renderViewCard(0); 
             }
+*/
         });
       
     return data;
@@ -102,8 +103,6 @@ function renderViewCard(index) {
     document.getElementById("contact_view_name").innerText = contact.name;
     document.getElementById("contact_view_mail").innerText = contact.mail;
     document.getElementById("contact_view_phone").innerText = contact.phone || 'No phone number available';
-
-       
 }
 
 
@@ -204,16 +203,8 @@ function deleteContact(id) {
 }
 
 
-function avatarColor() {
-    const colors = [
-        "#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#FFC300", "#DAF7A6",
-        "#581845", "#C70039", "#900C3F", "#1E90FF", "#33A1FF", "#FFD700",
-        "#FF4500", "#00BFFF", "#20B2AA", "#4682B4", "#32CD32", "#228B22",
-        "#2E8B57", "#006400", "#8B4513", "#A0522D", "#696969", "#FF69B4",
-        "#FF1493", "#9400D3", "#4B0082", "#00CED1", "#FFFF00", "#33FFBD"
-    ];
-    const randomIndex = Math.floor(Math.random() * colors.length);
-}
+
+
 
 
 function configEditDlgBox(id){
