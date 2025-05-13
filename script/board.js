@@ -1,24 +1,138 @@
 const BASE_URL = "https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/";
 
-let tasks = [];
+let tasks = BASE_URL;
 
-function init() {
+let users = [];
+
+async function loadTasksFromFirebase() {
+    const response = await fetch(`${BASE_URL}tasks.json`);
+    const data = await response.json();
+
+    if (data) {
+        tasks = Object.values(data); // aus Objekt ein Array machen
+    } else {
+        tasks = []; // Fallback, falls nichts da ist
+    }
+
+    renderCurrentTasks();
+}
+
+async function init() {
+    await loadUsersFromFirebase();
+    await loadTasksFromFirebase();
+
     showCurrentBoard();
 }
+
+function renderCurrentTasks() {
+
+    const statusContainers = proofStatus();
+
+    const statusCounts = proofStatusCounts();
+
+    for (let i = 0; i < tasks.length; i++) {
+        const task = tasks[i];
+        const taskData = prepareTaskForTemplate(task);
+
+          const assignedUsersHTML = taskData.assignedTo.map(user => `
+            <div class="user_initials_circle" style="background-color: ${user.color}; color: white;">${user.initials}</div>
+        `).join('');
+
+        const container = statusContainers[task.status];
+        if (container) {
+
+            container.innerHTML += getKanbanTemplate(taskData, assignedUsersHTML);
+            statusCounts[task.status]++;
+        }
+    }
+    
+    showStatusPlaceholder(statusCounts, statusContainers);
+
+}
+
+function proofStatus() {
+    const statusContainers = {
+        toDo: document.getElementById('toDoContainer'),
+        inProgress: document.getElementById('inProgressContainer'),
+        awaitFeedback: document.getElementById('awaitFeedbackContainer'),
+        done: document.getElementById('doneContainer')
+    };
+
+    Object.values(statusContainers).forEach(container => container.innerHTML = '');
+    return statusContainers;
+}
+
+function proofStatusCounts() {
+        const statusCounts = {
+        toDo: 0,
+        inProgress: 0,
+        awaitFeedback: 0,
+        done: 0
+    };
+
+    return statusCounts;
+}
+
+function showStatusPlaceholder(statusCounts, statusContainers) {
+    for (const [status, count] of Object.entries(statusCounts)) {
+        if (count === 0) {
+            const container = statusContainers[status];
+            container.innerHTML = `<div class="no_task_placeholder">No tasks</div>`;
+        }
+    }
+}
+
+function showSubtasks() {
+    container.innerHTML = `
+                        <div class="progress_container">
+                            <div class="progress-bar" style="width: 50%;"></div>
+                            <p class="subtasks_progress">1/2 Subtasks</p>
+                        </div>
+`
+}
+
+
+function prepareTaskForTemplate(task) {
+
+    const assignedTo = (task.assignedTo || []).map(name => {
+
+        const user = users.find(u => u.name === name);
+        const initials = name.split(' ').map(n => n[0]).join('').toUpperCase();
+        const color = user?.color || '#2A3647'; // Fallback-Farbe
+        return { initials, color };
+    });
+
+    return {
+        category: task.category || 'General',
+        categoryClass: (task.category || 'general').toLowerCase().replace(/\s/g, '_'),
+        title: task.task || 'Untitled',
+        details: task.description || '',
+        assignedTo,
+        priority: (task.priority || 'low').toLowerCase()
+    };
+
+}
+
 
 function showCurrentBoard() {
     renderCurrentTasks();
 }
 
-function renderCurrentTasks() {
-    let contentRef = document.getElementById('inProgressContainer');
+async function loadTasksFromFirebase() {
+    const response = await fetch(`${BASE_URL}tasks.json`);
+    const data = await response.json();
+    tasks = Object.values(data); // falls tasks als Objekt gespeichert sind
 
-    contentRef.innerHTML = "";
-
-    for (let taskIndex = 0; taskIndex < tasks.length; taskIndex++) {
-        contentRef.innerHTML += getKanbanTemplate(taskIndex);
-    }
+    console.log(tasks);
+    renderCurrentTasks();
 }
+
+async function loadUsersFromFirebase() {
+    const response = await fetch(`${BASE_URL}user.json`);
+    const data = await response.json();
+    users = data || [];
+}
+
 
 window.addEventListener('DOMContentLoaded', function () {
     var searchInput = document.getElementsByClassName('search_input')[0];
