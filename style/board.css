@@ -1,6 +1,6 @@
 .board_container {
   padding-left: 320px;
-  padding-top: 100px; /* Enough space for fixed header */
+  padding-top: 170px; /* Enough space for fixed header */
 }
 
 @media (max-width: 768px) {
@@ -11,7 +11,7 @@
 
 .headline {
   margin-bottom: 50px;
-  color: #2a3647;
+  color: black;
   font-size: 50px;
   font-weight: bold;
 }
@@ -28,6 +28,7 @@
 }
 
 .search_container {
+  position:relative;
   display: flex;
   align-items: center;
   border: 1px solid #a8a8a8;
@@ -54,12 +55,16 @@
 .search_separator {
   width: 1px;
   height: 30px;
-  background-color: #d1d1d1;
+  background-color: #a8a8a8;
 }
 
 .search_icon {
-  align-items: center;
-  padding-left: 16px;
+  display: flex;
+  justify-content: flex-end;
+  height: 24px;
+  object-fit: contain;
+  width: 24px;
+  height: 24px;
 }
 
 .add_task_headline {
@@ -222,12 +227,28 @@ h3 {
   height: 32px;
   width: 32px;
   border-radius: 50px;
-  background-color: #9327ff;
   font-size: 12px;
   font-weight: 400;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.user_initials_group {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.user_initials_circle {
+    width: 32px;
+    height: 32px;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 }
 
 .priority_high {
