@@ -34,20 +34,38 @@
           <h1>Log in</h1>
         </div>
         <form onsubmit="login(); return false;" class="form">
-          <input
-            type="email"
-            id="email"
-            placeholder="Email"
-            class="input-base"
-            required
-          />
-          <input
-            type="password"
-            id="password"
-            placeholder="Password"
-            class="input-base"
-            required
-          />
+          <div class="input-base-container">
+            <input
+              type="email"
+              id="email"
+              placeholder="Email"
+              class="input-base"
+              required
+            />
+            <img
+              src="assets/img/mail.svg"
+              alt="Mail Icon"
+              class="input-base-icon"
+            />
+          </div>
+
+          <!-- Password Field with Toggle Icon -->
+          <div class="input-base-container">
+            <input
+              type="password"
+              id="password"
+              placeholder="Password"
+              class="input-base"
+              required
+            />
+            <img
+              src="assets/icons/visibility-eye-off.svg"
+              alt="Show Password"
+              class="input-base-icon"
+              id="togglePasswordIcon"
+              onclick="togglePasswordVisibility()"
+            />
+          </div>
 
           <div class="remember-me">
             <input type="checkbox" id="rememberMe" />
@@ -68,14 +86,16 @@
       </section>
     </main>
 
+<nav class="nav-log-in hidden" id="nav_log_in">
+  <span>Not a Join user?</span>
+  <button onclick="goToUrl('sign_up.html')" class="button-base-gray">Sign up</button>
+</nav>
 
     <!-- Footer for login (hidden initially) -->
     <footer class="footer-log-in hidden" id="footerLogin">
       <a href="privacy_policy_login.html">Privacy Policy</a>
       <a href="legal_notice_login.html">Legal Notice</a>
     </footer>
-
-  
   </body>
   <script src="script/login.js"></script>
 </html>
