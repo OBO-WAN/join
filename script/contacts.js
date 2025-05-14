@@ -1,5 +1,12 @@
 let Contacts = [];
 
+let colorsArray = [
+  "#ff0000", "#ff6600", "#ffaa00", "#ffee00", "#ccff00",
+  "#88ff00", "#44ff00", "#00ff22", "#00ff88", "#00ffee",
+  "#00ccff", "#0088ff", "#0044ff", "#2200ff", "#8800ff",
+  "#cc00ff", "#ff00cc", "#ff0088", "#ff0044", "#ff0022"
+]
+
 
 function getContacts(data){
     fetch('https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/contacts.json')
@@ -9,11 +16,11 @@ function getContacts(data){
             renderContacts(data);
 
             if (Contacts.length > 0) {
-                renderViewCard(0); 
+                //renderViewCard(0); 
             }
                 
         });
-      
+    clearViewCard();
     return data;
 }
 
@@ -43,11 +50,7 @@ function renderContacts(contacts) {
 
     for (let index = 0; index < contacts.length; index++) {
         const contact = contacts[index];
-        const initials = contact.name
-            .trim()
-            .split(' ')
-            .filter(word => word.length > 0)
-            .map(word => word[0].toUpperCase()); 
+        const initials = getInitials(contact.name);
 
         const firstLetter = contact.name.charAt(0).toUpperCase(); // Erster Buchstabe des Namens
 
@@ -60,13 +63,21 @@ function renderContacts(contacts) {
             oldLetter = firstLetter;
         }
 
-
-        contactCards += getContactCardTamplate(contact.name, contact.mail, initials, index)   
+        let color = getColor(initials[0]);
+        contactCards += getContactCardTamplate(contact.name, contact.mail, initials, index, color);
     }
-
     document.getElementById("contact_card_section").innerHTML = contactCards;
 }
 
+function getInitials(name)
+{
+    const initials = name
+        .trim()
+        .split(' ')
+        .filter(word => word.length > 0)
+        .map(word => word[0].toUpperCase()); 
+    return initials;
+}
 
 function sortContacts(contacts){ //sort contacts by name
     contacts.sort((a, b) => a.name.localeCompare(b.name));
@@ -91,11 +102,15 @@ function getFirstLetter(name, oldLetter, change){ //get first letter of name
 
 
 function renderViewCard(index) {
+    
+    const contact = Contacts[index];
+
+    let initials = getInitials(contact.name);
+    let color = getColor(initials[0]);
+    let tempViewCard = getViewCardTemplate(index, color);
     tempViewCard.innerHTML = "";
-    let tempViewCard = getViewCardTemplate(index);
     document.getElementById("contactViewCard").innerHTML = tempViewCard;
 
-    const contact = Contacts[index]; 
     document.getElementById("contact_view_avatar_initials").innerText = contact.name
         .split(' ')
         .map(word => word[0].toUpperCase())
@@ -199,13 +214,13 @@ function deleteContact(id) {
         document.getElementById("contact_view_phone").innerText = "";
     }
     alert("Contact deleted");
-    document.getElementById("contactViewCard").innerHTML = "";
+    clearViewCard();
 }
 
-
-
-
-
+function clearViewCard()
+{
+    document.getElementById("contactViewCard").innerHTML = "";
+}
 
 function configEditDlgBox(id){
 
@@ -269,6 +284,19 @@ function closeContactDialog(){
     // dialog beim schliesen lleeren
 }
 
+
+function getColor(firstLetter){
+  /*let idx = Math.floor(Math.random() * colorsArray.length);
+  return colorsArray[idx]; 
+  */
+    let text = "";
+    text = String(firstLetter).toUpperCase();
+
+    let colorIndex = text.charCodeAt(0) - 65;
+
+    // Char = A entspricht decimal 65. 65 als Offset abziehn dann bekommt man index 0
+    return colorsArray[colorIndex];
+}
 
 
 
