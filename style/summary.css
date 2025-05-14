@@ -24,7 +24,7 @@
 
 .titeljoin {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   gap: 30px;
   white-space: nowrap;
@@ -50,7 +50,7 @@
 }
 
 .goodmorning {
-  padding-right: 15px;
+  padding-right: 80px;
 }
 
 .mobile-view-greeting-overlay {
@@ -108,6 +108,7 @@
   text-align: left;
   color: #2a3647;
   margin: 0;
+  padding-top: 30px;
 }
 
 .name {
@@ -437,7 +438,6 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
-    /* padding-bottom: 32px; */
   }
 
   .titeljoin h1 {
