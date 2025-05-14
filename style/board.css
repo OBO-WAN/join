@@ -301,20 +301,3 @@ h3 {
   }
 }
 
-/* Optional: Hide sidebar on mobile */
-@media (max-width: 768px) {
-  nav {
-    display: none;
-  }
-
-  header {
-    padding: 0 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  }
-}
-
-@media (min-width: 769px) {
-  header {
-    padding-left: 348px;
-  }
-}
