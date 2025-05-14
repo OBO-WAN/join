@@ -57,7 +57,7 @@
   }
  
 
-.nav-links {
+/* .nav-links {
   list-style: none;
   padding: 0;
   width: 232px;
@@ -65,6 +65,12 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+} */
+
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
   .logo {
@@ -79,7 +85,7 @@
   }
   
   .nav-links a {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     color: #b0b0b0;
@@ -113,14 +119,30 @@
   
   .nav-links a:hover span {
     color: white;
-  }
+  } 
   
   .nav-links a:hover {
     background-color: #3a4756;
     color: white;
-  }
+  } 
 
-@media screen and (max-width: 768px) {
+  @media (max-width: 768px) {
+  .nav-links {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 72px;
+    background-color: #2a3647;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* @media screen and (max-width: 768px) {
     .nav-links {
     display: flex;
     background-color: #2a3647;
@@ -133,7 +155,7 @@
     gap: 10px;
     text-decoration-line: none;
   }
-}
+} */
   
   .boaimg {
     margin-right: 20px;
@@ -317,7 +339,7 @@
       flex-direction: unset;
       justify-content: space-between;
       align-items: center;
-      height: 100%;
+      height: 10%;
       width: 100%;
       padding: 2px 40px 2px 40px; 
       gap: 10px;
@@ -357,7 +379,7 @@
     }
     
     .link-button{
-      height: 100%;
+     height: 100%;
      width: 80px;
      border-radius: 16px;
      display: flex;
@@ -417,7 +439,7 @@
     }
   }
   
-  @media screen and (max-width: 360px) {
+  /* @media screen and (max-width: 360px){
     .nav-links {
       display: flex;
       flex-direction: unset;
@@ -428,6 +450,4 @@
       padding: 2px 4px 2px 4px;
       gap: 4px;
     }
-  }
-  
-  
+  } */

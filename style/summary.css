@@ -1,5 +1,5 @@
 .body-summary {
-  min-height: 100vh;
+  min-height: calc(100vh - 80px);
   width: 100%;
   background-color: var(--light-gray-bg);
   overflow-x: hidden;
@@ -503,8 +503,8 @@
   @media (max-width: 768px) {
     .content-details {
       width: 100%;
-      padding-bottom: 36px;
-      min-height: calc(100vh - 100%);
+      /* padding-bottom: 36px;
+      min-height: calc(100vh - 100%); */
     }
   }
 
