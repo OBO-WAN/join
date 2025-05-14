@@ -692,7 +692,7 @@ ul {
 }
  /* New root */
 
-:root {
+/* :root {
     --light-gray-placeholder: #d1d1d1;
     --light-gray-bg: #f6f7f8;
     --primary-color-gray: #2a3647;
@@ -761,4 +761,4 @@ ul {
     --padding-top-main: clamp(95px, 76px + 5.9375vw, 190px);
     --main-container-width: 1014px;
     --scollbar-width-thin: 4px;
-}
+} */
