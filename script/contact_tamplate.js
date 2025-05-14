@@ -41,7 +41,7 @@ function getViewCardTemplate(id) {
                 </div>
                     <div class="contact_view_head_info_section">
                         <div class="contact_view_name_section">
-                            <span class="contact_view_name" id="contact_view_name">Alice Cooper</span>
+                            <span class="contact_view_name" id="contact_view_name"></span>
                         </div>
                         <div class="contact_view_edit_section">
                             <div class="edtit_section">
