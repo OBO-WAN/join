@@ -7,11 +7,11 @@ function getContacts(data){
         .then(data => {
             Contacts = data;
             renderContacts(data);
-/*
+
             if (Contacts.length > 0) {
                 renderViewCard(0); 
             }
-*/
+                
         });
       
     return data;
@@ -91,7 +91,7 @@ function getFirstLetter(name, oldLetter, change){ //get first letter of name
 
 
 function renderViewCard(index) {
-
+    tempViewCard.innerHTML = "";
     let tempViewCard = getViewCardTemplate(index);
     document.getElementById("contactViewCard").innerHTML = tempViewCard;
 
