@@ -45,18 +45,9 @@ header h1 {
   }
 }
 
-.help-button {
-    background-color: white;
-    cursor: pointer;
-    border: 0;
-    transition: transform 0.2s ease;
-}
 
-.help-button:hover {
-    transform: scale(1.25);
-}
 
-nav {
+nav.sidebar {
     background-color: #2a3647;
     position: fixed;
     top: 0;
@@ -68,6 +59,24 @@ nav {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+}
+
+/* Optional: Hide sidebar on mobile */
+@media (max-width: 768px) {
+  nav.sidebar {
+    display: none;
+  }
+
+  header {
+    padding: 0 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+}
+
+@media (min-width: 769px) {
+  header {
+    padding-left: 348px;
+  }
 }
 
 .logonav {
@@ -189,6 +198,7 @@ nav {
 
   header {
     padding: 20px;
+    z-index: 1;
   }
 
   .logonav {
