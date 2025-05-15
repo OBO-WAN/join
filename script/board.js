@@ -44,6 +44,8 @@ function renderCurrentTasks() {
             container.innerHTML += getKanbanTemplate(taskData, assignedUsersHTML);
             statusCounts[task.status]++;
         }
+
+        proofSubtasks(task, container);
     }
     
     showStatusPlaceholder(statusCounts, statusContainers);
@@ -71,6 +73,23 @@ function proofStatusCounts() {
     };
 
     return statusCounts;
+}
+
+function proofSubtasks(task, container) {
+      if (task.subTasks && task.subTasks.length > 0) {
+            const lastTaskElement = container.lastElementChild;
+            const subtaskContainer = lastTaskElement.querySelector('.subtask_container');
+
+            if (subtaskContainer) {
+                const progressHTML = `
+                    <div class="progress_container">
+                        <div class="progress-bar" style="width: 0%;"></div>
+                        <p class="subtasks_progress">0/${task.subTasks.length} Subtasks</p>
+                    </div>
+                `;
+                subtaskContainer.innerHTML = progressHTML;
+            }
+}
 }
 
 function showStatusPlaceholder(statusCounts, statusContainers) {
@@ -108,7 +127,8 @@ function prepareTaskForTemplate(task) {
         title: task.task || 'Untitled',
         details: task.description || '',
         assignedTo,
-        priority: (task.priority || 'low').toLowerCase()
+        priority: (task.priority || 'low').toLowerCase(),
+        subTasks: task.subTasks || []
     };
 
 }

@@ -224,14 +224,9 @@ h3 {
 }
 
 .user_initials {
-  height: 32px;
-  width: 32px;
-  border-radius: 50px;
-  font-size: 12px;
-  font-weight: 400;
   display: flex;
   justify-content: center;
-  align-items: center;
+  height: 32px;
 }
 
 .user_initials_group {
@@ -243,12 +238,14 @@ h3 {
 .user_initials_circle {
     width: 32px;
     height: 32px;
-    font-weight: bold;
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: 400;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    margin-left: -10px;
+    box-sizing: border-box;
 }
 
 .priority_high {
