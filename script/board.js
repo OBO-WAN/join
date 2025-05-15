@@ -41,11 +41,13 @@ function renderCurrentTasks() {
         const container = statusContainers[task.status];
         if (container) {
 
-            container.innerHTML += getKanbanTemplate(taskData, assignedUsersHTML);
+            container.innerHTML += getKanbanTemplate(taskData, assignedUsersHTML, i);
             statusCounts[task.status]++;
         }
 
-        proofSubtasks(task, container);
+        setTimeout(() => {
+            proofSubtasks(task, i);
+        }, 0);
     }
     
     showStatusPlaceholder(statusCounts, statusContainers);
@@ -75,21 +77,26 @@ function proofStatusCounts() {
     return statusCounts;
 }
 
-function proofSubtasks(task, container) {
-      if (task.subTasks && task.subTasks.length > 0) {
-            const lastTaskElement = container.lastElementChild;
-            const subtaskContainer = lastTaskElement.querySelector('.subtask_container');
+function proofSubtasks(task, index) {
+    if (!task.subTasks || task.subTasks.length === 0) return;
 
-            if (subtaskContainer) {
-                const progressHTML = `
-                    <div class="progress_container">
-                        <div class="progress-bar" style="width: 0%;"></div>
-                        <p class="subtasks_progress">0/${task.subTasks.length} Subtasks</p>
-                    </div>
-                `;
-                subtaskContainer.innerHTML = progressHTML;
-            }
-}
+    const subtaskContainer = document.getElementById(`subtask_container_${index}`);
+
+    if (subtaskContainer) {
+        // Fortschritt berechnen (hier: 0 erledigt, kann angepasst werden)
+        const total = task.subTasks.length;
+        const done = task.subTasks.filter(t => t.done === true).length;
+        const percent = Math.round((done / total) * 100) || 0;
+
+        subtaskContainer.innerHTML = `
+            <div class="progress_container">
+                <div class="progress_bar_bg">
+                    <div class="progress-bar" style="width: ${percent}%;"></div>
+                </div>
+                <p class="subtasks_progress">${done}/${total} Subtasks</p>
+            </div>
+        `;
+    }
 }
 
 function showStatusPlaceholder(statusCounts, statusContainers) {
@@ -135,15 +142,6 @@ function prepareTaskForTemplate(task) {
 
 
 function showCurrentBoard() {
-    renderCurrentTasks();
-}
-
-async function loadTasksFromFirebase() {
-    const response = await fetch(`${BASE_URL}tasks.json`);
-    const data = await response.json();
-    tasks = Object.values(data); // falls tasks als Objekt gespeichert sind
-
-    console.log(tasks);
     renderCurrentTasks();
 }
 

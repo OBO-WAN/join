@@ -206,13 +206,20 @@ h3 {
   margin-left: 10px;
 }
 
-.progress-bar {
+.progress_bar_bg {
+  background-color: #f1f1f1;
+  border-radius: 20px;
+  width: 100px;
   height: 8px;
-  width: 128px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  min-width: 4px;
   background-color: #4589ff;
+  border-radius: 4px;
   transition: width 0.3s ease;
-  border-radius: 5px;
-  flex-grow: 1;
 }
 
 .user_priority_container {
@@ -298,20 +305,3 @@ h3 {
   }
 }
 
-/* Optional: Hide sidebar on mobile */
-@media (max-width: 768px) {
-  nav {
-    display: none;
-  }
-
-  header {
-    padding: 0 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  }
-}
-
-@media (min-width: 769px) {
-  header {
-    padding-left: 348px;
-  }
-}

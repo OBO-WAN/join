@@ -1,4 +1,4 @@
-function getKanbanTemplate(task, assignedUsersHTML) {
+function getKanbanTemplate(task, assignedUsersHTML, index) {
     return `                <div class="task_container">
                     <div class="task">
                         <div class="task_category ${task.categoryClass}">${task.category}</div>
@@ -8,7 +8,7 @@ function getKanbanTemplate(task, assignedUsersHTML) {
                             <p class="task_details" id="task_details">${task.details}</p>
                         </div>
 
-                        <div id="subtask_container"></div>
+                        <div id="subtask_container_${index}" class="subtask_container"></div>
 
                         <div class="user_priority_container">
                             <div class="user_initials">${assignedUsersHTML}</div>

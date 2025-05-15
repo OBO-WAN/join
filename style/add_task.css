@@ -1,7 +1,7 @@
 .add-task-container {
-    max-width: 900px;
-    margin: 100px auto;
-    padding: 30px;
+    max-width: 1100px;
+    padding-left: 329px;
+    padding-top: 160px;
     background-color: #fff;
     border-radius: 8px;
     font-family: 'Inter', sans-serif;
@@ -10,7 +10,7 @@
 .add-task-container h2 {
     text-align: start;
     margin-bottom: 30px;
-    color: #2A3647;
+    color: black;
     font-size: 50px;
 }
 
