@@ -8,6 +8,8 @@ function getKanbanTemplate(task, assignedUsersHTML) {
                             <p class="task_details" id="task_details">${task.details}</p>
                         </div>
 
+                        <div id="subtask_container"></div>
+
                         <div class="user_priority_container">
                             <div class="user_initials">${assignedUsersHTML}</div>
                             <img src="./assets/icons/priority/priority_${task.priority}.png" class="priority_medium" id="priority">
