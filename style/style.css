@@ -45,16 +45,7 @@ header h1 {
   }
 }
 
-.help-button {
-    background-color: white;
-    cursor: pointer;
-    border: 0;
-    transition: transform 0.2s ease;
-}
 
-.help-button:hover {
-    transform: scale(1.25);
-}
 
 nav.sidebar {
     background-color: #2a3647;
