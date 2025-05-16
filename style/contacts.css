@@ -110,7 +110,6 @@ a {
     padding-bottom: 60px;
 }
 
-
 .contact_card{
     width: 90%;
     height: 70px;
@@ -187,11 +186,12 @@ a {
 }
 
 .contact_view_header{
-    height: 200px;
+    height: 120px;
     width: 100%;
     display: flex;
     align-items: center;
-    margin-left: 150px;
+    margin-left: 50px;
+    margin-top: 40px;
 }   
 
 .contact_view_header_section{
@@ -236,22 +236,25 @@ a {
     width: 100%;
     height: calc(100% - 200px);
     display: flex;
-    align-items: center;
+
     flex-direction: column;
 }
 
 .contact_view_card_header{
-    width: 70%;
-    height: 150px;
+    width: 50%;
+    height: 120px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin-left: 50px;
 }
 
 .contact_view_avatar_section{
-    width: 150px;
+    width: 120px;
     height: 150px;
-    display: flex;  
+    display: flex;
+    align-items: center;  
+    justify-content: center;
 
 }
 
@@ -268,7 +271,6 @@ a {
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    margin-left: 15px;  
 }
 
 .contact_view_avatar_initials{
@@ -277,8 +279,7 @@ a {
 }
 
 .contact_view_head_info_section{
-
-    width: calc(100% - 150px);
+    width: calc(100% - 120px);
     height: 90px;
     display: flex;
     justify-content: center;
@@ -321,7 +322,7 @@ a {
     width: 100%;
     height: calc(100% - 150px);
     display: flex;
-    align-items: center;
+    justify-content: flex-start;
     flex-direction: column;
     margin-top: 30px;
 }
@@ -330,15 +331,18 @@ a {
     width: 70%;
     height: 50px;
     display: flex;
-
     align-items: center;
+    margin-left: 50px;
+    margin-bottom: 30px;
 }
 
 .contact_view_card_info_hl{
     font-size: 18px;
-    margin-left: 15px;
+    font-weight: 350;
     margin-top: 30px;
     margin-bottom: 30px;
+    display: flex;
+    justify-content: flex-start;
 }
 
 .contact_view_mail_section{
@@ -346,18 +350,17 @@ a {
     height: 80px;
     display: flex;
     flex-direction: column;
+    margin-left: 50px;
 }
 
 .contact_view_mail_hl{
     font-size: 16px;
     font-weight: bold;
-    margin-left: 15px;
 }
 
 .contact_view_mail{
     font-size: 16px;
     font-weight: 300;
-    margin-left: 15px;
     color: #1baefd;
 }
 
@@ -366,18 +369,17 @@ a {
     height: 100px;
     display: flex;
     flex-direction: column;
+    margin-left: 50px;
 }
 
 .contact_view_phon_hl{
     font-size: 16px;
     font-weight: bold;
-    margin-left: 15px;
 }
 
 .contact_view_phon_num{
     font-size: 16px;
     font-weight: 300;
-    margin-left: 15px;
 }
 
 /*Ad New Contact Overlay section*/

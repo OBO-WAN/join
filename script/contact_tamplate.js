@@ -56,7 +56,7 @@ function getViewCardTemplate(id, color) {
 
                     <div class="contact_view_card_info_section">
                         <div class="contact_view_card_info_header">
-                            <span class="contact_view_card_info_hl"></span>
+                            <span class="contact_view_card_info_hl">Contact Information</span>
                         </div>
                         <div class="contact_view_mail_section">
                             <p class="contact_view_mail_hl">Email</p>
