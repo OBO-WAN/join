@@ -1,10 +1,27 @@
 /* background-color: #47ACE4;*/
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff; 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #bebdbd; 
+  max-height: 30px;
+  width: 10px;
+  border-radius: 8px;
+}
+
+
 html, body {
     height: 100%; 
     margin: 0;
     padding: 0;
     overflow: hidden; 
+    background-color: #F6F7F8;
 }
 
 a {
@@ -187,7 +204,7 @@ a {
 
 .contact_view_header{
     height: 120px;
-    width: 100%;
+    width: 70%;
     display: flex;
     align-items: center;
     margin-left: 50px;
@@ -195,7 +212,7 @@ a {
 }   
 
 .contact_view_header_section{
-    width: 70%;
+    width: 500px;
     height: 100%;
     display: flex;
     align-items: center; 
@@ -241,7 +258,7 @@ a {
 }
 
 .contact_view_card_header{
-    width: 50%;
+    width: 500px;
     height: 120px;
     display: flex;
     justify-content: flex-start;
@@ -618,6 +635,9 @@ a {
     width: 15px;
     margin-left: 10px;
  }
+
+
+
 
 
  
