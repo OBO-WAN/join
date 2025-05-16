@@ -131,9 +131,9 @@ function getContact(id){
 
 
 function createContact() {
-    const name = document.getElementById("name_input").value.trim();
-    const mail = document.getElementById("mail_input").value.trim();
-    const phone = document.getElementById("pohne_input").value.trim();
+    let name = document.getElementById("name_input").value.trim();
+    let mail = document.getElementById("mail_input").value.trim();
+    let phone = document.getElementById("pohne_input").value.trim();
     if (!name || !mail  || !phone) {
         alert("Bitte fülle die Felder Name, Mail und Pohne aus.")
         return;
@@ -142,7 +142,10 @@ function createContact() {
         alert("Pleas wiret a valid email address.");
         return;
     }
-    const newContact = {
+
+    name = capitalizeWords(name);
+
+    let newContact = {
         name: name,
         mail: mail,
         phone: phone || "No phone number available" 
@@ -174,6 +177,8 @@ function editContact(id) {
         return;
     }
     
+    name = capitalizeWords(name);
+
     let newContact = {
         name: name,
         mail: mail,
@@ -302,7 +307,10 @@ function getColor(firstLetter){
     return colorsArray[colorIndex];
 }
 
-
+function capitalizeWords(Sentence)
+{
+    return Sentence.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+}
 
 
 
