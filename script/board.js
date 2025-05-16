@@ -41,9 +41,13 @@ function renderCurrentTasks() {
         const container = statusContainers[task.status];
         if (container) {
 
-            container.innerHTML += getKanbanTemplate(taskData, assignedUsersHTML);
+            container.innerHTML += getKanbanTemplate(taskData, assignedUsersHTML, i);
             statusCounts[task.status]++;
         }
+
+        setTimeout(() => {
+            proofSubtasks(task, i);
+        }, 0);
     }
     
     showStatusPlaceholder(statusCounts, statusContainers);
@@ -71,6 +75,28 @@ function proofStatusCounts() {
     };
 
     return statusCounts;
+}
+
+function proofSubtasks(task, index) {
+    if (!task.subTasks || task.subTasks.length === 0) return;
+
+    const subtaskContainer = document.getElementById(`subtask_container_${index}`);
+
+    if (subtaskContainer) {
+        // Fortschritt berechnen (hier: 0 erledigt, kann angepasst werden)
+        const total = task.subTasks.length;
+        const done = task.subTasks.filter(t => t.done === true).length;
+        const percent = Math.round((done / total) * 100) || 0;
+
+        subtaskContainer.innerHTML = `
+            <div class="progress_container">
+                <div class="progress_bar_bg">
+                    <div class="progress-bar" style="width: ${percent}%;"></div>
+                </div>
+                <p class="subtasks_progress">${done}/${total} Subtasks</p>
+            </div>
+        `;
+    }
 }
 
 function showStatusPlaceholder(statusCounts, statusContainers) {
@@ -108,22 +134,14 @@ function prepareTaskForTemplate(task) {
         title: task.task || 'Untitled',
         details: task.description || '',
         assignedTo,
-        priority: (task.priority || 'low').toLowerCase()
+        priority: (task.priority || 'low').toLowerCase(),
+        subTasks: task.subTasks || []
     };
 
 }
 
 
 function showCurrentBoard() {
-    renderCurrentTasks();
-}
-
-async function loadTasksFromFirebase() {
-    const response = await fetch(`${BASE_URL}tasks.json`);
-    const data = await response.json();
-    tasks = Object.values(data); // falls tasks als Objekt gespeichert sind
-
-    console.log(tasks);
     renderCurrentTasks();
 }
 

@@ -206,13 +206,20 @@ h3 {
   margin-left: 10px;
 }
 
-.progress-bar {
+.progress_bar_bg {
+  background-color: #f1f1f1;
+  border-radius: 20px;
+  width: 100px;
   height: 8px;
-  width: 128px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  min-width: 4px;
   background-color: #4589ff;
+  border-radius: 4px;
   transition: width 0.3s ease;
-  border-radius: 5px;
-  flex-grow: 1;
 }
 
 .user_priority_container {
@@ -224,14 +231,9 @@ h3 {
 }
 
 .user_initials {
-  height: 32px;
-  width: 32px;
-  border-radius: 50px;
-  font-size: 12px;
-  font-weight: 400;
   display: flex;
   justify-content: center;
-  align-items: center;
+  height: 32px;
 }
 
 .user_initials_group {
@@ -243,12 +245,14 @@ h3 {
 .user_initials_circle {
     width: 32px;
     height: 32px;
-    font-weight: bold;
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: 400;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    margin-left: -10px;
+    box-sizing: border-box;
 }
 
 .priority_high {
