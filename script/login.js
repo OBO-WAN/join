@@ -76,3 +76,6 @@ function togglePasswordVisibility() {
   icon.src = isPassword ? "assets/icons/visibility-eye-off.svg" : "assets/icons/visibility-eye.svg";
   icon.alt = isPassword ? "Hide Password" : "Show Password";
 }
+
+// NEXT
+
