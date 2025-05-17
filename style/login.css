@@ -690,7 +690,8 @@ ul {
     padding-inline-start: 40px;
     unicode-bidi: isolate;
 }
- /* New root */
+ 
+/* New root */
 
 /* :root {
     --light-gray-placeholder: #d1d1d1;

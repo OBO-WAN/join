@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join</title>
+    <title>Join | Contacts </title>
     <link rel="icon" href="./assets/img/favicon.png">
     <link rel="stylesheet" href="style/style.css"> 
     <link rel="stylesheet" href="style/contacts.css">
@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="style/nav_mobile.css">
     <script src="./script/contacts.js"></script>
     <script src="script/contact_tamplate.js"></script>
+    <script src="./script/login.js"></script>
 
 </head>
 <body onload="getContacts()">
@@ -22,6 +23,9 @@
         <button onclick="location.href='help.html'" class="help-button">
             <img src="./assets/img/help.png" alt="help">
         </button>
+
+            <div id="user_profile_circle" class="user-profile" style="display:none;"></div>
+
             <div class="contact_icon">
                 <p class="contact_icon_initials" id="first_icon_initials">S</p>
                 <p class="contact_icon_initials" id="last_icon_initials">M</p>
@@ -140,5 +144,11 @@
    
 
 </body>
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
+
+
 </html>
 
