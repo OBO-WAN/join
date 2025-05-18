@@ -50,7 +50,7 @@ form select {
 
 .priority-options {
     display: flex;
-    gap: 10px;
+    gap: 13px;
 }
 
 .priority-options input[type="radio"] {
@@ -186,3 +186,67 @@ input[type="radio"]:checked + .priority-button {
     font-weight: bold;
     margin-right: 4px;
 }
+
+@media screen and (max-width: 1270px) {
+    .add-task-container {
+        padding-left: 290px;
+        padding-right: 20px;
+    }
+
+    .add-task-container h2 {
+        font-size: 40px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .add-task-container {
+        padding-left: 250px;
+    }
+
+    .form-right {
+        flex: none;
+    }
+
+    .form-left {
+        flex: none;
+    }
+}
+
+@media screen and (max-width: 910px) {
+    .form-grid {
+        gap: 15px;
+        display: block;
+    }
+
+    .add-task-container {
+        padding-bottom: 20px;
+    }
+
+}
+
+@media (max-width: 770px) {
+    .add-task-container {
+        padding-left: 20px;
+    }
+
+    .form-divider {
+        padding-bottom: 10px;
+    }
+
+    .priority-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .add-task-container h2 {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 400px) {
+    .priority-button {
+        padding: 3px 7px;
+        font-size: 14px;
+    }
+}
+
