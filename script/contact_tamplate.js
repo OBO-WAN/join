@@ -45,9 +45,11 @@ function getViewCardTemplate(id, color) {
                         </div>
                         <div class="contact_view_edit_section">
                             <div class="edtit_section">
+                                <img  class="contactview_icon" src="./assets/img/edit.png" alt="edit">
                                 <span class="edit_txt" onclick="openContactDialog(${id})">Edit</span>
                             </div>
                             <div class="delete_section">
+                                <img  class="contactview_icon" src="./assets/img/delete.png" alt="delete">
                                 <span class="delete_txt" onclick="deleteContact(${id})">Delete</span>
                             </div> 
                         </div>

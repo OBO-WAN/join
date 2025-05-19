@@ -295,15 +295,12 @@ function closeContactDialog(){
 
 
 function getColor(firstLetter){
-  /*let idx = Math.floor(Math.random() * colorsArray.length);
-  return colorsArray[idx]; 
-  */
+
     let text = "";
     text = String(firstLetter).toUpperCase();
 
     let colorIndex = text.charCodeAt(0) - 65;
 
-    // Char = A entspricht decimal 65. 65 als Offset abziehn dann bekommt man index 0
     return colorsArray[colorIndex];
 }
 
@@ -313,10 +310,11 @@ function capitalizeWords(Sentence)
 }
 
 
-
-/*
-TODO:
-
-- Colors of the Wind
-
-*/
+function toggleMenu() {
+    const menu = document.getElementById("dropdown_menu");
+    if (menu.style.display === "flex") {
+        menu.style.display = "none";
+    } else {
+        menu.style.display = "flex";
+    }
+}
