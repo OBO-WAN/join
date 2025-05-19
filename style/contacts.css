@@ -309,12 +309,13 @@ a {
     height: 50%;
     display: flex;
     align-items: center;
+    margin-left: 80px;
 }
 
 .contact_view_name{
     font-size: 38px;
     font-weight: 500px;
-    margin-left: 40px;
+    /*margin-left: 40px;*/
 }
 
 .contact_view_edit_section{
@@ -322,18 +323,61 @@ a {
     height: 100px;
     display: flex;
     align-items: center;
+    margin-left: 80px;
 }
+.edtit_section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*.edtit_section:hover{
+    color: #1baefd;
+    transform: scale(1.1); 
+    cursor: pointer; 
+}*/
+
 .edit_txt{
-    margin-left: 40px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 300;
 }
 
-.delete_txt{
-    font-size: 16px;
-    font-weight: 300;
-    padding-left: 10px;
+
+.delete_section{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
 }
+
+.edtit_section:hover,
+.delete_section:hover{
+    color: #1baefd;
+    transform: scale(1.1); 
+    cursor: pointer; 
+    
+}
+
+.edtit_section:hover img{
+  content: url(../assets/img/edit_blue.png);
+}
+
+.delete_section:hover img{
+  content: url(../assets/img/delete_blue.png);
+}
+
+.contactview_icon{
+    width: 16px;
+    
+}
+
+.delete_txt{
+    font-size: 14px;
+    font-weight: 300; 
+}
+
+
 
 .contact_view_card_info_section{
     width: 100%;
