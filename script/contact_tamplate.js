@@ -16,7 +16,7 @@ return`
 
 function getContactCardTamplate(name, email, initials, index, color) {
     return `
-<div class="contact_card" onclick="renderViewCard(${index})">
+<div class="contact_card" onclick="profVesrion(${index})">
     <div class="contact_avatar_section">
         <div class="contact_avatar" id="contact_avatar" style="background-color:${color};">
             <p class="contact_avatar_initials">${initials[0]}</p>
@@ -32,7 +32,7 @@ function getContactCardTamplate(name, email, initials, index, color) {
 
 function getViewCardTemplate(id, color) {
     return `
-            <div class="contact_view_card_header">
+            <div class="contact_view_card_header" id="contact_view_card_header">
                 <div class="contact_view_avatar_section" >
                     <div class="contact_view_avatar" id="contact_view_avatar"  style="background-color:${color};>
                         <p class="contact_view_avatar_initials" id="contact_view_avatar_initials"></p>

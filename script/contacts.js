@@ -104,15 +104,23 @@ function getFirstLetter(name, oldLetter, change){ //get first letter of name
     return firstLetter;
 }
 
+function MobileVievCard(index){
+        
+        document.getElementById("contacts_list").style.display = "none";
+        document.getElementById("add_new_contact_section").style.display = "none";
+
+       let viewCardTemp  = getViewCardTemplate(index);
+       let contactsContainer = document.getElementById("cantacts_list_container");
+       contactsContainer.innerHTML = viewCardTemp ;
+       renderViewCard(index); 
+}
 
 function renderViewCard(index) {
-    
     const contact = Contacts[index];
-
     let initials = getInitials(contact.name);
     let color = getColor(initials[0]);
     let tempViewCard = getViewCardTemplate(index, color);
-    tempViewCard.innerHTML = "";
+    //tempViewCard.innerHTML = "";
     document.getElementById("contactViewCard").innerHTML = tempViewCard;
 
     document.getElementById("contact_view_avatar_initials").innerText = contact.name
@@ -124,6 +132,36 @@ function renderViewCard(index) {
     document.getElementById("contact_view_phone").innerText = contact.phone || 'No phone number available';
 }
 
+function profVesrion(index){
+     let version = getViewMode();
+    switch (version) {
+        case 1:
+            renderViewCard(index)
+            break;
+        case 2:
+            MobileVievCard(index)
+            break;
+        default:
+            break;
+    }
+}
+
+/* return:
+    1 = desktop (default value)
+    2 = mobile
+    3 = tablet
+    4 = other
+*/
+function getViewMode()
+{
+    let viewMode = 1;
+    
+    if (window.innerWidth < 825) {
+        viewMode = 2;
+    }
+
+    return viewMode;
+}
 
 function getContact(id){
     console.log(Contacts[id]);
