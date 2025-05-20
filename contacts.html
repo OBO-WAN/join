@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="style/contacts.css">
     <link rel="stylesheet" href="style/user_icon_menu.css">
     <link rel="stylesheet" href="style/nav_mobile.css">
+    <link rel="stylesheet" href="style/contact_mobile.css">
     <script src="./script/contacts.js"></script>
     <script src="script/contact_tamplate.js"></script>
 
@@ -16,8 +17,10 @@
 <body onload="getContacts()">
     
     <header>
-        <h1>Kanban Project Management Tool</h1>
-
+        <div class="hl_logo_section">
+            <h1>Kanban Project Management Tool</h1>
+            <img class="header_logo" src="./assets/img/loginLogo.svg" alt="logo">
+        </div>
          <div class="dropdown_container">
         <div class="icon_header_section">
         <button onclick="location.href='help.html'" class="help-button">
@@ -32,7 +35,8 @@
             <div class="dropdown_menu" id="dropdown_menu">
                 <a class="dropdown_link" href="./privacy_policy.html">Privacy Policy</a>
                 <a class="dropdown_link" href="./legal_notice.html">Leagl Notes</a>
-                <a class="dropdown_link" href="./privacy_policy_login.html">Log out</a>
+                <a class="dropdown_link" href="./index.html">Log out</a>
+                <a class="dropdown_link help_link" href="help.html">Help</a>
             </div>
             
         </div>

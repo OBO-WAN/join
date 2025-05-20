@@ -29,6 +29,18 @@ a {
     color:  #1baefd;
 }
 
+.hl_logo_section{
+    width: 350px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.header_logo{
+    width: 30px;
+    display: none;
+}
+
 .contacts_main_content {
     padding-top: 80px; 
     height: 100%;
@@ -71,6 +83,7 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .add_new_contact_button:hover{
@@ -115,7 +128,7 @@ a {
 }
 
 .contacts_section_letter{
-    margin-left: 15px;
+    margin-left: 30px;
 }
 
 .contact_card_section{
@@ -128,10 +141,11 @@ a {
 }
 
 .contact_card{
-    width: 90%;
+    width: 70%;
     height: 70px;
     border-radius: 8px;
     display: flex;
+    justify-content: flex-start;
     align-items: center;
     margin-bottom: 30px;
 }
@@ -144,18 +158,16 @@ a {
 
 .contact_avatar_section{
     height: 100%;
-    width: 80px;
+    width: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 8px;
 }
 
 .contact_avatar{
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    margin-left: 20px;
     background-color: rgb(31, 88, 245);
     display: flex;
     justify-content: center;
@@ -376,7 +388,6 @@ a {
     font-size: 14px;
     font-weight: 300; 
 }
-
 
 
 .contact_view_card_info_section{
@@ -680,7 +691,49 @@ a {
     margin-left: 10px;
  }
 
+   
 
+/* mobile responsive*/
+@media (max-width: 1100px) {
+    .contacts_main_content{
+        height: 100%;
+        width: 100%;
+        
+    }
+    .contactslist_container {
+        width: 5000px;
+    }
+
+    .contact_card{
+        justify-content: center;
+        width: 70%;
+    }
+
+    .sidebar{
+        display: none !important;
+    }
+
+    header{
+        padding-left: 0px;
+        width: 100%;
+    }
+
+    h1{
+        margin-left: 15px;
+    }
+}
+
+@media (max-width: 825px) {
+
+    .contacts_view_container{
+        display: none;
+    }
+
+    .contact_card{
+        width: 70%;
+    }
+
+}
 
 
 
