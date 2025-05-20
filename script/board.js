@@ -172,3 +172,9 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+
+function addNewTask() {
+    const overlay = document.getElementById('overlay');
+    overlay.classList.remove('d-none');
+}
