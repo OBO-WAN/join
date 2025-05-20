@@ -694,6 +694,19 @@ a {
    
 
 /* mobile responsive*/
+@media (max-width: 825px) {
+
+    .contacts_view_container{
+        display: none;
+    }
+
+    .contact_card{
+        width: 70%;
+    }
+
+}
+
+
 @media (max-width: 1100px) {
     .contacts_main_content{
         height: 100%;
@@ -723,17 +736,6 @@ a {
     }
 }
 
-@media (max-width: 825px) {
-
-    .contacts_view_container{
-        display: none;
-    }
-
-    .contact_card{
-        width: 70%;
-    }
-
-}
 
 
 
