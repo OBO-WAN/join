@@ -212,10 +212,10 @@
 }
 
 .headline-vector h1 {
-  font-weight: var(--font-weight-700);
-  font-size: var(--font-size-heading);
-  text-align: center;
-  margin: 0;
+  font-weight: var(--font-weight-700) !important;
+  font-size: var(--font-size-heading) !important;
+  text-align: center !important;
+  margin: 0 !important;
 }
 
 .headline-vector {
