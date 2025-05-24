@@ -14,7 +14,7 @@
     <script src="script/contact_tamplate.js"></script>
 
 </head>
-<body onload="getContacts()">
+<body onload="getContacts()" id="body">
     
     <header>
         <div class="hl_logo_section">
@@ -76,9 +76,7 @@
     <div class="contacts_main_content">
         <!--contacts list container-->
         <div class="contactslist_container" id="contactslist_container">
-
-
-
+        
             <div class="add_new_contact_section" id="add_new_contact_section">
                     <div id="add_new_contact_ov_section" class="add_new_contact_ov">
                         <div class="add_new_contact_ov_container">
@@ -128,6 +126,13 @@
             </div>
 
         </div>
+
+    <div class="add_new_contact_Mobile_section">
+        <div class="add_new_contact_Mobile_btn" onclick="openContactDialog(-1)">
+            <img class="add_new_contact_mobile_icon" src="./assets/icons/contact/addcontact.png" alt="icon">
+        </div>
+    </div>
+        
     </div>
 
         <!--contact view container-->

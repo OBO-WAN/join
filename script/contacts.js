@@ -1,4 +1,9 @@
 let Contacts = [];
+let actualContactIndex = 0;
+
+window.addEventListener('resize', () => {
+    handleWindowResize( getActualContactIndex() );
+});
 
 let colorsArray = [
     "#FF6B6B", "#FF8C42", "#FFA500", "#FFD700", "#FFE600",
@@ -13,6 +18,7 @@ let colorsArray = [
 
 
 function getContacts(data){
+    
     fetch('https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/contacts.json')
         .then(response => response.json())
         .then(data => {
@@ -25,7 +31,10 @@ function getContacts(data){
                 
         });
     clearViewCard();
+
+    /*versionHandling();*/
     return data;
+
 }
 
 
@@ -46,7 +55,7 @@ function updateDatabase(data){
     });
 }
 
-
+/* Kontaktliste */
 function renderContacts(contacts) { 
     let contactCards = '';
     sortContacts(contacts); // Kontakte sortieren
@@ -73,50 +82,29 @@ function renderContacts(contacts) {
     document.getElementById("contact_card_section").innerHTML = contactCards;
 }
 
-function getInitials(name)
-{
-    const initials = name
-        .trim()
-        .split(' ')
-        .filter(word => word.length > 0)
-        .map(word => word[0].toUpperCase()); 
-    return initials;
-}
-
-function sortContacts(contacts){ //sort contacts by name
-    contacts.sort((a, b) => a.name.localeCompare(b.name));
-    Contacts = contacts;
-}
-
-
-function getFirstLetter(name, oldLetter, change){ //get first letter of name
-
-    const firstLetter = name.charAt(0);
-
-    if (oldLetter !== firstLetter) {
-        change = true;
-    }
-    else {
-        change = false;
-    }
-    oldLetter = firstLetter;
-
-    return firstLetter;
-}
-
+/* Mobile Version */
 function MobileVievCard(index){
-        
-        document.getElementById("contacts_list").style.display = "none";
-        document.getElementById("add_new_contact_section").style.display = "none";
+    
+    const contactsListElem = document.getElementById("contacts_list");
+    if (contactsListElem) {
+        contactsListElem.style.display = "none";
+    }
 
-       let viewCardTemp  = getViewCardTemplate(index);
-       let contactsContainer = document.getElementById("cantacts_list_container");
-       contactsContainer.innerHTML = viewCardTemp ;
-       renderViewCard(index); 
+    const addNewContactSectionElem = document.getElementById("add_new_contact_section");
+    if (addNewContactSectionElem) {
+        addNewContactSectionElem.style.display = "none";
+    }
+
+    let viewCardTemp  = getViewCardTemplate(index);
+    let contactsContainer = document.getElementById("contactslist_container");
+    contactsContainer.innerHTML = viewCardTemp ;
+    renderViewCard(index); 
 }
 
+/* Desktop Version*/
 function renderViewCard(index) {
     const contact = Contacts[index];
+    
     let initials = getInitials(contact.name);
     let color = getColor(initials[0]);
     let tempViewCard = getViewCardTemplate(index, color);
@@ -132,36 +120,6 @@ function renderViewCard(index) {
     document.getElementById("contact_view_phone").innerText = contact.phone || 'No phone number available';
 }
 
-function profVesrion(index){
-     let version = getViewMode();
-    switch (version) {
-        case 1:
-            renderViewCard(index)
-            break;
-        case 2:
-            MobileVievCard(index)
-            break;
-        default:
-            break;
-    }
-}
-
-/* return:
-    1 = desktop (default value)
-    2 = mobile
-    3 = tablet
-    4 = other
-*/
-function getViewMode()
-{
-    let viewMode = 1;
-    
-    if (window.innerWidth < 825) {
-        viewMode = 2;
-    }
-
-    return viewMode;
-}
 
 function getContact(id){
     console.log(Contacts[id]);
@@ -264,10 +222,12 @@ function deleteContact(id) {
     clearViewCard();
 }
 
+
 function clearViewCard()
 {
     document.getElementById("contactViewCard").innerHTML = "";
 }
+
 
 function configEditDlgBox(id){
 
@@ -331,6 +291,101 @@ function closeContactDialog(){
     // dialog beim schliesen lleeren
 }
 
+function getInitials(name)
+{
+    const initials = name
+        .trim()
+        .split(' ')
+        .filter(word => word.length > 0)
+        .map(word => word[0].toUpperCase()); 
+    return initials;
+}
+
+function sortContacts(contacts){ //sort contacts by name
+    contacts.sort((a, b) => a.name.localeCompare(b.name));
+    Contacts = contacts;
+}
+
+
+function getFirstLetter(name, oldLetter, change){ //get first letter of name
+
+    const firstLetter = name.charAt(0);
+
+    if (oldLetter !== firstLetter) {
+        change = true;
+    }
+    else {
+        change = false;
+    }
+    oldLetter = firstLetter;
+
+    return firstLetter;
+}
+
+/* return:
+    1 = desktop (default value)
+    2 = mobile
+    3 = tablet
+    4 = other
+*/
+function getViewMode()
+{
+    let viewMode = 1;
+    
+    if (window.innerWidth < 825) {
+        viewMode = 2;
+    }
+
+    return viewMode;
+}
+
+let bigWindowIsRendered = false;
+
+function proofVersion(index){
+
+    setActualContactIndex(index);
+    let version = getViewMode();
+
+    switch (version) {
+        case 1:
+            renderViewCard(index)
+            break;
+        case 2:
+            MobileVievCard(index)
+            break;
+        default:
+            break;
+    }
+}
+
+function handleWindowResize(index){
+
+    let idx = getActualContactIndex();
+
+    if (window.innerWidth > 825) {
+
+        //if (bigWindowIsRendered == false) {
+            renderContacts(Contacts);
+
+
+            if (idx < 0) {
+                // Clear the view card
+                clearViewCard();
+            }else
+            {
+                renderViewCard(idx);
+            }
+            bigWindowIsRendered = true;
+      //  }
+
+    }else {
+        document.getElementById("contactViewCard").style.display = "none";
+        renderContacts(Contacts);
+        bigWindowIsRendered = false;
+    }
+
+}
+
 
 function getColor(firstLetter){
 
@@ -341,6 +396,7 @@ function getColor(firstLetter){
 
     return colorsArray[colorIndex];
 }
+
 
 function capitalizeWords(Sentence)
 {
@@ -356,3 +412,14 @@ function toggleMenu() {
         menu.style.display = "flex";
     }
 }
+
+
+function setActualContactIndex(index){
+    actualContactIndex = index;
+    return actualContactIndex;
+}
+
+
+function getActualContactIndex(){
+    return actualContactIndex;
+}   
