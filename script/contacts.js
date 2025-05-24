@@ -404,14 +404,7 @@ function capitalizeWords(Sentence)
 }
 
 
-function toggleMenu() {
-    const menu = document.getElementById("dropdown_menu");
-    if (menu.style.display === "flex") {
-        menu.style.display = "none";
-    } else {
-        menu.style.display = "flex";
-    }
-}
+
 
 
 function setActualContactIndex(index){
@@ -423,3 +416,14 @@ function setActualContactIndex(index){
 function getActualContactIndex(){
     return actualContactIndex;
 }   
+
+function showContactList() {
+    // Kontakt-Detailansicht ausblenden
+    document.getElementById("contactViewCard").innerHTML = "";
+    // Kontaktliste wieder anzeigen
+    const contactsListElem = document.getElementById("contacts_list");
+    if (contactsListElem) {
+        contactsListElem.style.display = "block";
+    }
+    // Optional: andere Bereiche wieder einblenden, falls nötig
+}

@@ -9,16 +9,35 @@
     <link rel="stylesheet" href="style/style.css" />
     <link rel="stylesheet" href="style/summary.css" />
     <link rel="stylesheet" href="style/nav_mobile.css" />
+    <link rel="stylesheet" href="style/user_icon_menu.css" />
+    <script src="./script/script.js"></script>
   </head>
 
     <body class="body-summary" onload="initializeSummaryPage()">
 
     <!-- no landscape mode allowed overlay -->
     <header>
-      <h1>Kanban Project Management Tool</h1>
-      <button onclick="location.href='help.html'" class="help-button">
-        <img src="./assets/img/help.png" alt="help" />
-      </button>
+      <div class="hl_logo_section">
+            <h1>Kanban Project Management Tool</h1>
+            <img class="header_logo" src="./assets/img/loginLogo.svg" alt="logo">
+        </div>
+         <div class="dropdown_container">
+        <div class="icon_header_section">
+        <button onclick="location.href='help.html'" class="help-button">
+            <img src="./assets/img/help.png" alt="help">
+        </button>
+            <div class="contact_icon" onclick="toggleMenu()">
+                <p class="contact_icon_initials" id="first_icon_initials">S</p>
+                <p class="contact_icon_initials" id="last_icon_initials">M</p>
+            </div>
+        </div>
+            <div class="dropdown_menu" id="dropdown_menu">
+                <a class="dropdown_link" href="./privacy_policy.html">Privacy Policy</a>
+                <a class="dropdown_link" href="./legal_notice.html">Leagl Notes</a>
+                <a class="dropdown_link" href="./index.html">Log out</a>
+                <a class="dropdown_link help_link" href="help.html">Help</a>
+            </div>
+        </div>
       <!-- <div id="user_profile_circle" class="user-profile" onclick="toggleSubmenu()">G</div> -->
     </header>
 
