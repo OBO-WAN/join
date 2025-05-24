@@ -77,5 +77,6 @@ function togglePasswordVisibility() {
   icon.alt = isPassword ? "Hide Password" : "Show Password";
 }
 
-// NEXT
+// Login Firebase 
+
 
