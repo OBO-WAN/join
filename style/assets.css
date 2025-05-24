@@ -519,48 +519,6 @@ button[disabled]:hover {
   color: var(--light-gray-placeholder);
 }
 
-.arrow-left-sign-up {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 60px;
-  left: clamp(35px, 26px + 2.8125vw, 80px);
-}
-
-.arrow-left,
-.arrow-left-sign-up {
-  width: 35px;
-  aspect-ratio: 1 / 1;
-  border-radius: 100%;
-  cursor: pointer;
-}
-
-.arrow-left{
-margin-top: 10px;
-margin-left: 10px;
-display: flex;
-align-items: center;
-justify-content: center;
-}
-
-
-
-.arrow-left img,
-.arrow-left-sign-up img {
-  width: 21px;
-}
-
-.arrow-left:hover,
-.arrow-left-sign-up:hover {
-  background-color: var(--light-gray-bg);
-}
-
-.arrow-left:hover img,
-.arrow-left-sign-up:hover img {
-  transform: scale(1.1);
-}
-
 .popup-overlay-small-gray {
   position: fixed;
   top: 0;
