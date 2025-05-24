@@ -48,8 +48,8 @@ function getViewCardTemplate(id, color) {
             </div>    
         </div>
            <div class="go_back_btn_container">
-                <div class="go_back_btn_section">
-                    <img oncilck="showContactList()" class="go_back_btn_" src="./assets/icons/contact/next.png" alt="icon">
+                <div class="go_back_btn_section" id="go_back_btn_section">
+                    <img oncilck="showContactList()" class="go_back_btn" src="./assets/icons/contact/next.png" alt="icon">
                 </div>
             </div>
         </div>

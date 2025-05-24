@@ -418,12 +418,5 @@ function getActualContactIndex(){
 }   
 
 function showContactList() {
-    // Kontakt-Detailansicht ausblenden
-    document.getElementById("contactViewCard").innerHTML = "";
-    // Kontaktliste wieder anzeigen
-    const contactsListElem = document.getElementById("contacts_list");
-    if (contactsListElem) {
-        contactsListElem.style.display = "block";
-    }
-    // Optional: andere Bereiche wieder einblenden, falls nötig
+  document.getElementById("contactslist_container").style.display = "";
 }
