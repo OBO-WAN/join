@@ -16,7 +16,7 @@ return`
 
 function getContactCardTamplate(name, email, initials, index, color) {
     return `
-<div class="contact_card" onclick="profVesrion(${index})">
+<div class="contact_card" onclick="proofVersion(${index})">
     <div class="contact_avatar_section">
         <div class="contact_avatar" id="contact_avatar" style="background-color:${color};">
             <p class="contact_avatar_initials">${initials[0]}</p>
