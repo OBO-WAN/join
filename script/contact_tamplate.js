@@ -32,6 +32,31 @@ function getContactCardTamplate(name, email, initials, index, color) {
 
 function getViewCardTemplate(id, color) {
     return `
+    <div id="mobile_view_card_header">
+      <div class="contact_view_header">  
+            <div class="contact_view_header_section">
+            <div class="contacts_view_hl_section">
+                <span class="contacts_view_hl">Contacts</span>
+            </div>    
+            <div class="contacts_view_seperator"></div>
+            <div class="contacts_view_sloagen_section">
+                <span class="contacts_view_sloagen">Better wiht a Team</span>
+                
+                 </div>
+                 <div class="contacts_view_mobile_seperator_section">
+                 <div class="mobile_view_card_seperator"></div>
+            </div>    
+        </div>
+           <div class="go_back_btn_container">
+                <div class="go_back_btn_section">
+                    <img oncilck="showContactList()" class="go_back_btn_" src="./assets/icons/contact/next.png" alt="icon">
+                </div>
+            </div>
+        </div>
+    </div>
+      
+
+        <div class="contact_view_card" id="contact_view_card">
             <div class="contact_view_card_header" id="contact_view_card_header">
                 <div class="contact_view_avatar_section" >
                     <div class="contact_view_avatar" id="contact_view_avatar"  style="background-color:${color};>
@@ -69,6 +94,14 @@ function getViewCardTemplate(id, color) {
                             <div id="contact_view_phone" class="contact_view_phon_num"></div>
                         </div>
                     </div>
+
+                    <div class="mobil_view_card_edit_section">
+                        <div class="mobile_view_card_edit_btn">
+                            <img class="mobile_view_card_edit_icon" src="./assets/icons/contact/mobile_edtit_menu_icon.png" alt="icon">
+                        </div>
+                        <div class="mobile_vivcard_edit_ov"></div>
+                    </div>
+
 
                 </div>
            </div>`;
