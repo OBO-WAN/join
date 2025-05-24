@@ -21,6 +21,7 @@
   /* Colors */
   --primary-color-gray: #2a2a2a;
   --blue: #007bff;
+  --light-blue: #29abe2;
   --red: #ff4d4f;
   --light-gray-bg: #f4f4f4;
   --gray-a-links: #6b6b6b;
@@ -43,7 +44,7 @@
 
   /* Layout Gaps */
   --button-gap: 12px;
-  --form-gap: 20px;
+  --form-gap: 24px;
 
   /* Widths */
   --width-64-100: clamp(64px, 6vw, 100px);
@@ -690,7 +691,8 @@ ul {
     padding-inline-start: 40px;
     unicode-bidi: isolate;
 }
- /* New root */
+ 
+/* New root */
 
 /* :root {
     --light-gray-placeholder: #d1d1d1;
