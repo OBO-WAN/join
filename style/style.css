@@ -46,8 +46,6 @@ header h1 {
   }
 }
 
-
-
 nav.sidebar {
     background-color: #2a3647;
     position: fixed;
@@ -220,3 +218,4 @@ nav.sidebar {
 body {
     overflow-x: hidden;
 }    
+
