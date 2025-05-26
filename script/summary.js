@@ -8,7 +8,6 @@ async function initializeSummaryPage() {
   }
 }
 
-
 /**
  * Sets focus on a specified link and navigates to the given URL.
  * At the same time, the active link in the sidebar is visually marked

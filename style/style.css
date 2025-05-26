@@ -23,6 +23,60 @@
     background-color: transparent;
 }
 
+:root {
+  /* Font Sizes (Numeric Scale) */
+  --font-size-12: 12px;
+  --font-size-14: 14px;
+  --font-size-16: 16px;
+  --font-size-18: 18px;
+  --font-size-20: 20px;
+  --font-size-24: 24px;
+  --font-size-28: 28px;
+  --font-size-32: 32px;
+  --font-size-16-20: clamp(16px, 1vw, 20px);
+  --font-size-16-21: clamp(16px, 1.5vw, 21px);
+  --font-size-heading: clamp(28px, 4vw, 48px); /* h1 */
+
+  /* Font Weights */
+  --font-weight-400: 400;
+  --font-weight-500: 500;
+  --font-weight-600: 600;
+  --font-weight-700: 700;
+
+  /* Colors */
+  --primary-color-gray: #2a2a2a;
+  --primary-color-dark-gray: #091931;
+  --blue: #007bff;
+  --light-blue: #29abe2;
+  --red: #ff4d4f;
+  --light-gray-bg: #f4f4f4;
+  --gray-a-links: #6b6b6b;
+
+  /* Borders & Radius */
+  --border-radius: 12px;
+  --border-radius-buttons: 8px;
+  --border-radius-input-fields: 8px;
+  --border-buttons-gray: 1px solid #ccc;
+  --border-buttons-blue: 1px solid var(--blue);
+  --border-input-fields: 1px solid #ccc;
+
+  /* Shadows */
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --box-shadow-button: 0 4px 10px rgba(0, 123, 255, 0.3);
+
+  /* Transitions & Effects */
+  --transition-hover-effect: all 0.2s ease-in-out;
+  --scale-hover: 1.05;
+
+  /* Layout Gaps */
+  --button-gap: 12px;
+  --form-gap: 24px;
+
+  /* Widths */
+  --width-64-100: clamp(64px, 6vw, 100px);
+
+}
+
 header {
     position: fixed;
     top: 0;
