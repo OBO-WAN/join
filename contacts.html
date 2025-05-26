@@ -10,11 +10,13 @@
     <link rel="stylesheet" href="style/user_icon_menu.css">
     <link rel="stylesheet" href="style/nav_mobile.css">
     <link rel="stylesheet" href="style/contact_mobile.css">
+
+    <script src="./script/script.js"></script>
     <script src="./script/contacts.js"></script>
     <script src="script/contact_tamplate.js"></script>
 
 </head>
-<body onload="getContacts()">
+<body onload="getContacts()" id="body">
     
     <header>
         <div class="hl_logo_section">
@@ -31,14 +33,12 @@
                 <p class="contact_icon_initials" id="last_icon_initials">M</p>
             </div>
         </div>
-
             <div class="dropdown_menu" id="dropdown_menu">
                 <a class="dropdown_link" href="./privacy_policy.html">Privacy Policy</a>
                 <a class="dropdown_link" href="./legal_notice.html">Leagl Notes</a>
                 <a class="dropdown_link" href="./index.html">Log out</a>
                 <a class="dropdown_link help_link" href="help.html">Help</a>
             </div>
-            
         </div>
     </header>
 
@@ -76,9 +76,7 @@
     <div class="contacts_main_content">
         <!--contacts list container-->
         <div class="contactslist_container" id="contactslist_container">
-
-
-
+        
             <div class="add_new_contact_section" id="add_new_contact_section">
                     <div id="add_new_contact_ov_section" class="add_new_contact_ov">
                         <div class="add_new_contact_ov_container">
@@ -128,6 +126,13 @@
             </div>
 
         </div>
+
+    <div class="add_new_contact_Mobile_section">
+        <div class="add_new_contact_Mobile_btn" onclick="openContactDialog(-1)">
+            <img class="add_new_contact_mobile_icon" src="./assets/icons/contact/addcontact.png" alt="icon">
+        </div>
+    </div>
+        
     </div>
 
         <!--contact view container-->
@@ -149,8 +154,7 @@
     </div>
     </div>
 
-   
-
 </body>
 </html>
 
+         
