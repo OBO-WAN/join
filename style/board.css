@@ -265,6 +265,41 @@ h3 {
   width: 17px;
 }
 
+.d-none {
+  display: none !important;
+}
+
+.overlay {
+    background: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    display:flex;
+    top: 0;
+}
+
+.add-task-container-overlay {
+  padding-left: 40px !important;
+  padding-top: 40px !important;
+  padding-bottom: 40px !important;
+  padding-right: 40px !important;
+}
+
+.overlay_headline {
+  display: flex;
+  justify-content: space-between;
+}
+
+.close_button {
+  border: none;
+  background-color: transparent;
+  height: 10px;
+  font-size: 20px;
+  color: #2a3647;
+}
+
 /* ===== Responsive Fixes for Board Page ===== */
 @media (max-width: 768px) {
   .board_container {
@@ -305,6 +340,3 @@ h3 {
   }
 }
 
-.d-none {
-  display: none;
-}
