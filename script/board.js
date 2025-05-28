@@ -176,5 +176,15 @@ window.addEventListener('DOMContentLoaded', function () {
 
 function addNewTask() {
     const overlay = document.getElementById('overlay');
+    overlay.innerHTML = "";
+
+    overlay.innerHTML = getAddTaskOverlay();
+
     overlay.classList.remove('d-none');
+
+}
+
+function closeOverlay() {
+    const overlay = document.getElementById('overlay');
+    overlay.classList.add('d-none');
 }
