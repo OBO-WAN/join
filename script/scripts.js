@@ -307,7 +307,6 @@ function showPupupOverlaySignUp() {
   }, 1000);
 }
 
-
 /**
  * 
  * @function setAllPropertysForEditPopup
@@ -387,5 +386,7 @@ function validateField(inputField) {
     }
   }
 }
+
+
 
 

@@ -1,19 +1,3 @@
-import { auth, createUserWithEmailAndPassword } from './firebase.js';
-
-window.handleSignUp = async function () {
-  const email = document.getElementById('email-sign-up').value;
-  const password = document.getElementById('password_sign_up').value;
-
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    alert('Sign-up successful!');
-    window.location.href = 'login.html'; // redirect after sign up
-  } catch (error) {
-    alert(error.message);
-  }
-};
-
-
 /**
  * 
  * @function getIdRefs
@@ -86,7 +70,7 @@ function togglePasswordVisibility(inputId, iconElement) {
  */
 function delayedRedirectAndReset(){
  setTimeout(() => {
-      goToUrl('log_in.html');
+      goToUrl('login.html');
       toggleCheckbox(true);
     }, 500);
 }
@@ -524,5 +508,6 @@ async function ifParameterFalse(parameter, user, userId) {
   }
   return false; 
 }
+
 
 
