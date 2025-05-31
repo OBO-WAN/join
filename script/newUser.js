@@ -244,4 +244,4 @@ function removeLoginError(){
     errorMessageLogInRef.classList.remove('d-flex');
     emailLogInRef.classList.remove('not-valide-error');
     passwordLogInRef.classList.remove('not-valide-error');
-}
+  }
