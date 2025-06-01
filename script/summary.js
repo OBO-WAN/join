@@ -267,8 +267,6 @@ function checkAndShowAnimationSummary() {
     }, 2500);
 }
 
-Load 
-
 /**
  * Ensures a header container exists. Creates one if not found.
  * @returns {HTMLElement} The header container element.
