@@ -185,3 +185,53 @@ function getMobileViewCardTemplate(id, color) {
                 </div>
            </div>`;
 }
+
+
+
+function getAddNewCotactTemplate() {
+    return `
+<div class="contactslist_container" id="contactslist_container">
+        
+            <div class="add_new_contact_section" id="add_new_contact_section">
+                    <div id="add_new_contact_ov_section" class="add_new_contact_ov">
+                        <div class="add_new_contact_ov_container">
+                            <div class="add_newcontact_sloagen_container">
+                                <div class="ov_logo_section">
+                                    <img class="ov_logo" src="./assets/img/logo-white.svg" alt="join logo">
+                                </div>
+                                <div class="ov_hl_section"><span class="ov_hl" id="Kind_Of_Dlg"></span></div>
+                                <div class="ov_slogan_section"><span class="ov_slogan">Tasks are better wiht a team!</span>
+                                    <div class="ov_sloagen_seperator"></div>
+                                </div>
+                            </div>
+                            <div class="add_new_contact_entry_section">
+                                <div class="add_new_contact_avatar_section">
+                                    <div class="add_new_contact_avatar">
+                                        <img class="ov_avatar" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
+                                    </div>
+                                </div>
+                                <div class="add_new_contact_entry">
+                                    <div class="overlay_of_btn_sec"><p class="overlay_of_btn"  onclick="closeContactDialog()">X</p></div>
+                                    <input id="name_input" class="add_new_contact_input" type="input" placeholder ="  Name" >
+                                    <input id="mail_input" class="add_new_contact_input" type="input" placeholder="  Mail">                                   
+                                    <input id="pohne_input" class="add_new_contact_input" type="input" placeholder="  Phone">
+                                 <div class="add_new_contact_btn_section">
+                                    <button class="cancel_btn">
+                                        <span class="cancel_btn_txt" onclick="closeContactDialog()">Cancel X</span>
+                                        
+                                    </button>
+                                    <button class="create_btn" id="id_Edit_Btn">
+                                        <span id="id_Edit_Btn_Text"></span>
+                                        <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
+                                    </button>
+                                </div>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <button class="add_new_contact_button" onclick="openContactDialog(${-1})">
+                    <span class="add_contact_text">Add New Contact</span>
+                    <img src="./assets/icons/contact/addcontact.png" class="add_contact_icon">
+                </button>
+            </div>`;
+}
