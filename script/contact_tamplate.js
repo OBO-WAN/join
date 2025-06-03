@@ -94,6 +94,7 @@ function getViewCardTemplate(id, color) {
            </div>`;
 }
 
+
 function getMobileViewCardTemplate(id, color) {
     return `
     <div id="mobile_view_card_header">
@@ -160,10 +161,26 @@ function getMobileViewCardTemplate(id, color) {
                     </div>
 
                     <div class="mobil_view_card_edit_section">
-                        <div class="mobile_view_card_edit_btn">
+                        <div class="mobile_view_card_edit_btn" onclick="editContactsMobileMenuOn()">
                             <img class="mobile_view_card_edit_icon" src="./assets/icons/contact/mobile_edtit_menu_icon.png" alt="icon">
                         </div>
-                        <div class="mobile_vivcard_edit_ov"></div>
+
+                        <div class="mobile_view_card_menu_section">
+                            <div class="mobile_view_card_menu" id="mobile_view_card_menu">
+                                <div class="contact_view_edit_mobile_section">
+                                    <div class="edtit_mobile_section">
+                                        <img  class="contactview_icon_mobile" src="./assets/icons/contact/edit_mobile.png" alt="edit">
+                                        <span class="edit_txt_mobile" onclick="openContactDialog(${id})">Edit</span>
+                                    </div>
+                                    <div class="delete_mobile_section">
+                                        <img  class="contactview_icon" src="./assets/icons/contact/delete_mobile.png" alt="delete">
+                                        <span class="delete_txt_mobile" onclick="deleteContact(${id})">Delete</span>
+                                    </div> 
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
            </div>`;
