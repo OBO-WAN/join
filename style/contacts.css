@@ -696,9 +696,44 @@ html, body {
         display: flex;
     }
 
+    .contact_view_header{
+        width: 100%;
+        
+    }
+
     .mobil_view_card_edit_section{
         display: flex;
     }
+
+    .go_back_btn_container{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+}
+
+.go_back_btn_section{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    cursor: pointer;
+    position: absolute;
+    z-index: 10;
+}
+
+.go_back_btn_section:hover{
+    background-color: #afb1b1af;
+}
+
+.go_back_btn{
+    width: 30px;
+}
+
 }
 
 
