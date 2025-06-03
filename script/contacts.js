@@ -201,26 +201,34 @@ function emailIsValid (email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
 
-
+/*
+TODO:
+-Comment rausnehmen
+*/
 function deleteContact(id) {
     if (id < 0 || id >= Contacts.length) {
         console.error("Ungültige ID:", id);
         return;
     }
-    Contacts.splice(id, 1);
-    updateDatabase(Contacts);
-    renderContacts(Contacts);
 
-    if (Contacts.length > 0) {
-        renderViewCard(0); 
-    } else {
-        document.getElementById("contact_view_avatar_initials").innerText = "";
-        document.getElementById("contact_view_name").innerText = "";
-        document.getElementById("contact_view_mail").innerText = "";
-        document.getElementById("contact_view_phone").innerText = "";
+    let text = "Delete Contact?\nPress a button!\nEither OK or Cancel.";
+    
+    if (confirm(text) == true) {
+        //Contacts.splice(id, 1);
+        //updateDatabase(Contacts);
+        renderContacts(Contacts);
+
+        if (Contacts.length > 0) {
+            renderViewCard(0); 
+        } else {
+            document.getElementById("contact_view_avatar_initials").innerText = "";
+            document.getElementById("contact_view_name").innerText = "";
+            document.getElementById("contact_view_mail").innerText = "";
+            document.getElementById("contact_view_phone").innerText = "";
+        }
+    //  alert("Contact deleted");
+        clearViewCard();
     }
-    alert("Contact deleted");
-    clearViewCard();
 }
 
 
@@ -415,9 +423,6 @@ function getActualContactIndex(){
     return actualContactIndex;
 }   
 
-
-
-//function showContactList() 
 function goBacktoContacts(){
    
     const contactsContainer = document.getElementById("contactslist_container");
@@ -440,3 +445,27 @@ function goBacktoContacts(){
     renderContacts(Contacts);
 }
 
+function editContactsMobileMenuOn() {
+    const menu = document.getElementById("mobile_view_card_menu");
+    if (menu) {
+        menu.style.display = "flex";
+        setTimeout(() => {
+            document.addEventListener('mousedown', handleOutsideClickForMobileMenu);
+        }, 0);
+    }
+}
+
+function editContactsMobileMenuOff() {
+    const menu = document.getElementById("mobile_view_card_menu");
+    if (menu) {
+        menu.style.display = "none";
+        document.removeEventListener('mousedown', handleOutsideClickForMobileMenu);
+    }
+}
+
+function handleOutsideClickForMobileMenu(event) {
+    const menu = document.getElementById("mobile_view_card_menu");
+    if (menu && !menu.contains(event.target)) {
+        editContactsMobileMenuOff();
+    }
+}
