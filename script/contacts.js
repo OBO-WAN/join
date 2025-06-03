@@ -214,9 +214,9 @@ function deleteContact(id) {
     let text = "Delete Contact?\nPress a button!\nEither OK or Cancel.";
     
     if (confirm(text) == true) {
-        //Contacts.splice(id, 1);
+        Contacts.splice(id, 1);
         //updateDatabase(Contacts);
-        renderContacts(Contacts);
+        //renderContacts(Contacts);
 
         if (Contacts.length > 0) {
             renderViewCard(0); 
@@ -441,6 +441,8 @@ function goBacktoContacts(){
                 </div>
             </div>
         `;
+        const addNewContact = getAddNewCotactTemplate();
+        document.getElementById("add_new_contact_section").innerHTML = addNewContact;
     }
     renderContacts(Contacts);
 }
