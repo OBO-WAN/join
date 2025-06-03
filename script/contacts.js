@@ -388,7 +388,7 @@ function handleWindowResize(index){
       //  }
 
     }else {
-        document.getElementById("contactViewCard").style.display = "none";
+        document.getElementById("contactViewCard").style.display = "flex";
         renderContacts(Contacts);
         bigWindowIsRendered = false;
     }
