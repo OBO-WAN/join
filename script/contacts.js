@@ -389,7 +389,8 @@ function handleWindowResize(index){
 
     }else {
         document.getElementById("contactViewCard").style.display = "flex";
-        renderContacts(Contacts);
+        goBacktoContacts()
+        //renderContacts(Contacts);
         bigWindowIsRendered = false;
     }
 
@@ -424,7 +425,7 @@ function getActualContactIndex(){
 }   
 
 function goBacktoContacts(){
-   
+    
     const contactsContainer = document.getElementById("contactslist_container");
     if (contactsContainer) {
         contactsContainer.innerHTML = `
