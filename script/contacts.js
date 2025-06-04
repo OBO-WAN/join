@@ -303,12 +303,14 @@ function closeContactDialog(){
 
 
 /*contact dialog mobile section*/
-function openContactDialogMobile(id) {
-    
+function openContactDialogMobile(id){
+      configEditDlgBox(id);
+
+    document.getElementById("add_new_contact_mobile_ov").style.display = "flex";
 }
 
-function closeContactDialogMobile() {
-
+function closeContactDialogMobile(){
+      document.getElementById("add_new_contact_mobile_ov").style.display = "none";
 }
 
 

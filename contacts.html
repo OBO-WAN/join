@@ -77,11 +77,11 @@
 
            <!-- start Add New Contact mobile try Section -->
             
-                <div class="add_new_contact_mobile_ov">
+                <div class="add_new_contact_mobile_ov" id="add_new_contact_mobile_ov">
                     <div class="mobile_contact_dialogbox">
                         <div class="mobile_contact_dialog_header">
                             <div class="close_mobile_contact_dialog_container">
-                                <div class="close_mobile_contact_dialog_btn_section">
+                                <div class="close_mobile_contact_dialog_btn_section" onclick="closeContactDialogMobile()">
                                     <p class="close_mobile_contact_dialog_btn">x</p>
                                 </div>
                             </div>
@@ -172,7 +172,7 @@
         </div>
 
     <div class="add_new_contact_Mobile_section">
-        <div class="add_new_contact_Mobile_btn" onclick="openContactDialog(-1)">
+        <div class="add_new_contact_Mobile_btn" onclick="openContactDialogMobile(-1)">
             <img class="add_new_contact_mobile_icon" src="./assets/icons/contact/addcontact.png" alt="icon">
         </div>
     </div>
