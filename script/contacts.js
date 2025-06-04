@@ -244,7 +244,7 @@ function configEditDlgBox(id){
     if(id < 0) kindOFEdit = "createContact";
 
     let btnText ="";
-    let kindOfDlg_Text = "";
+    //let kindOfDlg_Text = "";
     let functionName = "";
 
     switch(kindOFEdit){
