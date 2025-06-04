@@ -300,6 +300,19 @@ function closeContactDialog(){
     // dialog beim schliesen lleeren
 }
 
+
+
+/*contact dialog mobile section*/
+function openContactDialogMobile(id) {
+    
+}
+
+function closeContactDialogMobile() {
+
+}
+
+
+
 function getInitials(name)
 {
     const initials = name
