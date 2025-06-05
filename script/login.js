@@ -44,19 +44,25 @@ function revealElement(element) {
     }
 }
 
-function login() {
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
+// function login() {
+//     const email = document.getElementById('email').value.trim();
+//     const password = document.getElementById('password').value;
 
-    // Basic validation (replace with real API call)
-    if (email === "user@example.com" && password === "password123") {
-        alert("Login successful!");
-        // Redirect to your app's main page
-        window.location.href = "summary.html";
-    } else {
-        alert("Invalid email or password.");
-    }
+//     // Basic validation (replace with real API call)
+//     if (email === "user@example.com" && password === "password123") {
+//         alert("Login successful!");
+//         // Redirect to your app's main page
+//         window.location.href = "summary.html";
+//     } else {
+//         alert("Invalid email or password.");
+//     }
+// }
+function login() {
+    console.log("Login function triggered");
+    checkUserIsPresent(false);
 }
+
+
 
 
 function guestLogin() {
@@ -67,10 +73,9 @@ function guestLogin() {
     window.location.href = "summary.html";
 }
 
-
-function togglePasswordVisibility() {
-  const passwordInput = document.getElementById("password");
-  const icon = document.getElementById("togglePasswordIcon");
+function togglePasswordVisibility(inputId, iconElement) {
+  const passwordInput = document.getElementById(inputId);
+  const icon = iconElement;
 
   const isPassword = passwordInput.type === "password";
   passwordInput.type = isPassword ? "text" : "password";
@@ -186,28 +191,35 @@ function setIdRefValueTrimLogIn() {
     };
   }
 
-  /**
- *
- * @function showLoginError
- * @description Displays the generic login error message if neither the specific email nor password error messages are currently visible.
- * It also adds the 'not-valide-error' class to the email and password input fields to visually indicate an error,
- * preventing duplicate application of the error class. It utilizes the `handleGenericLoginErrorDisplay` function
- * to manage the visibility of the main error message.
- */
+//   /**
+//  *
+//  * @function showLoginError
+//  * @description Displays the generic login error message if neither the specific email nor password error messages are currently visible.
+//  * It also adds the 'not-valide-error' class to the email and password input fields to visually indicate an error,
+//  * preventing duplicate application of the error class. It utilizes the `handleGenericLoginErrorDisplay` function
+//  * to manage the visibility of the main error message.
+//  */
+// function showLoginError() {
+//     const { errorMessageLogInRef, passwordLogInRef, emailLogInRef, errorMessageEmailNotValideLoginRef, errorMessagePasswordLogInRef } = getIdRefs();
+//     const isEmailErrorVisible = errorMessageEmailNotValideLoginRef && errorMessageEmailNotValideLoginRef.classList.contains('d-flex');
+//     const isPasswordErrorVisible = errorMessagePasswordLogInRef && errorMessagePasswordLogInRef.classList.contains('d-flex');
+  
+//     handleGenericLoginErrorDisplay(errorMessageLogInRef, isEmailErrorVisible, isPasswordErrorVisible);
+  
+//     if (emailLogInRef && !emailLogInRef.classList.contains('not-valide-error')) {
+//       emailLogInRef.classList.add('not-valide-error');
+//     }
+//     if (passwordLogInRef && !passwordLogInRef.classList.contains('not-valide-error')) {
+//       passwordLogInRef.classList.add('not-valide-error');
+//     }
+//   }
+
 function showLoginError() {
-    const { errorMessageLogInRef, passwordLogInRef, emailLogInRef, errorMessageEmailNotValideLoginRef, errorMessagePasswordLogInRef } = getIdRefs();
-    const isEmailErrorVisible = errorMessageEmailNotValideLoginRef && errorMessageEmailNotValideLoginRef.classList.contains('d-flex');
-    const isPasswordErrorVisible = errorMessagePasswordLogInRef && errorMessagePasswordLogInRef.classList.contains('d-flex');
-  
-    handleGenericLoginErrorDisplay(errorMessageLogInRef, isEmailErrorVisible, isPasswordErrorVisible);
-  
-    if (emailLogInRef && !emailLogInRef.classList.contains('not-valide-error')) {
-      emailLogInRef.classList.add('not-valide-error');
-    }
-    if (passwordLogInRef && !passwordLogInRef.classList.contains('not-valide-error')) {
-      passwordLogInRef.classList.add('not-valide-error');
-    }
+  const { errorMessageLogInRef } = getIdRefs();
+  if (errorMessageLogInRef) {
+    errorMessageLogInRef.classList.add('d-flex'); // Show the error according to css
   }
+}
   
   /**
    *

@@ -80,6 +80,7 @@ function renderContacts(contacts) {
         contactCards += getContactCardTamplate(contact.name, contact.mail, initials, index, color);
     }
     document.getElementById("contact_card_section").innerHTML = contactCards;
+   
 }
 
 /* Mobile Version */
@@ -95,7 +96,7 @@ function MobileVievCard(index){
         addNewContactSectionElem.style.display = "none";
     }
 
-    let viewCardTemp  = getViewCardTemplate(index);
+    let viewCardTemp  = getMobileViewCardTemplate(index);
     let contactsContainer = document.getElementById("contactslist_container");
     contactsContainer.innerHTML = viewCardTemp ;
     renderViewCard(index); 
@@ -200,26 +201,34 @@ function emailIsValid (email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
 
-
+/*
+TODO:
+-Comment rausnehmen
+*/
 function deleteContact(id) {
     if (id < 0 || id >= Contacts.length) {
         console.error("Ungültige ID:", id);
         return;
     }
-    Contacts.splice(id, 1);
-    updateDatabase(Contacts);
-    renderContacts(Contacts);
 
-    if (Contacts.length > 0) {
-        renderViewCard(0); 
-    } else {
-        document.getElementById("contact_view_avatar_initials").innerText = "";
-        document.getElementById("contact_view_name").innerText = "";
-        document.getElementById("contact_view_mail").innerText = "";
-        document.getElementById("contact_view_phone").innerText = "";
+    let text = "Delete Contact?\nPress a button!\nEither OK or Cancel.";
+    
+    if (confirm(text) == true) {
+        Contacts.splice(id, 1);
+        //updateDatabase(Contacts);
+        //renderContacts(Contacts);
+
+        if (Contacts.length > 0) {
+            renderViewCard(0); 
+        } else {
+            document.getElementById("contact_view_avatar_initials").innerText = "";
+            document.getElementById("contact_view_name").innerText = "";
+            document.getElementById("contact_view_mail").innerText = "";
+            document.getElementById("contact_view_phone").innerText = "";
+        }
+    //  alert("Contact deleted");
+        clearViewCard();
     }
-    alert("Contact deleted");
-    clearViewCard();
 }
 
 
@@ -235,7 +244,7 @@ function configEditDlgBox(id){
     if(id < 0) kindOFEdit = "createContact";
 
     let btnText ="";
-    let kindOfDlg_Text = "";
+    //let kindOfDlg_Text = "";
     let functionName = "";
 
     switch(kindOFEdit){
@@ -290,6 +299,21 @@ function closeContactDialog(){
 
     // dialog beim schliesen lleeren
 }
+
+
+
+/*contact dialog mobile section*/
+function openContactDialogMobile(id){
+      configEditDlgBox(id);
+
+    document.getElementById("add_new_contact_mobile_ov").style.display = "flex";
+}
+
+function closeContactDialogMobile(){
+      document.getElementById("add_new_contact_mobile_ov").style.display = "none";
+}
+
+
 
 function getInitials(name)
 {
@@ -379,8 +403,9 @@ function handleWindowResize(index){
       //  }
 
     }else {
-        document.getElementById("contactViewCard").style.display = "none";
-        renderContacts(Contacts);
+        document.getElementById("contactViewCard").style.display = "flex";
+        goBacktoContacts()
+        //renderContacts(Contacts);
         bigWindowIsRendered = false;
     }
 
@@ -404,9 +429,6 @@ function capitalizeWords(Sentence)
 }
 
 
-
-
-
 function setActualContactIndex(index){
     actualContactIndex = index;
     return actualContactIndex;
@@ -417,6 +439,51 @@ function getActualContactIndex(){
     return actualContactIndex;
 }   
 
-function showContactList() {
-  document.getElementById("contactslist_container").style.display = "";
+function goBacktoContacts(){
+    
+    const contactsContainer = document.getElementById("contactslist_container");
+    if (contactsContainer) {
+        contactsContainer.innerHTML = `
+            <div class="add_new_contact_section" id="add_new_contact_section">
+            </div>
+            <div class="contacts_list" id="contacts_list">
+                <div class="contacts_section">
+                    <div class="contact_card_section" id="contact_card_section"></div>
+                </div>
+            </div>
+            <div class="add_new_contact_Mobile_section">
+                <div class="add_new_contact_Mobile_btn" onclick="openContactDialog(-1)">
+                    <img class="add_new_contact_mobile_icon" src="./assets/icons/contact/addcontact.png" alt="icon">
+                </div>
+            </div>
+        `;
+        const addNewContact = getAddNewCotactTemplate();
+        document.getElementById("add_new_contact_section").innerHTML = addNewContact;
+    }
+    renderContacts(Contacts);
+}
+
+function editContactsMobileMenuOn() {
+    const menu = document.getElementById("mobile_view_card_menu");
+    if (menu) {
+        menu.style.display = "flex";
+        setTimeout(() => {
+            document.addEventListener('mousedown', handleOutsideClickForMobileMenu);
+        }, 0);
+    }
+}
+
+function editContactsMobileMenuOff() {
+    const menu = document.getElementById("mobile_view_card_menu");
+    if (menu) {
+        menu.style.display = "none";
+        document.removeEventListener('mousedown', handleOutsideClickForMobileMenu);
+    }
+}
+
+function handleOutsideClickForMobileMenu(event) {
+    const menu = document.getElementById("mobile_view_card_menu");
+    if (menu && !menu.contains(event.target)) {
+        editContactsMobileMenuOff();
+    }
 }
