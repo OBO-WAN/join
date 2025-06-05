@@ -11,9 +11,10 @@
     <link rel="stylesheet" href="style/nav_mobile.css">
     <link rel="stylesheet" href="style/contact_mobile.css">
 
-    <script src="./script/script.js"></script>
+    
     <script src="./script/contacts.js"></script>
     <script src="script/contact_tamplate.js"></script>
+    <script src="./script/script.js"></script>
 
 </head>
 <body onload="getContacts()" id="body">
@@ -76,8 +77,8 @@
     <div class="contacts_main_content">
 
            <!-- start Add New Contact mobile try Section -->
-            
-                <div class="add_new_contact_mobile_ov" id="add_new_contact_mobile_ov">
+            <div id="add_new_contact_mobile_ov_container">
+                <!--<div class="add_new_contact_mobile_ov" id="add_new_contact_mobile_ov">
                     <div class="mobile_contact_dialogbox">
                         <div class="mobile_contact_dialog_header">
                             <div class="close_mobile_contact_dialog_container">
@@ -107,14 +108,14 @@
                             <input id="mail_input" class="add_new_contact_input_mobile" type="input" placeholder="  Mail">                                   
                             <input id="pohne_input" class="add_new_contact_input_mobile" type="input" placeholder="  Phone">
 
-                                <button class="create_btn_mobile" id="id_Edit_Btn">
+                            <button class="create_btn_mobile" id="id_Edit_Btn" onclick="createContact()">
                                 <span id="id_Edit_Btn_Text">Create</span>
                                 <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
                             </button>
                         </div>
                     </div>
-                </div>
-            
+                </div>-->
+            </div>
         <!-- end Add New Contact mobile try Section -->
 
         <!--contacts list container -->
@@ -128,7 +129,7 @@
                                 <div class="ov_logo_section">
                                     <img class="ov_logo" src="./assets/img/logo-white.svg" alt="join logo">
                                 </div>
-                                <div class="ov_hl_section"><span class="ov_hl" id="Kind_Of_Dlg"></span></div>
+                                <div class="ov_hl_section"><span class="ov_hl" id="Kind_Of_Dlg">Add New Contact</span></div>
                                 <div class="ov_slogan_section"><span class="ov_slogan">Tasks are better wiht a team!</span>
                                     <div class="ov_sloagen_seperator"></div>
                                 </div>
@@ -150,7 +151,7 @@
                                         
                                     </button>
                                     <button class="create_btn" id="id_Edit_Btn">
-                                        <span id="id_Edit_Btn_Text"></span>
+                                        <span id="id_Edit_Btn_Text">Create</span>
                                         <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
                                     </button>
                                 </div>  
