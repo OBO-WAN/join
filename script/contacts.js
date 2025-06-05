@@ -152,6 +152,8 @@ function createContact() {
     updateDatabase(Contacts);
     renderContacts(Contacts);
     closeContactDialog();
+    closeContactDialogMobile()
+    
 
     document.getElementById("name_input").value = "";
     document.getElementById("mail_input").value = "";
@@ -301,12 +303,13 @@ function closeContactDialog(){
 }
 
 
-
 /*contact dialog mobile section*/
 function openContactDialogMobile(id){
       configEditDlgBox(id);
-
-    document.getElementById("add_new_contact_mobile_ov").style.display = "flex";
+      let mobileDialogTemplate= getAddNewContactMobileTemplate();
+        document.getElementById("add_new_contact_mobile_ov_container").innerHTML = mobileDialogTemplate;
+    console.log("openContactDialogMobile aufgerufen");
+    //document.getElementById("add_new_contact_mobile_ov").style.display = "flex";
 }
 
 function closeContactDialogMobile(){
