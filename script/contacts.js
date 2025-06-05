@@ -63,8 +63,9 @@ function renderContacts(contacts) {
 
     for (let index = 0; index < contacts.length; index++) {
         const contact = contacts[index];
+        //console.log("Kontakt:", contact);
         const initials = getInitials(contact.name);
-
+        //console.log("Initials:", initials);
         const firstLetter = contact.name.charAt(0).toUpperCase(); // Erster Buchstabe des Namens
 
         // Wenn der Buchstabe wechselt, füge eine neue Überschrift hinzu
@@ -77,7 +78,9 @@ function renderContacts(contacts) {
         }
 
         let color = getColor(initials[0]);
+        //console.log("Color:", color);
         contactCards += getContactCardTamplate(contact.name, contact.mail, initials, index, color);
+        //console.log(Array.isArray(contacts), contacts);
     }
     document.getElementById("contact_card_section").innerHTML = contactCards;
    
@@ -196,6 +199,7 @@ function editContact(id) {
     document.getElementById("mail_input").value = "";
     document.getElementById("pohne_input").value = "";
     console.log("Kontakt wurde aktualisiert:", newContact);
+    console.log("editContact aufgerufen mit id:", id, Contacts[id]);
 }
 
 
@@ -217,8 +221,8 @@ function deleteContact(id) {
     
     if (confirm(text) == true) {
         Contacts.splice(id, 1);
-        //updateDatabase(Contacts);
-        //renderContacts(Contacts);
+        updateDatabase(Contacts);
+        renderContacts(Contacts);
 
         if (Contacts.length > 0) {
             renderViewCard(0); 
