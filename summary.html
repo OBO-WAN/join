@@ -188,9 +188,17 @@
         </li>
         <li class="link-button hide-before-log-in">
           <a onclick="toHrefFocus('add_task.html',this); return false;" href="add_task.html">
-            <div class="img-box">
-            <img class="boaimg" src="assets/img/add-task.png" alt="Task Icon">
-            </div>
+            <div class="img-box">function toggleMenu() {
+    const menu = document.getElementById("dropdown_menu");
+    if (menu.style.display === "flex") {
+        menu.style.display = "none";
+        document.getElementById("go_back_btn_section").style.display = "flex";
+    } else {
+        menu.style.display = "flex";
+        document.getElementById("go_back_btn_section").style.display = "none";
+    }
+}
+
             <span>Add Task</span>
           </a>
         </li>
