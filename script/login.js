@@ -220,7 +220,6 @@ function showLoginError() {
     errorMessageLogInRef.classList.add('d-flex'); // Show the error according to css
   }
 }
-
   
   /**
    *
