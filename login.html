@@ -7,7 +7,6 @@
     <link rel="icon" href="./assets/img/favicon.png" />
     <link rel="stylesheet" href="style/style.css" />
     <link rel="stylesheet" href="style/login.css" />
-
   </head>
 
   <body id="body_log_in" class="body-log-in">
@@ -34,11 +33,14 @@
           <div class="vector-login"></div>
           <h1>Log in</h1>
         </div>
-        <form onsubmit="login(); return false;" class="form">
+        <form id="login_form" onsubmit="login(); return false;" class="form">
+          <span class="error-message-log-in" id="error_message_log_in">
+            Check your email and password.
+          </span>
           <div class="input-base-container">
             <input
               type="email"
-              id="email"
+              id="email_log_in"
               placeholder="Email"
               class="input-base"
               required
@@ -50,11 +52,16 @@
             />
           </div>
 
+          <!-- Error Message by false Input -->
+          <span class="error-message-log-in" id="error_message_log_in">
+            Check your email and password.
+          </span>
+
           <!-- Password Field with Toggle Icon -->
           <div class="input-base-container">
             <input
               type="password"
-              id="password"
+              id="password_log_in"
               placeholder="Password"
               class="input-base"
               required
@@ -64,7 +71,7 @@
               alt="Show Password"
               class="input-base-icon"
               id="togglePasswordIcon"
-              onclick="togglePasswordVisibility()"
+              onclick="togglePasswordVisibility('password_log_in', this)"
             />
           </div>
 
@@ -100,6 +107,8 @@
       <a href="legal_notice_login.html">Legal Notice</a>
     </footer>
   </body>
-  <script src="script/login.js"defer></script>
+  <script src="script/login.js" defer></script>
   <script src="script/scripts.js"></script>
+  <script src="script/register.js"></script>
+  <script src="script/firebase.js"></script>
 </html>
