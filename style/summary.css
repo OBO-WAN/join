@@ -124,7 +124,6 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: clamp(50px, 31px + 5.9375vw, 145px);
 }
 
 .content-details {
