@@ -187,6 +187,9 @@ function addNewTask() {
 
     overlay.classList.remove('d-none');
 
+    //after loading Overlay
+    // loadContacts();
+
 }
 
 function closeOverlay() {
