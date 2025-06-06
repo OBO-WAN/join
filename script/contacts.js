@@ -30,7 +30,8 @@ function getContacts(data){
             }
                 
         });
-    clearViewCard();
+
+    if( getViewMode() === 1)    clearViewCard();
 
     /*versionHandling();*/
     return data;
@@ -107,6 +108,7 @@ function MobileVievCard(index){
 
 /* Desktop Version*/
 function renderViewCard(index) {
+    setActualContactIndex(index);
     const contact = Contacts[index];
     
     let initials = getInitials(contact.name);
@@ -146,8 +148,8 @@ function createContact() {
     name = capitalizeWords(name);
 
     let newContact = {
-        name: name,
         mail: mail,
+        name: name,
         phone: phone || "No phone number available" 
     };
 
@@ -166,6 +168,7 @@ function createContact() {
 
 
 function editContact(id) {
+
     let name = document.getElementById("name_input").value;
     let mail = document.getElementById("mail_input").value;
     let phone = document.getElementById("pohne_input").value;
@@ -182,24 +185,32 @@ function editContact(id) {
     name = capitalizeWords(name);
 
     let newContact = {
-        name: name,
         mail: mail,
+        name: name,
         phone: phone || "No phone number available" 
     };
     
-    
     Contacts[id] = newContact;
-
     updateDatabase(Contacts);
-    renderContacts(Contacts);
-    renderViewCard(id);
-    closeContactDialog();
 
     document.getElementById("name_input").value = "";
     document.getElementById("mail_input").value = "";
     document.getElementById("pohne_input").value = "";
-    console.log("Kontakt wurde aktualisiert:", newContact);
-    console.log("editContact aufgerufen mit id:", id, Contacts[id]);
+
+    let viewMode = getViewMode();
+    if (viewMode === 1) {
+        renderContacts(Contacts);
+        renderViewCard(id);
+        closeContactDialog();
+    }else if (viewMode === 2) {
+        MobileVievCard(id);
+        closeContactDialogMobile();
+    }
+    else if (viewMode === 3) {
+        MobileVievCard(id);
+        closeContactDialogMobile();
+    }
+
 }
 
 
@@ -212,6 +223,10 @@ TODO:
 -Comment rausnehmen
 */
 function deleteContact(id) {
+
+    let viewMode = getViewMode();
+    if( viewMode === 2 || viewMode === 3) editContactsMobileMenuOff();
+
     if (id < 0 || id >= Contacts.length) {
         console.error("Ungültige ID:", id);
         return;
@@ -222,16 +237,21 @@ function deleteContact(id) {
     if (confirm(text) == true) {
         Contacts.splice(id, 1);
         updateDatabase(Contacts);
-        renderContacts(Contacts);
 
+        let viewMode = getViewMode();
+        if (viewMode === 1) {
+            renderContacts(Contacts);
+        }
+/*
         if (Contacts.length > 0) {
-            renderViewCard(0); 
+            //renderViewCard(0); 
         } else {
             document.getElementById("contact_view_avatar_initials").innerText = "";
             document.getElementById("contact_view_name").innerText = "";
             document.getElementById("contact_view_mail").innerText = "";
             document.getElementById("contact_view_phone").innerText = "";
         }
+        */
     //  alert("Contact deleted");
         clearViewCard();
     }
@@ -240,7 +260,13 @@ function deleteContact(id) {
 
 function clearViewCard()
 {
-    document.getElementById("contactViewCard").innerHTML = "";
+    let viewMode = getViewMode();
+    if( viewMode === 1) {
+        document.getElementById("contactViewCard").innerHTML = "";
+    }else if( viewMode === 2 || viewMode === 3) {
+        document.getElementById("contact_view_card").innerHTML = ""; 
+    }
+    
 }
 
 
@@ -309,9 +335,11 @@ function closeContactDialog(){
 
 /*contact dialog mobile section*/
 function openContactDialogMobile(id){
-      configEditDlgBox(id);
-      let mobileDialogTemplate= getAddNewContactMobileTemplate();
-        document.getElementById("add_new_contact_mobile_ov_container").innerHTML = mobileDialogTemplate;
+
+    editContactsMobileMenuOff();
+    let mobileDialogTemplate = getAddNewContactMobileTemplate();
+    document.getElementById("add_new_contact_mobile_ov_container").innerHTML = mobileDialogTemplate;
+    configEditDlgBox(id);
     console.log("openContactDialogMobile aufgerufen");
     //document.getElementById("add_new_contact_mobile_ov").style.display = "flex";
 }
@@ -319,7 +347,6 @@ function openContactDialogMobile(id){
 function closeContactDialogMobile(){
       document.getElementById("add_new_contact_mobile_ov").style.display = "none";
 }
-
 
 
 function getInitials(name)
@@ -331,6 +358,7 @@ function getInitials(name)
         .map(word => word[0].toUpperCase()); 
     return initials;
 }
+
 
 function sortContacts(contacts){ //sort contacts by name
     contacts.sort((a, b) => a.name.localeCompare(b.name));
@@ -353,6 +381,7 @@ function getFirstLetter(name, oldLetter, change){ //get first letter of name
     return firstLetter;
 }
 
+
 /* return:
     1 = desktop (default value)
     2 = mobile
@@ -367,11 +396,15 @@ function getViewMode()
         viewMode = 2;
     }
 
+    if (window.innerWidth < 560) {
+        viewMode = 3;
+    }
+
     return viewMode;
 }
 
-let bigWindowIsRendered = false;
 
+let bigWindowIsRendered = false;
 function proofVersion(index){
 
     setActualContactIndex(index);
@@ -384,10 +417,14 @@ function proofVersion(index){
         case 2:
             MobileVievCard(index)
             break;
+        case 3:
+            MobileVievCard(index)
+            break;
         default:
             break;
     }
 }
+
 
 function handleWindowResize(index){
 
@@ -446,6 +483,7 @@ function getActualContactIndex(){
     return actualContactIndex;
 }   
 
+
 function goBacktoContacts(){
     
     const contactsContainer = document.getElementById("contactslist_container");
@@ -470,23 +508,23 @@ function goBacktoContacts(){
     renderContacts(Contacts);
 }
 
+
 function editContactsMobileMenuOn() {
-    const menu = document.getElementById("mobile_view_card_menu");
-    if (menu) {
-        menu.style.display = "flex";
-        setTimeout(() => {
-            document.addEventListener('mousedown', handleOutsideClickForMobileMenu);
-        }, 0);
-    }
+
+    let id = getActualContactIndex();
+    document.getElementById("mobile_view_card_menu").style.display = "flex";
+    document.addEventListener('mousedown', handleOutsideClickForMobileMenu);
 }
+
 
 function editContactsMobileMenuOff() {
     const menu = document.getElementById("mobile_view_card_menu");
-    if (menu) {
+    
         menu.style.display = "none";
         document.removeEventListener('mousedown', handleOutsideClickForMobileMenu);
-    }
+  
 }
+
 
 function handleOutsideClickForMobileMenu(event) {
     const menu = document.getElementById("mobile_view_card_menu");
