@@ -1,5 +1,6 @@
 function getKanbanTemplate(task, assignedUsersHTML, index) {
-    return `                <div class="task_container" draggable="true" ondragstart="startDragging()">
+       console.log('task.id:', task.id, typeof task.id);
+    return `                <div class="task_container" draggable="true" ondragstart="startDragging('${task.id}')">
                     <div class="task">
                         <div class="task_category ${task.categoryClass}">${task.category}</div>
 

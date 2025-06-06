@@ -1,17 +1,19 @@
-const BASE_URL = "https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/";
+/* const BASE_URL = "https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/"; */
 
 let tasks = BASE_URL;
 
 let users = [];
 
+let currentDraggedElement = null;
+
 async function loadTasksFromFirebase() {
     const response = await fetch(`${BASE_URL}tasks.json`);
     const data = await response.json();
 
-    if (data) {
-        tasks = Object.values(data); // aus Objekt ein Array machen
-    } else {
-        tasks = []; // Fallback, falls nichts da ist
+    tasks = [];
+    for (const [id, task] of Object.entries(data || {})) {
+        task.id = id;
+        tasks.push(task);
     }
 
     renderCurrentTasks();
@@ -51,6 +53,8 @@ function renderCurrentTasks() {
     }
     
     showStatusPlaceholder(statusCounts, statusContainers);
+
+    console.log(currentDraggedElement, tasks.map(t => t.id));
 
 }
 
@@ -129,6 +133,7 @@ function prepareTaskForTemplate(task) {
     });
 
     return {
+        id: task.id,
         category: task.category || 'General',
         categoryClass: (task.category || 'general').toLowerCase().replace(/\s/g, '_'),
         title: task.task || 'Untitled',
@@ -187,4 +192,39 @@ function addNewTask() {
 function closeOverlay() {
     const overlay = document.getElementById('overlay');
     overlay.classList.add('d-none');
+}
+
+function startDragging(taskId) {
+    currentDraggedElement = parseInt(taskId, 10);
+    console.log('startDragging - taskId:', taskId, 'Type:', typeof taskId);
+    console.log('currentDraggedElement:', currentDraggedElement, 'Type:', typeof currentDraggedElement);
+}
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+async function moveTo(newStatus) {
+
+    if (!currentDraggedElement && currentDraggedElement !== 0) {
+        console.log('No currentDraggedElement set, exiting.');
+        return;
+    }
+
+    const task = tasks.find(t => Number(t.id) === currentDraggedElement);
+
+    if (!task) {
+        console.log('Task not found, exiting.');
+        return;
+    }
+
+    task.status = newStatus;
+
+    await fetch(`${BASE_URL}tasks/${currentDraggedElement}.json`, {
+        method: 'PUT',
+        body: JSON.stringify(task)
+    });
+
+    await loadTasksFromFirebase();
+    currentDraggedElement = null;
 }
