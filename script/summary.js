@@ -34,18 +34,22 @@ function initializeStats() {
 
 function updateStatsFromTask(task, stats) {
   stats.tasksInBoard++;
-  switch (task.state) {
-    case 'open': stats.todo++; break;
+  switch (task.status) {
+    case 'toDo': stats.todo++; break;
     case 'done': stats.done++; break;
-    case 'in-progress': stats.tasksInProgress++; break;
-    case 'await-feedback': stats.awaitingFeedback++; break;
+    case 'inProgress': stats.tasksInProgress++; break;
+    case 'awaitFeedback': stats.awaitingFeedback++; break;
   }
   if (task.priority?.toLowerCase() === 'urgent') stats.urgent++;
 }
 
 function computeTaskStats(tasks) {
   const stats = initializeStats();
-  Object.values(tasks).forEach(task => updateStatsFromTask(task, stats));
+  Object.values(tasks).forEach(task => {
+    if (task && typeof task === 'object') {
+      updateStatsFromTask(task, stats);
+    }
+  });
   return stats;
 }
 
