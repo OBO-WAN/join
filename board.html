@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="style/board.css">
     <link rel="stylesheet" href="style/nav_mobile.css">
     <link rel="stylesheet" href="style/add_task.css">
-    <link rel="stylesheet" href="style/user_icon_menu.css">
 
     <script src="./script/config.js"></script>
     <script src="./script/script.js"></script>
@@ -94,7 +93,7 @@
 
         <div class="kanban_container">
 
-            <div class="kanban_section">
+            <div class="kanban_section" ondrop="moveTo('toDo')" ondragover="allowDrop(event)">
 
                 <div class="section_header">
                     <h3>To do</h3>
@@ -104,7 +103,7 @@
                 <div id="toDoContainer"></div> 
 
             </div>
-            <div class="kanban_section">
+            <div class="kanban_section" ondrop="moveTo('inProgress')" ondragover="allowDrop(event)">
                 <div class="section_header">    
                     <h3>In progress</h3>
                     <button onclick="addNewTask()" class="add_task_btn">+</button>
@@ -113,7 +112,7 @@
                 <div id="inProgressContainer"></div>
 
             </div>
-            <div class="kanban_section">
+            <div class="kanban_section" ondrop="moveTo('awaitFeedback')" ondragover="allowDrop(event)">
                 <div class="section_header">
                     <h3>Await feedback</h3>
                     <button onclick="addNewTask()" class="add_task_btn">+</button>
@@ -122,7 +121,7 @@
                 <div id="awaitFeedbackContainer"></div>
 
             </div>
-            <div class="kanban_section">
+            <div class="kanban_section" ondrop="moveTo('done')" ondragover="allowDrop(event)">
                 <div class="section_header">    
                     <h3>Done</h3>
                 </div>
