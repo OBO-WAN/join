@@ -1,0 +1,102 @@
+@media (max-width: 768px) {
+  .board_container {
+    padding-left: 16px;
+  }
+}
+
+
+.task_container_overlay {
+  width: 430px;
+  background-color: white;
+  padding: 16px;
+  border-radius: 16px;
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+
+.task_category_overlay {
+  border-radius: 8px;
+  color: white;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  display: inline-block;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+
+.task_title_overlay {
+  font-size: 55px;
+  font-weight: 700;
+}
+
+
+.task_details_overlay {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+td {
+  width: 100px;
+  padding-bottom: 10px;
+  color: #43526e;
+}
+
+table {
+  border-collapse: separate;
+  font-size: 18px;
+}
+
+.td_priority {
+  display: flex;
+  align-items: center;
+}
+
+.margin_right_10 {
+  margin-right: 10px;
+}
+
+.assigned_container {
+  color:#43526e;
+  font-size: 18px;
+}
+
+.assigned_user {
+  display: flex;
+  align-items: center;
+}
+
+.user_initials_overlay {
+  display: flex;
+  justify-content: center;
+  height: 32px;
+  margin: 10px!important;
+}
+
+.user_initials_group_overlay {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.user_initials_circle_overlay {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-sizing: border-box;
+}
