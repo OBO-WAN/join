@@ -300,6 +300,11 @@ h3 {
   color: #2a3647;
 }
 
+.hover {
+  cursor: pointer;
+  
+}
+
 /* ===== Responsive Fixes for Board Page ===== */
 @media (max-width: 768px) {
   .board_container {

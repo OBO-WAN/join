@@ -1,6 +1,5 @@
 function getKanbanTemplate(task, assignedUsersHTML, index) {
-       console.log('task.id:', task.id, typeof task.id);
-    return `                <div class="task_container" draggable="true" ondragstart="startDragging('${task.id}')">
+    return `                <div class="task_container hover" draggable="true" ondragstart="startDragging('${task.id}')">
                     <div class="task">
                         <div class="task_category ${task.categoryClass}">${task.category}</div>
 
@@ -31,20 +30,20 @@ function getAddTaskOverlay() {
         <div class="overlay_headline">    
             <h2>Add Task</h2>
 
-            <button onclick="closeOverlay()" class="close_button">X</button>
+            <button onclick="closeOverlay()" class="close_button hover">X</button>
         </div>
 
         <form id="taskForm" class="form-grid">
             
             <div class="form-left">
                 <label for="title">Title <span class="required-marker">*</span></label>
-                <input type="text" id="title" name="title" placeholder="Enter a title" required>
+                <input type="text" class="hover" id="title" name="title" placeholder="Enter a title" required>
     
                 <label for="description">Description</label>
-                <textarea id="description" name="description" rows="4" placeholder="Enter a Description"></textarea>
+                <textarea id="description" class="hover" name="description" rows="4" placeholder="Enter a Description"></textarea>
     
                 <label for="due-date">Due Date <span class="required-marker">*</span></label>
-                <input type="date" id="due-date" name="due-date" required>
+                <input type="date" id="due-date" class="hover" name="due-date" required>
             </div>
     
             <div class="form-divider"></div>
@@ -69,14 +68,14 @@ function getAddTaskOverlay() {
                 </div>
     
                 <label for="assignees">Assigned to</label>
-                <select id="assignees" name="assignees">
+                <select class="hover" id="assignees" name="assignees">
                     <option value="" disabled selected>Select contacts to assign</option>
                 </select>
                     
                 </select>
     
                 <label for="category">Category <span class="required-marker">*</span></label>
-                <select id="category" name="category" required>
+                <select id="category" class="hover" name="category" required>
                     <option value="">Select category</option>
                     <option value="technical-task">Technical Task</option>
                     <option value="user-story">User Story</option>
