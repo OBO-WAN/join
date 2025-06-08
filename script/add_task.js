@@ -12,7 +12,6 @@ submitBtn.onclick = function (event) {
     form.reportValidity();
     return;
   }
-
   submitTask();
 };
 
