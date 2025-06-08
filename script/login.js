@@ -108,42 +108,42 @@ function checkAndShowAnimation() {
     sessionStorage.getItem('linksSidebarBoolienKey');
   }
 
-  /**
- * 
- * @function startLoginAnimationsWithDelay
- * @description **This function is called by the `checkAndShowAnimation` function.**
- * It initiates a sequence of delayed fade-in animations for the login container, navigation, and footer elements.
- * After the initial delay, the specified elements are faded in.
- * Subsequently, after a further delay, the logo overlay is hidden, and the final animation state is displayed.
- * @param {HTMLElement} loginContainerRef - The HTML element representing the login container.
- * @param {HTMLElement} navLogInRef - The HTML element representing the login navigation.
- * @param {HTMLElement} footerLogInRef - The HTML element representing the login/register footer.
- * @param {HTMLElement} animationsLogoOverlayRef - The HTML element representing the logo animation overlay.
- * @param {HTMLElement} animationFinishedRef - The HTML element representing the final state of the animation.
- */
-function startLoginAnimationsWithDelay(loginContainerRef,navLogInRef,footerLogInRef,animationsLogoOverlayRef,animationFinishedRef){
-    setTimeout(function () {
-      addFadeInAnimation(loginContainerRef);
-      addFadeInAnimation(navLogInRef);
-      addFadeInAnimation(footerLogInRef);
-      setTimeout(function () {
-        animationsLogoOverlayRef.classList.add('d-none');
-        animationFinishedRef.classList.add('d-flex');
-      }, 2000);
-    }, 500);
-  }
+//   /**
+//  * 
+//  * @function startLoginAnimationsWithDelay
+//  * @description **This function is called by the `checkAndShowAnimation` function.**
+//  * It initiates a sequence of delayed fade-in animations for the login container, navigation, and footer elements.
+//  * After the initial delay, the specified elements are faded in.
+//  * Subsequently, after a further delay, the logo overlay is hidden, and the final animation state is displayed.
+//  * @param {HTMLElement} loginContainerRef - The HTML element representing the login container.
+//  * @param {HTMLElement} navLogInRef - The HTML element representing the login navigation.
+//  * @param {HTMLElement} footerLogInRef - The HTML element representing the login/register footer.
+//  * @param {HTMLElement} animationsLogoOverlayRef - The HTML element representing the logo animation overlay.
+//  * @param {HTMLElement} animationFinishedRef - The HTML element representing the final state of the animation.
+//  */
+// function startLoginAnimationsWithDelay(loginContainerRef,navLogInRef,footerLogInRef,animationsLogoOverlayRef,animationFinishedRef){
+//     setTimeout(function () {
+//       addFadeInAnimation(loginContainerRef);
+//       addFadeInAnimation(navLogInRef);
+//       addFadeInAnimation(footerLogInRef);
+//       setTimeout(function () {
+//         animationsLogoOverlayRef.classList.add('d-none');
+//         animationFinishedRef.classList.add('d-flex');
+//       }, 2000);
+//     }, 500);
+//   }
 
-  /**
- *
- * @function addFadeInAnimation
- * @description Adds a fade-in animation to the specified HTML element.
- * The animation is named 'fadeIn', lasts for 0.8 seconds, uses an ease-in-out timing function,
- * applies the final state of the animation (forwards), and has a delay of 0.6 seconds before starting.
- * @param {HTMLElement} element - The HTML element to which the fade-in animation will be applied.
- */
-function addFadeInAnimation(element) {
-    element.style.animation = 'fadeIn 0.8s ease-in-out forwards 0.6s';
-  }
+//   /**
+//  *
+//  * @function addFadeInAnimation
+//  * @description Adds a fade-in animation to the specified HTML element.
+//  * The animation is named 'fadeIn', lasts for 0.8 seconds, uses an ease-in-out timing function,
+//  * applies the final state of the animation (forwards), and has a delay of 0.6 seconds before starting.
+//  * @param {HTMLElement} element - The HTML element to which the fade-in animation will be applied.
+//  */
+// function addFadeInAnimation(element) {
+//     element.style.animation = 'fadeIn 0.8s ease-in-out forwards 0.6s';
+//   }
   
   /**
    * 
