@@ -90,6 +90,11 @@ function renderContacts(contacts) {
 /* Mobile Version */
 function MobileVievCard(index){
     
+    const contact = Contacts[index];
+    
+    let initials = getInitials(contact.name);
+    let color = getColor(initials[0]);
+
     const contactsListElem = document.getElementById("contacts_list");
     if (contactsListElem) {
         contactsListElem.style.display = "none";
@@ -100,7 +105,7 @@ function MobileVievCard(index){
         addNewContactSectionElem.style.display = "none";
     }
 
-    let viewCardTemp  = getMobileViewCardTemplate(index);
+    let viewCardTemp  = getMobileViewCardTemplate(index, color);
     let contactsContainer = document.getElementById("contactslist_container");
     contactsContainer.innerHTML = viewCardTemp ;
     renderViewCard(index); 
@@ -335,17 +340,20 @@ function closeContactDialog(){
 
 /*contact dialog mobile section*/
 function openContactDialogMobile(id){
-
-    editContactsMobileMenuOff();
+    //editContactsMobileMenuOff();
+     
     let mobileDialogTemplate = getAddNewContactMobileTemplate();
     document.getElementById("add_new_contact_mobile_ov_container").innerHTML = mobileDialogTemplate;
     configEditDlgBox(id);
+    document.getElementById("add_new_contact_Mobile_btn").style.display = "none";
     console.log("openContactDialogMobile aufgerufen");
+
     //document.getElementById("add_new_contact_mobile_ov").style.display = "flex";
 }
 
 function closeContactDialogMobile(){
-      document.getElementById("add_new_contact_mobile_ov").style.display = "none";
+    document.getElementById("add_new_contact_mobile_ov").style.display = "none";
+    document.getElementById("add_new_contact_Mobile_btn").style.display = "flex";
 }
 
 
@@ -497,7 +505,7 @@ function goBacktoContacts(){
                 </div>
             </div>
             <div class="add_new_contact_Mobile_section">
-                <div class="add_new_contact_Mobile_btn" onclick="openContactDialog(-1)">
+                <div class="add_new_contact_Mobile_btn" onclick="openContactDialogMobile(-1)">
                     <img class="add_new_contact_mobile_icon" src="./assets/icons/contact/addcontact.png" alt="icon">
                 </div>
             </div>
@@ -510,8 +518,6 @@ function goBacktoContacts(){
 
 
 function editContactsMobileMenuOn() {
-
-    let id = getActualContactIndex();
     document.getElementById("mobile_view_card_menu").style.display = "flex";
     document.addEventListener('mousedown', handleOutsideClickForMobileMenu);
 }
