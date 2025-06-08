@@ -1,5 +1,6 @@
 function getKanbanTemplate(task, assignedUsersHTML, index) {
-    return `                <div class="task_container hover" draggable="true" ondragstart="startDragging('${task.id}')">
+    return `    <div class="task_container hover" data-task-id="${task.id}" data-task-index="${index}" draggable="true" ondragstart="startDragging('${task.id}')">
+                    
                     <div class="task">
                         <div class="task_category ${task.categoryClass}">${task.category}</div>
 
@@ -105,4 +106,55 @@ function getAddTaskOverlay() {
         </div>
 
     `
+}
+
+
+function getTaskSheetOverlay(task, assignedUsersHTML, index) {
+    return `    <div class="task_container_overlay hover">
+
+                    <div class="task">
+
+                        <div class="overlay_headline"> 
+                            <div class="task_category_overlay ${task.categoryClass}">${task.category}</div>
+                            <button onclick="closeOverlay()" class="close_button hover">X</button>
+                        </div>
+
+                        <div class="task_information_overlay">
+                            <p class="task_title_overlay" id="task_title">${task.title}</p>
+                            <p class="task_details_overlay" id="task_details">${task.details}</p>
+
+                            <table>
+                                <tr>
+                                    <td>Due date:</td>
+                                    <td class="td_right">1.1.2011</td>
+                                </tr>
+                                <tr>
+                                    <td>Priority:</td>
+                                    <td class="td_priority">
+                                        <p class="margin_right_10">Medium</p>
+                                        <img src="./assets/icons/priority/priority_medium.png">
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div class="assigned_container">
+                                <p> Assigned to:</p>
+
+                                <div class="assigned_user">
+                                    <div class="user_initials_overlay">${assignedUsersHTML}<p>User Name</p></div>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                        <div id="subtask_container_${index}" class="subtask_container"></div>
+
+                        <div class="user_priority_container">
+                            <img src="./assets/icons/priority/priority_${task.priority}.png" class="priority_medium" id="priority">
+                        </div>
+
+                    </div>
+                </div>
+
+`
 }
