@@ -3,49 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Join | Summary </title>
+    <title>Join | Summary</title>
 
     <link rel="icon" href="./assets/img/favicon.png" />
     <link rel="stylesheet" href="style/style.css" />
     <link rel="stylesheet" href="style/summary.css" />
     <link rel="stylesheet" href="style/nav_mobile.css" />
-    <link rel="stylesheet" href="style/user_icon_menu.css">
-  
+    <link rel="stylesheet" href="style/user_icon_menu.css" />
+
     <script src="./script/script.js"></script>
   </head>
 
-    <body class="body-summary" onload="initializeSummaryPage()">
-
+  <body class="body-summary" onload="initializeSummaryPage()">
     <!-- no landscape mode allowed overlay -->
     <header>
       <div class="hl_logo_section">
-            <h1>Kanban Project Management Tool</h1>
-            <img class="header_logo" src="./assets/img/loginLogo.svg" alt="logo">
-        </div>
-         <div class="dropdown_container">
+        <h1>Kanban Project Management Tool</h1>
+        <img class="header_logo" src="./assets/img/loginLogo.svg" alt="logo" />
+      </div>
+      <div class="dropdown_container">
         <div class="icon_header_section">
-        <button onclick="location.href='help.html'" class="help-button">
-            <img src="./assets/img/help.png" alt="help">
-        </button>
-            <div class="contact_icon" onclick="toggleMenu()">
-                <p class="contact_icon_initials" id="first_icon_initials">S</p>
-                <p class="contact_icon_initials" id="last_icon_initials">M</p>
-            </div>
+          <button onclick="location.href='help.html'" class="help-button">
+            <img src="./assets/img/help.png" alt="help" />
+          </button>
+          <div class="contact_icon" onclick="toggleMenu()">
+            <p class="contact_icon_initials" id="first_icon_initials">S</p>
+            <p class="contact_icon_initials" id="last_icon_initials">M</p>
+          </div>
         </div>
-            <div class="dropdown_menu" id="dropdown_menu">
-                <a class="dropdown_link" href="./privacy_policy.html">Privacy Policy</a>
-                <a class="dropdown_link" href="./legal_notice.html">Legal Notes</a>
-                <a class="dropdown_link" href="./index.html">Log out</a>
-                <a class="dropdown_link help_link" href="help.html">Help</a>
-            </div>
+        <div class="dropdown_menu" id="dropdown_menu">
+          <a class="dropdown_link" href="./privacy_policy.html"
+            >Privacy Policy</a
+          >
+          <a class="dropdown_link" href="./legal_notice.html">Legal Notes</a>
+          <a class="dropdown_link" href="./index.html">Log out</a>
+          <a class="dropdown_link help_link" href="help.html">Help</a>
         </div>
-      <!-- <div id="user_profile_circle" class="user-profile" onclick="toggleSubmenu()">G</div> -->
+      </div>
     </header>
 
     <nav class="sidebar">
       <img class="logonav" src="./assets/img/logo-white.svg" alt="logo" />
       <div class="menu">
-        <button onclick="location.href='summary.html'" class="menu-button active">
+        <button
+          onclick="location.href='summary.html'"
+          class="menu-button active"
+        >
           <img src="./assets/img/summary.png" alt="Summary" />
           <span>Summary</span>
         </button>
@@ -98,7 +101,7 @@
       </div>
 
       <div class="titeljoin">
-        <h1>Join 360</h1>
+        <h1>Join 456</h1>
         <div class="vector"></div>
         <p>Key Metrics at a Glance</p>
       </div>
@@ -179,48 +182,58 @@
     <!-- Responsive Menu -->
     <ul class="nav-links">
       <li class="link-button active hide-before-log-in">
-          <a onclick="toHrefFocus('summary.html', this); return false;" href="summary.html">
-            <div class="img-box">
-            <img class="boaimg" src="assets/img/summary.png" alt="Summary Icon">
+        <a
+          onclick="toHrefFocus('summary.html', this); return false;"
+          href="summary.html"
+        >
+          <div class="img-box">
+            <img
+              class="boaimg"
+              src="assets/img/summary.png"
+              alt="Summary Icon"
+            />
           </div>
-            <span>Summary</span>
-          </a>
-        </li>
-        <li class="link-button hide-before-log-in">
-          <a onclick="toHrefFocus('add_task.html',this); return false;" href="add_task.html">
-            <div class="img-box">function toggleMenu() {
-    const menu = document.getElementById("dropdown_menu");
-    if (menu.style.display === "flex") {
-        menu.style.display = "none";
-        document.getElementById("go_back_btn_section").style.display = "flex";
-    } else {
-        menu.style.display = "flex";
-        document.getElementById("go_back_btn_section").style.display = "none";
-    }
-}
-
-            <span>Add Task</span>
-          </a>
-        </li>
-        <li class="link-button hide-before-log-in">
-          <a onclick="toHrefFocus('board.html', this); return false;" href="board.html">
-            <div class="img-box">
-            <img class="boaimg" src="assets/img/board.png" alt="Board Icon">
+          <span>Summary</span>
+        </a>
+      </li>
+      <li class="link-button hide-before-log-in">
+        <a
+          onclick="toHrefFocus('add_task.html',this); return false;"
+          href="add_task.html"
+        >
+          <div class="img-box">
+            <img class="boaimg" src="assets/img/add-task.png" alt="Task Icon" />
           </div>
-            <span>Board</span>
-          </a>
-        </li>
-        <li class="link-button hide-before-log-in">
-          <a onclick="toHrefFocus('contacts.html', this); return false;" href="contacts.html">
-            <div class="img-box">
-            <img class="boaimg" src="assets/img/contacts.png" alt="Contacts Icon">
+          <span>Add Task</span>
+        </a>
+      </li>
+      <li class="link-button hide-before-log-in">
+        <a
+          onclick="toHrefFocus('board.html', this); return false;"
+          href="board.html"
+        >
+          <div class="img-box">
+            <img class="boaimg" src="assets/img/board.png" alt="Board Icon" />
           </div>
-            <span>Contacts</span>
-          </a>
-        </li>
+          <span>Board</span>
+        </a>
+      </li>
+      <li class="link-button hide-before-log-in">
+        <a
+          onclick="toHrefFocus('contacts.html', this); return false;"
+          href="contacts.html"
+        >
+          <div class="img-box">
+            <img
+              class="boaimg"
+              src="assets/img/contacts.png"
+              alt="Contacts Icon"
+            />
+          </div>
+          <span>Contacts</span>
+        </a>
+      </li>
     </ul>
-
-
   </body>
   <script src="script/firebase.js"></script>
   <script src="script/summary.js"></script>
