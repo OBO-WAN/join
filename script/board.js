@@ -1,4 +1,4 @@
-/* const BASE_URL = "https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/"; */
+// const BASE_URL = "https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/"; 
 
 let tasks = BASE_URL;
 
@@ -50,11 +50,15 @@ function renderCurrentTasks() {
         setTimeout(() => {
             proofSubtasks(task, i);
         }, 0);
+
     }
     
     showStatusPlaceholder(statusCounts, statusContainers);
+     setTimeout(() => {
+        attachTaskEventHandlers();
+     }, 0);
 
-    console.log(currentDraggedElement, tasks.map(t => t.id));
+     attachTaskEventHandlers();
 
 }
 
@@ -121,6 +125,33 @@ function showSubtasks() {
 `
 }
 
+function attachTaskEventHandlers() {
+ const containers = document.querySelectorAll('.task_container');
+
+    containers.forEach(container => {
+        const id = container.dataset.taskId;
+        const index = parseInt(container.dataset.taskIndex, 10);
+        const task = tasks.find(t => t.id == id);
+
+        if (!task) return;
+
+        const taskData = prepareTaskForTemplate(task);
+        const assignedUsersHTML = taskData.assignedTo.map(user => `
+            <div class="user_initials_circle" style="background-color: ${user.color}; color: white;">
+                ${user.initials}
+            </div>
+        `).join('');
+
+        // ✔️ Jetzt wird das Overlay per JS geöffnet
+        container.addEventListener('click', () => {
+            openTask(taskData, assignedUsersHTML, index);
+        });
+
+        container.addEventListener('dragstart', () => {
+            startDragging(task.id);
+        });
+    });}
+
 
 function prepareTaskForTemplate(task) {
 
@@ -186,15 +217,26 @@ function addNewTask() {
     overlay.innerHTML = getAddTaskOverlay();
 
     overlay.classList.remove('d-none');
-
-    //after loading Overlay
-    // loadContacts();
-
 }
 
 function closeOverlay() {
     const overlay = document.getElementById('overlay');
     overlay.classList.add('d-none');
+
+    // document.body.classList.remove('overlay-active');
+    // document.getElementById('overlay').classList.add('d-none');
+}
+
+
+function openTask(task, assignedUsersHTML, index) {
+    document.body.classList.add('overlay-active'); // hides <header> as well
+    console.log('openTask wurde aufgerufen');
+    const overlay = document.getElementById('overlay');
+    overlay.innerHTML = "";
+
+    overlay.innerHTML = getTaskSheetOverlay(task, assignedUsersHTML, index);
+
+    overlay.classList.remove('d-none');
 }
 
 function startDragging(taskId) {

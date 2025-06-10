@@ -1,0 +1,192 @@
+@media (max-width: 768px) {
+  .board_container {
+    padding-left: 16px;
+  }
+}
+
+.task_container_overlay {
+  max-width: 525px;
+  background-color: white;
+  padding: 16px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+
+.task_category_overlay {
+  border-radius: 8px;
+  color: white;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  display: inline-block;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+
+.task_title_overlay {
+  font-size: 44px;
+  font-weight: 700;
+}
+
+
+.task_details_overlay {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+td {
+  width: 100px;
+  padding-bottom: 10px;
+  color: #43526e;
+}
+
+table {
+  border-collapse: separate;
+  font-size: 18px;
+}
+
+.td_priority {
+  display: flex;
+  align-items: center;
+}
+
+.margin_right_10 {
+  margin-right: 10px;
+}
+
+.assigned_container {
+  color: #43526e;
+  font-size: 18px;
+}
+
+.assigned_user {
+  display: flex;
+  align-items: center;
+}
+
+.user_initials_overlay {
+  display: flex;
+  justify-content: center;
+  height: 32px;
+  margin: 10px !important;
+}
+
+.user_initials_group_overlay {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.user_initials_circle_overlay {
+  width: 32px;
+  height: 32px;
+  font-size: 12px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+/* Responsive Overlay */
+
+@media only screen and (max-width: 450px) {
+  .task_container_overlay {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    border-radius: 0;
+    padding: 20px;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .overlay {
+    padding: 0;
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+
+  .task_title_overlay {
+    font-size: clamp(28px, 4vw, 42px);
+    word-break: break-word;
+  }
+}
+
+/* hidden <header> for Overlay (Board)*/
+@media only screen and (max-width: 768px) {
+  .overlay:not(.d-none)~header {
+    display: none;
+  }
+}
+
+@media (min-width: 451px) and (max-width: 1024px) {
+  .task_container_overlay {
+    width: 90vw;
+    max-width: 520px;
+    max-height: 750px;
+    padding: 24px;
+    margin: 32px auto;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .task_title_overlay {
+    font-size: clamp(28px, 4vw, 42px);
+    word-break: break-word;
+  }
+
+  .task_details_overlay {
+    font-size: var(--font-size-16-20);
+    line-height: 1.5;
+  }
+
+  .overlay_headline {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .assigned_container {
+    margin-top: 24px;
+  }
+
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  td {
+    word-wrap: break-word;
+  }
+}
+
+@media (min-width: 451px) and (max-width: 1024px) {
+  .user_initials_overlay {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .user_initials_circle_overlay {
+    width: 28px;
+    height: 28px;
+    font-size: var(--font-size-12);
+  }
+
+  .task_information_overlay {
+    margin-top: 16px;
+  }
+}
