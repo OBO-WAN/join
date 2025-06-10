@@ -7,6 +7,7 @@
     <link rel="icon" href="./assets/img/favicon.png">
     <link rel="stylesheet" href="style/style.css"> 
     <link rel="stylesheet" href="style/board.css">
+    <link rel="stylesheet" href="style/board_taskoverlay.css">
     <link rel="stylesheet" href="style/nav_mobile.css">
     <link rel="stylesheet" href="style/add_task.css">
     <link rel="stylesheet" href="style/user_icon_menu.css">
@@ -83,11 +84,11 @@
                 <div class="search_container">
                     <input type="text" placeholder="Find task" class="search_input">
                     <div class="search_separator"></div>
-                    <img src="./assets/icons/search.png" class="search_icon">
+                    <img src="./assets/icons/search.png" class="search_icon hover">
                 </div>
 
-                <button onclick="addNewTask()" class="add_task_headline">Add task
-                    <img class="add_icon" src="./assets/icons/add.png">
+                <button onclick="addNewTask()" class="add_task_headline hover">Add task
+                    <img class="add_icon hover" src="./assets/icons/add.png">
                 </button>    
             </div>
         </div>
@@ -98,7 +99,7 @@
 
                 <div class="section_header">
                     <h3>To do</h3>
-                    <button onclick="addNewTask()" class="add_task_btn">+</button>
+                    <button onclick="addNewTask()" class="add_task_btn hover">+</button>
                 </div>
 
                 <div id="toDoContainer"></div> 
@@ -107,7 +108,7 @@
             <div class="kanban_section" ondrop="moveTo('inProgress')" ondragover="allowDrop(event)">
                 <div class="section_header">    
                     <h3>In progress</h3>
-                    <button onclick="addNewTask()" class="add_task_btn">+</button>
+                    <button onclick="addNewTask()" class="add_task_btn hover">+</button>
                 </div>
 
                 <div id="inProgressContainer"></div>
@@ -116,7 +117,7 @@
             <div class="kanban_section" ondrop="moveTo('awaitFeedback')" ondragover="allowDrop(event)">
                 <div class="section_header">
                     <h3>Await feedback</h3>
-                    <button onclick="addNewTask()" class="add_task_btn">+</button>
+                    <button onclick="addNewTask()" class="add_task_btn hover">+</button>
                 </div>
 
                 <div id="awaitFeedbackContainer"></div>

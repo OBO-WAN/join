@@ -1,6 +1,6 @@
 function getKanbanTemplate(task, assignedUsersHTML, index) {
-       console.log('task.id:', task.id, typeof task.id);
-    return `                <div class="task_container" draggable="true" ondragstart="startDragging('${task.id}')">
+    return `    <div class="task_container hover" data-task-id="${task.id}" data-task-index="${index}" draggable="true" ondragstart="startDragging('${task.id}')">
+                    
                     <div class="task">
                         <div class="task_category ${task.categoryClass}">${task.category}</div>
 
@@ -31,20 +31,20 @@ function getAddTaskOverlay() {
         <div class="overlay_headline">    
             <h2>Add Task</h2>
 
-            <button onclick="closeOverlay()" class="close_button">X</button>
+            <button onclick="closeOverlay()" class="close_button hover">X</button>
         </div>
 
         <form id="taskForm" class="form-grid">
             
             <div class="form-left">
                 <label for="title">Title <span class="required-marker">*</span></label>
-                <input type="text" id="title" name="title" placeholder="Enter a title" required>
+                <input type="text" class="hover" id="title" name="title" placeholder="Enter a title" required>
     
                 <label for="description">Description</label>
-                <textarea id="description" name="description" rows="4" placeholder="Enter a Description"></textarea>
+                <textarea id="description" class="hover" name="description" rows="4" placeholder="Enter a Description"></textarea>
     
                 <label for="due-date">Due Date <span class="required-marker">*</span></label>
-                <input type="date" id="due-date" name="due-date" required>
+                <input type="date" id="due-date" class="hover" name="due-date" required>
             </div>
     
             <div class="form-divider"></div>
@@ -69,14 +69,14 @@ function getAddTaskOverlay() {
                 </div>
     
                 <label for="assignees">Assigned to</label>
-                <select id="assignees" name="assignees">
+                <select class="hover" id="assignees" name="assignees">
                     <option value="" disabled selected>Select contacts to assign</option>
                 </select>
                     
                 </select>
     
                 <label for="category">Category <span class="required-marker">*</span></label>
-                <select id="category" name="category" required>
+                <select id="category" class="hover" name="category" required>
                     <option value="">Select category</option>
                     <option value="technical-task">Technical Task</option>
                     <option value="user-story">User Story</option>
@@ -106,4 +106,55 @@ function getAddTaskOverlay() {
         </div>
 
     `
+}
+
+
+function getTaskSheetOverlay(task, assignedUsersHTML, index) {
+    return `    <div class="task_container_overlay hover">
+
+                    <div class="task">
+
+                        <div class="overlay_headline"> 
+                            <div class="task_category_overlay ${task.categoryClass}">${task.category}</div>
+                            <button onclick="closeOverlay()" class="close_button hover">X</button>
+                        </div>
+
+                        <div class="task_information_overlay">
+                            <p class="task_title_overlay" id="task_title">${task.title}</p>
+                            <p class="task_details_overlay" id="task_details">${task.details}</p>
+
+                            <table>
+                                <tr>
+                                    <td>Due date:</td>
+                                    <td class="td_right">1.1.2011</td>
+                                </tr>
+                                <tr>
+                                    <td>Priority:</td>
+                                    <td class="td_priority">
+                                        <p class="margin_right_10">Medium</p>
+                                        <img src="./assets/icons/priority/priority_medium.png">
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div class="assigned_container">
+                                <p> Assigned to:</p>
+
+                                <div class="assigned_user">
+                                    <div class="user_initials_overlay">${assignedUsersHTML}<p>User Name</p></div>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                        <div id="subtask_container_${index}" class="subtask_container"></div>
+
+                        <div class="user_priority_container">
+                            <img src="./assets/icons/priority/priority_${task.priority}.png" class="priority_medium" id="priority">
+                        </div>
+
+                    </div>
+                </div>
+
+`
 }
