@@ -63,11 +63,11 @@ function renderContacts(contacts) {
     let oldLetter = ''; // Speichert den vorherigen Buchstaben
 
     for (let index = 0; index < contacts.length; index++) {
-        const contact = contacts[index];
+        let contact = contacts[index];
         //console.log("Kontakt:", contact);
-        const initials = getInitials(contact.name);
+        let initials = getInitials(contact.name);
         //console.log("Initials:", initials);
-        const firstLetter = contact.name.charAt(0).toUpperCase(); // Erster Buchstabe des Namens
+        let firstLetter = contact.name.charAt(0).toUpperCase(); // Erster Buchstabe des Namens
 
         // Wenn der Buchstabe wechselt, füge eine neue Überschrift hinzu
         if (oldLetter !== firstLetter) {
@@ -90,17 +90,17 @@ function renderContacts(contacts) {
 /* Mobile Version */
 function MobileVievCard(index){
     
-    const contact = Contacts[index];
+    let contact = Contacts[index];
     
     let initials = getInitials(contact.name);
     let color = getColor(initials[0]);
 
-    const contactsListElem = document.getElementById("contacts_list");
+    let contactsListElem = document.getElementById("contacts_list");
     if (contactsListElem) {
         contactsListElem.style.display = "none";
     }
 
-    const addNewContactSectionElem = document.getElementById("add_new_contact_section");
+    let addNewContactSectionElem = document.getElementById("add_new_contact_section");
     if (addNewContactSectionElem) {
         addNewContactSectionElem.style.display = "none";
     }
@@ -114,7 +114,7 @@ function MobileVievCard(index){
 /* Desktop Version*/
 function renderViewCard(index) {
     setActualContactIndex(index);
-    const contact = Contacts[index];
+    let contact = Contacts[index];
     
     let initials = getInitials(contact.name);
     let color = getColor(initials[0]);
@@ -162,7 +162,7 @@ function createContact() {
     updateDatabase(Contacts);
     renderContacts(Contacts);
     closeContactDialog();
-    closeContactDialogMobile()
+    closeContactDialogMobile();
     
 
     document.getElementById("name_input").value = "";
@@ -173,10 +173,10 @@ function createContact() {
 
 
 function editContact(id) {
+    let name = document.getElementById("name_input").value.trim();
+    let mail = document.getElementById("mail_input").value.trim();
+    let phone = document.getElementById("pohne_input").value.trim();
 
-    let name = document.getElementById("name_input").value;
-    let mail = document.getElementById("mail_input").value;
-    let phone = document.getElementById("pohne_input").value;
 
     if (!name || !mail  || !phone) {
         alert("EDIT: Bitte fülle die Felder Name, Mail und Pohne aus.")
@@ -198,9 +198,7 @@ function editContact(id) {
     Contacts[id] = newContact;
     updateDatabase(Contacts);
 
-    document.getElementById("name_input").value = "";
-    document.getElementById("mail_input").value = "";
-    document.getElementById("pohne_input").value = "";
+
 
     let viewMode = getViewMode();
     if (viewMode === 1) {
@@ -215,6 +213,10 @@ function editContact(id) {
         MobileVievCard(id);
         closeContactDialogMobile();
     }
+
+    /*document.getElementById("name_input").value = "";
+    document.getElementById("mail_input").value = "";
+    document.getElementById("pohne_input").value = "";*/
 
 }
 
@@ -322,10 +324,8 @@ function configEditDlgBox(id){
 function openContactDialog(id){
     //index > 0 entspricht Contacs editieren
     //index <0 entspricht neuen Kontakt erstellen
-
-    configEditDlgBox(id);
-
     document.getElementById("add_new_contact_ov_section").style.display = "flex";
+    configEditDlgBox(id);
 }
 
 
@@ -345,7 +345,17 @@ function openContactDialogMobile(id){
     let mobileDialogTemplate = getAddNewContactMobileTemplate();
     document.getElementById("add_new_contact_mobile_ov_container").innerHTML = mobileDialogTemplate;
     configEditDlgBox(id);
-    document.getElementById("add_new_contact_Mobile_btn").style.display = "none";
+
+    const addNewContactMobileBtn = document.getElementById("add_new_contact_Mobile_btn");
+    const mobileViewCartMenu = document.getElementById("mobile_view_card_menu");
+    if (mobileViewCartMenu  ) {
+        mobileViewCartMenu.style.display = "none";
+    }
+
+    if (addNewContactMobileBtn) {
+        addNewContactMobileBtn.style.display = "none";
+    }
+   
     console.log("openContactDialogMobile aufgerufen");
 
     //document.getElementById("add_new_contact_mobile_ov").style.display = "flex";
@@ -353,13 +363,16 @@ function openContactDialogMobile(id){
 
 function closeContactDialogMobile(){
     document.getElementById("add_new_contact_mobile_ov").style.display = "none";
-    document.getElementById("add_new_contact_Mobile_btn").style.display = "flex";
+    const addNewContactMobileBtn = document.getElementById("add_new_contact_Mobile_btn");
+    if (addNewContactMobileBtn) {
+        addNewContactMobileBtn.style.display = "flex";  
+    }
 }
 
 
 function getInitials(name)
 {
-    const initials = name
+    let initials = name
         .trim()
         .split(' ')
         .filter(word => word.length > 0)
@@ -376,7 +389,7 @@ function sortContacts(contacts){ //sort contacts by name
 
 function getFirstLetter(name, oldLetter, change){ //get first letter of name
 
-    const firstLetter = name.charAt(0);
+    let firstLetter = name.charAt(0);
 
     if (oldLetter !== firstLetter) {
         change = true;
@@ -440,23 +453,18 @@ function handleWindowResize(index){
 
     if (window.innerWidth > 825) {
 
-        //if (bigWindowIsRendered == false) {
             renderContacts(Contacts);
-
 
             if (idx < 0) {
                 // Clear the view card
                 clearViewCard();
-            }else
-            {
+            }else {
                 renderViewCard(idx);
             }
             bigWindowIsRendered = true;
-      //  }
-
     }else {
         document.getElementById("contactViewCard").style.display = "flex";
-        goBacktoContacts()
+        goBacktoContacts();
         //renderContacts(Contacts);
         bigWindowIsRendered = false;
     }
@@ -494,7 +502,7 @@ function getActualContactIndex(){
 
 function goBacktoContacts(){
     
-    const contactsContainer = document.getElementById("contactslist_container");
+    let contactsContainer = document.getElementById("contactslist_container");
     if (contactsContainer) {
         contactsContainer.innerHTML = `
             <div class="add_new_contact_section" id="add_new_contact_section">
@@ -510,7 +518,17 @@ function goBacktoContacts(){
                 </div>
             </div>
         `;
-        const addNewContact = getAddNewCotactTemplate();
+
+        let addNewContact = "";
+        let viewMode = getViewMode();
+        if (viewMode === 1) {
+            addNewContact = getAddNewCotactTemplate();
+        }else if (viewMode === 2) {
+            addNewContact = getAddNewContactMobileTemplate();
+        }else if (viewMode === 3) {
+            addNewContact = getAddNewContactMobileTemplate();
+        }
+
         document.getElementById("add_new_contact_section").innerHTML = addNewContact;
     }
     renderContacts(Contacts);
@@ -524,7 +542,7 @@ function editContactsMobileMenuOn() {
 
 
 function editContactsMobileMenuOff() {
-    const menu = document.getElementById("mobile_view_card_menu");
+    let menu = document.getElementById("mobile_view_card_menu");
     
         menu.style.display = "none";
         document.removeEventListener('mousedown', handleOutsideClickForMobileMenu);
@@ -533,7 +551,7 @@ function editContactsMobileMenuOff() {
 
 
 function handleOutsideClickForMobileMenu(event) {
-    const menu = document.getElementById("mobile_view_card_menu");
+    let menu = document.getElementById("mobile_view_card_menu");
     if (menu && !menu.contains(event.target)) {
         editContactsMobileMenuOff();
     }
