@@ -84,7 +84,7 @@ function getMobileViewCardTemplate(id, color) {
     return `
     <div id="mobile_view_card_header">
       <div class="contact_view_header">  
-            <div class="contact_view_header_section">
+            <div class="contact_view_header_section" id ="contact_view_header_section">
             <div class="contacts_view_hl_section">
                 <span class="contacts_view_hl">Contacts</span>
             </div>    
