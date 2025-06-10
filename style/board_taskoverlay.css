@@ -120,3 +120,11 @@ table {
     overflow-y: auto;
   }
 }
+
+/* hidden <header> */
+@media only screen and (max-width: 768px) {
+  .overlay:not(.d-none) ~ header {
+    display: none;
+  }
+}
+

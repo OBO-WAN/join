@@ -222,10 +222,14 @@ function addNewTask() {
 function closeOverlay() {
     const overlay = document.getElementById('overlay');
     overlay.classList.add('d-none');
+
+    // document.body.classList.remove('overlay-active');
+    // document.getElementById('overlay').classList.add('d-none');
 }
 
 
 function openTask(task, assignedUsersHTML, index) {
+    document.body.classList.add('overlay-active'); // hides <header> as well
     console.log('openTask wurde aufgerufen');
     const overlay = document.getElementById('overlay');
     overlay.innerHTML = "";
