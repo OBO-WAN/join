@@ -10,7 +10,6 @@
 }
 
 .headline {
-  margin-bottom: 50px;
   color: black;
   font-size: 50px;
   font-weight: bold;
@@ -21,6 +20,7 @@
   justify-content: space-between;
   align-items: center;
   width: 90%;
+  gap: 32px;
 }
 
 .search_task_container {
