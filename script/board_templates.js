@@ -1,5 +1,5 @@
 function getKanbanTemplate(task, assignedUsersHTML, index) {
-    return `    <div class="task_container hover" data-task-id="${task.id}" data-task-index="${index}" draggable="true" ondragstart="startDragging('${task.id}')">
+  return `    <div class="task_container hover" data-task-id="${task.id}" data-task-index="${index}" draggable="true" ondragstart="startDragging('${task.id}')">
                     
                     <div class="task">
                         <div class="task_category ${task.categoryClass}">${task.category}</div>
@@ -19,11 +19,11 @@ function getKanbanTemplate(task, assignedUsersHTML, index) {
                     </div>
                 </div>
 
-`
+`;
 }
 
 function getAddTaskOverlay() {
-    return `
+  return `
             <div class="overlay-content">
 
         <div class="add-task-container add-task-container-overlay">
@@ -105,56 +105,89 @@ function getAddTaskOverlay() {
             </div>
         </div>
 
-    `
+    `;
 }
-
 
 function getTaskSheetOverlay(task, assignedUsersHTML, index) {
-    return `    <div class="task_container_overlay hover">
+    return `
+      <div class="task_container_overlay hover">
+        <div class="task">
+  
+          <div class="overlay_headline"> 
+            <div class="task_category_overlay ${task.categoryClass}">${task.category}</div>
+            <button onclick="closeOverlay()" class="close_button hover">X</button>
+          </div>
+  
+          <div class="task_information_overlay">
+            <p class="task_title_overlay" id="task_title">${task.title}</p>
+            <p class="task_details_overlay" id="task_details">${task.details}</p>
+  
+            <table>
+              <tr>
+                <td>Due date:</td>
+                <td class="td_right">${task.dueDate || "1.1.2011"}</td>
+              </tr>
+              <tr>
+                <td>Priority:</td>
+                <td class="td_priority">
+                  <p class="margin_right_10">${task.priority}</p>
+                  <img src="./assets/icons/priority/priority_${task.priority.toLowerCase()}.png">
+                </td>
+              </tr>
+            </table>
+  
+            <div class="assigned_container">
+              <p>Assigned to:</p>
+              <div class="assigned_user">
+                <div class="user_initials_overlay">${assignedUsersHTML}<p>User Name</p></div>
+              </div>
+            </div>
+          </div>
+  
+          <div id="subtask_container_${index}" class="subtask_container"></div>
+  
+          <div class="popup-subtasks">
+            <span class="subtasks-label">Subtasks:</span>
+            <div class="subtasks-list" id="subtasks-list">
+              <div class="subtasks-elements-container" onclick="toggleSubtaskCheckbox(this)">
+                <img class="subtask-checkbox-img" src="assets/icons/checkbox-empty.svg" alt="Checkbox">
+                <span>In die Firebase Posten</span>
+              </div>
+              <div class="subtasks-elements-container" onclick="toggleSubtaskCheckbox(this)">
+                <img class="subtask-checkbox-img" src="assets/icons/checkbox-checked.svg" alt="Checkbox">
+                <span>Teste Task erstellung</span>
+              </div>
+              <div class="subtasks-elements-container" onclick="toggleSubtaskCheckbox(this)">
+                <img class="subtask-checkbox-img" src="assets/icons/checkbox-checked.svg" alt="Checkbox">
+                <span>Erfolgreich</span>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Popup Actions (Bottom Positioned on Mobile) -->
+          <div class="popup-actions">
+            <div class="action-box delete" onclick="deleteTaskFromBoardPopup()">
+              <div class="delete-icon">
+                <img src="assets/icons/delete_icon.svg" alt="Delete" id="delete_icon">
+              </div>
+              <span class="delete-btn">Delete</span>
+            </div>
+  
+            <div>
+              <img src="assets/icons/vertical_line.svg" alt="horizontal dividing line">
+            </div>
+  
+            <div class="action-box edit" onclick="editPopupTask('${task.id}')">
+              <div class="edit-icon">
+                <img src="assets/icons/edit.svg" alt="Edit" id="edit_icon">
+              </div>
+              <span class="edit-btn">Edit</span>
+            </div>
+          </div>
 
-                    <div class="task">
 
-                        <div class="overlay_headline"> 
-                            <div class="task_category_overlay ${task.categoryClass}">${task.category}</div>
-                            <button onclick="closeOverlay()" class="close_button hover">X</button>
-                        </div>
-
-                        <div class="task_information_overlay">
-                            <p class="task_title_overlay" id="task_title">${task.title}</p>
-                            <p class="task_details_overlay" id="task_details">${task.details}</p>
-
-                            <table>
-                                <tr>
-                                    <td>Due date:</td>
-                                    <td class="td_right">1.1.2011</td>
-                                </tr>
-                                <tr>
-                                    <td>Priority:</td>
-                                    <td class="td_priority">
-                                        <p class="margin_right_10">Medium</p>
-                                        <img src="./assets/icons/priority/priority_medium.png">
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <div class="assigned_container">
-                                <p> Assigned to:</p>
-
-                                <div class="assigned_user">
-                                    <div class="user_initials_overlay">${assignedUsersHTML}<p>User Name</p></div>
-                                </div>
-                            </div>
-                            
-                        </div>
-
-                        <div id="subtask_container_${index}" class="subtask_container"></div>
-
-                        <div class="user_priority_container">
-                            <img src="./assets/icons/priority/priority_${task.priority}.png" class="priority_medium" id="priority">
-                        </div>
-
-                    </div>
-                </div>
-
-`
-}
+        </div>  
+    </div>
+    `;
+  }
+  
