@@ -1,3 +1,9 @@
+.task {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 @media (max-width: 768px) {
   .board_container {
     padding-left: 16px;
@@ -99,6 +105,54 @@ table {
   box-sizing: border-box;
 }
 
+.popup-subtasks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 12px;
+}
+.subtasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-left: 8px;
+  overflow-y: auto;
+  max-height: 104px;
+}
+.subtasks-elements-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.subtasks-list img {
+  cursor: pointer;
+}
+
+.subtasks-elements-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.popup-actions {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  gap: 21px;
+  align-items: center;
+  bottom: 30px;
+  right: 18px;
+}
+@media only screen and (max-width: 450px) {
+  .popup-actions {
+    display: flex;
+    width: 100%;
+    margin-top: 144px; /*to be eventually modified by removing the responsive <nav>*/
+    justify-content: flex-end;
+    padding: 12px 0;
+  }
+} 
+
 /* Responsive Overlay */
 
 @media only screen and (max-width: 450px) {
@@ -133,10 +187,9 @@ table {
 
 @media (min-width: 451px) and (max-width: 1024px) {
   .task_container_overlay {
-    width: 90vw;
     max-width: 520px;
     max-height: 750px;
-    padding: 24px;
+    padding: 38px;
     margin: 32px auto;
     border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
