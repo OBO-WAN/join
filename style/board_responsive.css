@@ -1,0 +1,69 @@
+@media (min-width: 451px) and (max-width: 1024px) {
+  .overlay {
+    padding: 16px;
+    align-items: flex-start;
+    justify-content: center;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .board_container {
+    padding-top: 100px;
+    padding-left: 16px;
+    padding-bottom: 16px;
+    margin-right: 20px;
+  }
+
+  .headline_container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .search_task_container {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .search_container,
+  .add_task_headline {
+    width: 100%;
+  }
+
+  .kanban_container {
+    overflow-x: visible;
+    flex-wrap: nowrap;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-right: 20px;
+  }
+
+  .kanban_section {
+    min-width: 280px;
+    flex: 0 0 auto;
+  }
+
+  .task_information {
+    width: 100%;
+  }
+
+  .add_task_headline {
+    display: none;
+  }
+
+  .section_header {
+    width: 100vw;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+  }
+
+}
