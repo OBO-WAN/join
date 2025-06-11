@@ -32,7 +32,7 @@ function getContacts(data){
         });
 
     if( getViewMode() === 1)    clearViewCard();
-
+    setActualContactIndex(-1);
     /*versionHandling();*/
     return data;
 
@@ -111,6 +111,31 @@ function MobileVievCard(index){
     renderViewCard(index); 
 }
 
+
+function renderTabletVievCard(index){
+    
+    let contact = Contacts[index];
+    
+    let initials = getInitials(contact.name);
+    let color = getColor(initials[0]);
+
+    let contactsListElem = document.getElementById("contacts_list");
+    if (contactsListElem) {
+        contactsListElem.style.display = "none";
+    }
+
+    let addNewContactSectionElem = document.getElementById("add_new_contact_section");
+    if (addNewContactSectionElem) {
+        addNewContactSectionElem.style.display = "none";
+    }
+
+    let viewCardTemp  = getTabletViewCardTemplate(index, color);
+    let contactsContainer = document.getElementById("contactslist_container");
+    contactsContainer.innerHTML = viewCardTemp ;
+    renderViewCard(index); 
+    console.log("renderTabletVievCard aufgerufen");
+}
+
 /* Desktop Version*/
 function renderViewCard(index) {
     setActualContactIndex(index);
@@ -138,9 +163,14 @@ function getContact(id){
 
 
 function createContact() {
-    let name = document.getElementById("name_input").value.trim();
-    let mail = document.getElementById("mail_input").value.trim();
-    let phone = document.getElementById("pohne_input").value.trim();
+
+    let KindOfDlg_pc = "";
+    let viewMode = getViewMode();
+    if (viewMode === 1 || viewMode === 2) { KindOfDlg_pc = "_pc"; }
+
+    let name = document.getElementById("name_input" + KindOfDlg_pc).value.trim();
+    let mail = document.getElementById("mail_input" + KindOfDlg_pc).value.trim();
+    let phone = document.getElementById("pohne_input" + KindOfDlg_pc).value.trim();
     if (!name || !mail  || !phone) {
         alert("Bitte fülle die Felder Name, Mail und Pohne aus.")
         return;
@@ -165,10 +195,29 @@ function createContact() {
     closeContactDialogMobile();
     
 
-    document.getElementById("name_input").value = "";
-    document.getElementById("mail_input").value = "";
-    document.getElementById("pohne_input").value = "";
+    document.getElementById("name_input" + KindOfDlg_pc).value = "";
+    document.getElementById("mail_input" + KindOfDlg_pc).value = "";
+    document.getElementById("pohne_input" + KindOfDlg_pc).value = "";
     console.log("Neuer Kontakt hinzugefügt:", newContact);
+}
+
+
+/**
+ * Finds the new index of a contact after sorting the contacts array by name.
+ * @param {Object} contact - The contact object to search for.
+ * @returns {number} - The new index of the contact in the sorted Contacts array, or -1 if not found.
+ */
+function findContactNewIndex(contact) {
+    for (let i = 0; i < Contacts.length; i++) {
+        if (
+            Contacts[i].name === contact.name &&
+            Contacts[i].mail === contact.mail &&
+            Contacts[i].phone === contact.phone
+        ) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 
@@ -176,7 +225,7 @@ function editContact(id) {
 
     let KindOfDlg_pc = "";
     let viewMode = getViewMode();
-    if (viewMode === 1) { KindOfDlg_pc = "_pc"; }
+    if (viewMode === 1 || viewMode === 2) { KindOfDlg_pc = "_pc"; }
 
     let name = document.getElementById("name_input" + KindOfDlg_pc).value.trim();
     let mail = document.getElementById("mail_input" + KindOfDlg_pc).value.trim();
@@ -202,16 +251,20 @@ function editContact(id) {
     
     Contacts[id] = newContact;
     updateDatabase(Contacts);
+    id = findContactNewIndex(newContact);
 
     if (viewMode === 1) {
         renderContacts(Contacts);
         renderViewCard(id);
         closeContactDialog();
     }else if (viewMode === 2) {
+        renderContacts(Contacts);
+        renderViewCard(id);
+        closeContactDialog();
+    }else if (viewMode === 3) {
         MobileVievCard(id);
         closeContactDialogMobile();
-    }
-    else if (viewMode === 3) {
+    }else if (viewMode === 4) {
         MobileVievCard(id);
         closeContactDialogMobile();
     }
@@ -272,8 +325,12 @@ function clearViewCard()
     let viewMode = getViewMode();
     if( viewMode === 1) {
         document.getElementById("contactViewCard").innerHTML = "";
-    }else if( viewMode === 2 || viewMode === 3) {
-        document.getElementById("contact_view_card").innerHTML = ""; 
+    }else if( viewMode === 2) {
+         document.getElementById("contactViewCard").innerHTML = "";
+    }else if(viewMode === 3){
+        document.getElementById("contact_view_card").innerHTML = "";
+    }else if(viewMode === 4){
+        document.getElementById("contact_view_card").innerHTML = "";
     }
     
 }
@@ -346,14 +403,14 @@ function closeContactDialog(){
 
 /*contact dialog mobile section*/
 function openContactDialogMobile(id){
-    //editContactsMobileMenuOff();
      
     let mobileDialogTemplate = getAddNewContactMobileTemplate();
     document.getElementById("add_new_contact_mobile_ov_container").innerHTML = mobileDialogTemplate;
     configEditDlgBox(id);
 
     console.log("openContactDialogMobile aufgerufen");
-
+    
+    editContactsMobileMenuOff();
     //document.getElementById("add_new_contact_mobile_ov").style.display = "flex";
 }
 
@@ -400,21 +457,24 @@ function getFirstLetter(name, oldLetter, change){ //get first letter of name
 
 
 /* return:
-    1 = desktop (default value)
-    2 = mobile
-    3 = tablet
-    4 = other
+    1 = desktop big     | >= 1100
+    2 = desktop small   | < 1100
+    3 = tablet          | < 825
+    4 = mobile          | < 560
 */
 function getViewMode()
 {
     let viewMode = 1;
     
-    if (window.innerWidth < 825) {
+    if (window.innerWidth < 1100) {
         viewMode = 2;
     }
 
-    if (window.innerWidth < 560) {
+    if (window.innerWidth < 825) {
         viewMode = 3;
+    }
+    if (window.innerWidth < 560) {
+        viewMode = 4;
     }
 
     return viewMode;
@@ -428,15 +488,20 @@ function proofVersion(index){
     let version = getViewMode();
 
     switch (version) {
-        case 1:
-            renderViewCard(index)
+        case 1: //  1 = desktop big     | >= 1100
+            renderViewCard(index);
             break;
-        case 2:
-            MobileVievCard(index)
-            break;
+
+        case 2: // 2 = desktop small   | < 1100
+                // 3 = tablet          | < 825
         case 3:
-            MobileVievCard(index)
+            renderTabletVievCard(index);
             break;
+        
+        case 4: // 4 = mobile          | < 560
+            MobileVievCard(index);
+            break;
+
         default:
             break;
     }
