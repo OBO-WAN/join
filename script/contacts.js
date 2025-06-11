@@ -2,7 +2,7 @@ let Contacts = [];
 let actualContactIndex = 0;
 
 window.addEventListener('resize', () => {
-    handleWindowResize( getActualContactIndex() );
+    handleWindowResize();
 });
 
 let colorsArray = [
@@ -173,9 +173,14 @@ function createContact() {
 
 
 function editContact(id) {
-    let name = document.getElementById("name_input").value.trim();
-    let mail = document.getElementById("mail_input").value.trim();
-    let phone = document.getElementById("pohne_input").value.trim();
+
+    let KindOfDlg_pc = "";
+    let viewMode = getViewMode();
+    if (viewMode === 1) { KindOfDlg_pc = "_pc"; }
+
+    let name = document.getElementById("name_input" + KindOfDlg_pc).value.trim();
+    let mail = document.getElementById("mail_input" + KindOfDlg_pc).value.trim();
+    let phone = document.getElementById("pohne_input" + KindOfDlg_pc).value.trim();
 
 
     if (!name || !mail  || !phone) {
@@ -198,9 +203,6 @@ function editContact(id) {
     Contacts[id] = newContact;
     updateDatabase(Contacts);
 
-
-
-    let viewMode = getViewMode();
     if (viewMode === 1) {
         renderContacts(Contacts);
         renderViewCard(id);
@@ -285,23 +287,27 @@ function configEditDlgBox(id){
     let btnText ="";
     //let kindOfDlg_Text = "";
     let functionName = "";
+    let KindOfDlg_pc = "";
+    let viewMode = getViewMode();
+    if (viewMode === 1) { KindOfDlg_pc = "_pc"; }
+    
 
     switch(kindOFEdit){
         case "editContact":
-                document.getElementById("Kind_Of_Dlg").innerHTML = "Edit contact";
+                document.getElementById("Kind_Of_Dlg" + KindOfDlg_pc).innerHTML = "Edit contact";
                 btnText = "Save";
                 functionName = "editContact(" + id + ")";
 
                 let oldContactData = Contacts[id];
 
-                document.getElementById("name_input").value = oldContactData.name; // Contacts[id].name;
-                document.getElementById("mail_input").value = oldContactData.mail //Contacts[id].mail;
-                document.getElementById("pohne_input").value = oldContactData.phone; //Contacts[id].phone;
+                document.getElementById("name_input" + KindOfDlg_pc).value = oldContactData.name; // Contacts[id].name;
+                document.getElementById("mail_input" + KindOfDlg_pc).value = oldContactData.mail //Contacts[id].mail;
+                document.getElementById("pohne_input" + KindOfDlg_pc).value = oldContactData.phone; //Contacts[id].phone;
 
             break;
 
         case "createContact":
-                document.getElementById("Kind_Of_Dlg").innerHTML = "Add contact";
+                document.getElementById("Kind_Of_Dlg" + KindOfDlg_pc).innerHTML = "Add contact";
                 btnText = "Create";
                 functionName = "createContact()";
             break;
@@ -312,7 +318,7 @@ function configEditDlgBox(id){
 
     let btnHtml = `
         <button class="create_btn" id="id_Edit_Btn" onclick = "${functionName}">
-            <span id="id_Edit_Btn_Text">${btnText}</span>
+            <span id="id_Edit_Btn_Text${KindOfDlg_pc}">${btnText}</span>
             <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
         </button>`;
 
@@ -346,16 +352,6 @@ function openContactDialogMobile(id){
     document.getElementById("add_new_contact_mobile_ov_container").innerHTML = mobileDialogTemplate;
     configEditDlgBox(id);
 
-    const addNewContactMobileBtn = document.getElementById("add_new_contact_Mobile_btn");
-    const mobileViewCartMenu = document.getElementById("mobile_view_card_menu");
-    if (mobileViewCartMenu  ) {
-        mobileViewCartMenu.style.display = "none";
-    }
-
-    if (addNewContactMobileBtn) {
-        addNewContactMobileBtn.style.display = "none";
-    }
-   
     console.log("openContactDialogMobile aufgerufen");
 
     //document.getElementById("add_new_contact_mobile_ov").style.display = "flex";
@@ -447,7 +443,7 @@ function proofVersion(index){
 }
 
 
-function handleWindowResize(index){
+function handleWindowResize(){
 
     let idx = getActualContactIndex();
 
@@ -461,6 +457,12 @@ function handleWindowResize(index){
             }else {
                 renderViewCard(idx);
             }
+/**/
+            let addNewContact = "";
+            addNewContact = getAddNewCotactTemplate();
+            document.getElementById("add_new_contact_section").innerHTML = addNewContact;
+/**/
+
             bigWindowIsRendered = true;
     }else {
         document.getElementById("contactViewCard").style.display = "flex";
