@@ -1,3 +1,30 @@
+/**
+ * Generates the HTML string for a single task card displayed on the Kanban board.
+ * 
+ * The card includes task category, title, description, assigned user avatars,
+ * priority icon, and an empty container for subtask progress (populated later by JS).
+ * It also includes drag-and-drop attributes and a click event hook to open the overlay.
+ * 
+ * Used in rendering logic such as `renderCurrentTasks()` in board.js.
+ * 
+ * @function getKanbanTemplate
+ * @param {Object} task - The task object to render.
+ * @param {string} task.id - Unique identifier for the task.
+ * @param {string} task.category - Task category (e.g., "Technical Task").
+ * @param {string} task.categoryClass - CSS class applied to the category label.
+ * @param {string} task.title - Task title.
+ * @param {string} task.details - Task description/details.
+ * @param {string} task.priority - Task priority (e.g., "low", "medium", "urgent").
+ * @param {Array<Object>} assignedUsersHTML - Pre-rendered user initials HTML string.
+ * @param {number} index - Index of the task in the current list (used for DOM targeting).
+ * 
+ * @returns {string} - HTML string representing a Kanban board task card.
+ * 
+ * @example
+ * const cardHTML = getKanbanTemplate(task, assignedHTML, 3);
+ * document.getElementById('toDoContainer').innerHTML += cardHTML;
+ */
+
 function getKanbanTemplate(task, assignedUsersHTML, index) {
   return `    <div class="task_container hover" data-task-id="${task.id}" data-task-index="${index}" draggable="true" ondragstart="startDragging('${task.id}')">
                     
@@ -21,6 +48,28 @@ function getKanbanTemplate(task, assignedUsersHTML, index) {
 
 `;
 }
+
+/**
+ * Generates the HTML structure for the "Add Task" overlay form.
+ * Includes inputs for title, description, due date, priority selection,
+ * category dropdown, contact assignee selector, and dynamic subtask entry.
+ * 
+ * This form is typically displayed in a modal (overlay) when the user clicks
+ * "Add Task" on the board or from the sidebar menu.
+ * 
+ * The returned HTML is meant to be injected into an element with the ID "overlay",
+ * and works in conjunction with form handlers in `add_task.js`.
+ * 
+ * @function getAddTaskOverlay
+ * 
+ * @returns {string} - A complete HTML string for rendering the task creation form overlay.
+ * 
+ * @example
+ * const overlay = document.getElementById('overlay');
+ * overlay.innerHTML = getAddTaskOverlay();
+ * overlay.classList.remove('d-none');
+ */
+
 
 function getAddTaskOverlay() {
   return `
@@ -108,85 +157,106 @@ function getAddTaskOverlay() {
     `;
 }
 
+
+/**
+ * Generates the HTML content for the task detail overlay (popup) including task information,
+ * assigned users, priority, and dynamically rendered subtasks with interactive checkboxes.
+ * 
+ * @function getTaskSheetOverlay
+ * @param {Object} task - The task object containing details about the task.
+ * @param {string} task.id - The unique ID of the task.
+ * @param {string} task.title - The task title.
+ * @param {string} task.details - The task description/details.
+ * @param {string} task.dueDate - The due date of the task.
+ * @param {string} task.priority - The task's priority level ('low', 'medium', 'urgent').
+ * @param {string} task.category - The task category (e.g., 'Technical Task').
+ * @param {string} task.categoryClass - CSS class used to style the category badge.
+ * @param {Array<Object>} task.subTasks - Array of subtasks, each with a title and done status.
+ * @param {string} task.subTasks[].title - Title of the subtask.
+ * @param {boolean} task.subTasks[].done - Whether the subtask is completed.
+ * @param {string} assignedUsersHTML - Pre-rendered HTML string of assigned user badges.
+ * @param {number} index - The index of the task (used to scope DOM elements uniquely).
+ * 
+ * @returns {string} HTML string to be injected into the DOM for the overlay popup.
+ * 
+ * @example
+ * const overlayHTML = getTaskSheetOverlay(taskObj, assignedUsersHTML, 2);
+ * document.getElementById('overlay').innerHTML = overlayHTML;
+ */
+
 function getTaskSheetOverlay(task, assignedUsersHTML, index) {
   return `
-      <div class="task_container_overlay hover">
-        <div class="task">
-  
-          <div class="overlay_headline"> 
-            <div class="task_category_overlay ${task.categoryClass}">${task.category}</div>
-            <button onclick="closeOverlay()" class="close_button hover">X</button>
-          </div>
-  
-          <div class="task_information_overlay">
-            <p class="task_title_overlay" id="task_title">${task.title}</p>
-            <p class="task_details_overlay" id="task_details">${task.details}</p>
-  
-            <table>
-              <tr>
-                <td>Due date:</td>
-                <td class="td_right">${task.dueDate || "1.1.2011"}</td>
-              </tr>
-              <tr>
-                <td>Priority:</td>
-                <td class="td_priority">
-                  <p class="margin_right_10">${task.priority}</p>
-                  <img src="./assets/icons/priority/priority_${task.priority.toLowerCase()}.png">
-                </td>
-              </tr>
-            </table>
-  
-            <div class="assigned_container">
-              <p>Assigned to:</p>
-              <div class="assigned_user">
-                <div class="user_initials_overlay">${assignedUsersHTML}<p>User Name</p></div>
-              </div>
+    <div class="task_container_overlay hover">
+      <div class="task">
+
+        <div class="overlay_headline"> 
+          <div class="task_category_overlay ${task.categoryClass}">${task.category}</div>
+          <button onclick="closeOverlay()" class="close_button hover">X</button>
+        </div>
+
+        <div class="task_information_overlay">
+          <p class="task_title_overlay" id="task_title">${task.title}</p>
+          <p class="task_details_overlay" id="task_details">${task.details}</p>
+
+          <table>
+            <tr>
+              <td>Due date:</td>
+              <td class="td_right">${task.dueDate || "1.1.2011"}</td>
+            </tr>
+            <tr>
+              <td>Priority:</td>
+              <td class="td_priority">
+                <p class="margin_right_10">${task.priority}</p>
+                <img src="./assets/icons/priority/priority_${task.priority.toLowerCase()}.png">
+              </td>
+            </tr>
+          </table>
+
+          <div class="assigned_container">
+            <p>Assigned to:</p>
+            <div class="assigned_user">
+              <div class="user_initials_overlay">${assignedUsersHTML}<p>User Name</p></div>
             </div>
           </div>
-  
-          <div id="subtask_container_${index}" class="subtask_container"></div>
-  
-          <div class="popup-subtasks">
-            <span class="subtasks-label">Subtasks:</span>
-            <div class="subtasks-list" id="subtasks-list">
-              <div class="subtasks-elements-container" onclick="toggleSubtaskCheckbox(this)">
-                <img class="subtask-checkbox-img" src="assets/icons/checkbox-empty.svg" alt="Checkbox">
-                <span>In die Firebase Posten</span>
-              </div>
-              <div class="subtasks-elements-container" onclick="toggleSubtaskCheckbox(this)">
-                <img class="subtask-checkbox-img" src="assets/icons/checkbox-empty.svg" alt="Checkbox">
-                <span>Teste Task erstellung</span>
-              </div>
-              <div class="subtasks-elements-container" onclick="toggleSubtaskCheckbox(this)">
-                <img class="subtask-checkbox-img" src="assets/icons/checkbox-empty.svg" alt="Checkbox">
-                <span>Erfolgreich</span>
-              </div>
-            </div>
+        </div>
+
+        <div id="subtask_container_${index}" class="subtask_container"></div>
+
+        <div class="popup-subtasks">
+          <span class="subtasks-label">Subtasks:</span>
+          <div class="subtasks-list" id="subtasks-list-${index}">
+            ${
+              (task.subTasks || []).map((subtask, subIndex) => `
+                <div class="subtasks-elements-container" onclick="toggleSubtaskCheckbox(this, '${task.id}', ${subIndex})">
+                  <img class="subtask-checkbox-img" src="assets/icons/${subtask.done ? 'checkbox-checked' : 'checkbox-empty'}.svg" alt="Checkbox">
+                  <span>${subtask.title}</span>
+                </div>
+              `).join("")
+            }
           </div>
-  
-          <!-- Popup Actions (Bottom Positioned on Mobile) -->
-          <div class="popup-actions">
-            <div class="action-box delete" onclick="deleteTaskFromBoardPopup()">
-              <div class="delete-icon">
-                <img src="assets/icons/delete_icon.svg" alt="Delete" id="delete_icon">
-              </div>
-              <span class="delete-btn">Delete</span>
+        </div>
+
+        <div class="popup-actions">
+          <div class="action-box delete" onclick="deleteTaskFromBoardPopup('${task.id}')">
+            <div class="delete-icon">
+              <img src="assets/icons/delete_icon.svg" alt="Delete" id="delete_icon">
             </div>
-  
-            <div>
-              <img src="assets/icons/vertical_line.svg" alt="horizontal dividing line">
-            </div>
-  
-            <div class="action-box edit" onclick="editPopupTask('${task.id}')">
-              <div class="edit-icon">
-                <img src="assets/icons/edit.svg" alt="Edit" id="edit_icon">
-              </div>
-              <span class="edit-btn">Edit</span>
-            </div>
+            <span class="delete-btn">Delete</span>
           </div>
 
+          <div>
+            <img src="assets/icons/vertical_line.svg" alt="horizontal dividing line">
+          </div>
 
-        </div>  
+          <div class="action-box edit" onclick="editPopupTask('${task.id}')">
+            <div class="edit-icon">
+              <img src="assets/icons/edit.svg" alt="Edit" id="edit_icon">
+            </div>
+            <span class="edit-btn">Edit</span>
+          </div>
+        </div>
+
+      </div>  
     </div>
-    `;
+  `;
 }
