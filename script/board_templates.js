@@ -109,7 +109,7 @@ function getAddTaskOverlay() {
 }
 
 function getTaskSheetOverlay(task, assignedUsersHTML, index) {
-    return `
+  return `
       <div class="task_container_overlay hover">
         <div class="task">
   
@@ -154,11 +154,11 @@ function getTaskSheetOverlay(task, assignedUsersHTML, index) {
                 <span>In die Firebase Posten</span>
               </div>
               <div class="subtasks-elements-container" onclick="toggleSubtaskCheckbox(this)">
-                <img class="subtask-checkbox-img" src="assets/icons/checkbox-checked.svg" alt="Checkbox">
+                <img class="subtask-checkbox-img" src="assets/icons/checkbox-empty.svg" alt="Checkbox">
                 <span>Teste Task erstellung</span>
               </div>
               <div class="subtasks-elements-container" onclick="toggleSubtaskCheckbox(this)">
-                <img class="subtask-checkbox-img" src="assets/icons/checkbox-checked.svg" alt="Checkbox">
+                <img class="subtask-checkbox-img" src="assets/icons/checkbox-empty.svg" alt="Checkbox">
                 <span>Erfolgreich</span>
               </div>
             </div>
@@ -189,5 +189,4 @@ function getTaskSheetOverlay(task, assignedUsersHTML, index) {
         </div>  
     </div>
     `;
-  }
-  
+}
