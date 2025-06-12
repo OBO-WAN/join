@@ -111,7 +111,7 @@ function MobileVievCard(index){
     renderViewCard(index); 
 }
 
-
+/*Tablat version*/
 function renderTabletVievCard(index){
     
     let contact = Contacts[index];
@@ -269,9 +269,9 @@ function editContact(id) {
         closeContactDialogMobile();
     }
 
-    /*document.getElementById("name_input").value = "";
-    document.getElementById("mail_input").value = "";
-    document.getElementById("pohne_input").value = "";*/
+    document.getElementById("name_input"+ KindOfDlg_pc).value = "";
+    document.getElementById("mail_input"+ KindOfDlg_pc).value = "";
+    document.getElementById("pohne_input"+ KindOfDlg_pc).value = "";
 
 }
 
@@ -397,6 +397,9 @@ function closeContactDialog(){
     document.getElementById("add_new_contact_ov_section").style.display = "none";
     console.log("closeContactDialog aufgerufen");
 
+        document.getElementById("name_input_pc").value = "";
+    document.getElementById("mail_input_pc").value = "";
+    document.getElementById("pohne_input_pc").value = "";
     // dialog beim schliesen lleeren
 }
 
