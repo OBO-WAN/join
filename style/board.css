@@ -10,7 +10,6 @@
 }
 
 .headline {
-  margin-bottom: 50px;
   color: black;
   font-size: 50px;
   font-weight: bold;
@@ -21,6 +20,7 @@
   justify-content: space-between;
   align-items: center;
   width: 90%;
+  gap: 32px;
 }
 
 .search_task_container {
@@ -312,6 +312,16 @@ h3 {
 }
 
 /* ===== Responsive Fixes for Board Page ===== */
+
+@media (min-width: 451px) and (max-width: 1024px) {
+  .overlay {
+    padding: 16px;
+    align-items: flex-start;
+    justify-content: center;
+    overflow-y: auto;
+  }
+}
+
 @media (max-width: 768px) {
   .board_container {
     padding: 100px 16px 16px 16px; /* top space for fixed header */

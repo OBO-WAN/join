@@ -112,6 +112,12 @@ header h1 {
   }
 }
 
+@media (max-width: 768px) {
+  body.overlay-active header {
+    display: none !important;
+  }
+}
+
 nav.sidebar {
     background-color: #2a3647;
     position: fixed;
