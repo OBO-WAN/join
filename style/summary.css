@@ -57,7 +57,7 @@
   opacity: 1;
   display: none;
   position: absolute;
-  /* height: calc(100dvh - 160px); */
+  height: calc(100vh - 160px);
   width: 100%;
   top: 80px;
   left: 0;
@@ -65,7 +65,7 @@
   z-index: 999;
   align-items: center;
   justify-content: center;
-  animation: opacityGreetingOverlay 0.8s ease-in forwards 2s;
+  animation: opacityGreetingOverlay 0.8s ease-in forwards 3s;
 }
 
 @keyframes opacityGreetingOverlay {
