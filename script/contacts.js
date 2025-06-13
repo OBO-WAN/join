@@ -119,7 +119,13 @@ function getTabletViewCardHeader(){
 
 /*Tablat version*/
 function renderTabletVievCard(index){
-    
+ 
+   let addNewcontactMobileBtn = document.getElementById("add_new_contact_Mobile_btn")
+    if (addNewcontactMobileBtn) {
+        addNewcontactMobileBtn.style.display = "none";
+    }
+
+
     let contact = Contacts[index];
     
     let initials = getInitials(contact.name);
@@ -139,8 +145,11 @@ function renderTabletVievCard(index){
     // Jetzt existiert das Element im DOM!
     let tabletViewCardHeaderId = document.getElementById("Tablet_view_card_header");
     tabletViewCardHeaderId.innerHTML = getTabletViewCardHeaderTemplate();
-    
+
+   
     renderViewCard(index); 
+
+   
     console.log("renderTabletVievCard aufgerufen");
 }
 
@@ -578,9 +587,11 @@ function getActualContactIndex(){
     return actualContactIndex;
 }   
 
+function goBackBtn(){
+
+}
 
 function goBacktoContacts(){
-    
     let tablet_additional_div = '';
     let addNewContact = "";
     let viewMode = getViewMode();
@@ -600,7 +611,7 @@ function goBacktoContacts(){
                 </div>
             </div>
             <div class="add_new_contact_Mobile_section">
-                <div class="add_new_contact_Mobile_btn" onclick="openContactDialogMobile(-1)">
+                <div class="add_new_contact_Mobile_btn" id = "add_new_contact_Mobile_btn" onclick="openContactDialogMobile(-1)">
                     <img class="add_new_contact_mobile_icon" src="./assets/icons/contact/addcontact.png" alt="icon">
                 </div>
             </div>

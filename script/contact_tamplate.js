@@ -146,16 +146,19 @@ function getTabletViewCardHeaderTemplate(){
                 </div>    
             </div> 
             
-            <div class="go_back_btn_container">
-                <div class="go_back_btn_section" id="go_back_btn_section" onclick="goBacktoContacts()" >
-                    <img src="./assets/icons/contact/next.png" alt="icon" class="go_back_btn" >
-                </div>
+            <div class="go_back_btn_container" id="go_back_btn_container"> 
             </div>
 
         </div>`;
+
 }
 
-
+function getBackBtnTemplate(){
+    return`
+    <div class="go_back_btn_section" id="go_back_btn_section" onclick="goBacktoContacts()" >
+            <img src="./assets/icons/contact/next.png" alt="icon" class="go_back_btn" >
+    </div>`;
+}
 
 function getMobileViewCardTemplate(id, color) {
     return `
@@ -174,7 +177,7 @@ function getMobileViewCardTemplate(id, color) {
                  <div class="mobile_view_card_seperator"></div>
             </div>    
         </div>
-           <div class="go_back_btn_container">
+           <div class="go_back_btn_container" id="go_back_btn_container">
                 <div class="go_back_btn_section" id="go_back_btn_section" onclick="goBacktoContacts()" >
                     <img src="./assets/icons/contact/next.png" alt="icon" class="go_back_btn" >
                 </div>

@@ -24,7 +24,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-bottom: 80px;
+    padding-top: 50px;
 }
 
 .mobile_view_card_edit_btn{
@@ -439,6 +439,8 @@ body{
 
 .mobile_view_card_edit_btn{
     display: flex;
+    justify-self: center;
+    align-items: center;
 }
 }
 
