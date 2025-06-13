@@ -222,10 +222,14 @@ function addNewTask() {
 function closeOverlay() {
     const overlay = document.getElementById('overlay');
     overlay.classList.add('d-none');
+
+    // document.body.classList.remove('overlay-active');
+    // document.getElementById('overlay').classList.add('d-none');
 }
 
 
 function openTask(task, assignedUsersHTML, index) {
+    document.body.classList.add('overlay-active'); // hides <header> as well
     console.log('openTask wurde aufgerufen');
     const overlay = document.getElementById('overlay');
     overlay.innerHTML = "";
@@ -268,4 +272,51 @@ async function moveTo(newStatus) {
 
     await loadTasksFromFirebase();
     currentDraggedElement = null;
+}
+
+
+/**
+ * Toggles the completion status of a subtask in the task overlay.
+ * Updates the checkbox icon, modifies the task data in memory,
+ * and saves the updated task to Firebase.
+ * Also refreshes the subtask progress bar if applicable.
+ * 
+ * @function toggleSubtaskCheckbox
+ * @param {HTMLElement} element - The DOM element of the clicked subtask container.
+ * @param {string} taskId - The unique ID of the task containing the subtask.
+ * @param {number} subtaskIndex - The index of the subtask within the task's subTasks array.
+ * 
+ * @returns {Promise<void>} - A promise that resolves when the task is updated in Firebase.
+ * 
+ * @example
+ * // Inside dynamically generated HTML:
+ * <div onclick="toggleSubtaskCheckbox(this, 'abc123', 0)">...</div>
+ * 
+ * // JavaScript usage (manually triggered)
+ * toggleSubtaskCheckbox(document.querySelector('.subtasks-elements-container'), 'abc123', 0);
+ */
+
+
+async function toggleSubtaskCheckbox(element, taskId, subtaskIndex) {
+    const task = tasks.find(t => t.id == taskId);
+    if (!task || !task.subTasks || !task.subTasks[subtaskIndex]) return;
+
+    // Toggle "checked" Zustand
+    task.subTasks[subtaskIndex].done = !task.subTasks[subtaskIndex].done;
+
+    // Update image
+    const img = element.querySelector('img');
+    img.src = `assets/icons/${task.subTasks[subtaskIndex].done ? 'checkbox-checked' : 'checkbox-empty'}.svg`;
+
+    // Save updated task to Firebase
+    await fetch(`${BASE_URL}tasks/${taskId}.json`, {
+        method: 'PUT',
+        body: JSON.stringify(task)
+    });
+
+    // Optional: update progress bar without reloading the entire board
+    const progressContainer = document.getElementById(`subtask_container_${tasks.indexOf(task)}`);
+    if (progressContainer) {
+        proofSubtasks(task, tasks.indexOf(task));
+    }
 }

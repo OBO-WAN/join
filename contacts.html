@@ -76,50 +76,10 @@
 
     <div class="contacts_main_content">
 
-           <!-- start Add New Contact mobile try Section -->
-            <div id="add_new_contact_mobile_ov_container">
-                <!--<div class="add_new_contact_mobile_ov" id="add_new_contact_mobile_ov">
-                    <div class="mobile_contact_dialogbox">
-                        <div class="mobile_contact_dialog_header">
-                            <div class="close_mobile_contact_dialog_container">
-                                <div class="close_mobile_contact_dialog_btn_section" onclick="closeContactDialogMobile()">
-                                    <p class="close_mobile_contact_dialog_btn">x</p>
-                                </div>
-                            </div>
-                            <div class="mobile_contact_dialog_header_text_section">
-                                <div class="ov_hl_section_mobile">
-                                    <span class="ov_hl_mobile" id="Kind_Of_Dlg">Add Contact</span> 
-                                </div>
-                                <div class="ov_slogan_section_mobile">
-                                    <span class="ov_slogan_mobile">Tasks are better wiht a team!</span>
-                                </div>
-                                <div class="ov_sloagen_seperator"></div>
-                            </div>
-                        </div>
-
-                        <div class="mobile_contact_dialog_avatar_section">
-                            <div class="add_new_contact_avatar_mobile">
-                                <img class="contact_mobile_dialog_avatar_icon" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
-                            </div>
-                        </div>
-
-                        <div class="mobile_contact_dialog_input_section">
-                            <input id="name_input" class="add_new_contact_input_mobile" type="input" placeholder ="  Name" >
-                            <input id="mail_input" class="add_new_contact_input_mobile" type="input" placeholder="  Mail">                                   
-                            <input id="pohne_input" class="add_new_contact_input_mobile" type="input" placeholder="  Phone">
-
-                            <button class="create_btn_mobile" id="id_Edit_Btn" onclick="createContact()">
-                                <span id="id_Edit_Btn_Text">Create</span>
-                                <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
-                            </button>
-                        </div>
-                    </div>
-                </div>-->
-            </div>
-        <!-- end Add New Contact mobile try Section -->
+        <!--  Add New Contact mobile Section -->
+            <div id="add_new_contact_mobile_ov_container"></div>
 
         <!--contacts list container -->
-
         <div class="contactslist_container" id="contactslist_container">
         
             <div class="add_new_contact_section" id="add_new_contact_section">
@@ -129,7 +89,7 @@
                                 <div class="ov_logo_section">
                                     <img class="ov_logo" src="./assets/img/logo-white.svg" alt="join logo">
                                 </div>
-                                <div class="ov_hl_section"><span class="ov_hl" id="Kind_Of_Dlg">Add New Contact</span></div>
+                                <div class="ov_hl_section"><span class="ov_hl" id="Kind_Of_Dlg_pc">Add New Contact</span></div>
                                 <div class="ov_slogan_section"><span class="ov_slogan">Tasks are better wiht a team!</span>
                                     <div class="ov_sloagen_seperator"></div>
                                 </div>
@@ -142,16 +102,16 @@
                                 </div>
                                 <div class="add_new_contact_entry">
                                     <div class="overlay_of_btn_sec"><p class="overlay_of_btn"  onclick="closeContactDialog()">X</p></div>
-                                    <input id="name_input" class="add_new_contact_input" type="input" placeholder ="  Name" >
-                                    <input id="mail_input" class="add_new_contact_input" type="input" placeholder="  Mail">                                   
-                                    <input id="pohne_input" class="add_new_contact_input" type="input" placeholder="  Phone">
+                                    <input id="name_input_pc" class="add_new_contact_input" type="input" placeholder ="  Name" >
+                                    <input id="mail_input_pc" class="add_new_contact_input" type="input" placeholder="  Mail">                                   
+                                    <input id="pohne_input_pc" class="add_new_contact_input" type="input" placeholder="  Phone">
                                  <div class="add_new_contact_btn_section">
                                     <button class="cancel_btn">
                                         <span class="cancel_btn_txt" onclick="closeContactDialog()">Cancel X</span>
                                         
                                     </button>
                                     <button class="create_btn" id="id_Edit_Btn">
-                                        <span id="id_Edit_Btn_Text">Create</span>
+                                        <span id="id_Edit_Btn_Text_pc">Create</span>
                                         <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
                                     </button>
                                 </div>  
@@ -173,7 +133,7 @@
         </div>
 
     <div class="add_new_contact_Mobile_section">
-        <div class="add_new_contact_Mobile_btn" onclick="openContactDialogMobile(-1)">
+        <div id="add_new_contact_Mobile_btn" class="add_new_contact_Mobile_btn" onclick="openContactDialogMobile(-1)">
             <img class="add_new_contact_mobile_icon" src="./assets/icons/contact/addcontact.png" alt="icon">
         </div>
     </div>
@@ -240,4 +200,6 @@
 </html>
 
 
-     
+
+ 
+  
