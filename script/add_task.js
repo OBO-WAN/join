@@ -1,4 +1,4 @@
-/* const BASE_URL = "https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/"; */
+const BASE_URL = "https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/"; 
 
 loadContacts();
 
@@ -64,13 +64,13 @@ async function submitTask() {
         category,
         priority: priority || null,
         assignedTo: assignee || null,
-        subtasks,
+        subTasks: subtasks,
         status: "todo",
         createdAt: new Date().toISOString()
     };
 
     try {
-        const res = await fetch(`${BASE_URL}task.json`, {
+        const res = await fetch(`${BASE_URL}tasks.json`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(task)

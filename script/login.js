@@ -62,11 +62,7 @@ function login() {
     checkUserIsPresent(false);
 }
 
-
-
-
 function guestLogin() {
-    alert("Logged in as guest!");
     // Store user mode in local storage if needed
     localStorage.setItem("isGuest", "true");
     // Redirect to your app's main page
