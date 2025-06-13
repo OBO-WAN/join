@@ -17,6 +17,7 @@ function getContactCardTamplate(name, email, initials, index, color) {
 
 function getViewCardTemplate(id, color) {
     return `
+    <div class="Tablet_view_card">
     <div id="mobile_view_card_header">
       <div class="contact_view_header">  
             <div class="contact_view_header_section">
@@ -76,38 +77,14 @@ function getViewCardTemplate(id, color) {
                     </div>
 
                 </div>
+           </div>
            </div>`;
 }
 
 function getTabletViewCardTemplate(id, color) {
     return `
-    <div id="mobile_view_card_header">
-      <div class="contact_view_header">  
-            <div class="contact_view_header_section">
-            <div class="contacts_view_hl_section">
-                <span class="contacts_view_hl">Contacts</span>
-            </div>    
-            <div class="contacts_view_seperator"></div>
-            <div class="contacts_view_sloagen_section">
-                <span class="contacts_view_sloagen">Better wiht a Team</span>
-                
-                 </div>
-                 <div class="contacts_view_mobile_seperator_section">
-                 <div class="mobile_view_card_seperator"></div>
-            </div>    
-        </div> 
-        
-            <div class="go_back_btn_container">
-                <div class="go_back_btn_section" id="go_back_btn_section" onclick="goBacktoContacts()" >
-                    <img src="./assets/icons/contact/next.png" alt="icon" class="go_back_btn" >
-                </div>
-            </div>
-
-        </div>
-    </div>
-      
-
-        <div class="contact_view_card" id="contact_view_card">
+    <div class="Tablet_view_card_header"  id="Tablet_view_card_header"></div>
+      <div class="contact_view_card" id="contact_view_card">
             <div class="contact_view_card_header" id="contact_view_card_header">
                 <div class="contact_view_avatar_section" >
                     <div class="contact_view_avatar" id="contact_view_avatar"  style="background-color:${color};>
@@ -148,6 +125,34 @@ function getTabletViewCardTemplate(id, color) {
 
                 </div>
            </div>`;
+}
+
+function getTabletViewCardHeaderTemplate(){
+    return`
+        <div class="contact_view_header" id="contact_view_header">  
+            <div class="contact_view_header_section">
+                <div class="contacts_view_hl_section">
+                    <span class="contacts_view_hl">Contacts</span>
+                </div> 
+
+                <div class="contacts_view_seperator"></div>
+
+                <div class="contacts_view_sloagen_section">
+                    <span class="contacts_view_sloagen">Better wiht a Team</span>   
+                </div>
+
+                <div class="contacts_view_mobile_seperator_section">
+                    <div class="mobile_view_card_seperator"></div>
+                </div>    
+            </div> 
+            
+            <div class="go_back_btn_container">
+                <div class="go_back_btn_section" id="go_back_btn_section" onclick="goBacktoContacts()" >
+                    <img src="./assets/icons/contact/next.png" alt="icon" class="go_back_btn" >
+                </div>
+            </div>
+
+        </div>`;
 }
 
 
@@ -248,7 +253,7 @@ function getMobileViewCardTemplate(id, color) {
 function getAddNewCotactTemplate() {
     return `
 <div class="contactslist_container" id="contactslist_container">
-        
+
             <div class="add_new_contact_section" id="add_new_contact_section">
                     <div id="add_new_contact_ov_section" class="add_new_contact_ov">
                         <div class="add_new_contact_ov_container">
