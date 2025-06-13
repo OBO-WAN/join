@@ -111,6 +111,12 @@ function MobileVievCard(index){
     renderViewCard(index); 
 }
 
+function getTabletViewCardHeader(){
+    let tabletViewCardHeader = getTeblateViewCardHeaderTemplate();
+    let tabletViewCardHeaderId = document.getElementById("Tablet_view_card_header");
+    tabletViewCardHeaderId.innerHTML = tabletViewCardHeader;
+}
+
 /*Tablat version*/
 function renderTabletVievCard(index){
     
@@ -124,14 +130,16 @@ function renderTabletVievCard(index){
         contactsListElem.style.display = "none";
     }
 
-    let addNewContactSectionElem = document.getElementById("add_new_contact_section");
-    if (addNewContactSectionElem) {
-        addNewContactSectionElem.style.display = "none";
-    }
+    addNewContactSectionState(false);
 
-    let viewCardTemp  = getTabletViewCardTemplate(index, color);
-    let contactsContainer = document.getElementById("contactslist_container");
-    contactsContainer.innerHTML = viewCardTemp ;
+    let TabletViewContainer = document.getElementById("tablate_view_card_container");
+    TabletViewContainer.style.display = "flex";
+    TabletViewContainer.innerHTML = getTabletViewCardTemplate(index, color);
+
+    // Jetzt existiert das Element im DOM!
+    let tabletViewCardHeaderId = document.getElementById("Tablet_view_card_header");
+    tabletViewCardHeaderId.innerHTML = getTabletViewCardHeaderTemplate();
+    
     renderViewCard(index); 
     console.log("renderTabletVievCard aufgerufen");
 }
@@ -393,11 +401,10 @@ function openContactDialog(id){
 
 
 function closeContactDialog(){
-
     document.getElementById("add_new_contact_ov_section").style.display = "none";
     console.log("closeContactDialog aufgerufen");
 
-        document.getElementById("name_input_pc").value = "";
+    document.getElementById("name_input_pc").value = "";
     document.getElementById("mail_input_pc").value = "";
     document.getElementById("pohne_input_pc").value = "";
     // dialog beim schliesen lleeren
@@ -458,13 +465,15 @@ function getFirstLetter(name, oldLetter, change){ //get first letter of name
     return firstLetter;
 }
 
-
-/* return:
-    1 = desktop big     | >= 1100
-    2 = desktop small   | < 1100
-    3 = tablet          | < 825
-    4 = mobile          | < 560
-*/
+/**
+ * Determines the current view mode based on the window's width.
+ *
+ * @returns {number} The view mode:
+ *   1 - Desktop big (window width >= 1100)
+ *   2 - Desktop small (window width < 1100)
+ *   3 - Tablet (window width < 825)
+ *   4 - Mobile (window width < 560)
+ */
 function getViewMode()
 {
     let viewMode = 1;
@@ -572,9 +581,17 @@ function getActualContactIndex(){
 
 function goBacktoContacts(){
     
+    let tablet_additional_div = '';
+    let addNewContact = "";
+    let viewMode = getViewMode();
+    if(viewMode === 2 || viewMode === 3)  tablet_additional_div = '<div id="tablate_view_card_container" class="tablate_view_card_container"></div>';
+
     let contactsContainer = document.getElementById("contactslist_container");
     if (contactsContainer) {
         contactsContainer.innerHTML = `
+
+            ${tablet_additional_div}
+
             <div class="add_new_contact_section" id="add_new_contact_section">
             </div>
             <div class="contacts_list" id="contacts_list">
@@ -589,13 +606,15 @@ function goBacktoContacts(){
             </div>
         `;
 
-        let addNewContact = "";
-        let viewMode = getViewMode();
         if (viewMode === 1) {
             addNewContact = getAddNewCotactTemplate();
-        }else if (viewMode === 2) {
+        }else if (viewMode === 2){
+            addNewContact = getAddNewCotactTemplate();
+            addNewContactSectionState(true);
+        }else if(viewMode === 3) {
             addNewContact = getAddNewContactMobileTemplate();
-        }else if (viewMode === 3) {
+            addNewContactSectionState(true);
+        }else if (viewMode === 4) {
             addNewContact = getAddNewContactMobileTemplate();
         }
 
@@ -619,6 +638,22 @@ function editContactsMobileMenuOff() {
   
 }
 
+
+function addNewContactSectionState(state) {
+
+    let stateStr = "none";
+    if(state == true)   stateStr = "flex";
+
+    let section = document.getElementById("add_new_contact_Mobile_section");
+    if (section) {
+        section.style.display = stateStr;
+    }
+
+    section = document.getElementById("add_new_contact_Mobile_btn");
+    if (section) {
+        section.style.display = stateStr;
+    }
+}
 
 function handleOutsideClickForMobileMenu(event) {
     let menu = document.getElementById("mobile_view_card_menu");
