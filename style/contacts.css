@@ -203,12 +203,13 @@ html, body {
     width: 70%;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     margin-left: 50px;
     margin-top: 40px;
 }   
 
 .contact_view_header_section{
-    width: 500px;
+    width: 400px;
     height: 100%;
     display: flex;
     align-items: center; 
@@ -815,8 +816,36 @@ html, body {
     
 }
 
+.go_back_btn_container{
+    width: 90px;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    position: relative;
+}
+
 .go_back_btn_section:hover{
     background-color: #afb1b1af;
+}
+
+.go_back_btn_section{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    margin-right:  10px;
+    cursor: pointer;
+    position: absolute;
+    
+}
+
+.contact_view_header{
+    width: 95%;
+    justify-content: space-between;
+    
 }
 
 }
@@ -827,10 +856,8 @@ html, body {
     display: flex;
     position: fixed;
 }
-.contact_view_header{
-    width: 100%;
-    justify-content: space-between;
-}
+
+
 
 .contactslist_container{
     overflow-x: hidden;
@@ -851,36 +878,10 @@ html, body {
     display: flex;
 }
 
-.contact_view_header{
-    width: 100%;
-    
-}
-
 .mobil_view_card_edit_section{
     display: flex;
 }
 
-.go_back_btn_container{
-    display: flex ;
-    align-items: flex-start;
-    justify-content: flex-end;
-    width: 90px;
-    height: 100%;
-}
-
-.go_back_btn_section{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    top: 16px;
-    right:  16px;
-    cursor: pointer;
-    position: absolute;
-    
-}
 
 .go_back_btn_section:hover{
     background-color: #afb1b1af;
@@ -916,19 +917,6 @@ html, body {
     
     }
 
-.go_back_btn_section{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    top: 16px;
-    right:  16px;
-    cursor: pointer;
-    position: absolute;
-    
-}
 
 }
 
