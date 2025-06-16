@@ -365,7 +365,8 @@ function configEditDlgBox(id){
     let viewMode = getViewMode();
     if (viewMode === 1) { KindOfDlg_pc = "_pc"; }
     
-
+    let AddNewcontactAvatar = document.getElementById("add_new_contact_avatar");
+    let AddNewcontactAvatar_mobile = document.getElementById("add_new_contact_avatar_mobile");
     switch(kindOFEdit){
         case "editContact":
                 document.getElementById("Kind_Of_Dlg" + KindOfDlg_pc).innerHTML = "Edit contact";
@@ -378,12 +379,53 @@ function configEditDlgBox(id){
                 document.getElementById("mail_input" + KindOfDlg_pc).value = oldContactData.mail //Contacts[id].mail;
                 document.getElementById("pohne_input" + KindOfDlg_pc).value = oldContactData.phone; //Contacts[id].phone;
 
+                if(AddNewcontactAvatar){
+
+                    let test = getInitials(oldContactData.name);
+                    AddNewcontactAvatar.innerHTML = `
+                        <p class="contact_view_avatar_initials" id="add_new_contact_avatar_1">${test[0].toUpperCase()}</p>
+                        <p class="contact_view_avatar_initials" id="add_new_contact_avatar_2">${test[1].toUpperCase()}</p>
+                    `;
+                   
+                    let avatarColor = getColor( oldContactData.name.charAt(0) );
+                    AddNewcontactAvatar.style.backgroundColor = avatarColor;
+                    AddNewcontactAvatar.style.color = "#FFFFFF";
+                }
+
+                if(AddNewcontactAvatar_mobile){
+
+                    let test = getInitials(oldContactData.name);
+                    AddNewcontactAvatar_mobile.innerHTML = `
+                        <p class="contact_view_avatar_initials" id="add_new_contact_avatar_mob_1">${test[0].toUpperCase()}</p>
+                        <p class="contact_view_avatar_initials" id="add_new_contact_avatar_mob_2">${test[1].toUpperCase()}</p>
+                    `;
+                   
+                    let avatarColor = getColor( oldContactData.name.charAt(0) );
+                    AddNewcontactAvatar_mobile.style.backgroundColor = avatarColor;
+                    AddNewcontactAvatar_mobile.style.color = "#FFFFFF";
+                }
+
             break;
 
         case "createContact":
                 document.getElementById("Kind_Of_Dlg" + KindOfDlg_pc).innerHTML = "Add contact";
                 btnText = "Create";
                 functionName = "createContact()";
+
+                if(AddNewcontactAvatar){
+                    AddNewcontactAvatar.style.backgroundColor = "#eeecec";
+                    AddNewcontactAvatar.innerHTML = `
+                        <img class="ov_avatar" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
+                    `;
+                }
+
+                if(AddNewcontactAvatar_mobile){
+                    AddNewcontactAvatar_mobile.style.backgroundColor = "#eeecec";
+                    AddNewcontactAvatar_mobile.innerHTML = `
+                        <img class="ov_avatar" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
+                    `;
+                }
+
             break;
 
         default:
@@ -434,10 +476,14 @@ function openContactDialogMobile(id){
 }
 
 function closeContactDialogMobile(){
-    document.getElementById("add_new_contact_mobile_ov").style.display = "none";
-    const addNewContactMobileBtn = document.getElementById("add_new_contact_Mobile_btn");
-    if (addNewContactMobileBtn) {
-        addNewContactMobileBtn.style.display = "flex";  
+    const addNewContactMobileOv = document.getElementById("add_new_contact_mobile_ov");
+    
+    if(addNewContactMobileOv) {
+        addNewContactMobileOv.style.display = "none";
+        const addNewContactMobileBtn = document.getElementById("add_new_contact_Mobile_btn");
+        if (addNewContactMobileBtn) {
+            addNewContactMobileBtn.style.display = "flex";  
+        }
     }
 }
 

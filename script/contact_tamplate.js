@@ -147,18 +147,15 @@ function getTabletViewCardHeaderTemplate(){
             </div> 
             
             <div class="go_back_btn_container" id="go_back_btn_container"> 
+              <div class="go_back_btn_section" id="go_back_btn_section" onclick="goBacktoContacts()" >
+            <img src="./assets/icons/contact/next.png" alt="icon" class="go_back_btn" >
             </div>
-
+            </div>
         </div>`;
 
 }
 
-function getBackBtnTemplate(){
-    return`
-    <div class="go_back_btn_section" id="go_back_btn_section" onclick="goBacktoContacts()" >
-            <img src="./assets/icons/contact/next.png" alt="icon" class="go_back_btn" >
-    </div>`;
-}
+
 
 function getMobileViewCardTemplate(id, color) {
     return `
@@ -261,7 +258,7 @@ function getAddNewCotactTemplate() {
                     <div id="add_new_contact_ov_section" class="add_new_contact_ov">
                         <div class="add_new_contact_ov_container">
                             <div class="add_newcontact_sloagen_container">
-                                <div class="ov_logo_section">
+                                <div class="ov_logo_section" id = "ov_logo_section">
                                     <img class="ov_logo" src="./assets/img/logo-white.svg" alt="join logo">
                                 </div>
                                 <div class="ov_hl_section"><span class="ov_hl" id="Kind_Of_Dlg_pc">Place</span></div>
@@ -271,7 +268,7 @@ function getAddNewCotactTemplate() {
                             </div>
                             <div class="add_new_contact_entry_section">
                                 <div class="add_new_contact_avatar_section">
-                                    <div class="add_new_contact_avatar">
+                                    <div class="add_new_contact_avatar" id="add_new_contact_avatar">
                                         <img class="ov_avatar" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
                                     </div>
                                 </div>
@@ -323,7 +320,7 @@ function getAddNewContactMobileTemplate() {
                         </div>
 
                         <div class="mobile_contact_dialog_avatar_section">
-                            <div class="add_new_contact_avatar_mobile">
+                            <div class="add_new_contact_avatar_mobile" id="add_new_contact_avatar_mobile">
                                 <img class="contact_mobile_dialog_avatar_icon" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
                             </div>
                         </div>

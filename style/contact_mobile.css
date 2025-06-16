@@ -24,7 +24,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding-top: 50px;
+    margin-top: 120px;
 }
 
 .mobile_view_card_edit_btn{
@@ -304,8 +304,14 @@ body{
 /* end Add New Contact mobile try Section  add_new_contact_ov_container*/
 
 @media (max-width: 560px) {
+.go_back_btn_section {
+    
+    top: 16px;
+    left: 16px;
+    z-index: 20;
+    display: flex;
+}
 
-/*mobile contact view card*/
 
 
 .contact_view_header{
