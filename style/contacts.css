@@ -554,7 +554,7 @@ html, body {
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background-color: rgb(238, 236, 236);
+    background-color: #eeecec;
     border-width: 4px;
     border-color: rgb(255, 255, 255);
     border-style: solid;
@@ -735,25 +735,91 @@ html, body {
     width: 27px;
 }
 
-@media (max-width: 768px) {
-    .contacts_main_content{
+@media (max-width: 1100px) {
+    .tablate_view_card_container{
         width: 100%;
         height: 100%;
-     }
-
-     .contactslist_container{
-        background-color: #ffffff;
-        box-shadow: 0px 0px 0px 0px #cfcfcf;
-        height: calc(100% - 90px);
+        z-index: 2000;
+        display: none;
+        flex-direction: column;
     }
 
-    .add_new_contact_Mobile_section {
-        margin-bottom: 90px !important;
-        bottom: unset;
+    .Tablet_view_card{
+        /*width: 100%;
+        height: 100%;
+        z-index: 2000;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;*/
+           max-width: 500px;
+        margin: 40px auto 0 auto;
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        position: relative;
     }
 
+    .Tablet_view_card_header{
+        height: 180px;
+        width: calc(100%- 232px)s;
+    }
+
+    .contacts_main_content{
+        height: 100%;
+        width: calc(100%- 232px); 
+        
+    }
+    .contactslist_container {
+        width: 100%; 
+    }
+    .add_new_contact_section{
+        display: none;
+    }
+
+    .contacts_view_container{
+        display: none;
+    }
+
+    .contact_card{
+        justify-content: center;
+        width: 70%;
+    }
+    
+    .add_new_contact_Mobile_section{
+      bottom: 25px;
+      margin-bottom: 0;
+    }
+
+    .add_new_contact_Mobile_btn{
+        display: flex;
+        position: fixed;
+        right: 30px;
+        
+    }
+
+    h1{
+        margin-left: 15px;
+    }
+    .go_back_btn_section{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    top: 16px;
+    right:  16px;
+    cursor: pointer;
+    position: absolute;
+    
 }
 
+.go_back_btn_section:hover{
+    background-color: #afb1b1af;
+}
+
+}
 
 /* mobile responsive*/
 @media (max-width: 825px){
@@ -809,9 +875,11 @@ html, body {
     display: flex !important;
     align-items: center;
     justify-content: center;
-   
+    top: 16px;
+    right:  16px;
     cursor: pointer;
     position: absolute;
+    
 }
 
 .go_back_btn_section:hover{
@@ -821,6 +889,7 @@ html, body {
 .go_back_btn{
     width: 30px;
 }
+ 
 .Tablet_view_card,
 .tablate_view_card_container {
     position: relative;
@@ -828,74 +897,40 @@ html, body {
 
 }
 
-@media (max-width: 1100px) {
-    .tablate_view_card_container{
-        width: 100%;
-        height: 100%;
-        z-index: 2000;
-        display: none;
-        flex-direction: column;
-    }
 
-    .Tablet_view_card{
-        /*width: 100%;
-        height: 100%;
-        z-index: 2000;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;*/
-           max-width: 500px;
-        margin: 40px auto 0 auto;
-        border-radius: 16px;
-        background: #fff;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        position: relative;
-    }
-
-    .Tablet_view_card_header{
-        height: 180px;
-        width: 100%;
-    }
-
+@media (max-width: 768px) {
     .contacts_main_content{
+        width: 100%;
         height: 100%;
-        width: calc(100%- 232px); 
+     }
+
+     .contactslist_container{
+        background-color: #ffffff;
+        box-shadow: 0px 0px 0px 0px #cfcfcf;
+        height: calc(100% - 90px);
+    }
+
+    .add_new_contact_Mobile_section {
+        bottom: 130px;
         
-    }
-    .contactslist_container {
-        width: 100%; 
-    }
-    .add_new_contact_section{
-        display: none;
-    }
-
-    .contacts_view_container{
-        display: none;
-    }
-
-    .contact_card{
-        justify-content: center;
-        width: 70%;
-    }
     
-    .add_new_contact_Mobile_section{
-      bottom: 25px;
-      margin-bottom: 0;
     }
 
-    .add_new_contact_Mobile_btn{
-        display: flex;
-        position: fixed;
-        right: 30px;
-        
-    }
-
-    h1{
-        margin-left: 15px;
-    }
+.go_back_btn_section{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    top: 16px;
+    right:  16px;
+    cursor: pointer;
+    position: absolute;
+    
 }
 
+}
 
 
 
