@@ -105,19 +105,30 @@
                     </label>
                 </div>
     
-                <label for="assignees">Assigned to</label>
-                <select id="assignees" name="assignees">
-                    <option value="" disabled selected>Select contacts to assign</option>
-                </select>
+                <label>Assigned to</label>
+                <div class="custom-multiselect">
+                  <div class="multiselect-header" onclick="toggleAssigneeDropdown()">
+                    <span id="selected-assignees-placeholder">Select contacts</span>
+                    <img src="assets/icons/arrow_drop_downaa.png" class="dropdown-icon">
+                  </div>
+                    <div class="multiselect-dropdown d-none" id="assignee-dropdown">
+                </div>
+                </div> 
                     
                 </select>
     
-                <label for="category">Category <span class="required-marker">*</span></label>
-                <select id="category" name="category" required>
-                    <option value="">Select category</option>
-                    <option value="technical-task">Technical Task</option>
-                    <option value="user-story">User Story</option>
-                </select>
+                <label>Category <span class="required-marker">*</span></label>
+                <div class="custom-category-select">
+                    <div class="category-select-header" onclick="toggleCategoryDropdown()">
+                        <span id="selected-category-placeholder">Select category</span>
+                        <img src="assets/icons/arrow_drop_downaa.png" class="dropdown-icon">
+                    </div>
+                    <div class="category-dropdown d-none" id="category-dropdown">
+                        <div class="category-option" onclick="selectCategory('technical-task')">Technical Task</div>
+                        <div class="category-option" onclick="selectCategory('user-story')">User Story</div>
+                    </div>
+                </div>
+                <input type="hidden" id="category" name="category" required>
     
                 <label for="subtask">Subtasks</label>
                 <div>
