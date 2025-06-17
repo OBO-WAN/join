@@ -157,7 +157,7 @@ function prepareTaskForTemplate(task) {
 
     const assignedTo = (task.assignedTo || []).map(name => {
 
-        const user = users.find(u => u.name === name);
+        const user = Object.values(users).find(u => u.name === name);
         const initials = name.split(' ').map(n => n[0]).join('').toUpperCase();
         const color = user?.color || '#2A3647'; // Fallback-Farbe
         return { initials, color };
