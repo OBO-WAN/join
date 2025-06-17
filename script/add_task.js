@@ -161,10 +161,27 @@ function renderAssigneeDropdown() {
 }
 
 function updateAssigneePlaceholder() {
-    const checkboxes = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]:checked');
-    const names = Array.from(checkboxes).map(cb => cb.value);
+    const checkboxes = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]');
+    const selectedAvatars = document.getElementById("selected-assignee-avatars");
     const placeholder = document.getElementById("selected-assignees-placeholder");
-    placeholder.textContent = names.length > 0 ? names.join(', ') : 'Select contacts';
+
+    let avatarHTML = "";
+
+    checkboxes.forEach(cb => {
+        if (cb.checked) {
+            const initials = getInitials(cb.value);
+            const color = getColor(initials[0]);
+
+            avatarHTML += `
+                <div class="avatar" style="background-color: ${color};">
+                    ${initials}
+                </div>
+            `;
+        }
+    });
+
+    placeholder.textContent = 'Select contacts';
+    selectedAvatars.innerHTML = avatarHTML;
 }
 
 document.addEventListener('click', function(event) {
