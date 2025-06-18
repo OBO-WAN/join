@@ -447,17 +447,22 @@ function openContactDialog(id){
     //index > 0 entspricht Contacs editieren
     //index <0 entspricht neuen Kontakt erstellen
     document.getElementById("add_new_contact_ov_section").style.display = "flex";
+
+    let addNewContactOvSection = document.getElementById("add_new_contact_ov_section");
+    let addNewContactTemplate = getAddNewContactTemplate();
+    addNewContactOvSection.innerHTML = addNewContactTemplate;
     configEditDlgBox(id);
 }
 
 
 function closeContactDialog(){
     document.getElementById("add_new_contact_ov_section").style.display = "none";
-    console.log("closeContactDialog aufgerufen");
-
+    
     document.getElementById("name_input_pc").value = "";
     document.getElementById("mail_input_pc").value = "";
     document.getElementById("pohne_input_pc").value = "";
+    
+    document.getElementById("add_new_contact_ov_section").innerHTML = "";
     // dialog beim schliesen lleeren
 }
 
@@ -590,9 +595,9 @@ function handleWindowResize(){
                 renderViewCard(idx);
             }
 /**/
-            let addNewContact = "";
-            addNewContact = getAddNewCotactTemplate();
-            document.getElementById("add_new_contact_section").innerHTML = addNewContact;
+            //let addNewContact = "";
+            //addNewContact = getAddNewContactTemplate();
+            //document.getElementById("add_new_contact_section").innerHTML = addNewContact;
 /**/
 
             bigWindowIsRendered = true;
@@ -664,9 +669,9 @@ function goBacktoContacts(){
         `;
 
         if (viewMode === 1) {
-            addNewContact = getAddNewCotactTemplate();
+            addNewContact = getAddNewContactTemplate();
         }else if (viewMode === 2){
-            addNewContact = getAddNewCotactTemplate();
+            addNewContact = getAddNewContactTemplate();
             addNewContactSectionState(true);
         }else if(viewMode === 3) {
             addNewContact = getAddNewContactMobileTemplate();
