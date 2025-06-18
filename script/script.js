@@ -4,12 +4,12 @@ function toggleMenu(){
 
     if (menu.style.display === "flex") {
         menu.style.display = "none";
-        if (mobileViewCard = display = "flex"){
+        if (mobileViewCard){
            document.getElementById("go_back_btn_section").style.display = "flex";
         }           
     } else {
         menu.style.display = "flex";
-        if (mobileViewCard = display = "flex"){
+        if (mobileViewCard ){
         document.getElementById("go_back_btn_section").style.display = "none";
         }      
     }
