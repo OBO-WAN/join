@@ -718,3 +718,23 @@ function handleOutsideClickForMobileMenu(event) {
         editContactsMobileMenuOff();
     }
 }
+
+
+// SETTING USER INITIALS 
+function setUserInitials() {
+  const firstInitial = document.getElementById('first_icon_initials');
+  const lastInitial = document.getElementById('last_icon_initials');
+  const initials = sessionStorage.getItem('userInitials');
+  const firstName = sessionStorage.getItem('firstName');
+  const lastName = sessionStorage.getItem('lastName');
+
+  if (firstInitial && lastInitial && firstName && lastName) {
+    firstInitial.textContent = firstName[0].toUpperCase();
+    lastInitial.textContent = lastName[0].toUpperCase();
+  } else if (initials && initials.length === 2) {
+    firstInitial.textContent = initials[0];
+    lastInitial.textContent = initials[1];
+  }
+}
+
+window.addEventListener('DOMContentLoaded', setUserInitials);
