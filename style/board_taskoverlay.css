@@ -243,3 +243,23 @@ table {
     margin-top: 16px;
   }
 }
+
+/* Responsive Overlay */
+
+@media only screen and (max-width: 450px) {
+  .task_container_overlay {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    border-radius: 0;
+    padding: 20px;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .overlay {
+    padding: 0;
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+}

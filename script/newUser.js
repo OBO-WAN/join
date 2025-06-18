@@ -36,7 +36,7 @@ async function handleSignUp() {
       const profileData = await createUserProfileDataFromParts(nameParts);
       if (!checkPasswordConfirm()) return;
       await createUser(profileData.firstName, profileData.lastName, email, password, profileData.randomColor, profileData.initials);
-      handleSignUpSuccess()
+      handleSignUpSuccess(profileData);
     } catch (error) {
       console.error('Error creating user', error);
     }
@@ -125,17 +125,27 @@ async function createUserProfileDataFromParts(nameParts){
     return { firstName, lastName, randomColor, initials };
   }
 
-  /**
+  /**  TO BE ACTUALIZED
  * 
  * @function handleSignUpSuccess
  * @description **This function is called by `handleSignUp` after a successful user creation.**
  * It triggers the display of a sign-up success popup using `showPupupOverlaySignUp` and then initiates
  * a delayed redirection and form reset using `delayedRedirectAndReset`.
  */
-function handleSignUpSuccess(){
+// function handleSignUpSuccess(){
+//     showPupupOverlaySignUp();
+//     delayedRedirectAndReset();
+//   }
+function handleSignUpSuccess(profileData){
     showPupupOverlaySignUp();
+    // Store initials and names for UI use
+    sessionStorage.setItem('userInitials', profileData.initials);
+    sessionStorage.setItem('firstName', profileData.firstName);
+    sessionStorage.setItem('lastName', profileData.lastName);
     delayedRedirectAndReset();
-  }
+    delayedRedirectAndReset();
+}
+
 
   /**
  * 
