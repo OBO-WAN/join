@@ -205,14 +205,29 @@ function loginSuccessful() {
  * updates the 'linksSidebarBoolienKey' in sessionStorage, removes 'loggedIn', 'loggedInUserId',
  * and 'activePage' from sessionStorage, and then navigates the user back to the 'log_in.html' page.
  */
+// function logOut() {
+//   window.showButtonLinksSidebar = false;
+//   sessionStorage.setItem('linksSidebarBoolienKey', window.showButtonLinksSidebar);
+//   sessionStorage.removeItem('loggedIn'); 
+//   sessionStorage.removeItem('loggedInUserId');
+//   sessionStorage.removeItem('activePage');
+//   goToUrl('log_in.html');
+// }
 function logOut() {
   window.showButtonLinksSidebar = false;
   sessionStorage.setItem('linksSidebarBoolienKey', window.showButtonLinksSidebar);
-  sessionStorage.removeItem('loggedIn'); 
+
+  // Remove all relevant user session keys
+  sessionStorage.removeItem('loggedIn');
   sessionStorage.removeItem('loggedInUserId');
   sessionStorage.removeItem('activePage');
+  sessionStorage.removeItem('firstName');
+  sessionStorage.removeItem('lastName');
+  sessionStorage.removeItem('userInitials');
+
   goToUrl('log_in.html');
 }
+
 
 /**
  * 
