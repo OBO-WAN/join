@@ -28,28 +28,38 @@ async function submitTask() {
 }
 
 function collectTaskData() {
-    const title = document.getElementById("title").value.trim();
+    const title = document.getElementById("title").value.trim(); // ← wird zu task
     const description = document.getElementById("description").value.trim();
-    const dueDate = document.getElementById("due-date").value;
-    const category = document.getElementById("category").value;
-    const priority = document.querySelector("input[name='priority']:checked")?.value;
+    const dueDateRaw = document.getElementById("due-date").value;
+    const categoryValue = document.getElementById("category").value;
+    const priorityRaw = document.querySelector("input[name='priority']:checked")?.value;
+
+    const [year, month, day] = dueDateRaw.split("-");
+    const dueDate = `${day}/${month}/${year}`;
+
+    const categoryMap = {
+        "technical-task": "Technical Task",
+        "user-story": "User Story"
+    };
+    const category = categoryMap[categoryValue] || categoryValue;
+
+    const priority = priorityRaw ? priorityRaw.charAt(0).toUpperCase() + priorityRaw.slice(1).toLowerCase() : null;
 
     const checkboxElements = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]:checked');
     const assignees = Array.from(checkboxElements).map(cb => cb.value);
 
-    const subtasks = Array.from(document.querySelectorAll("#subtask-list li"))
-                          .map(li => li.textContent);
+    const subtaskInput = document.getElementById("subtask").value.trim();
+    const subTasks = { task: subtaskInput };
 
     return {
-        title,
+        task: title,
         description,
         dueDate,
         category,
-        priority: priority || null,
+        priority,
         assignedTo: assignees,
-        subTasks: subtasks,
-        status: "toDo",
-        createdAt: new Date().toISOString()
+        subTasks,
+        status: "toDo"
     };
 }
 
@@ -78,6 +88,10 @@ function getNextTaskId(tasks) {
 
 async function saveTaskToFirebase(task, id) {
     try {
+        if (!Array.isArray(task.assignedTo)) {
+            task.assignedTo = Object.values(task.assignedTo || {});
+        }
+
         const res = await fetch(`${BASE_URL}tasks/${id}.json`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },

@@ -167,7 +167,7 @@ function prepareTaskForTemplate(task) {
         id: task.id,
         category: task.category || 'General',
         categoryClass: (task.category || 'general').toLowerCase().replace(/\s/g, '_'),
-        title: task.task || 'Untitled',
+        title: task.title || task.task || 'Untitled',
         details: task.description || '',
         assignedTo,
         priority: (task.priority || 'low').toLowerCase(),
