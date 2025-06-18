@@ -417,12 +417,31 @@ async function checkUserIsPresent(parameter = false) {
   }
 }
 
+// /**
+//  *
+//  * @async
+//  * @function handleUserPresenceCheck
+//  * @description Checks user presence based on the provided parameter. If the parameter is true,
+//  * it calls `ifParameterTrue`. If the parameter is false, it asynchronously calls `ifParameterFalse`.
+//  * @param {*} parameter - A boolean flag determining which check to perform.
+//  * @param {object} user - The user object to check against.
+//  * @param {string} userId - The ID of the user (only relevant when parameter is false).
+//  * @returns {Promise<boolean>} - Returns the boolean result of either `ifParameterTrue` or `ifParameterFalse`.
+// */
+// async function handleUserPresenceCheck(parameter, user, userId) {
+//   if (parameter) {
+//     return ifParameterTrue(parameter, user);
+//   } else {
+//     return await ifParameterFalse(parameter, user, userId);
+//   }
+// }
 /**
  *
  * @async
  * @function handleUserPresenceCheck
- * @description Checks user presence based on the provided parameter. If the parameter is true,
- * it calls `ifParameterTrue`. If the parameter is false, it asynchronously calls `ifParameterFalse`.
+ * @description Checks user presence based on the provided parameter. 
+ * If the parameter is true (sign-up), it checks for duplicate emails.
+ * If false (login), it validates login credentials and stores user info in sessionStorage.
  * @param {*} parameter - A boolean flag determining which check to perform.
  * @param {object} user - The user object to check against.
  * @param {string} userId - The ID of the user (only relevant when parameter is false).
@@ -432,9 +451,25 @@ async function handleUserPresenceCheck(parameter, user, userId) {
   if (parameter) {
     return ifParameterTrue(parameter, user);
   } else {
-    return await ifParameterFalse(parameter, user, userId);
+    const { emailLogIn, passwordLogIn } = setIdRefValueTrimLogIn();
+    const { loginFormRef } = getIdRefs();
+
+    if (user.email === emailLogIn && user.password === passwordLogIn) {
+      sessionStorage.setItem('loggedInUserId', userId);
+      sessionStorage.setItem('userInitials', user.initials);
+      sessionStorage.setItem('firstName', user.firstname);
+      sessionStorage.setItem('lastName', user.lastname);
+      await loadUserData();
+      loginFormRef.reset();
+      loginSuccessful();
+      return true;
+    } else {
+      showLoginError();
+      return false;
+    }
   }
 }
+
 
 /**
  *
