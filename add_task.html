@@ -133,10 +133,11 @@
                 <input type="hidden" id="category" name="category" required>
     
                 <label for="subtask">Subtasks</label>
-                <div>
-                    <input type="text" id="subtask" placeholder="Add new subtask">
-                    <ul id="subtask-list"></ul>
+                <div class="subtask-input-container">
+                  <input type="text" id="subtask" placeholder="Add new subtask" onkeydown="handleSubtaskKey(event)">
+                  <button type="button" onclick="addSubtask()" class="subtask-add-btn">+</button>
                 </div>
+                <ul id="subtask-list"></ul>
             </div>
         </form>
     

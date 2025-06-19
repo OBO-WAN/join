@@ -317,6 +317,90 @@ input[type="radio"]:checked + .priority-button {
     justify-content: center;
 }
 
+.subtask-input-container {
+    position: relative;
+    width: 100%;
+}
+
+.subtask-input-container input {
+    width: 100%;
+    padding-right: 30px;
+}
+  
+.subtask-add-btn {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #2A3647;
+}
+
+#subtask-list {
+    margin-top: 10px;
+    padding: 0;
+    list-style: none;
+}
+
+.subtask-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f4f4f4;
+    padding: 6px 10px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.subtask-item:hover {
+    background-color: #EEEEEE;
+}
+
+.subtask-text {
+    flex: 1;
+    font-size: 14px;
+}
+
+.subtask-actions {
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    padding-left: 4px;
+}
+
+.subtask-item:hover .subtask-actions {
+    opacity: 1;
+}
+
+.subtask-actions img {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.subtask-actions img:hover {
+    opacity: 1;
+}
+
+.d-none {
+    display: none !important;
+}
+
+.subtask-edit-input {
+    flex: 1;
+    font-size: 14px;
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
 @media screen and (max-width: 1270px) {
     .add-task-container {
         padding-left: 290px;
