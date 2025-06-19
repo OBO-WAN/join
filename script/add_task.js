@@ -35,11 +35,11 @@ function collectTaskData() {
     const priorityRaw = document.querySelector("input[name='priority']:checked")?.value;
 
     const [year, month, day] = dueDateRaw.split("-");
-    const dueDate = `${day}/${month}/${year}`;
+    const dueDate = `${day}-${month}-${year}`;
 
     const categoryMap = {
         "technical-task": "Technical Task",
-        "user-story": "User Story"
+        "user-story": "user-story"
     };
     const category = categoryMap[categoryValue] || categoryValue;
 
@@ -48,8 +48,10 @@ function collectTaskData() {
     const checkboxElements = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]:checked');
     const assignees = Array.from(checkboxElements).map(cb => cb.value);
 
-    const subtaskInput = document.getElementById("subtask").value.trim();
-    const subTasks = { task: subtaskInput };
+    const subtaskItems = document.querySelectorAll('#subtask-list li');
+    const subTasks = Array.from(subtaskItems).map(item => ({
+      task: item.textContent.trim()
+    }));
 
     return {
         task: title,
@@ -150,6 +152,76 @@ function getColor(letter) {
     ];
     const index = (letter.toUpperCase().charCodeAt(0) - 65) % colorsArray.length;
     return colorsArray[index];
+}
+
+function addSubtask() {
+    const input = document.getElementById("subtask");
+    const value = input.value.trim();
+    if (!value) return;
+
+    const li = createSubtaskElement(value);
+    document.getElementById("subtask-list").appendChild(li);
+    input.value = "";
+}
+
+function createSubtaskElement(value) {
+    const li = document.createElement("li");
+    li.classList.add("subtask-item");
+
+    li.innerHTML = `
+        <span class="subtask-circle"></span>
+        <span class="subtask-text">• ${value}</span>
+        <input class="subtask-edit-input d-none" type="text" value="${value}">
+        <div class="subtask-actions">
+            <img src="./assets/icons/edit.svg" class="edit-subtask" title="Edit">
+            <img src="./assets/icons/delete_icon.svg" class="delete-subtask" title="Delete">
+        </div>
+    `;
+
+    addSubtaskEditHandler(li);
+    addSubtaskDeleteHandler(li);
+    return li;
+}
+
+function addSubtaskEditHandler(li) {
+    const editButton = li.querySelector('.edit-subtask');
+    editButton.addEventListener('click', () => enterEditMode(li));
+}
+
+function addSubtaskDeleteHandler(li) {
+    const deleteButton = li.querySelector('.delete-subtask');
+    deleteButton.addEventListener('click', () => li.remove());
+}
+
+function enterEditMode(li) {
+    const textSpan = li.querySelector('.subtask-text');
+    const inputField = li.querySelector('.subtask-edit-input');
+
+    inputField.value = textSpan.textContent.replace(/^•\s*/, '');
+    textSpan.style.display = 'none';
+    inputField.classList.remove('d-none');
+    inputField.focus();
+
+    const save = () => {
+        const newValue = inputField.value.trim();
+        if (newValue) {
+            textSpan.textContent = `• ${newValue}`;
+            inputField.classList.add('d-none');
+            textSpan.style.display = 'inline';
+        }
+        removeEditListeners();
+    };
+
+    const onEnter = (e) => e.key === 'Enter' && save();
+    const onBlur = () => save();
+
+    function removeEditListeners() {
+        inputField.removeEventListener('keydown', onEnter);
+        inputField.removeEventListener('blur', onBlur);
+    }
+
+    inputField.addEventListener('keydown', onEnter);
+    inputField.addEventListener('blur', onBlur);
 }
 
 function renderAssigneeDropdown() {

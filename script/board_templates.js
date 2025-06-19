@@ -229,7 +229,7 @@ function getTaskSheetOverlay(task, assignedUsersHTML, index) {
               (task.subTasks || []).map((subtask, subIndex) => `
                 <div class="subtasks-elements-container" onclick="toggleSubtaskCheckbox(this, '${task.id}', ${subIndex})">
                   <img class="subtask-checkbox-img" src="assets/icons/${subtask.done ? 'checkbox-checked' : 'checkbox-empty'}.svg" alt="Checkbox">
-                  <span>${subtask.title}</span>
+                  <span>${subtask.task}</span>
                 </div>
               `).join("")
             }
