@@ -78,6 +78,9 @@ function getNextTaskId(tasks) {
     let maxId = 0;
     for (const key in tasks) {
         const task = tasks[key];
+
+        if(!task || typeof task !=='object') continue;
+
         const idNum = parseInt(task.id);
         if (!isNaN(idNum) && idNum > maxId) {
             maxId = idNum;
@@ -309,5 +312,11 @@ function selectCategory(value) {
     document.getElementById('category-dropdown').classList.add('d-none');
 }
 
+function handleSubtaskKey(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); // Prevent form submission
+        addSubtask();
+    }
+}
 
 
