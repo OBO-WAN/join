@@ -1,5 +1,3 @@
-const BASE_URL = "https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/";
-
 let Contacts = [];
 
 loadContacts();
@@ -226,6 +224,8 @@ function enterEditMode(li) {
 
 function renderAssigneeDropdown() {
     const container = document.getElementById('assignee-dropdown');
+    if(!container) return;
+
     container.innerHTML = '';
 
     Contacts.forEach((contact, index) => {
@@ -247,10 +247,11 @@ function renderAssigneeDropdown() {
 }
 
 function updateAssigneePlaceholder() {
-    const checkboxes = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]');
     const selectedAvatars = document.getElementById("selected-assignee-avatars");
     const placeholder = document.getElementById("selected-assignees-placeholder");
+    if (!selectedAvatars || !placeholder) return;
 
+    const checkboxes = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]');
     let avatarHTML = "";
 
     checkboxes.forEach(cb => {
@@ -269,6 +270,7 @@ function updateAssigneePlaceholder() {
     placeholder.textContent = 'Select contacts';
     selectedAvatars.innerHTML = avatarHTML;
 }
+
 
 document.addEventListener('click', function(event) {
     const dropdowns = [
@@ -306,3 +308,6 @@ function selectCategory(value) {
     document.getElementById('selected-category-placeholder').textContent = label[value] || 'Select category';
     document.getElementById('category-dropdown').classList.add('d-none');
 }
+
+
+
