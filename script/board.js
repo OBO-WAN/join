@@ -1,6 +1,4 @@
-// const BASE_URL = "https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/"; 
-
-let tasks = BASE_URL;
+let tasks = [];
 
 let users = [];
 
@@ -10,8 +8,9 @@ async function loadTasksFromFirebase() {
     const response = await fetch(`${BASE_URL}tasks.json`);
     const data = await response.json();
 
-    tasks = [];
+    // tasks = [];
     for (const [id, task] of Object.entries(data || {})) {
+        if(!task || typeof task!== 'object') continue;
         task.id = id;
         tasks.push(task);
     }
