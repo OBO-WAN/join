@@ -149,14 +149,65 @@ table {
     width: 100%;
     margin-top: 144px; /*to be eventually modified by removing the responsive <nav>*/
     justify-content: flex-end;
-    padding: 12px 0;
+    padding: 12px 12px;
   }
 } 
+
+.action-box.delete {
+  background-color: transparent;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.action-box.delete:hover {
+  background-color: rgba(255, 0, 0, 0.1); /* light red bg */
+}
+
+.action-box.delete:hover .delete-btn {
+  color: red;
+}
+
+.action-box.delete:hover .delete-icon img {
+  filter: brightness(0) saturate(100%) invert(25%) sepia(94%) saturate(4373%) hue-rotate(355deg) brightness(90%) contrast(113%);
+}
+.action-box.delete:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 6px rgba(255, 0, 0, 0.2);
+}
+
+.action-box.edit {
+  background-color: transparent;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  padding: 14px;
+}
+
+.action-box.edit:hover {
+  background-color: rgba(41, 171, 226, 0.1);
+}
+
+.action-box.edit:hover .edit-btn {
+  color: #29abe2;
+}
+
+.action-box.edit:hover .edit-icon img {
+  filter: brightness(0) saturate(100%) invert(58%) sepia(47%) saturate(518%) hue-rotate(165deg) brightness(90%) contrast(90%);
+}
+
+.action-box.edit:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 6px rgba(41, 171, 226, 0.2);
+}
+
 
 /* Responsive Overlay */
 
 @media only screen and (max-width: 450px) {
   .task_container_overlay {
+    display: flex;
     width: 100vw;
     height: 100vh;
     max-width: 100%;
@@ -248,8 +299,8 @@ table {
 
 @media only screen and (max-width: 450px) {
   .task_container_overlay {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     max-width: 100%;
     border-radius: 0;
     padding: 20px;
@@ -263,3 +314,8 @@ table {
     overflow-y: auto;
   }
 }
+
+
+
+
+
