@@ -326,4 +326,10 @@ function handleSubtaskKey(event) {
     }
 }
 
-
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("taskForm");
+    if (form) {
+        initAddTaskFormEvents();
+        loadContacts();
+    }
+});
