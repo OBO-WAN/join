@@ -23,7 +23,7 @@ function collectTaskData() {
 
     const categoryMap = {
         "technical-task": "Technical Task",
-        "user-story": "user-story"
+        "user-story": "User Story"
     };
     const category = categoryMap[categoryValue] || categoryValue;
 
