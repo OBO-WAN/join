@@ -239,3 +239,44 @@ function getTaskSheetOverlay(task, assignedUsersHTML, index) {
     </div>
   `;
 }
+
+// Edit Functions Overlay (in Progress)
+
+function editPopupTask(taskId) {
+    const task = tasks.find(t => t.id == taskId);
+    if (!task) return;
+
+    const overlay = document.getElementById('overlay');
+
+    overlay.innerHTML = `
+        <div class="task_container_overlay hover">
+            <div class="task">
+
+                <div class="overlay_headline"> 
+                    <div class="task_category_overlay">${task.category}</div>
+                    <button onclick="closeOverlay()" class="close_button hover">X</button>
+                </div>
+
+                <div class="task_information_overlay">
+                    <input class="task_title_overlay" id="edit-title" value="${task.task || ''}">
+                    <textarea class="task_details_overlay" id="edit-details">${task.description || ''}</textarea>
+
+                    <label>Due date:</label>
+                    <input type="date" id="edit-dueDate" value="${formatDateForInput(task.dueDate)}">
+
+                    <label>Priority:</label>
+                    <select id="edit-priority">
+                        <option value="low" ${task.priority === 'low' ? 'selected' : ''}>Low</option>
+                        <option value="medium" ${task.priority === 'medium' ? 'selected' : ''}>Medium</option>
+                        <option value="urgent" ${task.priority === 'urgent' ? 'selected' : ''}>Urgent</option>
+                    </select>
+                </div>
+
+                <div class="popup-actions">
+                    <button class="save-btn" onclick="saveTaskEdits('${task.id}')">Save</button>
+                </div>
+
+            </div>
+        </div>
+    `;
+}

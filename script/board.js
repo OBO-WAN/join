@@ -8,7 +8,7 @@ async function loadTasksFromFirebase() {
     const response = await fetch(`${BASE_URL}tasks.json`);
     const data = await response.json();
 
-    // tasks = [];
+    tasks = [];
     for (const [id, task] of Object.entries(data || {})) {
         if(!task || typeof task!== 'object') continue;
         task.id = id;
@@ -26,6 +26,7 @@ async function init() {
 }
 
 function renderCurrentTasks() {
+    console.log('Rendering', tasks.length, 'tasks');
 
     const statusContainers = proofStatus();
 
@@ -298,79 +299,40 @@ async function toggleSubtaskCheckbox(element, taskId, subtaskIndex) {
     }
 }
 
-// Edit Functions Overlay (in Progress)
+// Edit Overlay (in Progress)
 
-// function editPopupTask(taskId) {
-//     const task = tasks.find(t => t.id == taskId);
-//     if (!task) return;
+function formatDateForInput(dueDate) {
+    if (!dueDate) return '';
 
-//     const overlay = document.getElementById('overlay');
+    const [day, month, year] = dueDate.split('-');
+    return `${year}-${month}-${day}`;
+}
 
-//     overlay.innerHTML = `
-//         <div class="task_container_overlay hover">
-//             <div class="task">
+async function saveTaskEdits(taskId) {
+    const task = tasks.find(t => t.id == taskId);
+    if (!task) return;
 
-//                 <div class="overlay_headline"> 
-//                     <div class="task_category_overlay">${task.category}</div>
-//                     <button onclick="closeOverlay()" class="close_button hover">X</button>
-//                 </div>
+    const newTitle = document.getElementById('edit-title').value.trim();
+    const newDetails = document.getElementById('edit-details').value.trim();
+    const newDueDate = document.getElementById('edit-dueDate').value;
+    const newPriority = document.getElementById('edit-priority').value;
 
-//                 <div class="task_information_overlay">
-//                     <input class="task_title_overlay" id="edit-title" value="${task.task || ''}">
-//                     <textarea class="task_details_overlay" id="edit-details">${task.description || ''}</textarea>
+    const [year, month, day] = newDueDate.split('-');
+    const formattedDate = `${day}-${month}-${year}`;
 
-//                     <label>Due date:</label>
-//                     <input type="date" id="edit-dueDate" value="${formatDateForInput(task.dueDate)}">
+    task.task = newTitle;
+    task.description = newDetails;
+    task.dueDate = formattedDate;
+    task.priority = newPriority;
 
-//                     <label>Priority:</label>
-//                     <select id="edit-priority">
-//                         <option value="low" ${task.priority === 'low' ? 'selected' : ''}>Low</option>
-//                         <option value="medium" ${task.priority === 'medium' ? 'selected' : ''}>Medium</option>
-//                         <option value="urgent" ${task.priority === 'urgent' ? 'selected' : ''}>Urgent</option>
-//                     </select>
-//                 </div>
+    await fetch(`${BASE_URL}tasks/${taskId}.json`, {
+        method: 'PUT',
+        body: JSON.stringify(task)
+    });
 
-//                 <div class="popup-actions">
-//                     <button class="save-btn" onclick="saveTaskEdits('${task.id}')">Save</button>
-//                 </div>
-
-//             </div>
-//         </div>
-//     `;
-// }
-
-// function formatDateForInput(dueDate) {
-//     if (!dueDate) return '';
-
-//     const [day, month, year] = dueDate.split('-');
-//     return `${year}-${month}-${day}`;
-// }
-
-// async function saveTaskEdits(taskId) {
-//     const task = tasks.find(t => t.id == taskId);
-//     if (!task) return;
-
-//     const newTitle = document.getElementById('edit-title').value.trim();
-//     const newDetails = document.getElementById('edit-details').value.trim();
-//     const newDueDate = document.getElementById('edit-dueDate').value;
-//     const newPriority = document.getElementById('edit-priority').value;
-
-//     const [year, month, day] = newDueDate.split('-');
-//     const formattedDate = `${day}-${month}-${year}`;
-
-//     task.task = newTitle;
-//     task.description = newDetails;
-//     task.dueDate = formattedDate;
-//     task.priority = newPriority;
-
-//     await fetch(`${BASE_URL}tasks/${taskId}.json`, {
-//         method: 'PUT',
-//         body: JSON.stringify(task)
-//     });
-
-//     closeOverlay();
-//     await loadTasksFromFirebase(); // Re-render
-// }
+    closeOverlay();
+    await loadTasksFromFirebase(); // Re-render
+}
 
 // Delete inside Overlay (in Progress)
 
