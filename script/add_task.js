@@ -2,20 +2,6 @@ let Contacts = [];
 
 loadContacts();
 
-document.querySelector('.clear-btn').onclick = resetForm;
-
-const form = document.getElementById("taskForm");
-const submitBtn = document.querySelector(".create-btn");
-
-submitBtn.onclick = function (event) {
-    event.preventDefault();
-    if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-    }
-    submitTask();
-};
-
 async function submitTask() {
     const task = collectTaskData();
     const tasks = await fetchAllTasks();
@@ -119,6 +105,27 @@ function resetForm() {
     const checkboxes = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]');
     checkboxes.forEach(cb => cb.checked = false);
     updateAssigneePlaceholder();
+}
+
+function initAddTaskFormEvents() {
+    const clearBtn = document.querySelector('.clear-btn');
+    if (clearBtn) {
+        clearBtn.onclick = resetForm;
+    }
+
+    const form = document.getElementById("taskForm");
+    const submitBtn = document.querySelector(".create-btn");
+
+    if (submitBtn && form) {
+        submitBtn.onclick = function (event) {
+            event.preventDefault();
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            submitTask();
+        };
+    }
 }
 
 async function loadContacts() {
@@ -314,7 +321,7 @@ function selectCategory(value) {
 
 function handleSubtaskKey(event) {
     if (event.key === 'Enter') {
-        event.preventDefault(); // Prevent form submission
+        event.preventDefault(); 
         addSubtask();
     }
 }
