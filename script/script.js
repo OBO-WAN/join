@@ -32,13 +32,25 @@ function toHrefFocus(targetHref, anchor) {
 function setUserInitials() {
   const firstInitial = document.getElementById('first_icon_initials');
   const lastInitial = document.getElementById('last_icon_initials');
-  const firstName = sessionStorage.getItem('firstName');
-  const lastName = sessionStorage.getItem('lastName');
+  let firstName = sessionStorage.getItem('firstName');
+  let lastName = sessionStorage.getItem('lastName');
+    
+  /*Only for testing purposes, remove later */
+//  firstName = "Guest"
+// lastName = "";
 
   if (firstInitial && lastInitial && firstName && lastName) {
     firstInitial.textContent = firstName[0].toUpperCase();
     lastInitial.textContent = lastName[0].toUpperCase();
+    lastInitial.style.display = "flex";
   }
+
+  if (firstInitial && lastInitial && firstName == "Guest") {
+    firstInitial.textContent = firstName[0].toUpperCase();
+    lastInitial.textContent = "";
+    lastInitial.style.display = "none";
+  }
+
 }
 
 // function logOut() {

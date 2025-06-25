@@ -250,9 +250,9 @@ function getMobileViewCardTemplate(id, color) {
 
 /*<div class="contactslist_container" id="contactslist_container">*/ 
 
-function getAddNewContactTemplate() {
+function getAddNewContactTemplate(){
     return `
-        <div class="add_new_contact_ov_container">
+        <div class="add_new_contact_ov_container" id="add_new_contact_ov_container">
             <div class="add_newcontact_sloagen_container">
                 <div class="ov_logo_section" id = "ov_logo_section">
                     <img class="ov_logo" src="./assets/img/logo-white.svg" alt="join logo">
