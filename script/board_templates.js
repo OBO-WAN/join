@@ -49,26 +49,6 @@ function getKanbanTemplate(task, assignedUsersHTML, index) {
 `;
 }
 
-/**
- * Generates the HTML structure for the "Add Task" overlay form.
- * Includes inputs for title, description, due date, priority selection,
- * category dropdown, contact assignee selector, and dynamic subtask entry.
- * 
- * This form is typically displayed in a modal (overlay) when the user clicks
- * "Add Task" on the board or from the sidebar menu.
- * 
- * The returned HTML is meant to be injected into an element with the ID "overlay",
- * and works in conjunction with form handlers in `add_task.js`.
- * 
- * @function getAddTaskOverlay
- * 
- * @returns {string} - A complete HTML string for rendering the task creation form overlay.
- * 
- * @example
- * const overlay = document.getElementById('overlay');
- * overlay.innerHTML = getAddTaskOverlay();
- * overlay.classList.remove('d-none');
- */
 
 
 function getAddTaskOverlay() {
@@ -117,12 +97,11 @@ function getAddTaskOverlay() {
                     </label>
                 </div>
     
-                <label for="assignees">Assigned to</label>
-                <select class="hover" id="assignees" name="assignees">
-                    <option value="" disabled selected>Select contacts to assign</option>
-                </select>
+                <div class="multiselect-header" onclick="toggleAssigneeDropdown()">
+                        <span id="selected-assignees-placeholder">Select contacts</span>
+                        <img src="assets/icons/arrow_drop_downaa.png" class="dropdown-icon">
+                    </div>
                     
-                </select>
     
                 <label for="category">Category <span class="required-marker">*</span></label>
                 <select id="category" class="hover" name="category" required>
@@ -229,7 +208,7 @@ function getTaskSheetOverlay(task, assignedUsersHTML, index) {
               (task.subTasks || []).map((subtask, subIndex) => `
                 <div class="subtasks-elements-container" onclick="toggleSubtaskCheckbox(this, '${task.id}', ${subIndex})">
                   <img class="subtask-checkbox-img" src="assets/icons/${subtask.done ? 'checkbox-checked' : 'checkbox-empty'}.svg" alt="Checkbox">
-                  <span>${subtask.title}</span>
+                  <span>${subtask.task}</span>
                 </div>
               `).join("")
             }
@@ -259,4 +238,45 @@ function getTaskSheetOverlay(task, assignedUsersHTML, index) {
       </div>  
     </div>
   `;
+}
+
+// Edit Functions Overlay (in Progress)
+
+function editPopupTask(taskId) {
+    const task = tasks.find(t => t.id == taskId);
+    if (!task) return;
+
+    const overlay = document.getElementById('overlay');
+
+    overlay.innerHTML = `
+        <div class="task_container_overlay hover">
+            <div class="task">
+
+                <div class="overlay_headline"> 
+                    <div class="task_category_overlay">${task.category}</div>
+                    <button onclick="closeOverlay()" class="close_button hover">X</button>
+                </div>
+
+                <div class="task_information_overlay">
+                    <input class="task_title_overlay" id="edit-title" value="${task.task || ''}">
+                    <textarea class="task_details_overlay" id="edit-details">${task.description || ''}</textarea>
+
+                    <label>Due date:</label>
+                    <input type="date" id="edit-dueDate" value="${formatDateForInput(task.dueDate)}">
+
+                    <label>Priority:</label>
+                    <select id="edit-priority">
+                        <option value="low" ${task.priority === 'low' ? 'selected' : ''}>Low</option>
+                        <option value="medium" ${task.priority === 'medium' ? 'selected' : ''}>Medium</option>
+                        <option value="urgent" ${task.priority === 'urgent' ? 'selected' : ''}>Urgent</option>
+                    </select>
+                </div>
+
+                <div class="popup-actions">
+                    <button class="save-btn" onclick="saveTaskEdits('${task.id}')">Save</button>
+                </div>
+
+            </div>
+        </div>
+    `;
 }

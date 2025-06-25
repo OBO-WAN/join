@@ -1,22 +1,6 @@
-const BASE_URL = "https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/";
-
 let Contacts = [];
 
 loadContacts();
-
-document.querySelector('.clear-btn').onclick = resetForm;
-
-const form = document.getElementById("taskForm");
-const submitBtn = document.querySelector(".create-btn");
-
-submitBtn.onclick = function (event) {
-    event.preventDefault();
-    if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-    }
-    submitTask();
-};
 
 async function submitTask() {
     const task = collectTaskData();
@@ -28,28 +12,40 @@ async function submitTask() {
 }
 
 function collectTaskData() {
-    const title = document.getElementById("title").value.trim();
+    const title = document.getElementById("title").value.trim(); // ← wird zu task
     const description = document.getElementById("description").value.trim();
-    const dueDate = document.getElementById("due-date").value;
-    const category = document.getElementById("category").value;
-    const priority = document.querySelector("input[name='priority']:checked")?.value;
+    const dueDateRaw = document.getElementById("due-date").value;
+    const categoryValue = document.getElementById("category").value;
+    const priorityRaw = document.querySelector("input[name='priority']:checked")?.value;
+
+    const [year, month, day] = dueDateRaw.split("-");
+    const dueDate = `${day}-${month}-${year}`;
+
+    const categoryMap = {
+        "technical-task": "Technical Task",
+        "user-story": "User Story"
+    };
+    const category = categoryMap[categoryValue] || categoryValue;
+
+    const priority = priorityRaw ? priorityRaw.charAt(0).toUpperCase() + priorityRaw.slice(1).toLowerCase() : null;
 
     const checkboxElements = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]:checked');
     const assignees = Array.from(checkboxElements).map(cb => cb.value);
 
-    const subtasks = Array.from(document.querySelectorAll("#subtask-list li"))
-                          .map(li => li.textContent);
+    const subtaskItems = document.querySelectorAll('#subtask-list li');
+    const subTasks = Array.from(subtaskItems).map(item => ({
+      task: item.textContent.trim()
+    }));
 
     return {
-        title,
+        task: title,
         description,
         dueDate,
         category,
-        priority: priority || null,
+        priority,
         assignedTo: assignees,
-        subTasks: subtasks,
-        status: "toDo",
-        createdAt: new Date().toISOString()
+        subTasks,
+        status: "toDo"
     };
 }
 
@@ -68,6 +64,9 @@ function getNextTaskId(tasks) {
     let maxId = 0;
     for (const key in tasks) {
         const task = tasks[key];
+
+        if(!task || typeof task !=='object') continue;
+
         const idNum = parseInt(task.id);
         if (!isNaN(idNum) && idNum > maxId) {
             maxId = idNum;
@@ -78,6 +77,10 @@ function getNextTaskId(tasks) {
 
 async function saveTaskToFirebase(task, id) {
     try {
+        if (!Array.isArray(task.assignedTo)) {
+            task.assignedTo = Object.values(task.assignedTo || {});
+        }
+
         const res = await fetch(`${BASE_URL}tasks/${id}.json`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -102,6 +105,27 @@ function resetForm() {
     const checkboxes = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]');
     checkboxes.forEach(cb => cb.checked = false);
     updateAssigneePlaceholder();
+}
+
+function initAddTaskFormEvents() {
+    const clearBtn = document.querySelector('.clear-btn');
+    if (clearBtn) {
+        clearBtn.onclick = resetForm;
+    }
+
+    const form = document.getElementById("taskForm");
+    const submitBtn = document.querySelector(".create-btn");
+
+    if (submitBtn && form) {
+        submitBtn.onclick = function (event) {
+            event.preventDefault();
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            submitTask();
+        };
+    }
 }
 
 async function loadContacts() {
@@ -138,8 +162,80 @@ function getColor(letter) {
     return colorsArray[index];
 }
 
+function addSubtask() {
+    const input = document.getElementById("subtask");
+    const value = input.value.trim();
+    if (!value) return;
+
+    const li = createSubtaskElement(value);
+    document.getElementById("subtask-list").appendChild(li);
+    input.value = "";
+}
+
+function createSubtaskElement(value) {
+    const li = document.createElement("li");
+    li.classList.add("subtask-item");
+
+    li.innerHTML = `
+        <span class="subtask-circle"></span>
+        <span class="subtask-text">• ${value}</span>
+        <input class="subtask-edit-input d-none" type="text" value="${value}">
+        <div class="subtask-actions">
+            <img src="./assets/icons/edit.svg" class="edit-subtask" title="Edit">
+            <img src="./assets/icons/delete_icon.svg" class="delete-subtask" title="Delete">
+        </div>
+    `;
+
+    addSubtaskEditHandler(li);
+    addSubtaskDeleteHandler(li);
+    return li;
+}
+
+function addSubtaskEditHandler(li) {
+    const editButton = li.querySelector('.edit-subtask');
+    editButton.addEventListener('click', () => enterEditMode(li));
+}
+
+function addSubtaskDeleteHandler(li) {
+    const deleteButton = li.querySelector('.delete-subtask');
+    deleteButton.addEventListener('click', () => li.remove());
+}
+
+function enterEditMode(li) {
+    const textSpan = li.querySelector('.subtask-text');
+    const inputField = li.querySelector('.subtask-edit-input');
+
+    inputField.value = textSpan.textContent.replace(/^•\s*/, '');
+    textSpan.style.display = 'none';
+    inputField.classList.remove('d-none');
+    inputField.focus();
+
+    const save = () => {
+        const newValue = inputField.value.trim();
+        if (newValue) {
+            textSpan.textContent = `• ${newValue}`;
+            inputField.classList.add('d-none');
+            textSpan.style.display = 'inline';
+        }
+        removeEditListeners();
+    };
+
+    const onEnter = (e) => e.key === 'Enter' && save();
+    const onBlur = () => save();
+
+    function removeEditListeners() {
+        inputField.removeEventListener('keydown', onEnter);
+        inputField.removeEventListener('blur', onBlur);
+    }
+
+    inputField.addEventListener('keydown', onEnter);
+    inputField.addEventListener('blur', onBlur);
+}
+
 function renderAssigneeDropdown() {
     const container = document.getElementById('assignee-dropdown');
+    if(!container) return;
+
     container.innerHTML = '';
 
     Contacts.forEach((contact, index) => {
@@ -161,10 +257,11 @@ function renderAssigneeDropdown() {
 }
 
 function updateAssigneePlaceholder() {
-    const checkboxes = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]');
     const selectedAvatars = document.getElementById("selected-assignee-avatars");
     const placeholder = document.getElementById("selected-assignees-placeholder");
+    if (!selectedAvatars || !placeholder) return;
 
+    const checkboxes = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]');
     let avatarHTML = "";
 
     checkboxes.forEach(cb => {
@@ -183,6 +280,7 @@ function updateAssigneePlaceholder() {
     placeholder.textContent = 'Select contacts';
     selectedAvatars.innerHTML = avatarHTML;
 }
+
 
 document.addEventListener('click', function(event) {
     const dropdowns = [
@@ -220,3 +318,18 @@ function selectCategory(value) {
     document.getElementById('selected-category-placeholder').textContent = label[value] || 'Select category';
     document.getElementById('category-dropdown').classList.add('d-none');
 }
+
+function handleSubtaskKey(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); 
+        addSubtask();
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("taskForm");
+    if (form) {
+        initAddTaskFormEvents();
+        loadContacts();
+    }
+});
