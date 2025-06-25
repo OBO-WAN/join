@@ -214,6 +214,19 @@ function loginSuccessful() {
 //   goToUrl('log_in.html');
 // }
 function logOut() {
+  /*window.showButtonLinksSidebar = false;
+  sessionStorage.setItem('linksSidebarBoolienKey', window.showButtonLinksSidebar);
+
+  // Remove all relevant user session keys
+  sessionStorage.removeItem('loggedIn');
+  sessionStorage.removeItem('loggedInUserId');
+  sessionStorage.removeItem('activePage');
+  sessionStorage.removeItem('firstName');
+  sessionStorage.removeItem('lastName');
+  sessionStorage.removeItem('userInitials');*/
+
+  goToUrl('login.html');
+
   window.showButtonLinksSidebar = false;
   sessionStorage.setItem('linksSidebarBoolienKey', window.showButtonLinksSidebar);
 
@@ -225,7 +238,7 @@ function logOut() {
   sessionStorage.removeItem('lastName');
   sessionStorage.removeItem('userInitials');
 
-  goToUrl('log_in.html');
+
 }
 
 

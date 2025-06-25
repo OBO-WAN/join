@@ -15,6 +15,7 @@
     <script src="./script/contacts.js"></script>
     <script src="script/contact_tamplate.js"></script>
     <script src="./script/script.js"></script>
+    <script src="./script/scripts.js"></script>
 
 </head>
 <body onload="getContacts(); setUserInitials();" id="body">
@@ -37,7 +38,7 @@
             <div class="dropdown_menu" id="dropdown_menu">
                 <a class="dropdown_link" href="./privacy_policy.html">Privacy Policy</a>
                 <a class="dropdown_link" href="./legal_notice.html">Leagl Notes</a>
-                <a class="dropdown_link" href="./sign_up.html">Log out</a>
+                <div class="dropdown_link" onclick="logOut()">Log out</div>
                 <a class="dropdown_link help_link" href="help.html">Help</a>
             </div>
         </div>
@@ -81,11 +82,12 @@
         <!---->
 
         <!--contacts list container -->
+         
         <div class="contactslist_container" id="contactslist_container">
         
             <!--Tablet Vievcard section-->
             <div id="add_new_contact_ov_section" class="add_new_contact_ov"></div>
-            <div id="tablate_view_card_container" class="tablate_view_card_container"></div>    
+            <div id="tablate_view_card_container" class="tablate_view_card_container"></div>
             <!---->
 
             <div class="add_new_contact_section" id="add_new_contact_section">
@@ -127,7 +129,7 @@
                         </div>
                         </div>-->
                     
-                <button class="add_new_contact_button" onclick="openContactDialog(-1)">
+                <button class="add_new_contact_button" id="add_new_contact_button" onclick="openContactDialog(-1)">
                     <span class="add_contact_text">Add New Contact</span>
                     <img src="./assets/icons/contact/addcontact.png" class="add_contact_icon">
                 </button>
