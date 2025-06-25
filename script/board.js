@@ -1,6 +1,4 @@
-// const BASE_URL = "https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/"; 
-
-let tasks = BASE_URL;
+let tasks = [];
 
 let users = [];
 
@@ -12,6 +10,7 @@ async function loadTasksFromFirebase() {
 
     tasks = [];
     for (const [id, task] of Object.entries(data || {})) {
+        if(!task || typeof task!== 'object') continue;
         task.id = id;
         tasks.push(task);
     }
@@ -27,6 +26,7 @@ async function init() {
 }
 
 function renderCurrentTasks() {
+    console.log('Rendering', tasks.length, 'tasks');
 
     const statusContainers = proofStatus();
 
@@ -142,7 +142,7 @@ function attachTaskEventHandlers() {
             </div>
         `).join('');
 
-        // ✔️ Jetzt wird das Overlay per JS geöffnet
+        // das Overlay wird per JS geöffnet
         container.addEventListener('click', () => {
             openTask(taskData, assignedUsersHTML, index);
         });
@@ -167,7 +167,7 @@ function prepareTaskForTemplate(task) {
         id: task.id,
         category: task.category || 'General',
         categoryClass: (task.category || 'general').toLowerCase().replace(/\s/g, '_'),
-        title: task.task || 'Untitled',
+        title: task.title || task.task || 'Untitled',
         details: task.description || '',
         assignedTo,
         priority: (task.priority || 'low').toLowerCase(),
@@ -213,18 +213,17 @@ window.addEventListener('DOMContentLoaded', function () {
 function addNewTask() {
     const overlay = document.getElementById('overlay');
     overlay.innerHTML = "";
-
     overlay.innerHTML = getAddTaskOverlay();
-
     overlay.classList.remove('d-none');
+
+    loadContacts()
+    initAddTaskFormEvents();
 }
 
 function closeOverlay() {
     const overlay = document.getElementById('overlay');
     overlay.classList.add('d-none');
 
-    // document.body.classList.remove('overlay-active');
-    // document.getElementById('overlay').classList.add('d-none');
 }
 
 
@@ -274,28 +273,7 @@ async function moveTo(newStatus) {
     currentDraggedElement = null;
 }
 
-
-/**
- * Toggles the completion status of a subtask in the task overlay.
- * Updates the checkbox icon, modifies the task data in memory,
- * and saves the updated task to Firebase.
- * Also refreshes the subtask progress bar if applicable.
- * 
- * @function toggleSubtaskCheckbox
- * @param {HTMLElement} element - The DOM element of the clicked subtask container.
- * @param {string} taskId - The unique ID of the task containing the subtask.
- * @param {number} subtaskIndex - The index of the subtask within the task's subTasks array.
- * 
- * @returns {Promise<void>} - A promise that resolves when the task is updated in Firebase.
- * 
- * @example
- * // Inside dynamically generated HTML:
- * <div onclick="toggleSubtaskCheckbox(this, 'abc123', 0)">...</div>
- * 
- * // JavaScript usage (manually triggered)
- * toggleSubtaskCheckbox(document.querySelector('.subtasks-elements-container'), 'abc123', 0);
- */
-
+//Overlay
 
 async function toggleSubtaskCheckbox(element, taskId, subtaskIndex) {
     const task = tasks.find(t => t.id == taskId);
@@ -320,3 +298,58 @@ async function toggleSubtaskCheckbox(element, taskId, subtaskIndex) {
         proofSubtasks(task, tasks.indexOf(task));
     }
 }
+
+// Edit Overlay (in Progress)
+
+function formatDateForInput(dueDate) {
+    if (!dueDate) return '';
+
+    const [day, month, year] = dueDate.split('-');
+    return `${year}-${month}-${day}`;
+}
+
+async function saveTaskEdits(taskId) {
+    const task = tasks.find(t => t.id == taskId);
+    if (!task) return;
+
+    const newTitle = document.getElementById('edit-title').value.trim();
+    const newDetails = document.getElementById('edit-details').value.trim();
+    const newDueDate = document.getElementById('edit-dueDate').value;
+    const newPriority = document.getElementById('edit-priority').value;
+
+    const [year, month, day] = newDueDate.split('-');
+    const formattedDate = `${day}-${month}-${year}`;
+
+    task.task = newTitle;
+    task.description = newDetails;
+    task.dueDate = formattedDate;
+    task.priority = newPriority;
+
+    await fetch(`${BASE_URL}tasks/${taskId}.json`, {
+        method: 'PUT',
+        body: JSON.stringify(task)
+    });
+
+    closeOverlay();
+    await loadTasksFromFirebase(); // Re-render
+}
+
+// Delete inside Overlay (in Progress)
+
+async function deleteTaskFromBoardPopup(taskId) {
+    const confirmDelete = confirm("Are you sure you want to delete this task?");
+    if (!confirmDelete) return;
+
+    try {
+        await fetch(`${BASE_URL}tasks/${taskId}.json`, {
+            method: 'DELETE'
+        });
+
+        closeOverlay();
+        await loadTasksFromFirebase(); // Refresh board
+    } catch (error) {
+        console.error("Error deleting task:", error);
+        alert("There was an error deleting the task.");
+    }
+}
+

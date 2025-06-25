@@ -26,3 +26,26 @@ function toHrefFocus(targetHref, anchor) {
 
   window.location.href = targetHref;
 }
+
+//Render Initials
+
+function setUserInitials() {
+  const firstInitial = document.getElementById('first_icon_initials');
+  const lastInitial = document.getElementById('last_icon_initials');
+  const firstName = sessionStorage.getItem('firstName');
+  const lastName = sessionStorage.getItem('lastName');
+
+  if (firstInitial && lastInitial && firstName && lastName) {
+    firstInitial.textContent = firstName[0].toUpperCase();
+    lastInitial.textContent = lastName[0].toUpperCase();
+  }
+}
+
+// function logOut() {
+//   sessionStorage.clear(); 
+//   window.location.href = 'login.html'; 
+// }
+
+
+
+window.addEventListener('DOMContentLoaded', setUserInitials);
