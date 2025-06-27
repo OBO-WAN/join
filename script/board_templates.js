@@ -55,29 +55,23 @@ function getAddTaskOverlay() {
   return `
             <div class="overlay-content">
 
-        <div class="add-task-container add-task-container-overlay">
-
-        <div class="overlay_headline">    
-            <h2>Add Task</h2>
-
-            <button onclick="closeOverlay()" class="close_button hover">X</button>
-        </div>
-
+            <div class="add-task-container-overlay">
+        <h2>Add Task</h2>
         <form id="taskForm" class="form-grid">
-            
+
             <div class="form-left">
                 <label for="title">Title <span class="required-marker">*</span></label>
-                <input type="text" class="hover" id="title" name="title" placeholder="Enter a title" required>
-    
+                <input type="text" id="title" name="title" placeholder="Enter a title" required>
+
                 <label for="description">Description</label>
-                <textarea id="description" class="hover" name="description" rows="4" placeholder="Enter a Description"></textarea>
-    
+                <textarea id="description" name="description" rows="4" placeholder="Enter a Description"></textarea>
+
                 <label for="due-date">Due Date <span class="required-marker">*</span></label>
-                <input type="date" id="due-date" class="hover" name="due-date" required>
+                <input type="date" id="due-date" name="due-date" required>
             </div>
-    
+
             <div class="form-divider"></div>
-    
+
             <div class="form-right">
                 <label>Priority</label>
                 <div class="priority-options">
@@ -96,28 +90,43 @@ function getAddTaskOverlay() {
                         Low <img src="./assets/icons/priority/priority_low.png" alt="Low icon">
                     </label>
                 </div>
-    
-                <div class="multiselect-header" onclick="toggleAssigneeDropdown()">
+
+                <label>Assigned to</label>
+                <div class="custom-multiselect">
+                    <div class="multiselect-header" onclick="toggleAssigneeDropdown()">
                         <span id="selected-assignees-placeholder">Select contacts</span>
                         <img src="assets/icons/arrow_drop_downaa.png" class="dropdown-icon">
                     </div>
-                    
-    
-                <label for="category">Category <span class="required-marker">*</span></label>
-                <select id="category" class="hover" name="category" required>
-                    <option value="">Select category</option>
-                    <option value="technical-task">Technical Task</option>
-                    <option value="user-story">User Story</option>
-                </select>
-    
-                <label for="subtask">Subtasks</label>
-                <div>
-                    <input type="text" id="subtask" placeholder="Add new subtask">
-                    <ul id="subtask-list"></ul>
+                    <div class="multiselect-dropdown d-none" id="assignee-dropdown">
+
+                    </div>
+                    <div class="selected-assignee-avatars" id="selected-assignee-avatars"></div>
                 </div>
+
+                </select>
+
+                <label>Category <span class="required-marker">*</span></label>
+                <div class="custom-category-select">
+                    <div class="category-select-header" onclick="toggleCategoryDropdown()">
+                        <span id="selected-category-placeholder">Select category</span>
+                        <img src="assets/icons/arrow_drop_downaa.png" class="dropdown-icon">
+                    </div>
+                    <div class="category-dropdown d-none" id="category-dropdown">
+                        <div class="category-option" onclick="selectCategory('technical-task')">Technical Task</div>
+                        <div class="category-option" onclick="selectCategory('user-story')">User Story</div>
+                    </div>
+                </div>
+                <input type="hidden" id="category" name="category" required>
+
+                <label for="subtask">Subtasks</label>
+                <div class="subtask-input-container">
+                    <input type="text" id="subtask" placeholder="Add new subtask" onkeydown="handleSubtaskKey(event)">
+                    <button type="button" onclick="addSubtask()" class="subtask-add-btn">+</button>
+                </div>
+                <ul id="subtask-list"></ul>
             </div>
         </form>
-    
+
         <div class="form-footer">
             <div class="form-hint">
                 <span class="required-marker">*</span>This field is required
@@ -131,6 +140,8 @@ function getAddTaskOverlay() {
                     <img src="./assets/icons/check.png" alt="Create Icon">
                 </button>
             </div>
+        </div>
+    </div>
         </div>
 
     `;
