@@ -280,8 +280,6 @@ h3 {
   top: 0;
 }
 
-
-
 .overlay_headline {
   display: flex;
   justify-content: space-between;
@@ -293,6 +291,15 @@ h3 {
   height: 10px;
   font-size: 20px;
   color: #2a3647;
+}
+
+.close_button_task {
+  border: none;
+  background-color: transparent;
+  height: 10px;
+  font-size: 20px;
+  color: #2a3647;
+  padding-top: 15px;
 }
 
 .hover {

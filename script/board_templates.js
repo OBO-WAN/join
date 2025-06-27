@@ -56,7 +56,10 @@ function getAddTaskOverlay() {
             <div class="overlay-content">
 
             <div class="add-task-container-overlay">
-        <h2>Add Task</h2>
+            <div class="add-task-title">
+            <h2>Add Task</h2> 
+            <button onclick="closeOverlay()" class="close_button_task hover">X</button>
+            </div>
         <form id="taskForm" class="form-grid">
 
             <div class="form-left">
