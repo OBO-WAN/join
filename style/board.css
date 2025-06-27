@@ -155,7 +155,6 @@ h3 {
   box-shadow: 0px 0px 10px 3px #00000014;
 }
 
-
 .task_category {
   border-radius: 8px;
   color: white;
@@ -167,7 +166,6 @@ h3 {
   font-size: 16px;
   margin-bottom: 20px;
 }
-
 
 .technical_task {
   background-color: #1fd7c1;
@@ -182,21 +180,17 @@ h3 {
   margin-bottom: 20px;
 }
 
-
 .task_title {
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 5px;
 }
 
-
 .task_details {
   font-size: 16px;
   font-weight: 400;
   color: #c1c1c1;
 }
-
-
 
 .progress_container {
   display: flex;
@@ -276,22 +270,17 @@ h3 {
 }
 
 .overlay {
-    background: rgba(0, 0, 0, 0.4);
-    position: fixed;
-    height: 100vh;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    display:flex;
-    top: 0;
+  background: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display:flex;
+  top: 0;
 }
 
-.add-task-container-overlay {
-  padding-left: 40px !important;
-  padding-top: 40px !important;
-  padding-bottom: 40px !important;
-  padding-right: 40px !important;
-}
+
 
 .overlay_headline {
   display: flex;
