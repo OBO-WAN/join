@@ -25,6 +25,11 @@
     font-size: 50px;
 }
 
+.add-task-title {
+    display: flex;
+    justify-content: space-between;
+}
+
 .add-task-container-overlay h2 {
     text-align: start;
     margin-bottom: 50px;
