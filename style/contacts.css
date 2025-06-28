@@ -47,7 +47,7 @@ html, body {
 .add_new_contact_section{
     width: 100%;
     height: 90px;
-    display: flex;
+    display: flex ;/*Flex*/
     justify-content: center;
     align-items: center;
     position: sticky;
@@ -450,7 +450,7 @@ html, body {
     width: 100%;
     height: 100%;
     background-color: rgba(141, 139, 139, 0.178);
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 100;
@@ -462,13 +462,15 @@ html, body {
     width: 1000px;
     height: 500px;
     background-color: white;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     flex-direction: row;
     border-radius: 22px; 
     z-index: 2000;
 }
+
+
 
 /*Sloagan section*/
 .add_newcontact_sloagen_container{
@@ -814,6 +816,7 @@ html, body {
     right:  16px;
     cursor: pointer;
     position: absolute;
+    z-index: 3000;
     
 }
 
