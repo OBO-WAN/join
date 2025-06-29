@@ -176,7 +176,6 @@ function prepareTaskForTemplate(task) {
 
 }
 
-
 function showCurrentBoard() {
     renderCurrentTasks();
 }
@@ -225,7 +224,6 @@ function closeOverlay() {
     overlay.classList.add('d-none');
 
 }
-
 
 function openTask(task, assignedUsersHTML, index) {
     document.body.classList.add('overlay-active'); // hides <header> as well
@@ -334,19 +332,33 @@ async function saveTaskEdits(taskId) {
     await loadTasksFromFirebase(); // Re-render
 }
 
-// Delete inside Overlay (in Progress)
+async function reindexTasksInFirebase() {
+    const newTasks = {};
+
+    for (let i = 0; i < tasks.length; i++) {
+        const task = { ...tasks[i] };
+        task.id = i;
+        newTasks[i] = task;
+    }
+
+    await fetch(`${BASE_URL}tasks.json`, {
+        method: 'PUT',
+        body: JSON.stringify(newTasks)
+    });
+
+    await loadTasksFromFirebase();
+}
 
 async function deleteTaskFromBoardPopup(taskId) {
     const confirmDelete = confirm("Are you sure you want to delete this task?");
     if (!confirmDelete) return;
 
     try {
-        await fetch(`${BASE_URL}tasks/${taskId}.json`, {
-            method: 'DELETE'
-        });
+        tasks = tasks.filter(t => t.id != taskId);
+
+        await reindexTasksInFirebase();
 
         closeOverlay();
-        await loadTasksFromFirebase(); // Refresh board
     } catch (error) {
         console.error("Error deleting task:", error);
         alert("There was an error deleting the task.");
