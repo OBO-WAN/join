@@ -28,6 +28,7 @@
   align-items: center;
   gap: 30px;
   white-space: nowrap;
+  padding-top: 50px;
 }
 
 .vector {
@@ -51,6 +52,7 @@
 
 .goodmorning {
   padding-right: 80px;
+  padding-left: 40px;
 }
 
 .mobile-view-greeting-overlay {
@@ -136,6 +138,7 @@
   max-width: 1000px;
   padding: 20px;
   box-sizing: border-box;
+  padding-top: 70px;
 }
 
 .checkpencil {

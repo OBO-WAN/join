@@ -12,7 +12,7 @@ async function submitTask() {
 }
 
 function collectTaskData() {
-    const title = document.getElementById("title").value.trim(); // ← wird zu task
+    const title = document.getElementById("title").value.trim();
     const description = document.getElementById("description").value.trim();
     const dueDateRaw = document.getElementById("due-date").value;
     const categoryValue = document.getElementById("category").value;
@@ -54,8 +54,7 @@ async function fetchAllTasks() {
         const res = await fetch(`${BASE_URL}tasks.json`);
         return await res.json() || {};
     } catch (err) {
-        console.error("Fehler beim Laden der Aufgaben:", err);
-        alert("Fehler beim Laden der Aufgaben.");
+        console.warn("⚠️ Fehler beim Laden der Aufgaben:", err);
         return {};
     }
 }
@@ -64,8 +63,7 @@ function getNextTaskId(tasks) {
     let maxId = 0;
     for (const key in tasks) {
         const task = tasks[key];
-
-        if(!task || typeof task !=='object') continue;
+        if (!task || typeof task !== 'object') continue;
 
         const idNum = parseInt(task.id);
         if (!isNaN(idNum) && idNum > maxId) {
@@ -73,6 +71,24 @@ function getNextTaskId(tasks) {
         }
     }
     return maxId + 1;
+}
+
+function showToast(message, iconPath = "./assets/img/board.png") {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = `
+        <span>${message}</span>
+        <img src="${iconPath}" alt="Icon">
+    `;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 4000);
 }
 
 async function saveTaskToFirebase(task, id) {
@@ -88,14 +104,26 @@ async function saveTaskToFirebase(task, id) {
         });
 
         if (res.ok) {
-            alert("Task erfolgreich erstellt!");
+            showToast("Task added to Board", "./assets/img/board.png");
             resetForm();
-        } else {
-            alert("Fehler beim Speichern der Aufgabe.");
+        
+            if (document.getElementById('overlay')) {
+                closeOverlay();
+            }
+        
+            if (typeof loadTasksFromFirebase === "function") {
+                await loadTasksFromFirebase();
+            }
         }
     } catch (error) {
-        console.error("Fehler beim Speichern der Aufgabe:", error);
-        alert("Ein Fehler ist aufgetreten.");
+        console.warn("⚠️ Fehler beim Speichern der Aufgabe:", error);
+    }
+}
+
+function closeOverlay() {
+    const overlay = document.getElementById('overlay');
+    if (overlay) {
+        overlay.classList.add('d-none');
     }
 }
 
@@ -134,14 +162,14 @@ async function loadContacts() {
         const data = await res.json();
 
         if (!Array.isArray(data)) {
-            console.warn("Contacts ist kein Array.");
+            console.warn("⚠️ Contacts ist kein Array.");
             return;
         }
 
         Contacts = data;
         renderAssigneeDropdown();
     } catch (error) {
-        console.error("Fehler beim Laden der Kontakte:", error);
+        console.warn("⚠️ Fehler beim Laden der Kontakte:", error);
     }
 }
 
@@ -234,7 +262,7 @@ function enterEditMode(li) {
 
 function renderAssigneeDropdown() {
     const container = document.getElementById('assignee-dropdown');
-    if(!container) return;
+    if (!container) return;
 
     container.innerHTML = '';
 
@@ -280,7 +308,6 @@ function updateAssigneePlaceholder() {
     placeholder.textContent = 'Select contacts';
     selectedAvatars.innerHTML = avatarHTML;
 }
-
 
 document.addEventListener('click', function(event) {
     const dropdowns = [
@@ -333,3 +360,5 @@ document.addEventListener("DOMContentLoaded", () => {
         loadContacts();
     }
 });
+
+
