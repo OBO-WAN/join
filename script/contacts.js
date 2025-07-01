@@ -5,7 +5,7 @@ window.addEventListener('resize', () => {
     handleWindowResize();
 });
 
-let colorsArray = [
+let colorsArray= [
     "#FF6B6B", "#FF8C42", "#FFA500", "#FFD700", "#FFE600",
     "#B4FF00", "#4CAF50", "#00C853", "#00E5FF", "#00B8D4",
     "#1DE9B6", "#00CFAE", "#00BCD4", "#40C4FF", "#2196F3",
@@ -16,6 +16,16 @@ let colorsArray = [
     "#C51162", "#8E24AA", "#651FFF", "#00BFA5", "#76FF03"
 ]
 
+let colorsArray_1 = [
+    "#FF6B6B", "#FF8C42", "#FFA500", "#FFD700", "#FFE600",
+    "#B4FF00", "#4CAF50", "#00C853", "#00E5FF", "#00B8D4",
+    "#1DE9B6", "#00CFAE", "#00BCD4", "#40C4FF", "#2196F3",
+    "#3D5AFE", "#536DFE", "#7C4DFF", "#AB47BC", "#E040FB",
+    "#FF4081", "#F50057", "#EC407A", "#FF1744", "#FF5252",
+    "#D500F9", "#9C27B0", "#BA68C8", "#E91E63", "#FFB300",
+    "#FFC400", "#FF9100", "#FF7043", "#F06292", "#FF6E40",
+    "#C51162", "#8E24AA", "#651FFF", "#00BFA5", "#76FF03"
+];
 
 function getContacts(data){
     
@@ -83,7 +93,9 @@ function renderContacts(contacts) {
             oldLetter = firstLetter;
         }
 
-        let color = getColor(initials[0]);
+        
+
+        let color = getColor(index);
         //console.log("Color:", color);
         contactCards += getContactCardTamplate(contact.name, contact.mail, initials, index, color);
         //console.log(Array.isArray(contacts), contacts);
@@ -103,7 +115,7 @@ function MobileVievCard(index){
         let contact = Contacts[index];
         
         let initials = getInitials(contact.name);
-        let color = getColor(initials[0]);
+        let color = getColor(index);
 
         let contactsListElem = document.getElementById("contacts_list");
         if (contactsListElem) {
@@ -131,7 +143,6 @@ function getTabletViewCardHeader(){
 
 /*Tablat version*/
 function renderTabletVievCard(index){
-     
     addNewContactSectionState(true);
 /*
     let addNewcontactMobileBtn = document.getElementById("add_new_contact_Mobile_btn")
@@ -143,7 +154,8 @@ function renderTabletVievCard(index){
         let contact = Contacts[index];
         
         let initials = getInitials(contact.name);
-        let color = getColor(initials[0]);
+        let color = getColor(index);
+        //let color = getColor(initials[0]);
 
         let contactsListElem = document.getElementById("contacts_list");
         if (contactsListElem) {
@@ -195,7 +207,8 @@ function renderViewCard(index) {
         let contact = Contacts[index];
         
         let initials = getInitials(contact.name);
-        let color = getColor(initials[0]);
+        //let color = getColor(initials[0]);
+        let color = getColor(index);
         let tempViewCard = getViewCardTemplate(index, color);
         //tempViewCard.innerHTML = "";
         document.getElementById("contactViewCard").innerHTML = tempViewCard;
@@ -309,12 +322,17 @@ function editContact(id) {
         renderViewCard(id);
         closeContactDialog();
     }else if (viewMode === 2) {
-        renderContacts(Contacts);
+/*      renderContacts(Contacts);
         renderViewCard(id);
         closeContactDialog();
-    }else if (viewMode === 3) {
+*/
         MobileVievCard(id);
         closeContactDialogMobile();
+
+    }else if (viewMode === 3) {
+        
+        closeContactDialogMobile();
+         renderTabletVievCard(id);
     }else if (viewMode === 4) {
         MobileVievCard(id);
         closeContactDialogMobile();
@@ -414,6 +432,7 @@ function configEditDlgBox(id){
                 document.getElementById("name_input" + KindOfDlg_pc).value = oldContactData.name; // Contacts[id].name;
                 document.getElementById("mail_input" + KindOfDlg_pc).value = oldContactData.mail //Contacts[id].mail;
                 document.getElementById("phone_input" + KindOfDlg_pc).value = oldContactData.phone; //Contacts[id].phone;
+                let avatarColor = getColor(id);
 
                 if(AddNewcontactAvatar){
 
@@ -422,8 +441,8 @@ function configEditDlgBox(id){
                         <p class="contact_view_avatar_initials" id="add_new_contact_avatar_1">${test[0].toUpperCase()}</p>
                         <p class="contact_view_avatar_initials" id="add_new_contact_avatar_2">${test[1].toUpperCase()}</p>
                     `;
-                   
-                    let avatarColor = getColor( oldContactData.name.charAt(0) );
+                    //let avatarColor = getColor( oldContactData.name.charAt(0) );
+                    
                     AddNewcontactAvatar.style.backgroundColor = avatarColor;
                     AddNewcontactAvatar.style.color = "#FFFFFF";
                 }
@@ -436,7 +455,7 @@ function configEditDlgBox(id){
                         <p class="contact_view_avatar_initials" id="add_new_contact_avatar_mob_2">${test[1].toUpperCase()}</p>
                     `;
                    
-                    let avatarColor = getColor( oldContactData.name.charAt(0) );
+                    //let avatarColor = getColor( oldContactData.name.charAt(0) );
                     AddNewcontactAvatar_mobile.style.backgroundColor = avatarColor;
                     AddNewcontactAvatar_mobile.style.color = "#FFFFFF";
                 }
@@ -469,12 +488,12 @@ function configEditDlgBox(id){
     }
 
     let btnHtml = `
-        <button class="create_btn" id="id_Edit_Btn" onclick = "${functionName}">
+        <button class="create_btn" id="id_Edit_Btn${KindOfDlg_pc}" onclick = "${functionName}">
             <span id="id_Edit_Btn_Text${KindOfDlg_pc}">${btnText}</span>
             <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
         </button>`;
 
-    document.getElementById("id_Edit_Btn").innerHTML = btnHtml;
+    document.getElementById("id_Edit_Btn" + KindOfDlg_pc).innerHTML = btnHtml;
 
 }
 
@@ -716,8 +735,16 @@ function handleWindowResize(){
 */
 }
 
+function getColor(index){
+    let idx = index;
+    if (idx < 0) {
+        idx = 0; // Fallback to the first color if index is out of bounds
+    }
+    
+    return colorsArray[ (idx % colorsArray.length)];
+}
 
-function getColor(firstLetter){
+function getColorFromFirstLetter(firstLetter){
 
     let text = "";
     text = String(firstLetter).toUpperCase();

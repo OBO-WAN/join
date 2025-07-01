@@ -19,7 +19,7 @@ function getViewCardTemplate(id, color) {
     return `
         <div class="Tablet_view_card">
             <div id="mobile_view_card_header">
-                <div class="contact_view_header">  
+                <div class="contact_view_header" id ="contact_view_header">  
                     <div class="contact_view_header_section">
                     <div class="contacts_view_hl_section">
                         <span class="contacts_view_hl">Contacts</span>
@@ -29,7 +29,7 @@ function getViewCardTemplate(id, color) {
                     <div class="contacts_view_sloagen_section">
                         <span class="contacts_view_sloagen">Better wiht a Team</span>
                     </div>
-                    
+                       
                     <div class="contacts_view_mobile_seperator_section">
                         <div class="mobile_view_card_seperator"></div>
                     </div>    
@@ -41,7 +41,7 @@ function getViewCardTemplate(id, color) {
         <div class="contact_view_card" id="contact_view_card">
             <div class="contact_view_card_header" id="contact_view_card_header">
                 <div class="contact_view_avatar_section" >
-                    <div class="contact_view_avatar" id="contact_view_avatar"  style="background-color:${color};>
+                    <div class="contact_view_avatar" id="contact_view_avatar"  style="background-color:${color};">
                         <p class="contact_view_avatar_initials" id="contact_view_avatar_initials"></p>
                         <p class="contact_view_avatar_initials" id="contact_view_avatar_initials"></p>
                     </div>
@@ -61,21 +61,19 @@ function getViewCardTemplate(id, color) {
                         </div> 
                     </div>
                 </div>
-
-                <div class="contact_view_card_info_section">
-                    <div class="contact_view_card_info_header">
-                        <span class="contact_view_card_info_hl">Contact Information</span>
-                    </div>
-                    <div class="contact_view_mail_section">
-                        <p class="contact_view_mail_hl">Email</p>
-                        <a href="mailto:cooper@gmail.com" id="contact_view_mail" class="contact_view_mail"></a>
-                    </div>
-                    <div class="contact_view_phone_section">
-                        <p class="contact_view_phon_hl">Phone</p>
-                        <div id="contact_view_phone" class="contact_view_phon_num"></div>
-                    </div>
+            </div>
+            <div class="contact_view_card_info_section">
+                <div class="contact_view_card_info_header">
+                    <span class="contact_view_card_info_hl">Contact Information</span>
                 </div>
-
+                <div class="contact_view_mail_section">
+                    <p class="contact_view_mail_hl">Email</p>
+                    <a href="mailto:cooper@gmail.com" id="contact_view_mail" class="contact_view_mail"></a>
+                </div>
+                <div class="contact_view_phone_section">
+                    <p class="contact_view_phon_hl">Phone</p>
+                    <div id="contact_view_phone" class="contact_view_phon_num"></div>
+                </div>
             </div>
         </div>
     `;
@@ -84,12 +82,12 @@ function getViewCardTemplate(id, color) {
 function getTabletViewCardTemplate(id, color) {
     return `
 
-    <div class="Tablet_view_card_header"  id="Tablet_view_card_header"></div>
+   <div class="Tablet_view_card_header"  id="Tablet_view_card_header"></div>
 
     <div class="contact_view_card" id="contact_view_card">
         <div class="contact_view_card_header" id="contact_view_card_header">
             <div class="contact_view_avatar_section" >
-                <div class="contact_view_avatar" id="contact_view_avatar"  style="background-color:${color};>
+                <div class="contact_view_avatar" id="contact_view_avatar"  style="background-color:${color};">
                     <p class="contact_view_avatar_initials" id="contact_view_avatar_initials"></p>
                     <p class="contact_view_avatar_initials" id="contact_view_avatar_initials"></p>
                 </div>
@@ -110,7 +108,7 @@ function getTabletViewCardTemplate(id, color) {
                     </div> 
                 </div>
             </div>
-
+            </div>
             <div class="contact_view_card_info_section">
                 <div class="contact_view_card_info_header">
                     <span class="contact_view_card_info_hl">Contact Information</span>
@@ -125,7 +123,7 @@ function getTabletViewCardTemplate(id, color) {
                 </div>
             </div>
 
-        </div>
+        
     </div>
    `;
 
@@ -328,7 +326,7 @@ function getAddNewContactTemplate(){
                         <span class="cancel_btn_txt" onclick="closeContactDialog()">Cancel X</span>
                         
                     </button>
-                    <button class="create_btn" id="id_Edit_Btn">
+                    <button class="create_btn" id="id_Edit_Btn_pc">
                         <span id="id_Edit_Btn_Text_pc"></span>
                         <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
                     </button>
