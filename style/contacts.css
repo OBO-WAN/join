@@ -1,5 +1,3 @@
-/* background-color: #47ACE4;*/
-
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -14,7 +12,6 @@
   width: 10px;
   border-radius: 8px;
 }
-
 
 html, body {
     height: 100%; 
@@ -90,7 +87,6 @@ html, body {
     height: calc(100%);
     width: 100%;
     flex-grow: 1;
-
 }
 
 .contacts_section{
@@ -130,8 +126,7 @@ html, body {
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 20px;
-   
-    
+    z-index: 2000;
 }
 
 .contact_card:hover{
@@ -250,7 +245,6 @@ html, body {
     width: 100%;
     height: calc(100% - 200px);
     display: flex;
-
     flex-direction: column;
 }
 
@@ -312,7 +306,6 @@ html, body {
 .contact_view_name{
     font-size: 38px;
     font-weight: 500px;
-    /*margin-left: 40px;*/
 }
 
 .contact_view_edit_section{
@@ -328,17 +321,10 @@ html, body {
     align-items: center;
 }
 
-/*.edtit_section:hover{
-    color: #1baefd;
-    transform: scale(1.1); 
-    cursor: pointer; 
-}*/
-
 .edit_txt{
     font-size: 14px;
     font-weight: 300;
 }
-
 
 .delete_section{
     height: 100%;
@@ -353,7 +339,6 @@ html, body {
     color: #1baefd;
     transform: scale(1.1); 
     cursor: pointer; 
-    
 }
 
 .edtit_section:hover img{
@@ -366,14 +351,12 @@ html, body {
 
 .contactview_icon{
     width: 16px;
-    
 }
 
 .delete_txt{
     font-size: 14px;
     font-weight: 300; 
 }
-
 
 .contact_view_card_info_section{
     width: 100%;
@@ -453,7 +436,7 @@ html, body {
     display: none;
     justify-content: center;
     align-items: center;
-    z-index: 100;
+    z-index: 3000;
     overflow: hidden;
     display: none;
 }
@@ -467,10 +450,8 @@ html, body {
     align-items: center;
     flex-direction: row;
     border-radius: 22px; 
-    z-index: 2000;
+    
 }
-
-
 
 /*Sloagan section*/
 .add_newcontact_sloagen_container{
@@ -551,7 +532,6 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 
 .add_new_contact_avatar{
@@ -580,7 +560,6 @@ html, body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
 }
 
 .add_new_contact_input{
@@ -710,11 +689,26 @@ html, body {
     display: none;
 }
 
-
-
 @media (max-width: 1100px) {
 
+.mobil_view_card_edit_section{
+    display: flex !important;
+}
 
+.mobile_view_card_edit_btn{
+     width: 50px;
+    height: 50px;
+    background-color: #2A3647;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 1px 1px 5px 1px rgba(150, 148, 148, 0.575);
+    margin-right: 20px;
+    position: absolute;
+    z-index: 1000;
+    margin-bottom: 10px;
+}
 
 .contact_view_header{
     display: flex;
@@ -728,7 +722,7 @@ html, body {
     justify-content: flex-end;
     margin-bottom: 70px;
     position: fixed;
-    z-index: 3000;
+    z-index: 1000;
 }
 
 .add_new_contact_Mobile_btn{
@@ -750,73 +744,66 @@ html, body {
     width: 27px;
 }
 
-    .tablate_view_card_container{
-        width: 100%;
-        height: 100%;
-       
-        display: none;
-        flex-direction: column;
-    }
-
-    .Tablet_view_card{
-        /*width: 100%;
-        height: 100%;
-        z-index: 2000;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;*/
-           max-width: 500px;
-        margin: 40px auto 0 auto;
-        border-radius: 16px;
-        background: #fff;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        position: relative;
-    }
-
-    .Tablet_view_card_header{
-        height: 180px;
-        width: calc(100%- 232px);
-     
-    }
-
-    .contacts_main_content{
-        height: 100%;
-        width: calc(100%- 232px); 
-        
-    }
-    .contactslist_container {
-        width: 100%; 
-    }
-    .add_new_contact_section{
-        display: none;
-    }
-
-    .contacts_view_container{
-        display: none;
-    }
-
-    .contact_card{
-        justify-content: center;
-        width: 70%;
-    }
+.tablate_view_card_container{
+    width: 100%;
+    height: 100%;
     
-    .add_new_contact_Mobile_section{
-      bottom: 25px;
-      margin-bottom: 0;
-    }
+    display: none;
+    flex-direction: column;
+}
 
-    .add_new_contact_Mobile_btn{
-        display: flex;
-        position: fixed;
-        right: 30px;
-        
-    }
+.Tablet_view_card{
+    max-width: 500px;
+    margin: 40px auto 0 auto;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    position: relative;
+}
 
-    h1{
-        margin-left: 15px;
-    }
-    .go_back_btn_section{
+.Tablet_view_card_header{
+    height: 180px;
+    width: calc(100%- 232px);
+    
+}
+
+.contacts_main_content{
+    height: 100%;
+    width: calc(100%- 232px); 
+    
+}
+.contactslist_container {
+    width: 100%; 
+}
+.add_new_contact_section{
+    display: none;
+}
+
+.contacts_view_container{
+    display: none;
+}
+
+.contact_card{
+    justify-content: center;
+    width: 70%;
+}
+
+.add_new_contact_Mobile_section{
+    bottom: 25px;
+    margin-bottom: 0;
+}
+
+.add_new_contact_Mobile_btn{
+    display: flex;
+    position: fixed;
+    right: 30px;
+    
+}
+
+h1{
+    margin-left: 15px;
+}
+.go_back_btn_section{
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -828,7 +815,6 @@ html, body {
     cursor: pointer;
     position: absolute;
     z-index: 3000;
-    
 }
 
 .go_back_btn_container{
@@ -854,15 +840,12 @@ html, body {
     margin-right:  10px;
     cursor: pointer;
     position: absolute;
-    
 }
 
 .contact_view_header{
     width: 95%;
     justify-content: space-between;
-    
 }
-
 }
 
 /* mobile responsive*/
@@ -871,8 +854,6 @@ html, body {
     display: flex;
     position: fixed;
 }
-
-
 
 .contactslist_container{
     overflow-x: hidden;
@@ -897,7 +878,6 @@ html, body {
     display: flex;
 }
 
-
 .go_back_btn_section:hover{
     background-color: #afb1b1af;
 }
@@ -910,9 +890,7 @@ html, body {
 .tablate_view_card_container {
     position: relative;
 }
-
 }
-
 
 @media (max-width: 768px) {
     .contacts_main_content{
@@ -931,8 +909,6 @@ html, body {
         
     
     }
-
-
 }
 
 

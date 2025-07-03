@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join | Contacts</title>
     <link rel="icon" href="./assets/img/favicon.png">
-    <link rel="stylesheet" href="style/style.css"> 
+    <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/contacts.css">
     <link rel="stylesheet" href="style/user_icon_menu.css">
     <link rel="stylesheet" href="style/nav_mobile.css">
     <link rel="stylesheet" href="style/contact_mobile.css">
 
-    
+
     <script src="./script/contacts.js"></script>
     <script src="script/contact_tamplate.js"></script>
     <script src="./script/script.js"></script>
     <script src="./script/scripts.js"></script>
 
 </head>
+
 <body onload="getContacts(); setUserInitials();" id="body">
-    
+
     <header>
         <div class="hl_logo_section">
             <h1>Kanban Project Management Tool</h1>
             <img class="header_logo" src="./assets/img/loginLogo.svg" alt="logo">
         </div>
-         <div class="dropdown_container">
-        <div class="icon_header_section">
-        <button onclick="location.href='help.html'" class="help-button">
-            <img src="./assets/img/help.png" alt="help">
-        </button>
-            <div class="contact_icon" onclick="toggleMenu()">
-                <p class="contact_icon_initials" id="first_icon_initials">S</p>
-                <p class="contact_icon_initials" id="last_icon_initials">M</p>
+        <div class="dropdown_container">
+            <div class="icon_header_section">
+                <button onclick="location.href='help.html'" class="help-button">
+                    <img src="./assets/img/help.png" alt="help">
+                </button>
+                <div class="contact_icon" onclick="toggleMenu()">
+                    <p class="contact_icon_initials" id="first_icon_initials"></p>
+                    <p class="contact_icon_initials" id="last_icon_initials"></p>
+                </div>
             </div>
-        </div>
             <div class="dropdown_menu" id="dropdown_menu">
                 <a class="dropdown_link" href="./privacy_policy.html">Privacy Policy</a>
                 <a class="dropdown_link" href="./legal_notice.html">Leagl Notes</a>
@@ -64,10 +66,11 @@
                 <span>Contacts</span>
             </button>
         </div>
-    
+
         <div class="legal-policy">
             <div class="legal-policy-background">
-                <button onclick="location.href='privacy_policy.html'" class="legal-policy-button">Privacy Policy</button>
+                <button onclick="location.href='privacy_policy.html'" class="legal-policy-button">Privacy
+                    Policy</button>
             </div>
             <div class="legal-policy-background">
                 <button onclick="location.href='legal_notice.html'" class="legal-policy-button">Legal Notice</button>
@@ -78,57 +81,19 @@
     <div class="contacts_main_content">
 
         <!--  Add New Contact mobile Section -->
-            <div id="add_new_contact_mobile_ov_container"></div>
+        <div id="add_new_contact_mobile_ov_container"></div>
         <!---->
 
         <!--contacts list container -->
-         
+
         <div class="contactslist_container" id="contactslist_container">
-        
+
             <!--Tablet Vievcard section-->
             <div id="add_new_contact_ov_section" class="add_new_contact_ov"></div>
             <div id="tablate_view_card_container" class="tablate_view_card_container"></div>
-            <!---->
+
 
             <div class="add_new_contact_section" id="add_new_contact_section">
-                    
-                        <!--<div id="add_new_contact_ov_section" class="add_new_contact_ov">
-                        <div class="add_new_contact_ov_container">
-                            <div class="add_newcontact_sloagen_container">
-                                <div class="ov_logo_section">
-                                    <img class="ov_logo" src="./assets/img/logo-white.svg" alt="join logo">
-                                </div>
-                                <div class="ov_hl_section"><span class="ov_hl" id="Kind_Of_Dlg_pc">Add New Contact</span></div>
-                                <div class="ov_slogan_section"><span class="ov_slogan">Tasks are better wiht a team!</span>
-                                    <div class="ov_sloagen_seperator"></div>
-                                </div>
-                            </div>
-                            <div class="add_new_contact_entry_section">
-                                <div class="add_new_contact_avatar_section">
-                                    <div class="add_new_contact_avatar" id="add_new_contact_avatar">
-                                        <img class="ov_avatar" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
-                                    </div>
-                                </div>
-                                <div class="add_new_contact_entry">
-                                    <div class="overlay_of_btn_sec"><p class="overlay_of_btn"  onclick="closeContactDialog()">X</p></div>
-                                    <input id="name_input_pc" class="add_new_contact_input" type="input" placeholder ="  Name" >
-                                    <input id="mail_input_pc" class="add_new_contact_input" type="input" placeholder="  Mail">                                   
-                                    <input id="pohne_input_pc" class="add_new_contact_input" type="input" placeholder="  Phone">
-                                 <div class="add_new_contact_btn_section">
-                                    <button class="cancel_btn">
-                                        <span class="cancel_btn_txt" onclick="closeContactDialog()">Cancel X</span>
-                                        
-                                    </button>
-                                    <button class="create_btn" id="id_Edit_Btn">
-                                        <span id="id_Edit_Btn_Text_pc">Create</span>
-                                        <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
-                                    </button>
-                                </div>  
-                                </div>
-                            </div>
-                        </div>
-                        </div>-->
-                    
                 <button class="add_new_contact_button" id="add_new_contact_button" onclick="openContactDialog(-1)">
                     <span class="add_contact_text">Add New Contact</span>
                     <img src="./assets/icons/contact/addcontact.png" class="add_contact_icon">
@@ -136,77 +101,77 @@
             </div>
 
             <div class="contacts_list" id="contacts_list">
-            <div class="contacts_section">
-                <div class="contact_card_section" id="contact_card_section"></div>
+                <div class="contacts_section">
+                    <div class="contact_card_section" id="contact_card_section"></div>
+                </div>
+
             </div>
 
-        </div>
+            <div class="add_new_contact_Mobile_section" id="add_new_contact_Mobile_section">
+                <div id="add_new_contact_Mobile_btn" class="add_new_contact_Mobile_btn"
+                    onclick="openContactDialogMobile(-1)">
+                    <img class="add_new_contact_mobile_icon" src="./assets/icons/contact/addcontact.png" alt="icon">
+                </div>
+            </div>
 
-    <div class="add_new_contact_Mobile_section" id="add_new_contact_Mobile_section">
-        <div id="add_new_contact_Mobile_btn" class="add_new_contact_Mobile_btn" onclick="openContactDialogMobile(-1)">
-            <img class="add_new_contact_mobile_icon" src="./assets/icons/contact/addcontact.png" alt="icon">
-        </div>
-    </div>
-        
         </div>
 
         <!--contact view container-->
-    <div class="contacts_view_container">
-        <div class="contact_view_header">  
-            <div class="contact_view_header_section">
-            <div class="contacts_view_hl_section">
-                <span class="contacts_view_hl">Contacts</span>
-            </div>    
-            <div class="contacts_view_seperator"></div>
-            <div class="contacts_view_sloagen_section">
-                <span class="contacts_view_sloagen">Better wiht a Team</span>
-            </div>    
-        </div>
-        </div>
-        <div class="contact_view_card" id="contactViewCard">
+        <div class="contacts_view_container">
+            <div class="contact_view_header">
+                <div class="contact_view_header_section">
+                    <div class="contacts_view_hl_section">
+                        <span class="contacts_view_hl">Contacts</span>
+                    </div>
+                    <div class="contacts_view_seperator"></div>
+                    <div class="contacts_view_sloagen_section">
+                        <span class="contacts_view_sloagen">Better wiht a Team</span>
+                    </div>
+                </div>
+            </div>
+            <div class="contact_view_card" id="contactViewCard">
 
+            </div>
         </div>
     </div>
-    </div>
 
-      <!-- Responsive Menu -->
+    <!-- Responsive Menu -->
     <ul class="nav-links">
         <li class="link-button hide-before-log-in">
             <a onclick="toHrefFocus('summary.html', this); return false;" href="summary.html">
-              <div class="img-box">
-              <img class="boaimg" src="assets/img/summary.png" alt="Summary Icon">
-            </div>
-              <span>Summary</span>
+                <div class="img-box">
+                    <img class="boaimg" src="assets/img/summary.png" alt="Summary Icon">
+                </div>
+                <span>Summary</span>
             </a>
-          </li>
-          <li class="link-button hide-before-log-in">
+        </li>
+        <li class="link-button hide-before-log-in">
             <a onclick="toHrefFocus('add_task.html',this); return false;" href="add_task.html">
-              <div class="img-box">
-              <img class="boaimg" src="assets/img/add-task.png" alt="Task Icon">
-              </div>
-              <span>Add Task</span>
+                <div class="img-box">
+                    <img class="boaimg" src="assets/img/add-task.png" alt="Task Icon">
+                </div>
+                <span>Add Task</span>
             </a>
-          </li>
-          <li class="link-button hide-before-log-in">
+        </li>
+        <li class="link-button hide-before-log-in">
             <a onclick="toHrefFocus('board.html', this); return false;" href="board.html">
-              <div class="img-box">
-              <img class="boaimg" src="assets/img/board.png" alt="Board Icon">
-            </div>
-              <span>Board</span>
+                <div class="img-box">
+                    <img class="boaimg" src="assets/img/board.png" alt="Board Icon">
+                </div>
+                <span>Board</span>
             </a>
-          </li>
-          <li class="link-button active hide-before-log-in">
+        </li>
+        <li class="link-button active hide-before-log-in">
             <a onclick="toHrefFocus('contacts.html', this); return false;" href="contacts.html">
-              <div class="img-box">
-              <img class="boaimg" src="assets/img/contacts.png" alt="Contacts Icon">
-            </div>
-              <span>Contacts</span>
+                <div class="img-box">
+                    <img class="boaimg" src="assets/img/contacts.png" alt="Contacts Icon">
+                </div>
+                <span>Contacts</span>
             </a>
-          </li>
-      </ul>
+        </li>
+    </ul>
 
 
 </body>
+
 </html>
-
-
