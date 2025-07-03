@@ -288,11 +288,14 @@ function getAddNewContactTemplate() {
                         <img class="ov_avatar" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
                     </div>
                 </div>
+                
                 <div class="add_new_contact_entry">
                     <div class="overlay_of_btn_sec"><p class="overlay_of_btn"  onclick="closeContactDialog()">X</p></div>
-                    <input id="name_input_pc" class="add_new_contact_input" type="text" placeholder ="  Name" >
-                    <input id="mail_input_pc" class="add_new_contact_input" type="email" placeholder="  Mail">                                   
-                    <input id="phone_input_pc" class="add_new_contact_input" type="tel" placeholder="  Phone">
+                    <form>
+                        <input id="name_input_pc" class="add_new_contact_input" type="text" placeholder ="  Name" required>
+                        <input id="mail_input_pc" class="add_new_contact_input" type="email" placeholder="  Mail" required>                                   
+                        <input id="phone_input_pc" class="add_new_contact_input" type="tel" placeholder="  Phone" required>
+                    <form>
                     <div class="add_new_contact_btn_section">
                     <button class="cancel_btn">
                         <span class="cancel_btn_txt" onclick="closeContactDialog()">Cancel X</span>
@@ -302,7 +305,8 @@ function getAddNewContactTemplate() {
                         <span id="id_Edit_Btn_Text_pc">PlaceHolder</span>
                         <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
                     </button>
-                </div>  
+                </div> 
+                 
                 </div>
             </div>
         </div>
@@ -336,17 +340,18 @@ function getAddNewContactMobileTemplate() {
                                 <img class="contact_mobile_dialog_avatar_icon" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
                             </div>
                         </div>
-
+                        <form>
                         <div class="mobile_contact_dialog_input_section">
-                            <input id="name_input" class="add_new_contact_input_mobile" type="text" placeholder ="  Name" >
-                            <input id="mail_input" class="add_new_contact_input_mobile" type="email" placeholder="  Mail">                                   
-                            <input id="phone_input" class="add_new_contact_input_mobile" type="tel" placeholder="  Phone">
+                            <input id="name_input" class="add_new_contact_input_mobile" type="text" placeholder ="  Name" required>
+                            <input id="mail_input" class="add_new_contact_input_mobile" type="email" placeholder="  Mail" required>                                   
+                            <input id="phone_input" class="add_new_contact_input_mobile" type="tel" placeholder="  Phone" required>
 
                             <button class="create_btn_mobile" id="id_Edit_Btn">
                                 <span id="id_Edit_Btn_Text">PlaceHolder</span>
                                 <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
                             </button>
                         </div>
+                        </form>
                     </div>
                 </div>`;
 }

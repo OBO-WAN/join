@@ -327,11 +327,11 @@ function createContact() {
     .getElementById("phone_input" + KindOfDlg_pc)
     .value.trim();
   if (!name || !mail || !phone) {
-    alert("Bitte fülle die Felder Name, Mail und Pohne aus.");
+   // alert("Bitte fülle die Felder Name, Mail und Pohne aus.");
     return;
   }
   if (emailIsValid(mail) == false) {
-    alert("Pleas wiret a valid email address.");
+   // alert("Pleas wiret a valid email address.");
     return;
   }
 
@@ -387,11 +387,11 @@ function editContact(id) {
     .value.trim();
 
   if (!name || !mail || !phone) {
-    alert("EDIT: Bitte fülle die Felder Name, Mail und Pohne aus.");
+    //alert("EDIT: Bitte fülle die Felder Name, Mail und Pohne aus.");
     return;
   }
   if (emailIsValid(mail) == false) {
-    alert("Pleas wiret a valid email address.");
+    //alert("Pleas wiret a valid email address.");
     return;
   }
 
@@ -433,10 +433,6 @@ function emailIsValid(email) {
 }
 
 
-/*
-TODO:
--Comment rausnehmen
-*/
 function deleteContact(id) {
   if (id < 0 || id >= Contacts.length) {
     console.error("Ungültige ID:", id);
@@ -488,7 +484,6 @@ function configEditDlgBox(id) {
   if (id < 0) kindOFEdit = "createContact";
 
   let btnText = "";
-  //let kindOfDlg_Text = "";
   let functionName = "";
   let KindOfDlg_pc = "";
   let viewMode = getViewMode();

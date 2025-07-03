@@ -436,7 +436,7 @@ html, body {
     display: none;
     justify-content: center;
     align-items: center;
-    z-index: 100;
+    z-index: 3000;
     overflow: hidden;
     display: none;
 }
@@ -450,7 +450,7 @@ html, body {
     align-items: center;
     flex-direction: row;
     border-radius: 22px; 
-    z-index: 2000;
+    
 }
 
 /*Sloagan section*/
