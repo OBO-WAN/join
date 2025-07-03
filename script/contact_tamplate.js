@@ -1,6 +1,5 @@
-
 function getContactCardTamplate(name, email, initials, index, color) {
-    return `
+  return `
 <div class="contact_card" onclick="proofVersion(${index})">
     <div class="contact_avatar_section">
         <div class="contact_avatar" id="contact_avatar" style="background-color:${color};">
@@ -15,8 +14,9 @@ function getContactCardTamplate(name, email, initials, index, color) {
 </div>`;
 }
 
+
 function getViewCardTemplate(id, color) {
-    return `
+  return `
         <div class="Tablet_view_card">
             <div id="mobile_view_card_header">
                 <div class="contact_view_header" id ="contact_view_header">  
@@ -79,8 +79,9 @@ function getViewCardTemplate(id, color) {
     `;
 }
 
+
 function getTabletViewCardTemplate(id, color) {
-    return `
+  return `
 
    <div class="Tablet_view_card_header"  id="Tablet_view_card_header"></div>
 
@@ -123,60 +124,34 @@ function getTabletViewCardTemplate(id, color) {
                 </div>
             </div>
 
-        
+            <div class="mobil_view_card_edit_section">
+                <div class="mobile_view_card_edit_btn" onclick="editContactsMobileMenuOn()">
+                    <img class="mobile_view_card_edit_icon" src="./assets/icons/contact/mobile_edtit_menu_icon.png" alt="icon">
+                </div>
+
+                <div class="mobile_view_card_menu_section">
+                    <div class="mobile_view_card_menu" id="mobile_view_card_menu">
+                        <div class="contact_view_edit_mobile_section">
+                            <div class="edtit_mobile_section" onclick="openContactDialogMobile(${id})">
+                                <img  class="contactview_icon_mobile" src="./assets/icons/contact/edit_mobile.png" alt="edit">
+                                <span class="edit_txt_mobile" >Edit</span>
+                            </div>
+                            <div class="delete_mobile_section">
+                                <img  class="contactview_icon" src="./assets/icons/contact/delete_mobile.png" alt="delete">
+                                <span class="delete_txt_mobile" onclick="deleteContact(${id})">Delete</span>
+                            </div> 
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
     </div>
    `;
-
-   /*
-    <div class="Tablet_view_card_header"  id="Tablet_view_card_header"></div>
-
-    <div class="contact_view_card" id="contact_view_card">
-        <div class="contact_view_card_header" id="contact_view_card_header">
-            <div class="contact_view_avatar_section" >
-                <div class="contact_view_avatar" id="contact_view_avatar"  style="background-color:${color};>
-                    <p class="contact_view_avatar_initials" id="contact_view_avatar_initials"></p>
-                    <p class="contact_view_avatar_initials" id="contact_view_avatar_initials"></p>
-                </div>
-            </div>
-                <div class="contact_view_head_info_section">
-                    <div class="contact_view_name_section">
-                        <span class="contact_view_name" id="contact_view_name"></span>
-                    </div>
-                    <div class="contact_view_edit_section">
-                        <div class="edtit_section">
-                            <img  class="contactview_icon" src="./assets/img/edit.png" alt="edit">
-                            <span class="edit_txt" onclick="openContactDialogMobile(${id})">Edit</span>
-                        </div>
-                        <div class="delete_section">
-                            <img  class="contactview_icon" src="./assets/img/delete.png" alt="delete">
-                            <span class="delete_txt" onclick="deleteContact(${id})">Delete</span>
-                        </div> 
-                    </div>
-                </div>
-            </div>
-
-                <div class="contact_view_card_info_section">
-                    <div class="contact_view_card_info_header">
-                        <span class="contact_view_card_info_hl">Contact Information</span>
-                    </div>
-                    <div class="contact_view_mail_section">
-                        <p class="contact_view_mail_hl">Email</p>
-                        <a href="mailto:cooper@gmail.com" id="contact_view_mail" class="contact_view_mail"></a>
-                    </div>
-                    <div class="contact_view_phone_section">
-                        <p class="contact_view_phon_hl">Phone</p>
-                        <div id="contact_view_phone" class="contact_view_phon_num"></div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        
-        */
 }
 
-function getTabletViewCardHeaderTemplate(){
-    return`
+
+function getTabletViewCardHeaderTemplate() {
+  return `
         <div class="contact_view_header" id="contact_view_header">  
             <div class="contact_view_header_section">
                 <div class="contacts_view_hl_section">
@@ -200,13 +175,11 @@ function getTabletViewCardHeaderTemplate(){
             </div>
             </div>
         </div>`;
-
 }
 
 
-
 function getMobileViewCardTemplate(id, color) {
-    return `
+  return `
     <div id="mobile_view_card_header">
       <div class="contact_view_header">  
             <div class="contact_view_header_section" id ="contact_view_header_section">
@@ -296,10 +269,9 @@ function getMobileViewCardTemplate(id, color) {
            </div>`;
 }
 
-/*<div class="contactslist_container" id="contactslist_container">*/ 
 
-function getAddNewContactTemplate(){
-    return `
+function getAddNewContactTemplate() {
+  return `
         <div class="add_new_contact_ov_container" id="add_new_contact_ov_container">
             <div class="add_newcontact_sloagen_container">
                 <div class="ov_logo_section" id = "ov_logo_section">
@@ -327,7 +299,7 @@ function getAddNewContactTemplate(){
                         
                     </button>
                     <button class="create_btn" id="id_Edit_Btn_pc">
-                        <span id="id_Edit_Btn_Text_pc"></span>
+                        <span id="id_Edit_Btn_Text_pc">PlaceHolder</span>
                         <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
                     </button>
                 </div>  
@@ -337,8 +309,9 @@ function getAddNewContactTemplate(){
     `;
 }
 
+
 function getAddNewContactMobileTemplate() {
-    return `
+  return `
 <div class="add_new_contact_mobile_ov" id="add_new_contact_mobile_ov">
                     <div class="mobile_contact_dialogbox">
                         <div class="mobile_contact_dialog_header">
@@ -369,13 +342,13 @@ function getAddNewContactMobileTemplate() {
                             <input id="mail_input" class="add_new_contact_input_mobile" type="email" placeholder="  Mail">                                   
                             <input id="phone_input" class="add_new_contact_input_mobile" type="tel" placeholder="  Phone">
 
-                            <button class="create_btn_mobile" id="id_Edit_Btn" openContactDialogMobile()>
-                                <span id="id_Edit_Btn_Text">Create</span>
+                            <button class="create_btn_mobile" id="id_Edit_Btn">
+                                <span id="id_Edit_Btn_Text">PlaceHolder</span>
                                 <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
                             </button>
                         </div>
                     </div>
                 </div>`;
 }
-            
+
 //onclick="createContact()"
