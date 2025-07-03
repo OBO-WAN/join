@@ -1,268 +1,356 @@
 let Contacts = [];
 let actualContactIndex = 0;
 
-window.addEventListener('resize', () => {
-    handleWindowResize();
+window.addEventListener("resize", () => {
+  handleWindowResize();
 });
 
-let colorsArray= [
-    "#FF6B6B", "#FF8C42", "#FFA500", "#FFD700", "#FFE600",
-    "#B4FF00", "#4CAF50", "#00C853", "#00E5FF", "#00B8D4",
-    "#1DE9B6", "#00CFAE", "#00BCD4", "#40C4FF", "#2196F3",
-    "#3D5AFE", "#536DFE", "#7C4DFF", "#AB47BC", "#E040FB",
-    "#FF4081", "#F50057", "#EC407A", "#FF1744", "#FF5252",
-    "#D500F9", "#9C27B0", "#BA68C8", "#E91E63", "#FFB300",
-    "#FFC400", "#FF9100", "#FF7043", "#F06292", "#FF6E40",
-    "#C51162", "#8E24AA", "#651FFF", "#00BFA5", "#76FF03"
-]
 
-let colorsArray_1 = [
-    "#FF6B6B", "#FF8C42", "#FFA500", "#FFD700", "#FFE600",
-    "#B4FF00", "#4CAF50", "#00C853", "#00E5FF", "#00B8D4",
-    "#1DE9B6", "#00CFAE", "#00BCD4", "#40C4FF", "#2196F3",
-    "#3D5AFE", "#536DFE", "#7C4DFF", "#AB47BC", "#E040FB",
-    "#FF4081", "#F50057", "#EC407A", "#FF1744", "#FF5252",
-    "#D500F9", "#9C27B0", "#BA68C8", "#E91E63", "#FFB300",
-    "#FFC400", "#FF9100", "#FF7043", "#F06292", "#FF6E40",
-    "#C51162", "#8E24AA", "#651FFF", "#00BFA5", "#76FF03"
+let colorsArray = [
+  "#FF6B6B",
+  "#FF8C42",
+  "#FFA500",
+  "#FFD700",
+  "#FFE600",
+  "#B4FF00",
+  "#4CAF50",
+  "#00C853",
+  "#00E5FF",
+  "#00B8D4",
+  "#1DE9B6",
+  "#00CFAE",
+  "#00BCD4",
+  "#40C4FF",
+  "#2196F3",
+  "#3D5AFE",
+  "#536DFE",
+  "#7C4DFF",
+  "#AB47BC",
+  "#E040FB",
+  "#FF4081",
+  "#F50057",
+  "#EC407A",
+  "#FF1744",
+  "#FF5252",
+  "#D500F9",
+  "#9C27B0",
+  "#BA68C8",
+  "#E91E63",
+  "#FFB300",
+  "#FFC400",
+  "#FF9100",
+  "#FF7043",
+  "#F06292",
+  "#FF6E40",
+  "#C51162",
+  "#8E24AA",
+  "#651FFF",
+  "#00BFA5",
+  "#76FF03",
 ];
 
-function getContacts(data){
-    
-    fetch('https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/contacts.json')
-        .then(response => response.json())
-        .then(data => {
-            Contacts = data;
-            renderContacts(data);
 
-            if (Contacts.length > 0) {
-                //renderViewCard(0); 
-            }
-                
-        });
+let colorsArray_1 = [
+  "#FF6B6B",
+  "#FF8C42",
+  "#FFA500",
+  "#FFD700",
+  "#FFE600",
+  "#B4FF00",
+  "#4CAF50",
+  "#00C853",
+  "#00E5FF",
+  "#00B8D4",
+  "#1DE9B6",
+  "#00CFAE",
+  "#00BCD4",
+  "#40C4FF",
+  "#2196F3",
+  "#3D5AFE",
+  "#536DFE",
+  "#7C4DFF",
+  "#AB47BC",
+  "#E040FB",
+  "#FF4081",
+  "#F50057",
+  "#EC407A",
+  "#FF1744",
+  "#FF5252",
+  "#D500F9",
+  "#9C27B0",
+  "#BA68C8",
+  "#E91E63",
+  "#FFB300",
+  "#FFC400",
+  "#FF9100",
+  "#FF7043",
+  "#F06292",
+  "#FF6E40",
+  "#C51162",
+  "#8E24AA",
+  "#651FFF",
+  "#00BFA5",
+  "#76FF03",
+];
 
-    if( getViewMode() === 1)    clearViewCard();
-    setActualContactIndex(-1);
-    /*versionHandling();*/
-    return data;
 
+function getContacts(data) {
+  fetch(
+    "https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/contacts.json"
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      Contacts = data;
+      renderContacts(data);
+
+      if (Contacts.length > 0) {
+        //renderViewCard(0);
+      }
+    });
+
+  if (getViewMode() === 1) clearViewCard();
+  setActualContactIndex(-1);
+  /*versionHandling();*/
+  return data;
 }
 
 
-function updateDatabase(data){ 
-    fetch('https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/contacts.json', {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
+function updateDatabase(data) {
+  fetch(
+    "https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/contacts.json",
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
     })
     .catch((error) => {
-        console.error('Error:', error);
+      console.error("Error:", error);
     });
 }
 
+
 /* Kontaktliste */
-function renderContacts(contacts) { 
-    let contactCards = '';
-    sortContacts(contacts); // Kontakte sortieren
-    let oldLetter = ''; // Speichert den vorherigen Buchstaben
+function renderContacts(contacts) {
+  document.getElementById("contactslist_container").style.overflowy = "scroll";
+  let contactCards = "";
+  sortContacts(contacts); // Kontakte sortieren
+  let oldLetter = ""; // Speichert den vorherigen Buchstaben
 
-    let contactsListElem = document.getElementById("contacts_list");
-    if (contactsListElem) {
-        contactsListElem.style.display = "flex";
-    }
+  let contactsListElem = document.getElementById("contacts_list");
+  if (contactsListElem) {
+    contactsListElem.style.display = "flex";
+  }
 
-    for (let index = 0; index < contacts.length; index++) {
-        let contact = contacts[index];
-        //console.log("Kontakt:", contact);
-        let initials = getInitials(contact.name);
-        //console.log("Initials:", initials);
-        let firstLetter = contact.name.charAt(0).toUpperCase(); // Erster Buchstabe des Namens
+  for (let index = 0; index < contacts.length; index++) {
+    let contact = contacts[index];
+    //console.log("Kontakt:", contact);
+    let initials = getInitials(contact.name);
+    //console.log("Initials:", initials);
+    let firstLetter = contact.name.charAt(0).toUpperCase(); // Erster Buchstabe des Namens
 
-        // Wenn der Buchstabe wechselt, füge eine neue Überschrift hinzu
-        if (oldLetter !== firstLetter) {
-            contactCards += `
+    // Wenn der Buchstabe wechselt, füge eine neue Überschrift hinzu
+    if (oldLetter !== firstLetter) {
+      contactCards += `
                 <div class="contacts_section_header">
                     <p class="contacts_section_letter">${firstLetter}</p>
                 </div>`;
-            oldLetter = firstLetter;
-        }
-
-        
-
-        let color = getColor(index);
-        //console.log("Color:", color);
-        contactCards += getContactCardTamplate(contact.name, contact.mail, initials, index, color);
-        //console.log(Array.isArray(contacts), contacts);
+      oldLetter = firstLetter;
     }
 
-    let contactCardSection = document.getElementById("contact_card_section")
+    let color = getColor(index);
+    //console.log("Color:", color);
+    contactCards += getContactCardTamplate(
+      contact.name,
+      contact.mail,
+      initials,
+      index,
+      color
+    );
+    //console.log(Array.isArray(contacts), contacts);
+  }
 
-    if (contactCardSection) {
-        contactCardSection.innerHTML = contactCards;
-    }
+  let contactCardSection = document.getElementById("contact_card_section");
+
+  if (contactCardSection) {
+    contactCardSection.innerHTML = contactCards;
+  }
 }
+
 
 /* Mobile Version */
-function MobileVievCard(index){
-    
-    if( index >= 0) {
-        let contact = Contacts[index];
-        
-        let initials = getInitials(contact.name);
-        let color = getColor(index);
+function MobileVievCard(index) {
+  if (index >= 0) {
+    let contact = Contacts[index];
 
-        let contactsListElem = document.getElementById("contacts_list");
-        if (contactsListElem) {
-            contactsListElem.style.display = "none";
-        }
-
-        let addNewContactSectionElem = document.getElementById("add_new_contact_section");
-        if (addNewContactSectionElem) {
-            addNewContactSectionElem.style.display = "none";
-        }
-
-        let viewCardTemp  = getMobileViewCardTemplate(index, color);
-        let contactsContainer = document.getElementById("contactslist_container");
-        contactsContainer.innerHTML = viewCardTemp ;
-    
-        renderViewCard(index);
-    }
-}
-
-function getTabletViewCardHeader(){
-    let tabletViewCardHeader = getTeblateViewCardHeaderTemplate();
-    let tabletViewCardHeaderId = document.getElementById("Tablet_view_card_header");
-    tabletViewCardHeaderId.innerHTML = tabletViewCardHeader;
-}
-
-/*Tablat version*/
-function renderTabletVievCard(index){
-    addNewContactSectionState(true);
-/*
-    let addNewcontactMobileBtn = document.getElementById("add_new_contact_Mobile_btn")
-    if (addNewcontactMobileBtn) {
-        addNewcontactMobileBtn.style.display = "none";
-    }
-*/
-    if(index >= 0){ 
-        let contact = Contacts[index];
-        
-        let initials = getInitials(contact.name);
-        let color = getColor(index);
-        //let color = getColor(initials[0]);
-
-        let contactsListElem = document.getElementById("contacts_list");
-        if (contactsListElem) {
-            contactsListElem.style.display = "none";
-        }
-
-        addNewContactSectionState(false);
-
-        let TabletViewContainer = document.getElementById("tablate_view_card_container");
-        TabletViewContainer.style.display = "flex";
-    
-        TabletViewContainer.innerHTML = getTabletViewCardTemplate(index, color);
-
-        // Jetzt existiert das Element im DOM!
-        let tabletViewCardHeaderId = document.getElementById("Tablet_view_card_header");
-        tabletViewCardHeaderId.innerHTML = getTabletViewCardHeaderTemplate();
-    
-        //renderViewCard(index);
-
-        document.getElementById("contact_view_avatar_initials").innerText = contact.name
-            .split(' ')
-            .map(word => word[0].toUpperCase())
-            .join('');
-        document.getElementById("contact_view_name").innerText = contact.name;
-        document.getElementById("contact_view_mail").innerText = contact.mail;
-        document.getElementById("contact_view_phone").innerText = contact.phone || 'No phone number available';
-    }
+    let initials = getInitials(contact.name);
+    let color = getColor(index);
 
     let contactsListElem = document.getElementById("contacts_list");
-    if (contactsListElem) contactsListElem.style.display = "none";
-    console.log("renderTabletVievCard aufgerufen");
+    if (contactsListElem) {
+      contactsListElem.style.display = "none";
+    }
 
+    let addNewContactSectionElem = document.getElementById(
+      "add_new_contact_section"
+    );
+    if (addNewContactSectionElem) {
+      addNewContactSectionElem.style.display = "none";
+    }
+
+    let viewCardTemp = getMobileViewCardTemplate(index, color);
+    let contactsContainer = document.getElementById("contactslist_container");
+    contactsContainer.innerHTML = viewCardTemp;
+
+    renderViewCard(index);
+  }
 }
+
+
+function getTabletViewCardHeader() {
+  let tabletViewCardHeader = getTeblateViewCardHeaderTemplate();
+  let tabletViewCardHeaderId = document.getElementById(
+    "Tablet_view_card_header"
+  );
+  tabletViewCardHeaderId.innerHTML = tabletViewCardHeader;
+}
+
+
+/*Tablat version*/
+function renderTabletVievCard(index) {
+  addNewContactSectionState(true);
+
+  document.getElementById("contactslist_container").style.overflow = "hidden";
+  if (index >= 0) {
+    let contact = Contacts[index];
+
+    let initials = getInitials(contact.name);
+    let color = getColor(index);
+    //let color = getColor(initials[0]);
+
+    let contactsListElem = document.getElementById("contacts_list");
+    if (contactsListElem) {
+      contactsListElem.style.display = "none";
+    }
+
+    addNewContactSectionState(false);
+
+    let TabletViewContainer = document.getElementById(
+      "tablate_view_card_container"
+    );
+    TabletViewContainer.style.display = "flex";
+
+    TabletViewContainer.innerHTML = getTabletViewCardTemplate(index, color);
+
+    // Jetzt existiert das Element im DOM!
+    let tabletViewCardHeaderId = document.getElementById(
+      "Tablet_view_card_header"
+    );
+    tabletViewCardHeaderId.innerHTML = getTabletViewCardHeaderTemplate();
+
+    //renderViewCard(index);
+
+    document.getElementById("contact_view_avatar_initials").innerText =
+      contact.name
+        .split(" ")
+        .map((word) => word[0].toUpperCase())
+        .join("");
+    document.getElementById("contact_view_name").innerText = contact.name;
+    document.getElementById("contact_view_mail").innerText = contact.mail;
+    document.getElementById("contact_view_phone").innerText =
+      contact.phone || "No phone number available";
+  }
+
+  let contactsListElem = document.getElementById("contacts_list");
+  if (contactsListElem) contactsListElem.style.display = "none";
+  console.log("renderTabletVievCard aufgerufen");
+}
+
 
 function clearTabletViewCard() {
-    let tabletViewCardContainer = document.getElementById("tablate_view_card_container");   
-    if (tabletViewCardContainer) {
-            tabletViewCardContainer.innerHTML = "";
-            tabletViewCardContainer.style.display = "none";
-    }
+  let tabletViewCardContainer = document.getElementById(
+    "tablate_view_card_container"
+  );
+  if (tabletViewCardContainer) {
+    tabletViewCardContainer.innerHTML = "";
+    tabletViewCardContainer.style.display = "none";
+  }
 }
+
 
 /* Desktop Version*/
 function renderViewCard(index) {
-    
-    setActualContactIndex(index);
+  setActualContactIndex(index);
 
-    if (index >= 0 ) {
-        let contact = Contacts[index];
-        
-        let initials = getInitials(contact.name);
-        //let color = getColor(initials[0]);
-        let color = getColor(index);
-        let tempViewCard = getViewCardTemplate(index, color);
-        //tempViewCard.innerHTML = "";
-        document.getElementById("contactViewCard").innerHTML = tempViewCard;
+  if (index >= 0) {
+    let contact = Contacts[index];
 
-        document.getElementById("contact_view_avatar_initials").innerText = contact.name
-            .split(' ')
-            .map(word => word[0].toUpperCase())
-            .join('');
-        document.getElementById("contact_view_name").innerText = contact.name;
-        document.getElementById("contact_view_mail").innerText = contact.mail;
-        document.getElementById("contact_view_phone").innerText = contact.phone || 'No phone number available';
-    }
+    let initials = getInitials(contact.name);
+    //let color = getColor(initials[0]);
+    let color = getColor(index);
+    let tempViewCard = getViewCardTemplate(index, color);
+    //tempViewCard.innerHTML = "";
+    document.getElementById("contactViewCard").innerHTML = tempViewCard;
+
+    document.getElementById("contact_view_avatar_initials").innerText =
+      contact.name
+        .split(" ")
+        .map((word) => word[0].toUpperCase())
+        .join("");
+    document.getElementById("contact_view_name").innerText = contact.name;
+    document.getElementById("contact_view_mail").innerText = contact.mail;
+    document.getElementById("contact_view_phone").innerText =
+      contact.phone || "No phone number available";
+  }
 }
 
 
-function getContact(id){
+/*function getContact(id){
     console.log(Contacts[id]);
-}
-
-
+}*/
 function createContact() {
+  let KindOfDlg_pc = "";
+  let viewMode = getViewMode();
+  if (viewMode === 1) {
+    KindOfDlg_pc = "_pc";
+  }
 
-    let KindOfDlg_pc = "";
-    let viewMode = getViewMode();
-    if (viewMode === 1) { KindOfDlg_pc = "_pc"; }
+  let name = document.getElementById("name_input" + KindOfDlg_pc).value.trim();
+  let mail = document.getElementById("mail_input" + KindOfDlg_pc).value.trim();
+  let phone = document
+    .getElementById("phone_input" + KindOfDlg_pc)
+    .value.trim();
+  if (!name || !mail || !phone) {
+    alert("Bitte fülle die Felder Name, Mail und Pohne aus.");
+    return;
+  }
+  if (emailIsValid(mail) == false) {
+    alert("Pleas wiret a valid email address.");
+    return;
+  }
 
-    let name = document.getElementById("name_input" + KindOfDlg_pc).value.trim();
-    let mail = document.getElementById("mail_input" + KindOfDlg_pc).value.trim();
-    let phone = document.getElementById("phone_input" + KindOfDlg_pc).value.trim();
-    if (!name || !mail  || !phone) {
-        alert("Bitte fülle die Felder Name, Mail und Pohne aus.")
-        return;
-    }
-    if ( emailIsValid(mail) == false)  {
-        alert("Pleas wiret a valid email address.");
-        return;
-    }
+  name = capitalizeWords(name);
 
-    name = capitalizeWords(name);
+  let newContact = {
+    mail: mail,
+    name: name,
+    phone: phone || "No phone number available",
+  };
 
-    let newContact = {
-        mail: mail,
-        name: name,
-        phone: phone || "No phone number available" 
-    };
+  Contacts.push(newContact);
+  updateDatabase(Contacts);
+  renderContacts(Contacts);
 
-    Contacts.push(newContact);
-    updateDatabase(Contacts);
-    renderContacts(Contacts);
+  closeContactDialog();
+  closeContactDialogMobile();
 
-    closeContactDialog();
-    closeContactDialogMobile();
-    
-    console.log("Neuer Kontakt hinzugefügt:", newContact);
+  console.log("Neuer Kontakt hinzugefügt:", newContact);
 }
 
 
@@ -272,337 +360,338 @@ function createContact() {
  * @returns {number} - The new index of the contact in the sorted Contacts array, or -1 if not found.
  */
 function findContactNewIndex(contact) {
-    for (let i = 0; i < Contacts.length; i++) {
-        if (
-            Contacts[i].name === contact.name &&
-            Contacts[i].mail === contact.mail &&
-            Contacts[i].phone === contact.phone
-        ) {
-            return i;
-        }
+  for (let i = 0; i < Contacts.length; i++) {
+    if (
+      Contacts[i].name === contact.name &&
+      Contacts[i].mail === contact.mail &&
+      Contacts[i].phone === contact.phone
+    ) {
+      return i;
     }
-    return -1;
+  }
+  return -1;
 }
 
 
 function editContact(id) {
+  let KindOfDlg_pc = "";
+  let viewMode = getViewMode();
+  if (viewMode === 1) {
+    KindOfDlg_pc = "_pc";
+  }
 
-    let KindOfDlg_pc = "";
-    let viewMode = getViewMode();
-    if (viewMode === 1) { KindOfDlg_pc = "_pc"; }
+  let name = document.getElementById("name_input" + KindOfDlg_pc).value.trim();
+  let mail = document.getElementById("mail_input" + KindOfDlg_pc).value.trim();
+  let phone = document
+    .getElementById("phone_input" + KindOfDlg_pc)
+    .value.trim();
 
-    let name = document.getElementById("name_input" + KindOfDlg_pc).value.trim();
-    let mail = document.getElementById("mail_input" + KindOfDlg_pc).value.trim();
-    let phone = document.getElementById("phone_input" + KindOfDlg_pc).value.trim();
+  if (!name || !mail || !phone) {
+    alert("EDIT: Bitte fülle die Felder Name, Mail und Pohne aus.");
+    return;
+  }
+  if (emailIsValid(mail) == false) {
+    alert("Pleas wiret a valid email address.");
+    return;
+  }
 
+  name = capitalizeWords(name);
 
-    if (!name || !mail  || !phone) {
-        alert("EDIT: Bitte fülle die Felder Name, Mail und Pohne aus.")
-        return;
-    }
-    if ( emailIsValid(mail) == false)  {
-        alert("Pleas wiret a valid email address.");
-        return;
-    }
-    
-    name = capitalizeWords(name);
+  let newContact = {
+    mail: mail,
+    name: name,
+    phone: phone || "No phone number available",
+  };
 
-    let newContact = {
-        mail: mail,
-        name: name,
-        phone: phone || "No phone number available" 
-    };
-    
-    Contacts[id] = newContact;
-    updateDatabase(Contacts);
-    id = findContactNewIndex(newContact);
+  Contacts[id] = newContact;
+  updateDatabase(Contacts);
+  id = findContactNewIndex(newContact);
 
-    if (viewMode === 1) {
-        renderContacts(Contacts);
-        renderViewCard(id);
-        closeContactDialog();
-    }else if (viewMode === 2) {
-/*      renderContacts(Contacts);
+  if (viewMode === 1) {
+    renderContacts(Contacts);
+    renderViewCard(id);
+    closeContactDialog();
+  } else if (viewMode === 2) {
+    /*      renderContacts(Contacts);
         renderViewCard(id);
         closeContactDialog();
 */
-        MobileVievCard(id);
-        closeContactDialogMobile();
-
-    }else if (viewMode === 3) {
-        
-        closeContactDialogMobile();
-         renderTabletVievCard(id);
-    }else if (viewMode === 4) {
-        MobileVievCard(id);
-        closeContactDialogMobile();
-    }
+    renderViewCard(id);
+    closeContactDialogMobile();
+  } else if (viewMode === 3) {
+    closeContactDialogMobile();
+    renderTabletVievCard(id);
+  } else if (viewMode === 4) {
+    MobileVievCard(id);
+    closeContactDialogMobile();
+  }
 }
 
 
-function emailIsValid (email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+function emailIsValid(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
+
 
 /*
 TODO:
 -Comment rausnehmen
 */
 function deleteContact(id) {
+  if (id < 0 || id >= Contacts.length) {
+    console.error("Ungültige ID:", id);
+    return;
+  }
 
-    if (id < 0 || id >= Contacts.length) {
-        console.error("Ungültige ID:", id);
-        return;
+  let text = "Delete Contact?\nPress a button!\nEither OK or Cancel.";
+
+  if (confirm(text) == true) {
+    Contacts.splice(id, 1);
+    updateDatabase(Contacts);
+
+    let viewMode = getViewMode();
+    if (viewMode === 1) {
+      renderContacts(Contacts);
     }
-
-    let text = "Delete Contact?\nPress a button!\nEither OK or Cancel.";
-    
-    if (confirm(text) == true) {
-        Contacts.splice(id, 1);
-        updateDatabase(Contacts);
-
-        let viewMode = getViewMode();
-        if (viewMode === 1) {
-            renderContacts(Contacts);
-        }
-/*
-        if (Contacts.length > 0) {
-            //renderViewCard(0); 
-        } else {
-            document.getElementById("contact_view_avatar_initials").innerText = "";
-            document.getElementById("contact_view_name").innerText = "";
-            document.getElementById("contact_view_mail").innerText = "";
-            document.getElementById("contact_view_phone").innerText = "";
-        }
-        */
-    //  alert("Contact deleted");
-        goBacktoContacts();
-    }
+    goBacktoContacts();
+  }
 }
 
 
-function clearViewCard()
-{
-    let contactViewCard = document.getElementById("contactViewCard");
-    let contact_view_card = document.getElementById("contact_view_card");
+function clearViewCard() {
+  let contactViewCard = document.getElementById("contactViewCard");
+  let contact_view_card = document.getElementById("contact_view_card");
 
-    let viewMode = getViewMode();
-    if( viewMode === 1 && contactViewCard) {
-        contactViewCard.innerHTML = "";
-    }else if( viewMode === 2 && contact_view_card) {
-        contact_view_card.innerHTML = "";
-    }else if(viewMode === 3 && contact_view_card) {
-        contact_view_card.innerHTML = "";
-    }else if(viewMode === 4 && contact_view_card) {
-        contact_view_card.innerHTML = ""
-    }
+  let viewMode = getViewMode();
+  if (viewMode === 1 && contactViewCard) {
+    contactViewCard.innerHTML = "";
+  } else if (viewMode === 2 && contact_view_card) {
+    contact_view_card.innerHTML = "";
+  } else if (viewMode === 3 && contact_view_card) {
+    contact_view_card.innerHTML = "";
+  } else if (viewMode === 4 && contact_view_card) {
+    contact_view_card.innerHTML = "";
+  }
 
-    setActualContactIndex(-1);
+  setActualContactIndex(-1);
 }
 
 /** * Configures the dialog box for editing or creating a contact.
  * @param {number} id - The index of the contact to edit, or -1 for creating a new contact.
- * This function sets the dialog box's title, button text, and function name based on the   
+ * This function sets the dialog box's title, button text, and function name based on the
  * provided index. It also populates the input fields with the existing contact data if editing.
- * If creating a new contact, it clears the input fields and sets default values.   
+ * If creating a new contact, it clears the input fields and sets default values.
  *  * It also configures the avatar display based on the contact's initials and color.
  * The dialog box is displayed in either desktop or mobile view mode based on the current window width*/
-function configEditDlgBox(id){
+function configEditDlgBox(id) {
+  let kindOFEdit = "editContact";
+  if (id < 0) kindOFEdit = "createContact";
 
-    let kindOFEdit = "editContact";
-    if(id < 0) kindOFEdit = "createContact";
+  let btnText = "";
+  //let kindOfDlg_Text = "";
+  let functionName = "";
+  let KindOfDlg_pc = "";
+  let viewMode = getViewMode();
+  if (viewMode === 1) {
+    KindOfDlg_pc = "_pc";
+  }
 
-    let btnText ="";
-    //let kindOfDlg_Text = "";
-    let functionName = "";
-    let KindOfDlg_pc = "";
-    let viewMode = getViewMode();
-    if (viewMode === 1) { KindOfDlg_pc = "_pc"; }
-    
-    let AddNewcontactAvatar = document.getElementById("add_new_contact_avatar");
-    let AddNewcontactAvatar_mobile = document.getElementById("add_new_contact_avatar_mobile");
-    switch(kindOFEdit){
-        case "editContact":
-                document.getElementById("Kind_Of_Dlg" + KindOfDlg_pc).innerHTML = "Edit contact";
-                btnText = "Save";
-                functionName = "editContact(" + id + ")";
+  let AddNewcontactAvatar = document.getElementById("add_new_contact_avatar");
+  let AddNewcontactAvatar_mobile = document.getElementById(
+    "add_new_contact_avatar_mobile"
+  );
+  switch (kindOFEdit) {
+    case "editContact":
+      document.getElementById("Kind_Of_Dlg" + KindOfDlg_pc).innerHTML =
+        "Edit contact";
+      btnText = "Save";
+      //               functionName = "editContact(" + id + ")";
+      document.getElementById("id_Edit_Btn" + KindOfDlg_pc).onclick =
+        function () {
+          editContact(id);
+        };
 
-                let oldContactData = Contacts[id];
+      let oldContactData = Contacts[id];
 
-                document.getElementById("name_input" + KindOfDlg_pc).value = oldContactData.name; // Contacts[id].name;
-                document.getElementById("mail_input" + KindOfDlg_pc).value = oldContactData.mail //Contacts[id].mail;
-                document.getElementById("phone_input" + KindOfDlg_pc).value = oldContactData.phone; //Contacts[id].phone;
-                let avatarColor = getColor(id);
+      document.getElementById("name_input" + KindOfDlg_pc).value =
+        oldContactData.name; // Contacts[id].name;
+      document.getElementById("mail_input" + KindOfDlg_pc).value =
+        oldContactData.mail; //Contacts[id].mail;
+      document.getElementById("phone_input" + KindOfDlg_pc).value =
+        oldContactData.phone; //Contacts[id].phone;
+      let avatarColor = getColor(id);
 
-                if(AddNewcontactAvatar){
-
-                    let test = getInitials(oldContactData.name);
-                    AddNewcontactAvatar.innerHTML = `
+      if (AddNewcontactAvatar) {
+        let test = getInitials(oldContactData.name);
+        AddNewcontactAvatar.innerHTML = `
                         <p class="contact_view_avatar_initials" id="add_new_contact_avatar_1">${test[0].toUpperCase()}</p>
                         <p class="contact_view_avatar_initials" id="add_new_contact_avatar_2">${test[1].toUpperCase()}</p>
                     `;
-                    //let avatarColor = getColor( oldContactData.name.charAt(0) );
-                    
-                    AddNewcontactAvatar.style.backgroundColor = avatarColor;
-                    AddNewcontactAvatar.style.color = "#FFFFFF";
-                }
+        //let avatarColor = getColor( oldContactData.name.charAt(0) );
 
-                if(AddNewcontactAvatar_mobile){
+        AddNewcontactAvatar.style.backgroundColor = avatarColor;
+        AddNewcontactAvatar.style.color = "#FFFFFF";
+      }
 
-                    let test = getInitials(oldContactData.name);
-                    AddNewcontactAvatar_mobile.innerHTML = `
+      if (AddNewcontactAvatar_mobile) {
+        let test = getInitials(oldContactData.name);
+        AddNewcontactAvatar_mobile.innerHTML = `
                         <p class="contact_view_avatar_initials" id="add_new_contact_avatar_mob_1">${test[0].toUpperCase()}</p>
                         <p class="contact_view_avatar_initials" id="add_new_contact_avatar_mob_2">${test[1].toUpperCase()}</p>
                     `;
-                   
-                    //let avatarColor = getColor( oldContactData.name.charAt(0) );
-                    AddNewcontactAvatar_mobile.style.backgroundColor = avatarColor;
-                    AddNewcontactAvatar_mobile.style.color = "#FFFFFF";
-                }
 
-            break;
+        //let avatarColor = getColor( oldContactData.name.charAt(0) );
+        AddNewcontactAvatar_mobile.style.backgroundColor = avatarColor;
+        AddNewcontactAvatar_mobile.style.color = "#FFFFFF";
+      }
 
-        case "createContact":
-                document.getElementById("Kind_Of_Dlg" + KindOfDlg_pc).innerHTML = "Add contact";
-                btnText = "Create";
-                functionName = "createContact()";
+      break;
 
-                if(AddNewcontactAvatar){
-                    AddNewcontactAvatar.style.backgroundColor = "#eeecec";
-                    AddNewcontactAvatar.innerHTML = `
+    case "createContact":
+      document.getElementById("Kind_Of_Dlg" + KindOfDlg_pc).innerHTML =
+        "Add contact";
+      btnText = "Create";
+      //               functionName = "createContact()";
+      document.getElementById("id_Edit_Btn" + KindOfDlg_pc).onclick =
+        function () {
+          createContact();
+        };
+
+      if (AddNewcontactAvatar) {
+        AddNewcontactAvatar.style.backgroundColor = "#eeecec";
+        AddNewcontactAvatar.innerHTML = `
                         <img class="ov_avatar" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
                     `;
-                }
+      }
 
-                if(AddNewcontactAvatar_mobile){
-                    AddNewcontactAvatar_mobile.style.backgroundColor = "#eeecec";
-                    AddNewcontactAvatar_mobile.innerHTML = `
+      if (AddNewcontactAvatar_mobile) {
+        AddNewcontactAvatar_mobile.style.backgroundColor = "#eeecec";
+        AddNewcontactAvatar_mobile.innerHTML = `
                         <img class="ov_avatar" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
                     `;
-                }
+      }
 
-            break;
+      break;
 
-        default:
-            break;
-    }
-
-    let btnHtml = `
-        <button class="create_btn" id="id_Edit_Btn${KindOfDlg_pc}" onclick = "${functionName}">
-            <span id="id_Edit_Btn_Text${KindOfDlg_pc}">${btnText}</span>
-            <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
-        </button>`;
-
-    document.getElementById("id_Edit_Btn" + KindOfDlg_pc).innerHTML = btnHtml;
-
+    default:
+      break;
+  }
+  document.getElementById("id_Edit_Btn_Text" + KindOfDlg_pc).innerText =
+    btnText;
 }
 
 
-function openContactDialog(id){
-    //index > 0 entspricht Contacs editieren
-    //index <0 entspricht neuen Kontakt erstellen
-    let addNewContactButton = document.getElementById("add_new_contact_button")
-    
-    if (addNewContactButton) {
-        addNewContactButton.style.display = "none";
-    }
+function openContactDialog(id) {
+  //index > 0 entspricht Contacs editieren
+  //index <0 entspricht neuen Kontakt erstellen
+  let addNewContactButton = document.getElementById("add_new_contact_button");
 
-    let addNewContactOvSection = document.getElementById("add_new_contact_ov_section");
-    if( addNewContactOvSection) {
-        addNewContactOvSection.style.display = "flex";
-        addNewContactOvSection.innerHTML = getAddNewContactTemplate();
+  if (addNewContactButton) {
+    addNewContactButton.style.display = "none";
+  }
 
-        document.getElementById("add_new_contact_ov_container").style.display = "flex";
-    }
-    
-    addNewContactSectionState_pc(true);
-    configEditDlgBox(id);
+  let addNewContactOvSection = document.getElementById(
+    "add_new_contact_ov_section"
+  );
+  if (addNewContactOvSection) {
+    addNewContactOvSection.style.display = "flex";
+    addNewContactOvSection.innerHTML = getAddNewContactTemplate();
+
+    document.getElementById("add_new_contact_ov_container").style.display =
+      "flex";
+  }
+
+  addNewContactSectionState_pc(true);
+  configEditDlgBox(id);
 }
 
 
-function closeContactDialog(){
+function closeContactDialog() {
+  let name = document.getElementById("name_input_pc");
+  let mail = document.getElementById("mail_input_pc");
+  let phone = document.getElementById("phone_input_pc");
 
-    
-    let name = document.getElementById("name_input_pc");
-    let mail = document.getElementById("mail_input_pc");
-    let phone = document.getElementById("phone_input_pc");
+  if (name || mail || phone) {
+    name.value = "";
+    mail.value = "";
+    phone.value = "";
+  }
 
-    if( name || mail || phone) {
-        name.value = "";
-        mail.value = "";    
-        phone.value = "";
-    }
+  let addNewSection = document.getElementById("add_new_contact_ov_section");
+  let addNewContainer = document.getElementById("add_new_contact_ov_container");
 
-    let addNewSection = document.getElementById("add_new_contact_ov_section");
-    let addNewContainer = document.getElementById("add_new_contact_ov_container");
-
-    if( name || mail || phone) {
-        addNewSection.style.display = "none";
-        addNewSection.innerHTML = "";
-        addNewContainer.style.display = "none";
-    }
-    // dialog beim schliesen lleeren
+  if (name || mail || phone) {
+    addNewSection.style.display = "none";
+    addNewSection.innerHTML = "";
+    addNewContainer.style.display = "none";
+  }
+  // dialog beim schliesen lleeren
 }
 
 
 /*contact dialog mobile section*/
-function openContactDialogMobile(id){
-     
-    let mobileDialogTemplate = getAddNewContactMobileTemplate();
-    document.getElementById("add_new_contact_mobile_ov_container").innerHTML = mobileDialogTemplate;
-    configEditDlgBox(id);
+function openContactDialogMobile(id) {
+  let mobileDialogTemplate = getAddNewContactMobileTemplate();
+  document.getElementById("add_new_contact_mobile_ov_container").innerHTML =
+    mobileDialogTemplate;
+  configEditDlgBox(id);
 
-    console.log("openContactDialogMobile aufgerufen");
-    
-    editContactsMobileMenuOff();
-    //document.getElementById("add_new_contact_mobile_ov").style.display = "flex";
+  console.log("openContactDialogMobile aufgerufen");
 
+  editContactsMobileMenuOff();
+  //document.getElementById("add_new_contact_mobile_ov").style.display = "flex";
 }
 
-function closeContactDialogMobile(){
-    const addNewContactMobileOv = document.getElementById("add_new_contact_mobile_ov");
-    
-    if(addNewContactMobileOv) {
-        addNewContactMobileOv.style.display = "none";
-        const addNewContactMobileBtn = document.getElementById("add_new_contact_Mobile_btn");
-        if (addNewContactMobileBtn) {
-            addNewContactMobileBtn.style.display = "flex";  
-        }
+
+function closeContactDialogMobile() {
+  const addNewContactMobileOv = document.getElementById(
+    "add_new_contact_mobile_ov"
+  );
+
+  if (addNewContactMobileOv) {
+    addNewContactMobileOv.style.display = "none";
+    const addNewContactMobileBtn = document.getElementById(
+      "add_new_contact_Mobile_btn"
+    );
+    if (addNewContactMobileBtn) {
+      addNewContactMobileBtn.style.display = "flex";
     }
+  }
 }
 
 
-function getInitials(name)
-{
-    let initials = name
-        .trim()
-        .split(' ')
-        .filter(word => word.length > 0)
-        .map(word => word[0].toUpperCase()); 
-    return initials;
+function getInitials(name) {
+  let initials = name
+    .trim()
+    .split(" ")
+    .filter((word) => word.length > 0)
+    .map((word) => word[0].toUpperCase());
+  return initials;
 }
 
 
-function sortContacts(contacts){ //sort contacts by name
-    contacts.sort((a, b) => a.name.localeCompare(b.name));
-    Contacts = contacts;
+function sortContacts(contacts) {
+  //sort contacts by name
+  contacts.sort((a, b) => a.name.localeCompare(b.name));
+  Contacts = contacts;
 }
 
 
-function getFirstLetter(name, oldLetter, change){ //get first letter of name
+function getFirstLetter(name, oldLetter, change) {
+  //get first letter of name
 
-    let firstLetter = name.charAt(0);
+  let firstLetter = name.charAt(0);
 
-    if (oldLetter !== firstLetter) {
-        change = true;
-    }
-    else {
-        change = false;
-    }
-    oldLetter = firstLetter;
+  if (oldLetter !== firstLetter) {
+    change = true;
+  } else {
+    change = false;
+  }
+  oldLetter = firstLetter;
 
-    return firstLetter;
+  return firstLetter;
 }
+
 
 /**
  * Determines the current view mode based on the window's width.
@@ -613,185 +702,140 @@ function getFirstLetter(name, oldLetter, change){ //get first letter of name
  *   3 - Tablet (window width < 825)
  *   4 - Mobile (window width < 560)
  */
-function getViewMode()
-{
-    let viewMode = 1;
-    
-    if (window.innerWidth < 1100) {
-        viewMode = 2;
-    }
+function getViewMode() {
+  let viewMode = 1;
 
-    if (window.innerWidth < 825) {
-        viewMode = 3;
-    }
-    if (window.innerWidth < 560) {
-        viewMode = 4;
-    }
+  if (window.innerWidth < 1100) {
+    viewMode = 2;
+  }
 
-    return viewMode;
+  if (window.innerWidth < 825) {
+    viewMode = 3;
+  }
+  if (window.innerWidth < 560) {
+    viewMode = 4;
+  }
+
+  return viewMode;
 }
 
 
 let bigWindowIsRendered = false;
-function proofVersion(index){
+function proofVersion(index) {
+  setActualContactIndex(index);
+  let version = getViewMode();
 
-    setActualContactIndex(index);
-    let version = getViewMode();
+  switch (version) {
+    case 1: //  1 = desktop big     | >= 1100
+      renderViewCard(index);
+      break;
 
-    switch (version) {
-        case 1: //  1 = desktop big     | >= 1100
-            renderViewCard(index);
-            break;
+    case 2: // 2 = desktop small   | < 1100
+    // 3 = tablet          | < 825
+    case 3:
+      renderTabletVievCard(index);
+      break;
 
-        case 2: // 2 = desktop small   | < 1100
-                // 3 = tablet          | < 825
-        case 3:
-            renderTabletVievCard(index);
-            break;
-        
-        case 4: // 4 = mobile          | < 560
-            MobileVievCard(index);
-            break;
+    case 4: // 4 = mobile          | < 560
+      MobileVievCard(index);
+      break;
 
-        default:
-            break;
-    }
+    default:
+      break;
+  }
 }
 
 
-function handleWindowResize(){
+function handleWindowResize() {
+  let idx = getActualContactIndex();
+  getViewMode();
 
-    let idx = getActualContactIndex();
-    getViewMode();
+  switch (getViewMode()) {
+    case 1: // 1 = desktop big     | >= 1100
+      clearTabletViewCard();
+      addNewContact = getAddNewContactTemplate();
+      document.getElementById("add_new_contact_section").innerHTML =
+        addNewContact;
 
-    switch (getViewMode()) {
-        case 1:  // 1 = desktop big     | >= 1100      
-            clearTabletViewCard();
-            addNewContact = getAddNewContactTemplate();
-            document.getElementById("add_new_contact_section").innerHTML = addNewContact;
+      renderContacts(Contacts);
+      renderViewCard(idx);
+      addNewContactSectionState_pc(true);
+      break;
 
-            renderContacts(Contacts);
-            renderViewCard(idx);
-            addNewContactSectionState_pc(true);
-            break;  
+    case 2: // 2 = desktop small   | < 1100
+      goBacktoContacts();
+      addNewContactSectionState_pc(false);
+      break;
 
-        case 2: // 2 = desktop small   | < 1100
-            goBacktoContacts();
-            addNewContactSectionState_pc(false);
-            break;
-
-        case 3: // 3 = tablet          | < 825  
-            goBacktoContacts();
-            MobileVievCard(idx);
-            addNewContactSectionState_pc(false);
-            break;
-        case 4: // 4 = mobile          | < 560
-    
-            goBacktoContacts();  
-            MobileVievCard(idx);
-            break;
-        default:
-            //console.error("Unbekannter View Mode");
-            break;
-    }
-
-/*
-
-    if (window.innerWidth > 825) {
-
-            renderContacts(Contacts);
-
-            if (idx < 0) {
-                // Clear the view card
-                clearViewCard();
-            }else {
-                renderViewCard(idx);
-            }
-
-            //let addNewContact = "";
-            //addNewContact = getAddNewContactTemplate();
-            //document.getElementById("add_new_contact_section").innerHTML = addNewContact;
-
-            bigWindowIsRendered = true;
-    }
-    
-    if (window.innerWidth > 1100) {
-        document.getElementById("add_new_contact_mobile_ov_container").style.display = "none";
-        let addNewContact =   getElementById("add_new_contact_section");
-
-        addNewContact.innerHTML = `
-             <button class="add_new_contact_button" onclick="openContactDialog(-1)">
-                    <span class="add_contact_text">Add New Contact</span>
-                    <img src="./assets/icons/contact/addcontact.png" class="add_contact_icon">
-                </button>
-            </div>
-        `;
-    }else {
-        document.getElementById("contactViewCard").style.display = "flex";
-        goBacktoContacts();
-        //renderContacts(Contacts);
-        bigWindowIsRendered = false;
-    }
-*/
-}
-
-function getColor(index){
-    let idx = index;
-    if (idx < 0) {
-        idx = 0; // Fallback to the first color if index is out of bounds
-    }
-    
-    return colorsArray[ (idx % colorsArray.length)];
-}
-
-function getColorFromFirstLetter(firstLetter){
-
-    let text = "";
-    text = String(firstLetter).toUpperCase();
-
-    let colorIndex = text.charCodeAt(0) - 65;
-
-    return colorsArray[colorIndex];
+    case 3: // 3 = tablet          | < 825
+      goBacktoContacts();
+      MobileVievCard(idx);
+      addNewContactSectionState_pc(false);
+      break;
+    case 4: // 4 = mobile          | < 560
+      goBacktoContacts();
+      MobileVievCard(idx);
+      break;
+    default:
+      //console.error("Unbekannter View Mode");
+      break;
+  }
 }
 
 
-function capitalizeWords(Sentence)
-{
-    return Sentence.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+function getColor(index) {
+  let idx = index;
+  if (idx < 0) {
+    idx = 0; // Fallback to the first color if index is out of bounds
+  }
+
+  return colorsArray[idx % colorsArray.length];
 }
 
 
-function setActualContactIndex(index){
-    actualContactIndex = index;
-    return actualContactIndex;
+function getColorFromFirstLetter(firstLetter) {
+  let text = "";
+  text = String(firstLetter).toUpperCase();
+
+  let colorIndex = text.charCodeAt(0) - 65;
+
+  return colorsArray[colorIndex];
 }
 
 
-function getActualContactIndex(){
-    return actualContactIndex;
-}   
+function capitalizeWords(Sentence) {
+  return Sentence.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
+    letter.toUpperCase()
+  );
+}
 
 
-function goBacktoContacts(){
-    let tablet_additional_div = '';
-    let addNewContact = "";
-    let viewMode = getViewMode();
-    if(viewMode === 2 || viewMode === 3) 
-    {
-        tablet_additional_div = `
+function setActualContactIndex(index) {
+  actualContactIndex = index;
+  return actualContactIndex;
+}
+
+
+function getActualContactIndex() {
+  return actualContactIndex;
+}
+
+
+function goBacktoContacts() {
+  let tablet_additional_div = "";
+  let addNewContact = "";
+  let viewMode = getViewMode();
+  if (viewMode === 2 || viewMode === 3) {
+    tablet_additional_div = `
             <div id="tablate_view_card_container" class="tablate_view_card_container"></div>
             `;
-/*      tablet_additional_div = `
-            <div id="add_new_contact_ov_section" class="add_new_contact_ov"></div>    
-            <div id="tablate_view_card_container" class="tablate_view_card_container"></div>
-            `;
-*/let contactsListElem = document.getElementById("contacts_list");
-if (contactsListElem) contactsListElem.style.display = "flex";
-    }
+    let contactsListElem = document.getElementById("contacts_list");
+    if (contactsListElem) contactsListElem.style.display = "flex";
+  }
 
-    let contactsContainer = document.getElementById("contactslist_container");
-    if (contactsContainer) {
-        contactsContainer.innerHTML = `
+  let contactsContainer = document.getElementById("contactslist_container");
+  if (contactsContainer) {
+    contactsContainer.innerHTML = `
             <div id="add_new_contact_ov_section" class="add_new_contact_ov"></div>
             <div id="tablate_view_card_container" class="tablate_view_card_container"></div>
             ${tablet_additional_div}
@@ -808,92 +852,91 @@ if (contactsListElem) contactsListElem.style.display = "flex";
             </div>
         `;
 
-        if (viewMode === 1) {
-            addNewContact = getAddNewContactTemplate();
-            addNewContactSectionState_pc(true);
-        }else if (viewMode === 2){
-            addNewContact = getAddNewContactTemplate();
-            addNewContactSectionState(true);
-            addNewContactSectionState_pc(false);
-        }else if(viewMode === 3) {
-            addNewContact = getAddNewContactMobileTemplate();
-            addNewContactSectionState(true);
-            addNewContactSectionState_pc(false);
-        }else if (viewMode === 4) {
-            addNewContact = getAddNewContactMobileTemplate();
-            addNewContactSectionState_pc(false);
-        }
-
-        
+    if (viewMode === 1) {
+      addNewContact = getAddNewContactTemplate();
+      addNewContactSectionState_pc(true);
+    } else if (viewMode === 2) {
+      addNewContact = getAddNewContactTemplate();
+      addNewContactSectionState(true);
+      addNewContactSectionState_pc(false);
+    } else if (viewMode === 3) {
+      addNewContact = getAddNewContactMobileTemplate();
+      addNewContactSectionState(true);
+      addNewContactSectionState_pc(false);
+    } else if (viewMode === 4) {
+      addNewContact = getAddNewContactMobileTemplate();
+      addNewContactSectionState_pc(false);
     }
-    renderContacts(Contacts);
-    setActualContactIndex(-1);
-    clearViewCard();
+  }
+  renderContacts(Contacts);
+  setActualContactIndex(-1);
+  clearViewCard();
 }
 
+
 function editContactsMobileMenuOn() {
-    document.getElementById("mobile_view_card_menu").style.display = "flex";
-    document.addEventListener('mousedown', handleOutsideClickForMobileMenu);
+  document.getElementById("mobile_view_card_menu").style.display = "flex";
+  document.addEventListener("mousedown", handleOutsideClickForMobileMenu);
 }
 
 
 function editContactsMobileMenuOff() {
-    let menu = document.getElementById("mobile_view_card_menu");
-    if(menu){
-        menu.style.display = "none";
-        document.removeEventListener('mousedown', handleOutsideClickForMobileMenu);
-    }
+  let menu = document.getElementById("mobile_view_card_menu");
+  if (menu) {
+    menu.style.display = "none";
+    document.removeEventListener("mousedown", handleOutsideClickForMobileMenu);
+  }
 }
 
+
 function addNewContactSectionState_pc(state) {
-
-    let stateStr = "none";
-    if(state == true)   stateStr = "flex";
-
-    let section = document.getElementById("add_new_contact_button");
-    if (section) {
-        section.style.display = stateStr;
-    }else {
-
-        let addNewContactSection = document.getElementById("add_new_contact_section")
-        if(addNewContactSection) {
-            let addNewContact = `
+  let stateStr = "none";
+  if (state == true) stateStr = "flex";
+  let section = document.getElementById("add_new_contact_button");
+  if (section) {
+    section.style.display = stateStr;
+  } else {
+    let addNewContactSection = document.getElementById(
+      "add_new_contact_section"
+    );
+    if (addNewContactSection) {
+      let addNewContact = `
                 <button class="add_new_contact_button" id="add_new_contact_button" onclick="openContactDialog(-1)">
                 <span class="add_contact_text">Add New Contact</span>
                 <img src="./assets/icons/contact/addcontact.png" class="add_contact_icon">
                 </button>`;
-            addNewContactSection.innerHTML += addNewContact;
-            section = document.getElementById("add_new_contact_button");
-            section.style.display = stateStr;
-        }
+      addNewContactSection.innerHTML += addNewContact;
+      section = document.getElementById("add_new_contact_button");
+      section.style.display = stateStr;
     }
+  }
 
-    section = document.getElementById("add_new_contact_section");
-    if (section) {
-        section.style.display = stateStr;
-    }
-
+  section = document.getElementById("add_new_contact_section");
+  if (section) {
+    section.style.display = stateStr;
+  }
 }
+
 
 function addNewContactSectionState(state) {
+  let stateStr = "none";
+  if (state == true) stateStr = "flex";
 
-    let stateStr = "none";
-    if(state == true)   stateStr = "flex";
+  let section = document.getElementById("add_new_contact_Mobile_section");
+  if (section) {
+    section.style.display = stateStr;
+  }
 
-    let section = document.getElementById("add_new_contact_Mobile_section");
-    if (section) {
-        section.style.display = stateStr;
-    }
-
-    section = document.getElementById("add_new_contact_Mobile_btn");
-    if (section) {
-        section.style.display = stateStr;
-    }
+  section = document.getElementById("add_new_contact_Mobile_btn");
+  if (section) {
+    section.style.display = stateStr;
+  }
 }
 
+
 function handleOutsideClickForMobileMenu(event) {
-    let menu = document.getElementById("mobile_view_card_menu");
-    if (menu && !menu.contains(event.target)) {
-        editContactsMobileMenuOff();
-    }
+  let menu = document.getElementById("mobile_view_card_menu");
+  if (menu && !menu.contains(event.target)) {
+    editContactsMobileMenuOff();
+  }
 }

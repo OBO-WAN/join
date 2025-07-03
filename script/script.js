@@ -27,37 +27,33 @@ function toHrefFocus(targetHref, anchor) {
   window.location.href = targetHref;
 }
 
-//Render Initials
 
+//Render Initials
 function setUserInitials() {
   const firstInitial = document.getElementById('first_icon_initials');
   const lastInitial = document.getElementById('last_icon_initials');
   let firstName = sessionStorage.getItem('firstName');
   let lastName = sessionStorage.getItem('lastName');
-    
-  /*Only for testing purposes, remove later */
-//  firstName = "Guest"
-// lastName = "";
+  let prooofLokedIn = sessionStorage.getItem("loggedIn");
 
-  if (firstInitial && lastInitial && firstName && lastName) {
+  if (prooofLokedIn == "true") {
     firstInitial.textContent = firstName[0].toUpperCase();
     lastInitial.textContent = lastName[0].toUpperCase();
     lastInitial.style.display = "flex";
   }
-
-  if (firstInitial && lastInitial && firstName == "Guest") {
-    firstInitial.textContent = firstName[0].toUpperCase();
-    lastInitial.textContent = "";
-    lastInitial.style.display = "none";
+  else{
+      let AvatarInitialFirst = document.getElementById("first_icon_initials");
+      let AvatarInitialLast = document.getElementById("last_icon_initials");
+      AvatarInitialFirst.innerHTML ="G";
+      AvatarInitialLast.innerHTML = "";
   }
-
 }
 
-// function logOut() {
-//   sessionStorage.clear(); 
-//   window.location.href = 'login.html'; 
-// }
 
+function logOut() {
+  sessionStorage.clear(); 
+  window.location.href = 'login.html';
+}
 
 
 window.addEventListener('DOMContentLoaded', setUserInitials);
