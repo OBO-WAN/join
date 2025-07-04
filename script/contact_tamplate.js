@@ -356,4 +356,22 @@ function getAddNewContactMobileTemplate() {
                 </div>`;
 }
 
-//onclick="createContact()"
+
+function getGoBackTemplate(tablet_additional_div){
+    return `
+            <div id="add_new_contact_ov_section" class="add_new_contact_ov"></div>
+            <div id="tablate_view_card_container" class="tablate_view_card_container"></div>
+            ${tablet_additional_div}
+            <div class="add_new_contact_section" id="add_new_contact_section"></div>
+            <div class="contacts_list" id="contacts_list">
+                <div class="contacts_section">
+                    <div class="contact_card_section" id="contact_card_section"></div>
+                </div>
+            </div>
+            <div class="add_new_contact_Mobile_section">
+                <div class="add_new_contact_Mobile_btn" id = "add_new_contact_Mobile_btn" onclick="openContactDialogMobile(-1)">
+                    <img class="add_new_contact_mobile_icon" src="./assets/icons/contact/addcontact.png" alt="icon">
+                </div>
+            </div>
+        `;
+}
