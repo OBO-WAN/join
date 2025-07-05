@@ -255,27 +255,22 @@ function ifEmailPattern(trimmedEmail, errorMessageEmailNotValideSignUpRef, error
   return true;
 }
 
-/**
- *
- * @function validatePassword
- * @description Validates a password input field, checking for emptiness and minimum length.
- * It utilizes helper functions to retrieve password data and the appropriate DOM element references
- * based on whether the validation is for sign-up or login.
- * @param {HTMLInputElement} passwordInputField - The HTML input element for the password.
- * @param {boolean} boolean - A boolean value indicating the context of the validation:
- * - `true` if the validation is for the sign-up form.
- * - `false` if the validation is for the login form.
- * @returns {boolean} - Returns the result of either `handleEmptyPassword` (if the field is empty)
- * or `handlePasswordLengthValidation` (based on the password length validation).
- */
-function validatePassword(passwordInputField, boolean) {
-  const { errorMessageLogInRef } = getIdRefs();
-  const { trimmedPassword } = getPasswordInputData(passwordInputField);
-  const { currentPasswordRef, currentErrorMessageRef } = getPasswordRefs(boolean);
+function validatePassword(inputField, isSignUp) {
+  const password = inputField.value.trim();
+  const errorMessage = document.getElementById('error_message_password_log_in');
+  const isValid = password.length >= 8;
 
-  if (trimmedPassword === '') return handleEmptyPassword(currentPasswordRef, currentErrorMessageRef, errorMessageLogInRef);
-  return handlePasswordLengthValidation(trimmedPassword, currentPasswordRef, currentErrorMessageRef);
+  if (!isValid) {
+    inputField.classList.add('not-valide-error');
+    if (errorMessage) errorMessage.style.display = 'block';
+    return false;
+  } else {
+    inputField.classList.remove('not-valide-error');
+    if (errorMessage) errorMessage.style.display = 'none';
+    return true;
+  }
 }
+
 
 /**
  *
