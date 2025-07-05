@@ -1,6 +1,7 @@
 let Contacts = [];
 let actualContactIndex = 0;
 
+
 window.addEventListener("resize", () => {
     handleWindowResize();
 });
@@ -47,6 +48,7 @@ let colorsArray = [
     "#00BFA5",
     "#76FF03",
 ];
+
 
 function getContacts(data) {
     fetch(
@@ -164,47 +166,51 @@ function getTabletViewCardHeader() {
     tabletViewCardHeaderId.innerHTML = tabletViewCardHeader;
 }
 
-/*Tablat version*/
+
+
 function renderTabletVievCard(index) {
     addNewContactSectionState(true);
     document.getElementById("contactslist_container").style.overflow = "hidden";
 
     if (index >= 0) {
-        let contact = Contacts[index];
-
-       // let initials = getInitials(contact.name);
-        let color = getColor(index);
+        const contact = Contacts[index];
+        const color = getColor(index);
 
         addNewContactSectionState(false);
 
-        let TabletViewContainer = document.getElementById(
-            "tablate_view_card_container"
-        );
-        TabletViewContainer.style.display = "flex";
-
-        TabletViewContainer.innerHTML = getTabletViewCardTemplate(index, color);
-
-        // Jetzt existiert das Element im DOM!
-        let tabletViewCardHeaderId = document.getElementById(
-            "Tablet_view_card_header"
-        );
-        tabletViewCardHeaderId.innerHTML = getTabletViewCardHeaderTemplate();
-
-        document.getElementById("contact_view_avatar_initials").innerText =
-            contact.name
-                .split(" ")
-                .map((word) => word[0].toUpperCase())
-                .join("");
-        document.getElementById("contact_view_name").innerText = contact.name;
-        document.getElementById("contact_view_mail").innerText = contact.mail;
-        document.getElementById("contact_view_phone").innerText =
-            contact.phone || "No phone number available";
+        renderTabletCardContainer(index, color);
+        fillTabletCardFields(contact);
     }
 
-    let contactsListElem = document.getElementById("contacts_list");
-    if (contactsListElem) contactsListElem.style.display = "none";
-
+    hideContactsList();
     console.log("renderTabletVievCard aufgerufen");
+}
+
+function renderTabletCardContainer(index, color) {
+    const TabletViewContainer = document.getElementById("tablate_view_card_container");
+    TabletViewContainer.style.display = "flex";
+    TabletViewContainer.innerHTML = getTabletViewCardTemplate(index, color);
+
+    // Header einfügen
+    const tabletViewCardHeaderId = document.getElementById("Tablet_view_card_header");
+    tabletViewCardHeaderId.innerHTML = getTabletViewCardHeaderTemplate();
+}
+
+function fillTabletCardFields(contact) {
+    document.getElementById("contact_view_avatar_initials").innerText =
+        contact.name
+            .split(" ")
+            .map((word) => word[0].toUpperCase())
+            .join("");
+    document.getElementById("contact_view_name").innerText = contact.name;
+    document.getElementById("contact_view_mail").innerText = contact.mail;
+    document.getElementById("contact_view_phone").innerText =
+        contact.phone || "No phone number available";
+}
+
+function hideContactsList() {
+    const contactsListElem = document.getElementById("contacts_list");
+    if (contactsListElem) contactsListElem.style.display = "none";
 }
 
 function clearTabletViewCard() {
@@ -243,44 +249,45 @@ function renderViewCard(index) {
     }
 }
 
-/*function getContact(id){
-    console.log(Contacts[id]);
-}*/
+
+
+
 function createContact() {
+    const newContact = buildContactFromForm();
+    if (!newContact) return; // Falls Validierung fehlschlägt
+
+    addContactAndUpdateUI(newContact);
+}
+
+function buildContactFromForm() {
     let KindOfDlg_pc = "";
-    let viewMode = getViewMode();
-    if (viewMode === 1) {
-        KindOfDlg_pc = "_pc";
-    }
+    if (getViewMode() === 1) KindOfDlg_pc = "_pc";
+
     let name = document.getElementById("name_input" + KindOfDlg_pc).value.trim();
     let mail = document.getElementById("mail_input" + KindOfDlg_pc).value.trim();
-    let phone = document
-        .getElementById("phone_input" + KindOfDlg_pc)
-        .value.trim();
-    if (!name || !mail || !phone) {
-        // alert("Bitte fülle die Felder Name, Mail und Pohne aus.");
-        return;
-    }
-    if (emailIsValid(mail) == false) {
-        // alert("Pleas wiret a valid email address.");
-        return;
-    }
+    let phone = document.getElementById("phone_input" + KindOfDlg_pc).value.trim();
+
+    if (!name || !mail || !phone) return null;
+    if (!emailIsValid(mail)) return null;
+
     name = capitalizeWords(name);
-    let newContact = {
+
+    return {
         mail: mail,
         name: name,
         phone: phone || "No phone number available",
     };
+}
 
-    Contacts.push(newContact);
+function addContactAndUpdateUI(contact) {
+    Contacts.push(contact);
     updateDatabase(Contacts);
     renderContacts(Contacts);
-
     closeContactDialog();
     closeContactDialogMobile();
-
-    console.log("Neuer Kontakt hinzugefügt:", newContact);
+    console.log("Neuer Kontakt hinzugefügt:", contact);
 }
+
 
 /**
  * Finds the new index of a contact after sorting the contacts array by name.
@@ -409,6 +416,7 @@ function clearViewCard() {
  *  * It also configures the avatar display based on the contact's initials and color.
  * The dialog box is displayed in either desktop or mobile view mode based on the current window width*/
 function configEditDlgBox(id) {
+    
 
     let kindOFEdit = "editContact";
     if (id < 0) kindOFEdit = "createContact";
