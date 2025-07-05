@@ -208,24 +208,25 @@ function getTaskSheetOverlay(task, assignedUsersHTML, index) {
           <div class="assigned_container">
             <p>Assigned to:</p>
             <div class="assigned_user">
-              <div class="user_initials_overlay">${assignedUsersHTML}<p>User Name</p></div>
+              <div class="user_badge">
+
+              <div class="user_initials_overlay"><p>${assignedUsersHTML}</p></div>
             </div>
           </div>
         </div>
 
-        <div id="subtask_container_${index}" class="subtask_container"></div>
 
+        <div id="subtask_container_${index}" class="subtask_container"></div>
         <div class="popup-subtasks">
           <span class="subtasks-label">Subtasks:</span>
           <div class="subtasks-list" id="subtasks-list-${index}">
-            ${
-              (task.subTasks || []).map((subtask, subIndex) => `
+            ${(task.subTasks || []).map((subtask, subIndex) => `
                 <div class="subtasks-elements-container" onclick="toggleSubtaskCheckbox(this, '${task.id}', ${subIndex})">
                   <img class="subtask-checkbox-img" src="assets/icons/${subtask.done ? 'checkbox-checked' : 'checkbox-empty'}.svg" alt="Checkbox">
                   <span>${subtask.task}</span>
                 </div>
               `).join("")
-            }
+    }
           </div>
         </div>
 
@@ -257,40 +258,51 @@ function getTaskSheetOverlay(task, assignedUsersHTML, index) {
 // Edit Functions Overlay (in Progress)
 
 function editPopupTask(taskId) {
-    const task = tasks.find(t => t.id == taskId);
-    if (!task) return;
+  const task = tasks.find(t => t.id == taskId);
+  if (!task) return;
 
-    const overlay = document.getElementById('overlay');
+  const overlay = document.getElementById('overlay');
 
-    overlay.innerHTML = `
+  overlay.innerHTML = `
         <div class="task_container_overlay hover">
-            <div class="task">
+    <div class="task">
 
-                <div class="overlay_headline"> 
-                    <div class="task_category_overlay">${task.category}</div>
-                    <button onclick="closeOverlay()" class="close_button hover">X</button>
-                </div>
+      <div class="overlay_headline"> 
+        <div class="task_category_overlay">${task.category}</div>
+        <button onclick="closeOverlay()" class="close_button hover">X</button>
+      </div>
 
-                <div class="task_information_overlay">
-                    <input class="task_title_overlay" id="edit-title" value="${task.task || ''}">
-                    <textarea class="task_details_overlay" id="edit-details">${task.description || ''}</textarea>
+      <form class="edit_task_form">
 
-                    <label>Due date:</label>
-                    <input type="date" id="edit-dueDate" value="${formatDateForInput(task.dueDate)}">
-
-                    <label>Priority:</label>
-                    <select id="edit-priority">
-                        <option value="low" ${task.priority === 'low' ? 'selected' : ''}>Low</option>
-                        <option value="medium" ${task.priority === 'medium' ? 'selected' : ''}>Medium</option>
-                        <option value="urgent" ${task.priority === 'urgent' ? 'selected' : ''}>Urgent</option>
-                    </select>
-                </div>
-
-                <div class="popup-actions">
-                    <button class="save-btn" onclick="saveTaskEdits('${task.id}')">Save</button>
-                </div>
-
-            </div>
+        <div class="edit_form_group">
+          <label for="edit-title">Title</label>
+          <input type="text" id="edit-title" value="${task.title || ''}">
         </div>
-    `;
+
+        <div class="edit_form_group">
+          <label for="edit-details">Description</label>
+          <textarea id="edit-details" rows="4">${task.details || ''}</textarea>
+        </div>
+
+        <div class="edit_form_group">
+          <label for="edit-dueDate">Due date</label>
+          <input type="date" id="edit-dueDate" value="${formatDateForInput(task.dueDate)}">
+        </div>
+
+        <div class="edit_form_group">
+          <label for="edit-priority">Priority</label>
+          <select id="edit-priority">
+            <option value="low" ${task.priority === 'low' ? 'selected' : ''}>Low</option>
+            <option value="medium" ${task.priority === 'medium' ? 'selected' : ''}>Medium</option>
+            <option value="urgent" ${task.priority === 'urgent' ? 'selected' : ''}>Urgent</option>
+          </select>
+        </div>
+
+        <button type="button" class="save-btn" onclick="saveTaskEdits('${task.id}')">Save</button>
+
+      </form>
+
+    </div>
+  </div>
+ `;
 }

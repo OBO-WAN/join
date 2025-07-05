@@ -343,7 +343,7 @@ h3 {
 
   .kanban_container {
     overflow-x: auto;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     padding-bottom: 20px;
   }
 
