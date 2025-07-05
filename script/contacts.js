@@ -50,6 +50,11 @@ let colorsArray = [
 ];
 
 
+/**
+ * Fetches contacts from the remote database and renders them.
+ * @param {any} data - Unused parameter.
+ * @returns {any} The input data.
+ */
 function getContacts(data) {
     fetch(
         "https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/contacts.json"
@@ -66,6 +71,10 @@ function getContacts(data) {
     return data;
 }
 
+/**
+ * Updates the remote database with the provided contacts data.
+ * @param {Array} data - The contacts array to store.
+ */
 function updateDatabase(data) {
     fetch(
         "https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/contacts.json",
@@ -86,6 +95,11 @@ function updateDatabase(data) {
         });
 }
 
+/**
+ * Generates HTML for all contact cards, grouped by first letter.
+ * @param {Array} contacts - The contacts array.
+ * @returns {string} The HTML string for contact cards.
+ */
 function generateContactsCards(contacts) {
     let oldLetter = ""; // Speichert den vorherigen Buchstaben
     let contactCards = "";
@@ -158,6 +172,9 @@ function MobileVievCard(index) {
     }
 }
 
+/**
+ * Renders the header for the tablet view card.
+ */
 function getTabletViewCardHeader() {
     let tabletViewCardHeader = getTeblateViewCardHeaderTemplate();
     let tabletViewCardHeaderId = document.getElementById(
@@ -168,6 +185,10 @@ function getTabletViewCardHeader() {
 
 
 
+/**
+ * Renders the contact view card for tablet view.
+ * @param {number} index - The contact index.
+ */
 function renderTabletVievCard(index) {
     addNewContactSectionState(true);
     document.getElementById("contactslist_container").style.overflow = "hidden";
@@ -186,6 +207,11 @@ function renderTabletVievCard(index) {
     console.log("renderTabletVievCard aufgerufen");
 }
 
+/**
+ * Renders the container for the tablet view card.
+ * @param {number} index - The contact index.
+ * @param {string} color - The avatar color.
+ */
 function renderTabletCardContainer(index, color) {
     const TabletViewContainer = document.getElementById("tablate_view_card_container");
     TabletViewContainer.style.display = "flex";
@@ -196,6 +222,10 @@ function renderTabletCardContainer(index, color) {
     tabletViewCardHeaderId.innerHTML = getTabletViewCardHeaderTemplate();
 }
 
+/**
+ * Fills the tablet card fields with contact data.
+ * @param {Object} contact - The contact object.
+ */
 function fillTabletCardFields(contact) {
     document.getElementById("contact_view_avatar_initials").innerText =
         contact.name
@@ -208,11 +238,17 @@ function fillTabletCardFields(contact) {
         contact.phone || "No phone number available";
 }
 
+/**
+ * Hides the contacts list in the UI.
+ */
 function hideContactsList() {
     const contactsListElem = document.getElementById("contacts_list");
     if (contactsListElem) contactsListElem.style.display = "none";
 }
 
+/**
+ * Clears the tablet view card container.
+ */
 function clearTabletViewCard() {
     let tabletViewCardContainer = document.getElementById(
         "tablate_view_card_container"
@@ -223,7 +259,10 @@ function clearTabletViewCard() {
     }
 }
 
-/* Desktop Version*/
+/**
+ * Renders the contact view card for desktop view.
+ * @param {number} index - The contact index.
+ */
 function renderViewCard(index) {
     setActualContactIndex(index);
 
@@ -249,9 +288,9 @@ function renderViewCard(index) {
     }
 }
 
-
-
-
+/**
+ * Creates a new contact from the form and updates the UI.
+ */
 function createContact() {
     const newContact = buildContactFromForm();
     if (!newContact) return; // Falls Validierung fehlschlägt
@@ -259,6 +298,10 @@ function createContact() {
     addContactAndUpdateUI(newContact);
 }
 
+/**
+ * Builds a contact object from the form inputs.
+ * @returns {Object|null} The contact object or null if validation fails.
+ */
 function buildContactFromForm() {
     let KindOfDlg_pc = "";
     if (getViewMode() === 1) KindOfDlg_pc = "_pc";
@@ -279,6 +322,10 @@ function buildContactFromForm() {
     };
 }
 
+/**
+ * Adds a contact to the list, updates the database, and refreshes the UI.
+ * @param {Object} contact - The contact object.
+ */
 function addContactAndUpdateUI(contact) {
     Contacts.push(contact);
     updateDatabase(Contacts);
@@ -307,6 +354,10 @@ function findContactNewIndex(contact) {
     return -1;
 }
 
+/**
+ * Edits an existing contact with new data from the form.
+ * @param {number} id - The contact index.
+ */
 function editContact(id) {
     let KindOfDlg_pc = "";
     let viewMode = getViewMode();
@@ -332,6 +383,15 @@ function editContact(id) {
    saveEditedContact(id, KindOfDlg_pc, name, mail, phone, viewMode)
 }
 
+/**
+ * Saves the edited contact and updates the UI based on view mode.
+ * @param {number} id - The contact index.
+ * @param {string} KindOfDlg_pc - Dialog suffix.
+ * @param {string} name - The contact name.
+ * @param {string} mail - The contact email.
+ * @param {string} phone - The contact phone.
+ * @param {number} viewMode - The current view mode.
+ */
 function saveEditedContact(id, KindOfDlg_pc, name, mail, phone, viewMode){
      name = document.getElementById("name_input" + KindOfDlg_pc).value.trim();
     name = capitalizeWords(name);
@@ -366,10 +426,19 @@ function saveEditedContact(id, KindOfDlg_pc, name, mail, phone, viewMode){
     }
 }
 
+/**
+ * Validates an email address.
+ * @param {string} email - The email to validate.
+ * @returns {boolean} True if valid, false otherwise.
+ */
 function emailIsValid(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+/**
+ * Deletes a contact by index after confirmation.
+ * @param {number} id - The contact index.
+ */
 function deleteContact(id) {
     if (id < 0 || id >= Contacts.length) {
         console.error("Ungültige ID:", id);
@@ -390,6 +459,9 @@ function deleteContact(id) {
     }
 }
 
+/**
+ * Clears the contact view card based on view mode.
+ */
 function clearViewCard() {
     let contactViewCard = document.getElementById("contactViewCard");
     let contact_view_card = document.getElementById("contact_view_card");
@@ -460,6 +532,11 @@ function configEditDlgBox(id) {
     document.getElementById("id_Edit_Btn_Text" + KindOfDlg_pc).innerText = btnText;
 }
 
+/**
+ * Configures the avatar for the desktop dialog.
+ * @param {Object} contact - The contact object.
+ * @param {string} avatarColor - The avatar color.
+ */
 function configAvatar_pc(contact, avatarColor) {
 
     let AddNewcontactAvatar = document.getElementById("add_new_contact_avatar");
@@ -475,6 +552,11 @@ function configAvatar_pc(contact, avatarColor) {
     }
 }
 
+/**
+ * Configures the avatar for the mobile dialog.
+ * @param {Object} contact - The contact object.
+ * @param {string} avatarColor - The avatar color.
+ */
 function configAvatar_mobile(contact, avatarColor) {
     let AddNewcontactAvatar_mobile = document.getElementById(
         "add_new_contact_avatar_mobile"
@@ -492,6 +574,10 @@ function configAvatar_mobile(contact, avatarColor) {
     }
 }
 
+/**
+ * Prepares the dialog for creating a new contact.
+ * @param {string} KindOfDlg_pc - Dialog suffix.
+ */
 function createContactDialog(KindOfDlg_pc) {
 
     let AddNewcontactAvatar = document.getElementById("add_new_contact_avatar");
@@ -518,7 +604,10 @@ function createContactDialog(KindOfDlg_pc) {
     }
 }
 
-
+/**
+ * Opens the contact dialog for editing or creating a contact.
+ * @param {number} id - The contact index or -1 for new contact.
+ */
 function openContactDialog(id) {
     //index > 0 entspricht Contacs editieren
     //index <0 entspricht neuen Kontakt erstellen
@@ -543,6 +632,9 @@ function openContactDialog(id) {
     configEditDlgBox(id);
 }
 
+/**
+ * Closes the contact dialog and clears input fields.
+ */
 function closeContactDialog() {
     let name = document.getElementById("name_input_pc");
     let mail = document.getElementById("mail_input_pc");
@@ -566,6 +658,10 @@ function closeContactDialog() {
 }
 
 /*contact dialog mobile section*/
+/**
+ * Opens the contact dialog for mobile view.
+ * @param {number} id - The contact index or -1 for new contact.
+ */
 function openContactDialogMobile(id) {
     let mobileDialogTemplate = getAddNewContactMobileTemplate();
     document.getElementById("add_new_contact_mobile_ov_container").innerHTML =
@@ -578,6 +674,9 @@ function openContactDialogMobile(id) {
     //document.getElementById("add_new_contact_mobile_ov").style.display = "flex";
 }
 
+/**
+ * Closes the contact dialog for mobile view.
+ */
 function closeContactDialogMobile() {
     const addNewContactMobileOv = document.getElementById(
         "add_new_contact_mobile_ov"
@@ -594,6 +693,11 @@ function closeContactDialogMobile() {
     }
 }
 
+/**
+ * Gets the initials from a name string.
+ * @param {string} name - The full name.
+ * @returns {Array} Array of initials.
+ */
 function getInitials(name) {
     let initials = name
         .trim()
@@ -603,12 +707,23 @@ function getInitials(name) {
     return initials;
 }
 
+/**
+ * Sorts the contacts array by name.
+ * @param {Array} contacts - The contacts array.
+ */
 function sortContacts(contacts) {
     //sort contacts by name
     contacts.sort((a, b) => a.name.localeCompare(b.name));
     Contacts = contacts;
 }
 
+/**
+ * Gets the first letter of a name and checks if it changed.
+ * @param {string} name - The name.
+ * @param {string} oldLetter - The previous letter.
+ * @param {boolean} change - Change flag.
+ * @returns {string} The first letter.
+ */
 function getFirstLetter(name, oldLetter, change) {
     //get first letter of name
 
@@ -650,7 +765,10 @@ function getViewMode() {
     return viewMode;
 }
 
-let bigWindowIsRendered = false;
+/**
+ * Renders the appropriate contact view based on the current version.
+ * @param {number} index - The contact index.
+ */
 function proofVersion(index) {
     setActualContactIndex(index);
     let version = getViewMode();
@@ -675,6 +793,9 @@ function proofVersion(index) {
     }
 }
 
+/**
+ * Handles window resize events and updates the UI accordingly.
+ */
 function handleWindowResize() {
     let idx = getActualContactIndex();
     getViewMode();
@@ -710,6 +831,11 @@ function handleWindowResize() {
     }
 }
 
+/**
+ * Gets a color from the colors array based on index.
+ * @param {number} index - The index.
+ * @returns {string} The color.
+ */
 function getColor(index) {
     let idx = index;
     if (idx < 0) {
@@ -719,6 +845,11 @@ function getColor(index) {
     return colorsArray[idx % colorsArray.length];
 }
 
+/**
+ * Gets a color from the colors array based on the first letter.
+ * @param {string} firstLetter - The first letter.
+ * @returns {string} The color.
+ */
 function getColorFromFirstLetter(firstLetter) {
     let text = "";
     text = String(firstLetter).toUpperCase();
@@ -728,21 +859,38 @@ function getColorFromFirstLetter(firstLetter) {
     return colorsArray[colorIndex];
 }
 
+/**
+ * Capitalizes the first letter of each word in a sentence.
+ * @param {string} Sentence - The sentence.
+ * @returns {string} The capitalized sentence.
+ */
 function capitalizeWords(Sentence) {
     return Sentence.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
         letter.toUpperCase()
     );
 }
 
+/**
+ * Sets the actual contact index.
+ * @param {number} index - The index.
+ * @returns {number} The set index.
+ */
 function setActualContactIndex(index) {
     actualContactIndex = index;
     return actualContactIndex;
 }
 
+/**
+ * Gets the actual contact index.
+ * @returns {number} The actual contact index.
+ */
 function getActualContactIndex() {
     return actualContactIndex;
 }
 
+/**
+ * Returns to the contacts list view and resets UI.
+ */
 function goBacktoContacts() {
     let tablet_additional_div = "";
     let addNewContact = "";
@@ -766,6 +914,10 @@ function goBacktoContacts() {
     clearViewCard();
 }
 
+/**
+ * Controls the display state of the add new contact section based on view mode.
+ * @param {number} viewMode - The view mode.
+ */
 function contorlAddNewContactSection(viewMode) {
         if (viewMode === 1) {
             addNewContactSectionState_pc(true);
@@ -780,11 +932,17 @@ function contorlAddNewContactSection(viewMode) {
         }
 }
 
+/**
+ * Shows the mobile menu for editing contacts.
+ */
 function editContactsMobileMenuOn() {
     document.getElementById("mobile_view_card_menu").style.display = "flex";
     document.addEventListener("mousedown", handleOutsideClickForMobileMenu);
 }
 
+/**
+ * Hides the mobile menu for editing contacts.
+ */
 function editContactsMobileMenuOff() {
     let menu = document.getElementById("mobile_view_card_menu");
     if (menu) {
@@ -793,6 +951,10 @@ function editContactsMobileMenuOff() {
     }
 }
 
+/**
+ * Sets the display state of the add new contact section for desktop.
+ * @param {boolean} state - True to show, false to hide.
+ */
 function addNewContactSectionState_pc(state) {
     let stateStr = "none";
     if (state == true) stateStr = "flex";
@@ -821,6 +983,10 @@ function addNewContactSectionState_pc(state) {
     }
 }
 
+/**
+ * Sets the display state of the add new contact section for mobile/tablet.
+ * @param {boolean} state - True to show, false to hide.
+ */
 function addNewContactSectionState(state) {
     let stateStr = "none";
     if (state == true) stateStr = "flex";
@@ -836,6 +1002,10 @@ function addNewContactSectionState(state) {
     }
 }
 
+/**
+ * Handles clicks outside the mobile menu to close it.
+ * @param {Event} event - The mouse event.
+ */
 function handleOutsideClickForMobileMenu(event) {
     let menu = document.getElementById("mobile_view_card_menu");
     if (menu && !menu.contains(event.target)) {
