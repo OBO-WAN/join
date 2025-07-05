@@ -36,7 +36,7 @@ function setUserInitials() {
   let lastName = sessionStorage.getItem('lastName');
   let prooofLokedIn = sessionStorage.getItem("loggedIn");
 
-  if (prooofLokedIn == "true") {
+  if (prooofLokedIn == "true" && firstName && lastName) {
     firstInitial.textContent = firstName[0].toUpperCase();
     lastInitial.textContent = lastName[0].toUpperCase();
     lastInitial.style.display = "flex";
