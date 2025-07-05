@@ -269,7 +269,9 @@
   display: none;
 }
 
-.error-message-email-not-valide-login {
+.error-message-email-not-valide-login,
+.error-message-password-log-in,
+.error-message-log-in {
   display: none;
 }
 
@@ -595,50 +597,47 @@ button {
 }
 
 @media screen and (max-width: 768px) {
-    .nav-links {
-        display: flex
-;
-        flex-direction: unset;
-        justify-content: space-between;
-        align-items: center;
-        height: 100%;
-        width: 100%;
-        padding: 2px 40px 2px 40px;
-        gap: 10px;
-    }
+  .nav-links {
+    display: flex;
+    flex-direction: unset;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 2px 40px 2px 40px;
+    gap: 10px;
+  }
 }
 @media screen and (max-width: 992px) {
-    .nav-links {
-        width: unset;
-    }
+  .nav-links {
+    width: unset;
+  }
 }
 .nav-links {
-    list-style: none;
-    padding: 0;
-    width: 232px;
-    height: 320px;
-    display: flex
-;
-    flex-direction: column;
-    gap: 15px;
+  list-style: none;
+  padding: 0;
+  width: 232px;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 * {
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-    margin: 0;
-    padding: 0;
-    font-family: 'inter';
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  font-family: "inter";
 }
-user agent stylesheet
-ul {
-    display: block;
-    list-style-type: disc;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    padding-inline-start: 40px;
-    unicode-bidi: isolate;
+user agent stylesheet ul {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  padding-inline-start: 40px;
+  unicode-bidi: isolate;
 }
- 
+
 /* New root */
 
 /* :root {
