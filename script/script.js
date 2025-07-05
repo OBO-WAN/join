@@ -1,3 +1,7 @@
+/**
+ * Toggles the visibility of the dropdown menu and go back button section
+ * for mobile view.
+ */
 function toggleMenu(){
     let mobileViewCard = document.getElementById("mobile_view_card_header");
     const menu = document.getElementById("dropdown_menu");
@@ -16,7 +20,11 @@ function toggleMenu(){
 }
 
 
-// Toggle active for Responsive Menu
+/**
+ * Sets the active class on the clicked navigation link and navigates to the target href.
+ * @param {string} targetHref - The URL to navigate to.
+ * @param {HTMLElement} anchor - The anchor element that was clicked.
+ */
 function toHrefFocus(targetHref, anchor) {
   const allLinks = document.querySelectorAll('.nav-links .link-button');
   allLinks.forEach(link => link.classList.remove('active'));
@@ -28,7 +36,10 @@ function toHrefFocus(targetHref, anchor) {
 }
 
 
-//Render Initials
+/**
+ * Renders the user's initials in the avatar icon if logged in,
+ * otherwise sets a default initial.
+ */
 function setUserInitials() {
   const firstInitial = document.getElementById('first_icon_initials');
   const lastInitial = document.getElementById('last_icon_initials');
@@ -36,7 +47,7 @@ function setUserInitials() {
   let lastName = sessionStorage.getItem('lastName');
   let prooofLokedIn = sessionStorage.getItem("loggedIn");
 
-  if (prooofLokedIn == "true" && firstName && lastName) {
+  if (prooofLokedIn == "true") {
     firstInitial.textContent = firstName[0].toUpperCase();
     lastInitial.textContent = lastName[0].toUpperCase();
     lastInitial.style.display = "flex";
@@ -50,10 +61,14 @@ function setUserInitials() {
 }
 
 
+/**
+ * Logs out the user by clearing session storage and redirecting to login page.
+ */
 function logOut() {
   sessionStorage.clear(); 
   window.location.href = 'login.html';
 }
 
 
+// Set user initials when the DOM content is loaded
 window.addEventListener('DOMContentLoaded', setUserInitials);
