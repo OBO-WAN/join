@@ -150,31 +150,32 @@ function getEmailInputData(emailInputField, isSignUp) {
   return { trimmedEmail, currentEmailRef };
 }
 
-/**
- *
- * @function validateEmail
- * @description Validates the email input field. It checks if the email is not empty,
- * has no leading/trailing whitespace, and matches a basic email pattern using helper functions.
- * It updates the visual feedback (error messages and input field styling) based on the validation result.
- * @param {HTMLInputElement} emailInputField - The input element for the email.
- * @param {boolean} boolean - A boolean indicating if the validation is for the sign-up form (`true`) or login form (`false`).
- * @returns {boolean} - Returns true if the email is valid, false otherwise.
- */
-function validateEmail(emailInputField, boolean) {
-  const { errorMessageEmailRef, errorMessageEmailNotValideSignUpRef, errorMessageEmailNotValideLoginRef } = getIdRefs();
-  const { trimmedEmail, currentEmailRef } = getEmailInputData(emailInputField, boolean);
-  let isValid = true;
+// /**
+//  *
+//  * @function validateEmail
+//  * @description Validates the email input field. It checks if the email is not empty,
+//  * has no leading/trailing whitespace, and matches a basic email pattern using helper functions.
+//  * It updates the visual feedback (error messages and input field styling) based on the validation result.
+//  * @param {HTMLInputElement} emailInputField - The input element for the email.
+//  * @param {boolean} boolean - A boolean indicating if the validation is for the sign-up form (`true`) or login form (`false`).
+//  * @returns {boolean} - Returns true if the email is valid, false otherwise.
+//  */
+function validateEmail(inputField, isSignUp) {
+  const value = inputField.value.trim();
+  const errorMessage = document.getElementById('error_message_email_not_valide_login');
+  const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
-  if (!ifValidateEmailTrimmed(emailInputField.value, trimmedEmail, errorMessageEmailNotValideSignUpRef, errorMessageEmailNotValideLoginRef, errorMessageEmailRef, currentEmailRef, boolean)) isValid = false;
-
-  if (trimmedEmail === '') return clearEmailValidationErrors(boolean), false;
-
-  if (!ifEmailPattern(trimmedEmail, errorMessageEmailNotValideSignUpRef, errorMessageEmailNotValideLoginRef, errorMessageEmailRef, currentEmailRef, boolean)) isValid = false;
-
-  if (isValid) clearEmailValidationErrors(boolean);
-
-  return isValid;
+  if (!isValid) {
+    inputField.classList.add('not-valide-error');
+    if (errorMessage) errorMessage.style.display = 'block';
+    return false;
+  } else {
+    inputField.classList.remove('not-valide-error');
+    if (errorMessage) errorMessage.style.display = 'none';
+    return true;
+  }
 }
+
 
 /**
  * 
@@ -254,27 +255,22 @@ function ifEmailPattern(trimmedEmail, errorMessageEmailNotValideSignUpRef, error
   return true;
 }
 
-/**
- *
- * @function validatePassword
- * @description Validates a password input field, checking for emptiness and minimum length.
- * It utilizes helper functions to retrieve password data and the appropriate DOM element references
- * based on whether the validation is for sign-up or login.
- * @param {HTMLInputElement} passwordInputField - The HTML input element for the password.
- * @param {boolean} boolean - A boolean value indicating the context of the validation:
- * - `true` if the validation is for the sign-up form.
- * - `false` if the validation is for the login form.
- * @returns {boolean} - Returns the result of either `handleEmptyPassword` (if the field is empty)
- * or `handlePasswordLengthValidation` (based on the password length validation).
- */
-function validatePassword(passwordInputField, boolean) {
-  const { errorMessageLogInRef } = getIdRefs();
-  const { trimmedPassword } = getPasswordInputData(passwordInputField);
-  const { currentPasswordRef, currentErrorMessageRef } = getPasswordRefs(boolean);
+function validatePassword(inputField, isSignUp) {
+  const password = inputField.value.trim();
+  const errorMessage = document.getElementById('error_message_password_log_in');
+  const isValid = password.length >= 8;
 
-  if (trimmedPassword === '') return handleEmptyPassword(currentPasswordRef, currentErrorMessageRef, errorMessageLogInRef);
-  return handlePasswordLengthValidation(trimmedPassword, currentPasswordRef, currentErrorMessageRef);
+  if (!isValid) {
+    inputField.classList.add('not-valide-error');
+    if (errorMessage) errorMessage.style.display = 'block';
+    return false;
+  } else {
+    inputField.classList.remove('not-valide-error');
+    if (errorMessage) errorMessage.style.display = 'none';
+    return true;
+  }
 }
+
 
 /**
  *
