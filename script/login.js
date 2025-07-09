@@ -44,19 +44,6 @@ function revealElement(element) {
     }
 }
 
-// function login() {
-//     const email = document.getElementById('email').value.trim();
-//     const password = document.getElementById('password').value;
-
-//     // Basic validation (replace with real API call)
-//     if (email === "user@example.com" && password === "password123") {
-//         alert("Login successful!");
-//         // Redirect to your app's main page
-//         window.location.href = "summary.html";
-//     } else {
-//         alert("Invalid email or password.");
-//     }
-// }
 function login() {
     console.log("Login function triggered");
     checkUserIsPresent(false);
@@ -104,43 +91,6 @@ function checkAndShowAnimation() {
     sessionStorage.getItem('linksSidebarBoolienKey');
   }
 
-//   /**
-//  * 
-//  * @function startLoginAnimationsWithDelay
-//  * @description **This function is called by the `checkAndShowAnimation` function.**
-//  * It initiates a sequence of delayed fade-in animations for the login container, navigation, and footer elements.
-//  * After the initial delay, the specified elements are faded in.
-//  * Subsequently, after a further delay, the logo overlay is hidden, and the final animation state is displayed.
-//  * @param {HTMLElement} loginContainerRef - The HTML element representing the login container.
-//  * @param {HTMLElement} navLogInRef - The HTML element representing the login navigation.
-//  * @param {HTMLElement} footerLogInRef - The HTML element representing the login/register footer.
-//  * @param {HTMLElement} animationsLogoOverlayRef - The HTML element representing the logo animation overlay.
-//  * @param {HTMLElement} animationFinishedRef - The HTML element representing the final state of the animation.
-//  */
-// function startLoginAnimationsWithDelay(loginContainerRef,navLogInRef,footerLogInRef,animationsLogoOverlayRef,animationFinishedRef){
-//     setTimeout(function () {
-//       addFadeInAnimation(loginContainerRef);
-//       addFadeInAnimation(navLogInRef);
-//       addFadeInAnimation(footerLogInRef);
-//       setTimeout(function () {
-//         animationsLogoOverlayRef.classList.add('d-none');
-//         animationFinishedRef.classList.add('d-flex');
-//       }, 2000);
-//     }, 500);
-//   }
-
-//   /**
-//  *
-//  * @function addFadeInAnimation
-//  * @description Adds a fade-in animation to the specified HTML element.
-//  * The animation is named 'fadeIn', lasts for 0.8 seconds, uses an ease-in-out timing function,
-//  * applies the final state of the animation (forwards), and has a delay of 0.6 seconds before starting.
-//  * @param {HTMLElement} element - The HTML element to which the fade-in animation will be applied.
-//  */
-// function addFadeInAnimation(element) {
-//     element.style.animation = 'fadeIn 0.8s ease-in-out forwards 0.6s';
-//   }
-  
   /**
    * 
    * @function removeAnimation
@@ -187,28 +137,6 @@ function setIdRefValueTrimLogIn() {
     };
   }
 
-//   /**
-//  *
-//  * @function showLoginError
-//  * @description Displays the generic login error message if neither the specific email nor password error messages are currently visible.
-//  * It also adds the 'not-valide-error' class to the email and password input fields to visually indicate an error,
-//  * preventing duplicate application of the error class. It utilizes the `handleGenericLoginErrorDisplay` function
-//  * to manage the visibility of the main error message.
-//  */
-// function showLoginError() {
-//     const { errorMessageLogInRef, passwordLogInRef, emailLogInRef, errorMessageEmailNotValideLoginRef, errorMessagePasswordLogInRef } = getIdRefs();
-//     const isEmailErrorVisible = errorMessageEmailNotValideLoginRef && errorMessageEmailNotValideLoginRef.classList.contains('d-flex');
-//     const isPasswordErrorVisible = errorMessagePasswordLogInRef && errorMessagePasswordLogInRef.classList.contains('d-flex');
-  
-//     handleGenericLoginErrorDisplay(errorMessageLogInRef, isEmailErrorVisible, isPasswordErrorVisible);
-  
-//     if (emailLogInRef && !emailLogInRef.classList.contains('not-valide-error')) {
-//       emailLogInRef.classList.add('not-valide-error');
-//     }
-//     if (passwordLogInRef && !passwordLogInRef.classList.contains('not-valide-error')) {
-//       passwordLogInRef.classList.add('not-valide-error');
-//     }
-//   }
 
 function showLoginError() {
   const { errorMessageLogInRef } = getIdRefs();
