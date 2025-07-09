@@ -7,46 +7,14 @@ window.addEventListener("resize", () => {
 });
 
 let colorsArray = [
-    "#FF6B6B",
-    "#FF8C42",
-    "#FFA500",
-    "#FFD700",
-    "#FFE600",
-    "#B4FF00",
-    "#4CAF50",
-    "#00C853",
-    "#00E5FF",
-    "#00B8D4",
-    "#1DE9B6",
-    "#00CFAE",
-    "#00BCD4",
-    "#40C4FF",
-    "#2196F3",
-    "#3D5AFE",
-    "#536DFE",
-    "#7C4DFF",
-    "#AB47BC",
-    "#E040FB",
-    "#FF4081",
-    "#F50057",
-    "#EC407A",
-    "#FF1744",
-    "#FF5252",
-    "#D500F9",
-    "#9C27B0",
-    "#BA68C8",
-    "#E91E63",
-    "#FFB300",
-    "#FFC400",
-    "#FF9100",
-    "#FF7043",
-    "#F06292",
-    "#FF6E40",
-    "#C51162",
-    "#8E24AA",
-    "#651FFF",
-    "#00BFA5",
-    "#76FF03",
+  "#FF6B6B", "#FF8C42", "#FFA500", "#FFD700", "#FFE600",
+  "#B4FF00", "#4CAF50", "#00C853", "#00E5FF", "#00B8D4",
+  "#1DE9B6", "#00CFAE", "#00BCD4", "#40C4FF", "#2196F3",
+  "#3D5AFE", "#536DFE", "#7C4DFF", "#AB47BC", "#E040FB",
+  "#FF4081", "#F50057", "#EC407A", "#FF1744", "#FF5252",
+  "#D500F9", "#9C27B0", "#BA68C8", "#E91E63", "#FFB300",
+  "#FFC400", "#FF9100", "#FF7043", "#F06292", "#FF6E40",
+  "#C51162", "#8E24AA", "#651FFF", "#00BFA5", "#76FF03"
 ];
 
 
@@ -88,10 +56,8 @@ function updateDatabase(data) {
     )
         .then((response) => response.json())
         .then((data) => {
-            console.log("Success:", data);
         })
         .catch((error) => {
-            console.error("Error:", error);
         });
 }
 
@@ -105,9 +71,8 @@ function generateContactsCards(contacts) {
     let contactCards = "";
     for (let index = 0; index < contacts.length; index++) {
         let contact = contacts[index];
-        //console.log("Kontakt:", contact);
         let initials = getInitials(contact.name);
-        //console.log("Initials:", initials);
+
         let firstLetter = contact.name.charAt(0).toUpperCase(); // Erster Buchstabe des Namens
         // Wenn der Buchstabe wechselt, füge eine neue Überschrift hinzu
         if (oldLetter !== firstLetter) {
@@ -118,7 +83,6 @@ function generateContactsCards(contacts) {
             oldLetter = firstLetter;
         }
         let color = getColor(index);
-        //console.log("Color:", color);
         contactCards += getContactCardTamplate(
             contact.name,
             contact.mail,
@@ -146,6 +110,7 @@ function renderContacts(contacts) {
 
     if (contactCardSection) {
         contactCardSection.innerHTML = contactCards;
+         activateContactCardClick();
     }
 }
 
@@ -204,7 +169,6 @@ function renderTabletVievCard(index) {
     }
 
     hideContactsList();
-    console.log("renderTabletVievCard aufgerufen");
 }
 
 /**
@@ -332,7 +296,6 @@ function addContactAndUpdateUI(contact) {
     renderContacts(Contacts);
     closeContactDialog();
     closeContactDialogMobile();
-    console.log("Neuer Kontakt hinzugefügt:", contact);
 }
 
 
@@ -441,13 +404,12 @@ function emailIsValid(email) {
  */
 function deleteContact(id) {
     if (id < 0 || id >= Contacts.length) {
-        console.error("Ungültige ID:", id);
         return;
     }
 
-    let text = "Delete Contact?\nPress a button!\nEither OK or Cancel.";
 
-    if (confirm(text) == true) {
+
+
         Contacts.splice(id, 1);
         updateDatabase(Contacts);
 
@@ -456,7 +418,7 @@ function deleteContact(id) {
             renderContacts(Contacts);
         }
         goBacktoContacts();
-    }
+ 
 }
 
 /**
@@ -665,13 +627,9 @@ function closeContactDialog() {
 function openContactDialogMobile(id) {
     let mobileDialogTemplate = getAddNewContactMobileTemplate();
     document.getElementById("add_new_contact_mobile_ov_container").innerHTML =
-        mobileDialogTemplate;
+    mobileDialogTemplate;
     configEditDlgBox(id);
-
-    console.log("openContactDialogMobile aufgerufen");
-
     editContactsMobileMenuOff();
-    //document.getElementById("add_new_contact_mobile_ov").style.display = "flex";
 }
 
 /**
@@ -826,7 +784,6 @@ function handleWindowResize() {
             MobileVievCard(idx);
             break;
         default:
-            //console.error("Unbekannter View Mode");
             break;
     }
 }
@@ -1012,3 +969,16 @@ function handleOutsideClickForMobileMenu(event) {
         editContactsMobileMenuOff();
     }
 }
+
+function activateContactCardClick() {
+    document.querySelectorAll('.contact_card').forEach(card => {
+        card.addEventListener('click', function() {
+            document.querySelectorAll('.contact_card').forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+}
+
+// Nach dem Rendern der Kontakte aufrufen:
+renderContacts(Contacts);
+activateContactCardClick();
