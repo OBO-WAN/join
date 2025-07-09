@@ -96,7 +96,10 @@ function generateContactsCards(contacts) {
 
 /* Kontaktliste */
 function renderContacts(contacts) {
-    document.getElementById("contactslist_container").style.overflowy = "scroll";
+    let contactList = document.getElementById("contacts_list");
+    if (contactList) {
+       contactList.style.overflowy = "scroll";
+    }
 
     sortContacts(contacts); // Kontakte sortieren
 
@@ -112,6 +115,7 @@ function renderContacts(contacts) {
         contactCardSection.innerHTML = contactCards;
          activateContactCardClick();
     }
+
 }
 
 /* Mobile Version */
@@ -156,7 +160,7 @@ function getTabletViewCardHeader() {
  */
 function renderTabletVievCard(index) {
     addNewContactSectionState(true);
-    document.getElementById("contactslist_container").style.overflow = "hidden";
+    //document.getElementById("contactslist_container").style.overflow = "hidden";
 
     if (index >= 0) {
         const contact = Contacts[index];
