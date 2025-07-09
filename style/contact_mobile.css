@@ -293,12 +293,9 @@ body{
     box-shadow: 0px 2px 5px -1px #919192;
     cursor: pointer;
 }
-/* end Add New Contact mobile try Section  add_new_contact_ov_container*/
+
 
 @media (max-width: 560px) {
-
-
-
 .go_back_btn_section {
     top: 16px;
     left: 16px;
@@ -436,9 +433,19 @@ body{
 }
 
 .mobile_view_card_edit_btn{
+  
+    width: 50px;
+    height: 50px;
+    background-color: #2A3647;
+    border-radius: 50%;
     display: flex;
-    justify-self: center;
     align-items: center;
+    justify-content: center;
+    box-shadow: 1px 1px 5px 1px rgba(150, 148, 148, 0.575);
+    margin-right: 20px;
+    position: absolute;
+    z-index: 1000;
+    margin-bottom: 80px;
 }
 }
 
