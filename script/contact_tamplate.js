@@ -116,7 +116,7 @@ function getTabletViewCardTemplate(id, color) {
                 </div>
                 <div class="contact_view_mail_section">
                     <p class="contact_view_mail_hl">Email</p>
-                    <a href="mailto:cooper@gmail.com" id="contact_view_mail" class="contact_view_mail"></a>
+                    <div id="contact_view_mail" class="contact_view_mail"></div>
                 </div>
                 <div class="contact_view_phone_section">
                     <p class="contact_view_phon_hl">Phone</p>
@@ -295,7 +295,7 @@ function getAddNewContactTemplate() {
                         <input id="name_input_pc" class="add_new_contact_input" type="text" placeholder ="  Name" required>
                         <input id="mail_input_pc" class="add_new_contact_input" type="email" placeholder="  Mail" required>                                   
                         <input id="phone_input_pc" class="add_new_contact_input" type="tel" placeholder="  Phone" required>
-                    <form>
+                    </form>
                     <div class="add_new_contact_btn_section">
                     <button class="cancel_btn">
                         <span class="cancel_btn_txt" onclick="closeContactDialog()">Cancel X</span>
