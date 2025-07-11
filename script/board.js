@@ -26,7 +26,6 @@ async function init() {
 }
 
 function renderCurrentTasks() {
-    console.log('Rendering', tasks.length, 'tasks');
 
     const statusContainers = proofStatus();
 
@@ -227,7 +226,6 @@ function closeOverlay() {
 
 function openTask(task, assignedUsersHTML, index) {
     document.body.classList.add('overlay-active'); // hides <header> as well
-    console.log('openTask wurde aufgerufen');
     const overlay = document.getElementById('overlay');
     overlay.innerHTML = "";
 
@@ -238,8 +236,7 @@ function openTask(task, assignedUsersHTML, index) {
 
 function startDragging(taskId) {
     currentDraggedElement = parseInt(taskId, 10);
-    console.log('startDragging - taskId:', taskId, 'Type:', typeof taskId);
-    console.log('currentDraggedElement:', currentDraggedElement, 'Type:', typeof currentDraggedElement);
+
 }
 
 function allowDrop(ev) {
@@ -249,14 +246,12 @@ function allowDrop(ev) {
 async function moveTo(newStatus) {
 
     if (!currentDraggedElement && currentDraggedElement !== 0) {
-        console.log('No currentDraggedElement set, exiting.');
         return;
     }
 
     const task = tasks.find(t => Number(t.id) === currentDraggedElement);
 
     if (!task) {
-        console.log('Task not found, exiting.');
         return;
     }
 
@@ -360,7 +355,6 @@ async function deleteTaskFromBoardPopup(taskId) {
 
         closeOverlay();
     } catch (error) {
-        console.error("Error deleting task:", error);
         alert("There was an error deleting the task.");
     }
 }
