@@ -135,9 +135,16 @@ html, body {
 
 .contact_card:hover,
 .contact_card.active{
-    background-color: #eff1f1b9;
+    background-color: #2a3647;
     color: rgb(0, 0, 0);
     cursor: pointer;
+}
+.contact_card:hover .contact_name {
+    color: white;
+}
+
+.contact_card {
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .contact_avatar_section{
