@@ -130,7 +130,7 @@ html, body {
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 20px;
-    z-index: 2000;
+    z-index: 0;
 }
 
 .contact_card:hover,
