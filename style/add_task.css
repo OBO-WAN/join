@@ -35,9 +35,9 @@
 
 .add-task-container-overlay h2 {
   text-align: start;
-  margin-bottom: 50px;
+  margin-bottom: 21px;
   color: black;
-  font-size: 50px;
+  font-size: 44px;
 }
 
 .form-grid {
@@ -150,9 +150,10 @@ input[type="radio"]:checked + .priority-button {
 
 .task-buttons {
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 30px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
 }
 
 .form-footer {
@@ -175,31 +176,37 @@ input[type="radio"]:checked + .priority-button {
 
 .clear-btn,
 .create-btn {
-  padding: 10px 20px;
-  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  min-width: 140px;
+  width: 160px;
+  height: 44px;
   border-radius: 6px;
   font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .clear-btn {
   background-color: transparent;
-  color: #091931;
-  border: 1px solid #091931;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
+  color: #2a3647;
+  border: 1px solid #2a3647;
 }
 
 .clear-btn:hover {
+  border-color: #29abe2;
   color: #29abe2;
-  border: 1px solid #29abe2;
 }
 
 .create-btn {
   background-color: #2a3647;
   color: white;
+  border: 1px solid transparent;
 }
 
 .create-btn:hover {
@@ -504,7 +511,7 @@ input[type="radio"]:checked + .priority-button {
     display: block;
     gap: 0;
   }
-   .form-footer {
+  .form-footer {
     margin-top: 0;
     align-items: center;
     gap: 20px;
@@ -514,10 +521,14 @@ input[type="radio"]:checked + .priority-button {
     flex-direction: row;
     align-items: center;
   }
-   .clear-btn, .create-btn {
+  .clear-btn,
+  .create-btn {
     width: 100%;
   }
-
+  .task-buttons {
+    display: flex;
+    gap: 12px;
+  }
 }
 
 @media (max-width: 768px) {
