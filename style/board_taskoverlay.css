@@ -206,6 +206,7 @@ table {
   align-items: flex-start;
   overflow-y: auto;
   box-sizing: border-box;
+  z-index: 1000;
 }
 
 .overlay_headline {
