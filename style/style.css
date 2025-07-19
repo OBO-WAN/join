@@ -116,12 +116,6 @@ header h1 {
   }
 }
 
-/* @media (max-width: 768px) {
-  body.overlay-active header {
-    display: none !important;
-  }
-} */
-
 nav.sidebar {
     background-color: #2a3647;
     position: fixed;
@@ -294,4 +288,58 @@ nav.sidebar {
 body {
     overflow-x: hidden;
 }    
+
+/* Confirmation Modal */
+
+#confirm-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.modal-content {
+  position: relative;
+  background: white;
+  padding: 24px 32px;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  z-index: 1;
+  text-align: center;
+}
+
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.confirm-btn,
+.cancel-btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.confirm-btn {
+  background-color: #FF3D00;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #ccc;
+  color: #333;
+}
+
 

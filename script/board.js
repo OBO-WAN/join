@@ -360,19 +360,19 @@ async function reindexTasksInFirebase() {
 }
 
 async function deleteTaskFromBoardPopup(taskId) {
-    const confirmDelete = confirm("Are you sure you want to delete this task?");
-    if (!confirmDelete) return;
+  const confirmDelete = await showConfirmation("Are you sure you want to delete this task?");
+  if (!confirmDelete) return;
 
-    try {
-        tasks = tasks.filter(t => t.id != taskId);
-
-        await reindexTasksInFirebase();
-
-        closeOverlay();
-    } catch (error) {
-        alert("There was an error deleting the task.");
-    }
+  try {
+    tasks = tasks.filter(t => t.id != taskId);
+    await reindexTasksInFirebase();
+    closeOverlay();
+  } catch (error) {
+    showToast("Error deleting task", "./assets/icons/error.png");
+    console.error("Delete error:", error);
+  }
 }
+
 
 function editPopupTask(taskId) {
   const task = tasks.find(t => t.id == taskId);
@@ -449,4 +449,29 @@ function generateSubtasksHTML(subTasks = [], taskId) {
       <span>${subtask.task}</span>
     </div>
   `).join("");
+}
+
+
+function showConfirmation(message = "Are you sure?") {
+  return new Promise(resolve => {
+    const modal = document.getElementById("confirm-modal");
+    const msg = document.getElementById("confirm-message");
+    const yesBtn = document.getElementById("confirm-yes");
+    const noBtn = document.getElementById("confirm-no");
+
+    msg.textContent = message;
+    modal.classList.remove("d-none");
+
+    const cleanUp = () => {
+      modal.classList.add("d-none");
+      yesBtn.removeEventListener("click", onYes);
+      noBtn.removeEventListener("click", onNo);
+    };
+
+    const onYes = () => { cleanUp(); resolve(true); };
+    const onNo = () => { cleanUp(); resolve(false); };
+
+    yesBtn.addEventListener("click", onYes);
+    noBtn.addEventListener("click", onNo);
+  });
 }
