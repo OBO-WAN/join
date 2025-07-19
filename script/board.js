@@ -225,18 +225,20 @@ function closeOverlay() {
 }
 
 function openTask(task, assignedUsersHTML, index) {
-    document.body.classList.add('overlay-active'); // hides <header> as well
-    const overlay = document.getElementById('overlay');
-    overlay.innerHTML = "";
+  document.body.classList.add('overlay-active');
 
-    overlay.innerHTML = getTaskSheetOverlay(task, assignedUsersHTML, index);
+  const formattedDate = task.dueDate || "1.1.2011";
+  const priority = (task.priority || 'low').toLowerCase();
+  const subtasksHTML = generateSubtasksHTML(task.subTasks, task.id);
 
-    overlay.classList.remove('d-none');
+  const overlay = document.getElementById('overlay');
+  overlay.innerHTML = getTaskSheetOverlay(task, assignedUsersHTML, index, formattedDate, priority, subtasksHTML);
+  overlay.classList.remove('d-none');
 }
+
 
 function startDragging(taskId) {
     currentDraggedElement = parseInt(taskId, 10);
-
 }
 
 function allowDrop(ev) {
@@ -292,8 +294,6 @@ async function toggleSubtaskCheckbox(element, taskId, subtaskIndex) {
     }
 }
 
-// Edit Overlay (in Progress)
-
 function formatDateForInput(dueDate) {
     if (!dueDate) return '';
 
@@ -325,6 +325,21 @@ async function saveTaskEdits(taskId) {
 
     closeOverlay();
     await loadTasksFromFirebase(); // Re-render
+}
+
+async function saveEditedTask(taskId) {
+  const updatedTask = collectTaskData();
+  updatedTask.id = taskId;
+
+  await fetch(`${BASE_URL}tasks/${taskId}.json`, {
+    method: 'PUT',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatedTask)
+  });
+
+  showToast("Task updated", "./assets/img/board.png");
+  closeOverlay();
+  await loadTasksFromFirebase();
 }
 
 async function reindexTasksInFirebase() {
@@ -359,3 +374,79 @@ async function deleteTaskFromBoardPopup(taskId) {
     }
 }
 
+function editPopupTask(taskId) {
+  const task = tasks.find(t => t.id == taskId);
+  if (!task) return;
+
+  showEditOverlay(task);
+  prefillEditForm(task);
+  loadContacts().then(() => preselectAssignees(task.assignedTo));
+  setupEditFormSubmit(taskId);
+}
+
+function showEditOverlay(task) {
+  const overlay = document.getElementById('overlay');
+  overlay.innerHTML = '';
+  overlay.classList.remove('d-none');
+  overlay.innerHTML = getAddTaskOverlay();
+
+  document.querySelector('.add-task-title h2').textContent = "Edit Task";
+  document.querySelector(".create-btn").innerHTML = `Save <img src="./assets/icons/check.png" alt="Save Icon">`;
+}
+
+function prefillEditForm(task) {
+  document.getElementById("title").value = task.task || task.title || "";
+  document.getElementById("description").value = task.description || "";
+  document.getElementById("due-date").value = formatDateForInput(task.dueDate);
+  document.getElementById("category").value = task.category;
+  document.getElementById("selected-category-placeholder").textContent = task.category;
+
+  if (task.priority) {
+    const priorityInput = document.querySelector(`input[name="priority"][value="${task.priority.toLowerCase()}"]`);
+    if (priorityInput) priorityInput.checked = true;
+  }
+
+  if (task.subTasks && Array.isArray(task.subTasks)) {
+    const subtaskList = document.getElementById("subtask-list");
+    subtaskList.innerHTML = "";
+    for (const sub of task.subTasks) {
+      const li = createSubtaskElement(sub.task || sub);
+      subtaskList.appendChild(li);
+    }
+  }
+}
+
+function preselectAssignees(assignedToArray) {
+  if (!Array.isArray(assignedToArray)) return;
+
+  assignedToArray.forEach(name => {
+    const checkbox = [...document.querySelectorAll('#assignee-dropdown input[type="checkbox"]')]
+      .find(cb => cb.value === name);
+    if (checkbox) checkbox.checked = true;
+  });
+
+  updateAssigneePlaceholder();
+}
+
+function setupEditFormSubmit(taskId) {
+  const form = document.getElementById("taskForm");
+  const saveBtn = document.querySelector(".create-btn");
+
+  saveBtn.onclick = async function (e) {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    await saveEditedTask(taskId);
+  };
+}
+
+function generateSubtasksHTML(subTasks = [], taskId) {
+  return subTasks.map((subtask, i) => `
+    <div class="subtasks-elements-container" onclick="toggleSubtaskCheckbox(this, '${taskId}', ${i})">
+      <img class="subtask-checkbox-img" src="assets/icons/${subtask.done ? 'checkbox-checked' : 'checkbox-empty'}.svg" alt="Checkbox">
+      <span>${subtask.task}</span>
+    </div>
+  `).join("");
+}
