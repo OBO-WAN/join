@@ -49,8 +49,6 @@ function getKanbanTemplate(task, assignedUsersHTML, index) {
 `;
 }
 
-
-
 function getAddTaskOverlay() {
   return `
             <div class="overlay-content">
@@ -105,7 +103,6 @@ function getAddTaskOverlay() {
                     </div>
                     <div class="selected-assignee-avatars" id="selected-assignee-avatars"></div>
                 </div>
-
                 </select>
 
                 <label>Category <span class="required-marker">*</span></label>
@@ -135,7 +132,7 @@ function getAddTaskOverlay() {
                 <span class="required-marker">*</span>This field is required
             </div>
             <div class="task-buttons">
-                <button type="reset" class="clear-btn">
+                <button type="reset" class="clear-btn" id="clear-btn">
                     Clear <span class="x-icon">X</span>
                 </button>
                 <button type="submit" class="create-btn">
@@ -185,7 +182,7 @@ function getTaskSheetOverlay(task, assignedUsersHTML, index, formattedDate, prio
             <p>Assigned to:</p>
             <div class="assigned_user">
               <div class="user_badge">
-                <div class="user_initials_overlay"><p>${assignedUsersHTML}</p></div>
+                <div class="user_initials_overlay">${assignedUsersHTML}</div>
               </div>
             </div>
           </div>
