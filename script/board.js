@@ -151,7 +151,6 @@ function attachTaskEventHandlers() {
         });
     });}
 
-
 function prepareTaskForTemplate(task) {
 
     const assignedTo = (task.assignedTo || []).map(name => {
@@ -172,7 +171,6 @@ function prepareTaskForTemplate(task) {
         priority: (task.priority || 'low').toLowerCase(),
         subTasks: task.subTasks || []
     };
-
 }
 
 function showCurrentBoard() {
@@ -184,7 +182,6 @@ async function loadUsersFromFirebase() {
     const data = await response.json();
     users = data || [];
 }
-
 
 window.addEventListener('DOMContentLoaded', function () {
     var searchInput = document.getElementsByClassName('search_input')[0];
@@ -207,13 +204,13 @@ window.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
 function addNewTask() {
     const overlay = document.getElementById('overlay');
     overlay.innerHTML = "";
     overlay.innerHTML = getAddTaskOverlay();
     overlay.classList.remove('d-none');
 
+    setMinDateToday();
     loadContacts()
     initAddTaskFormEvents();
 }
@@ -221,7 +218,6 @@ function addNewTask() {
 function closeOverlay() {
     const overlay = document.getElementById('overlay');
     overlay.classList.add('d-none');
-
 }
 
 function openTask(task, assignedUsersHTML, index) {
@@ -236,7 +232,6 @@ function openTask(task, assignedUsersHTML, index) {
   overlay.classList.remove('d-none');
 }
 
-
 function startDragging(taskId) {
     currentDraggedElement = parseInt(taskId, 10);
 }
@@ -246,48 +241,32 @@ function allowDrop(ev) {
 }
 
 async function moveTo(newStatus) {
-
     if (!currentDraggedElement && currentDraggedElement !== 0) {
         return;
     }
-
     const task = tasks.find(t => Number(t.id) === currentDraggedElement);
-
     if (!task) {
         return;
     }
-
     task.status = newStatus;
-
     await fetch(`${BASE_URL}tasks/${currentDraggedElement}.json`, {
         method: 'PUT',
         body: JSON.stringify(task)
     });
-
     await loadTasksFromFirebase();
     currentDraggedElement = null;
 }
 
-//Overlay
-
 async function toggleSubtaskCheckbox(element, taskId, subtaskIndex) {
     const task = tasks.find(t => t.id == taskId);
     if (!task || !task.subTasks || !task.subTasks[subtaskIndex]) return;
-
-    // Toggle "checked" Zustand
     task.subTasks[subtaskIndex].done = !task.subTasks[subtaskIndex].done;
-
-    // Update image
     const img = element.querySelector('img');
     img.src = `assets/icons/${task.subTasks[subtaskIndex].done ? 'checkbox-checked' : 'checkbox-empty'}.svg`;
-
-    // Save updated task to Firebase
     await fetch(`${BASE_URL}tasks/${taskId}.json`, {
         method: 'PUT',
         body: JSON.stringify(task)
     });
-
-    // Optional: update progress bar without reloading the entire board
     const progressContainer = document.getElementById(`subtask_container_${tasks.indexOf(task)}`);
     if (progressContainer) {
         proofSubtasks(task, tasks.indexOf(task));
@@ -373,13 +352,17 @@ async function deleteTaskFromBoardPopup(taskId) {
   }
 }
 
-
 function editPopupTask(taskId) {
   const task = tasks.find(t => t.id == taskId);
   if (!task) return;
 
   showEditOverlay(task);
+
+  const clearBtn = document.getElementById("clear-btn");
+  if (clearBtn) clearBtn.remove();
+
   prefillEditForm(task);
+  setMinDateToday();
   loadContacts().then(() => preselectAssignees(task.assignedTo));
   setupEditFormSubmit(taskId);
 }
@@ -450,7 +433,6 @@ function generateSubtasksHTML(subTasks = [], taskId) {
     </div>
   `).join("");
 }
-
 
 function showConfirmation(message = "Are you sure?") {
   return new Promise(resolve => {
