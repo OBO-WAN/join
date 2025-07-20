@@ -3,7 +3,7 @@
   min-height: 100vh;
   padding: 160px 20px 80px 20px; /* responsive padding */
   padding-left: 329px;
-  padding-top: 160px;
+  padding-top: 96px;
   background-color: #fff;
   border-radius: 8px;
   font-family: "Inter", sans-serif;
@@ -178,7 +178,7 @@ input[type="radio"]:checked + .priority-button {
 .create-btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   padding: 12px 24px;
   min-width: 140px;
   width: 160px;
