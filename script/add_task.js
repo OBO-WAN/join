@@ -114,6 +114,10 @@ async function saveTaskToFirebase(task, id) {
             if (typeof loadTasksFromFirebase === "function") {
                 await loadTasksFromFirebase();
             }
+
+            setTimeout(() => {
+                window.location.href = "board.html";
+            }, 1000); 
         }
     } catch (error) {
         console.warn("⚠️ Fehler beim Speichern der Aufgabe:", error);
@@ -287,26 +291,47 @@ function renderAssigneeDropdown() {
 function updateAssigneePlaceholder() {
     const selectedAvatars = document.getElementById("selected-assignee-avatars");
     const placeholder = document.getElementById("selected-assignees-placeholder");
+    const checkboxes = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]');
+    
     if (!selectedAvatars || !placeholder) return;
 
-    const checkboxes = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]');
-    let avatarHTML = "";
-
+    let selected = [];
     checkboxes.forEach(cb => {
+        const label = cb.closest('.checkbox-label');
         if (cb.checked) {
-            const initials = getInitials(cb.value);
-            const color = getColor(initials[0]);
-
-            avatarHTML += `
-                <div class="avatar" style="background-color: ${color};">
-                    ${initials}
-                </div>
-            `;
+            selected.push(cb.value);
+            label.classList.add('selected');
+        } else {
+            label.classList.remove('selected');
         }
     });
 
+    // Reset Anzeige
+    selectedAvatars.innerHTML = '';
     placeholder.textContent = 'Select contacts';
-    selectedAvatars.innerHTML = avatarHTML;
+
+    // Avatare anzeigen
+    const maxVisible = 4;
+    const visible = selected.slice(0, maxVisible);
+    const extraCount = selected.length - maxVisible;
+
+    visible.forEach(name => {
+        const initials = getInitials(name);
+        const color = getColor(initials[0]);
+        selectedAvatars.innerHTML += `
+            <div class="avatar" style="background-color: ${color};">
+                ${initials}
+            </div>
+        `;
+    });
+
+    if (extraCount > 0) {
+        selectedAvatars.innerHTML += `
+            <div class="avatar" style="background-color: #2a3647;">
+                +${extraCount}
+            </div>
+        `;
+    }
 }
 
 document.addEventListener('click', function(event) {
@@ -354,11 +379,11 @@ function handleSubtaskKey(event) {
 }
 
 function setMinDateToday() {
-  const dateInput = document.getElementById("due-date");
-  if (dateInput) {
-    const today = new Date().toISOString().split("T")[0]; // format: YYYY-MM-DD
-    dateInput.min = today;
-  }
+    const dateInput = document.getElementById("due-date");
+    if (dateInput) {
+      const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+      dateInput.min = today;
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
