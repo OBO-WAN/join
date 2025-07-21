@@ -60,6 +60,7 @@ function updateDatabase(data) {
  */
 function createContact() {
     let newContact = buildContactFromForm();
+    console.log("New contact:", newContact); // to be removed, just testing...
     if (!newContact) return; // Falls Validierung fehlschlägt
 
     addContactAndUpdateUI(newContact);
@@ -70,28 +71,47 @@ function createContact() {
  * Builds a contact object from the form inputs.
  * @returns {Object|null} The contact object or null if validation fails.
  */
+// function buildContactFromForm() {
+    
+//     let KindOfDlg_pc = "";
+//     if (getViewMode() === 1) KindOfDlg_pc = "_pc";
+
+//     let name = document.getElementById("name_input" + KindOfDlg_pc).value.trim();
+//     let mail = document.getElementById("mail_input" + KindOfDlg_pc).value.trim();
+//     let phone = document.getElementById("phone_input" + KindOfDlg_pc).value.trim();
+
+//     if (!name || !mail || !phone) return null;
+//     if (!emailIsValid(mail)) return null;
+
+//     name = capitalizeWords(name);
+
+//     let contact = {
+//         mail: mail,
+//         name: name,
+//         phone: phone || "No phone number available",
+//     };
+
+//     return contact;
+// }
 function buildContactFromForm() {
     let KindOfDlg_pc = "";
     if (getViewMode() === 1) KindOfDlg_pc = "_pc";
 
-    let name = document.getElementById("name_input" + KindOfDlg_pc).value.trim();
-    let mail = document.getElementById("mail_input" + KindOfDlg_pc).value.trim();
-    let phone = document.getElementById("phone_input" + KindOfDlg_pc).value.trim();
+    let name = document.getElementById("name_input" + KindOfDlg_pc)?.value.trim();
+    let mail = document.getElementById("mail_input" + KindOfDlg_pc)?.value.trim();
+    let phone = document.getElementById("phone_input" + KindOfDlg_pc)?.value.trim();
 
-    if (!name || !mail || !phone) return null;
-    if (!emailIsValid(mail)) return null;
-
+    if (!name || !mail || !phone || !emailIsValid(mail)) {
+        console.warn("Invalid form input", { name, mail, phone });
+        return null;
+    }
     name = capitalizeWords(name);
-
-    let contact = {
-        mail: mail,
-        name: name,
-        phone: phone || "No phone number available",
+    return {
+        name,
+        mail,
+        phone: phone || "No phone number available"
     };
-
-    return contact;
 }
-
 
 /**
  * Adds a contact to the list, updates the database, and refreshes the UI.
@@ -101,6 +121,10 @@ function addContactAndUpdateUI(contact) {
     Contacts.push(contact);
     updateDatabase(Contacts);
     renderContacts(Contacts);
+
+    const index = findContactNewIndex(contact);
+    renderViewCard(index); 
+
     closeContactDialog();
     closeContactDialogMobile();
 }
@@ -280,12 +304,13 @@ function configAvatar_mobile(contact, avatarColor) {
  * @returns {Array} Array of initials.
  */
 function getInitials(name) {
-    let initials = name
-        .trim()
-        .split(" ")
-        .filter((word) => word.length > 0)
-        .map((word) => word[0].toUpperCase());
-    return initials;
+    if (!name || typeof name !== "string") return ['?', '?'];
+
+    const parts = name.trim().split(/\s+/);
+    const initials = parts.map(p => p[0].toUpperCase());
+
+    if (initials.length === 1) initials.push(initials[0]);
+    return initials.length >= 2 ? initials.slice(0, 2) : ['?', '?'];
 }
 
 
