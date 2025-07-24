@@ -291,13 +291,12 @@ function getAddNewContactTemplate() {
                 
                 <div class="add_new_contact_entry">
                     <div class="overlay_of_btn_sec"><p class="overlay_of_btn"  onclick="closeContactDialog()">X</p></div>
-                    <form>
+                    <form onsubmit="handleContactFormSubmit(event)">
                         <input id="name_input_pc" class="add_new_contact_input" type="text" placeholder ="  Name" required>
                         <input id="mail_input_pc" class="add_new_contact_input" type="email" placeholder="  Mail" required>                                   
                         <input id="phone_input_pc" class="add_new_contact_input" type="tel" placeholder="  Phone" required>
                     </form>
 
-                    
                     <div class="add_new_contact_btn_section">
                     <button class="cancel_btn">
                         <span class="cancel_btn_txt" onclick="closeContactDialog()">Cancel X</span>
@@ -368,7 +367,7 @@ function getAddNewContactMobileTemplate() {
               id="phone_input"
               class="add_new_contact_input_mobile"
               type="tel"
-              placeholder="  Phone"
+              placeholder="Phone"
               required
               pattern="[0-9+\\s\\-\\/]{7,}"
               title="Enter a valid phone number (min. 7 characters, numbers, +, /, or -)"
