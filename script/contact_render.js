@@ -203,20 +203,12 @@ function renderViewCard(index) {
 
     if (index >= 0) {
         let contact = Contacts[index];
-
-        //let initials = getInitials(contact.name);
-
-        //let color = getColor(initials[0]);
         let color = getColor(index);
         let tempViewCard = getViewCardTemplate(index, color);
-        //tempViewCard.innerHTML = "";
         document.getElementById("contactViewCard").innerHTML = tempViewCard;
 
-        document.getElementById("contact_view_avatar_initials").innerText =
-            contact.name
-                .split(" ")
-                .map((word) => word[0].toUpperCase())
-                .join("");
+        let initials = getInitials(contact.name || '');
+        document.getElementById("contact_view_avatar_initials").innerText = initials.join('');
         document.getElementById("contact_view_name").innerText = contact.name;
         document.getElementById("contact_view_mail").innerText = contact.mail;
         document.getElementById("contact_view_phone").innerText =

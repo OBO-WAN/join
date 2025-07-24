@@ -26,7 +26,6 @@ async function init() {
 }
 
 function renderCurrentTasks() {
-    console.log('Rendering', tasks.length, 'tasks');
 
     const statusContainers = proofStatus();
 
@@ -152,7 +151,6 @@ function attachTaskEventHandlers() {
         });
     });}
 
-
 function prepareTaskForTemplate(task) {
 
     const assignedTo = (task.assignedTo || []).map(name => {
@@ -173,7 +171,6 @@ function prepareTaskForTemplate(task) {
         priority: (task.priority || 'low').toLowerCase(),
         subTasks: task.subTasks || []
     };
-
 }
 
 function showCurrentBoard() {
@@ -185,7 +182,6 @@ async function loadUsersFromFirebase() {
     const data = await response.json();
     users = data || [];
 }
-
 
 window.addEventListener('DOMContentLoaded', function () {
     var searchInput = document.getElementsByClassName('search_input')[0];
@@ -208,13 +204,13 @@ window.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
 function addNewTask() {
     const overlay = document.getElementById('overlay');
     overlay.innerHTML = "";
     overlay.innerHTML = getAddTaskOverlay();
     overlay.classList.remove('d-none');
 
+    setMinDateToday();
     loadContacts()
     initAddTaskFormEvents();
 }
@@ -222,24 +218,22 @@ function addNewTask() {
 function closeOverlay() {
     const overlay = document.getElementById('overlay');
     overlay.classList.add('d-none');
-
 }
 
 function openTask(task, assignedUsersHTML, index) {
-    document.body.classList.add('overlay-active'); // hides <header> as well
-    console.log('openTask wurde aufgerufen');
-    const overlay = document.getElementById('overlay');
-    overlay.innerHTML = "";
+  document.body.classList.add('overlay-active');
 
-    overlay.innerHTML = getTaskSheetOverlay(task, assignedUsersHTML, index);
+  const formattedDate = task.dueDate || "1.1.2011";
+  const priority = (task.priority || 'low').toLowerCase();
+  const subtasksHTML = generateSubtasksHTML(task.subTasks, task.id);
 
-    overlay.classList.remove('d-none');
+  const overlay = document.getElementById('overlay');
+  overlay.innerHTML = getTaskSheetOverlay(task, assignedUsersHTML, index, formattedDate, priority, subtasksHTML);
+  overlay.classList.remove('d-none');
 }
 
 function startDragging(taskId) {
     currentDraggedElement = parseInt(taskId, 10);
-    console.log('startDragging - taskId:', taskId, 'Type:', typeof taskId);
-    console.log('currentDraggedElement:', currentDraggedElement, 'Type:', typeof currentDraggedElement);
 }
 
 function allowDrop(ev) {
@@ -247,57 +241,37 @@ function allowDrop(ev) {
 }
 
 async function moveTo(newStatus) {
-
     if (!currentDraggedElement && currentDraggedElement !== 0) {
-        console.log('No currentDraggedElement set, exiting.');
         return;
     }
-
     const task = tasks.find(t => Number(t.id) === currentDraggedElement);
-
     if (!task) {
-        console.log('Task not found, exiting.');
         return;
     }
-
     task.status = newStatus;
-
     await fetch(`${BASE_URL}tasks/${currentDraggedElement}.json`, {
         method: 'PUT',
         body: JSON.stringify(task)
     });
-
     await loadTasksFromFirebase();
     currentDraggedElement = null;
 }
 
-//Overlay
-
 async function toggleSubtaskCheckbox(element, taskId, subtaskIndex) {
     const task = tasks.find(t => t.id == taskId);
     if (!task || !task.subTasks || !task.subTasks[subtaskIndex]) return;
-
-    // Toggle "checked" Zustand
     task.subTasks[subtaskIndex].done = !task.subTasks[subtaskIndex].done;
-
-    // Update image
     const img = element.querySelector('img');
     img.src = `assets/icons/${task.subTasks[subtaskIndex].done ? 'checkbox-checked' : 'checkbox-empty'}.svg`;
-
-    // Save updated task to Firebase
     await fetch(`${BASE_URL}tasks/${taskId}.json`, {
         method: 'PUT',
         body: JSON.stringify(task)
     });
-
-    // Optional: update progress bar without reloading the entire board
     const progressContainer = document.getElementById(`subtask_container_${tasks.indexOf(task)}`);
     if (progressContainer) {
         proofSubtasks(task, tasks.indexOf(task));
     }
 }
-
-// Edit Overlay (in Progress)
 
 function formatDateForInput(dueDate) {
     if (!dueDate) return '';
@@ -332,6 +306,21 @@ async function saveTaskEdits(taskId) {
     await loadTasksFromFirebase(); // Re-render
 }
 
+async function saveEditedTask(taskId) {
+  const updatedTask = collectTaskData();
+  updatedTask.id = taskId;
+
+  await fetch(`${BASE_URL}tasks/${taskId}.json`, {
+    method: 'PUT',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatedTask)
+  });
+
+  showToast("Task updated", "./assets/img/board.png");
+  closeOverlay();
+  await loadTasksFromFirebase();
+}
+
 async function reindexTasksInFirebase() {
     const newTasks = {};
 
@@ -350,18 +339,121 @@ async function reindexTasksInFirebase() {
 }
 
 async function deleteTaskFromBoardPopup(taskId) {
-    const confirmDelete = confirm("Are you sure you want to delete this task?");
-    if (!confirmDelete) return;
+  const confirmDelete = await showConfirmation("Are you sure you want to delete this task?");
+  if (!confirmDelete) return;
 
-    try {
-        tasks = tasks.filter(t => t.id != taskId);
-
-        await reindexTasksInFirebase();
-
-        closeOverlay();
-    } catch (error) {
-        console.error("Error deleting task:", error);
-        alert("There was an error deleting the task.");
-    }
+  try {
+    tasks = tasks.filter(t => t.id != taskId);
+    await reindexTasksInFirebase();
+    closeOverlay();
+  } catch (error) {
+    showToast("Error deleting task", "./assets/icons/error.png");
+    console.error("Delete error:", error);
+  }
 }
 
+function editPopupTask(taskId) {
+  const task = tasks.find(t => t.id == taskId);
+  if (!task) return;
+
+  showEditOverlay(task);
+
+  const clearBtn = document.getElementById("clear-btn");
+  if (clearBtn) clearBtn.remove();
+
+  prefillEditForm(task);
+  setMinDateToday();
+  loadContacts().then(() => preselectAssignees(task.assignedTo));
+  setupEditFormSubmit(taskId);
+}
+
+function showEditOverlay(task) {
+  const overlay = document.getElementById('overlay');
+  overlay.innerHTML = '';
+  overlay.classList.remove('d-none');
+  overlay.innerHTML = getAddTaskOverlay();
+
+  document.querySelector('.add-task-title h2').textContent = "Edit Task";
+  document.querySelector(".create-btn").innerHTML = `Save <img src="./assets/icons/check.png" alt="Save Icon">`;
+}
+
+function prefillEditForm(task) {
+  document.getElementById("title").value = task.task || task.title || "";
+  document.getElementById("description").value = task.description || "";
+  document.getElementById("due-date").value = formatDateForInput(task.dueDate);
+  document.getElementById("category").value = task.category;
+  document.getElementById("selected-category-placeholder").textContent = task.category;
+
+  if (task.priority) {
+    const priorityInput = document.querySelector(`input[name="priority"][value="${task.priority.toLowerCase()}"]`);
+    if (priorityInput) priorityInput.checked = true;
+  }
+
+  if (task.subTasks && Array.isArray(task.subTasks)) {
+    const subtaskList = document.getElementById("subtask-list");
+    subtaskList.innerHTML = "";
+    for (const sub of task.subTasks) {
+      const li = createSubtaskElement(sub.task || sub);
+      subtaskList.appendChild(li);
+    }
+  }
+}
+
+function preselectAssignees(assignedToArray) {
+  if (!Array.isArray(assignedToArray)) return;
+
+  assignedToArray.forEach(name => {
+    const checkbox = [...document.querySelectorAll('#assignee-dropdown input[type="checkbox"]')]
+      .find(cb => cb.value === name);
+    if (checkbox) checkbox.checked = true;
+  });
+
+  updateAssigneePlaceholder();
+}
+
+function setupEditFormSubmit(taskId) {
+  const form = document.getElementById("taskForm");
+  const saveBtn = document.querySelector(".create-btn");
+
+  saveBtn.onclick = async function (e) {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    await saveEditedTask(taskId);
+  };
+}
+
+function generateSubtasksHTML(subTasks = [], taskId) {
+  return subTasks.map((subtask, i) => `
+    <div class="subtasks-elements-container" onclick="toggleSubtaskCheckbox(this, '${taskId}', ${i})">
+      <img class="subtask-checkbox-img" src="assets/icons/${subtask.done ? 'checkbox-checked' : 'checkbox-empty'}.svg" alt="Checkbox">
+      <span>${subtask.task}</span>
+    </div>
+  `).join("");
+}
+
+function showConfirmation(message = "Are you sure?") {
+  return new Promise(resolve => {
+    const modal = document.getElementById("confirm-modal");
+    const msg = document.getElementById("confirm-message");
+    const yesBtn = document.getElementById("confirm-yes");
+    const noBtn = document.getElementById("confirm-no");
+
+    msg.textContent = message;
+    modal.classList.remove("d-none");
+
+    const cleanUp = () => {
+      modal.classList.add("d-none");
+      yesBtn.removeEventListener("click", onYes);
+      noBtn.removeEventListener("click", onNo);
+    };
+
+    const onYes = () => { cleanUp(); resolve(true); };
+    const onNo = () => { cleanUp(); resolve(false); };
+
+    yesBtn.addEventListener("click", onYes);
+    noBtn.addEventListener("click", onNo);
+  });
+}

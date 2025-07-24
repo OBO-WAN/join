@@ -6,6 +6,12 @@
     font-family: "inter";
 }
 
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 @font-face {
     font-family: "Inter";
     src: url("../assets/font/Inter-VariableFont_opsz\,wght.ttf")
@@ -88,9 +94,9 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /*padding: 0 40px 0 348px;*/
     padding: 0 0 0 348px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    z-index: 0;
 }
 
 @media (max-width: 768px) {
@@ -109,12 +115,6 @@ header h1 {
 @media (max-width: 768px) {
   header {
     padding: 0 20px;
-  }
-}
-
-@media (max-width: 768px) {
-  body.overlay-active header {
-    display: none !important;
   }
 }
 
@@ -290,4 +290,58 @@ nav.sidebar {
 body {
     overflow-x: hidden;
 }    
+
+/* Confirmation Modal */
+
+#confirm-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.modal-content {
+  position: relative;
+  background: white;
+  padding: 24px 32px;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  z-index: 1;
+  text-align: center;
+}
+
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.confirm-btn,
+.cancel-btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.confirm-btn {
+  background-color: #FF3D00;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #ccc;
+  color: #333;
+}
+
 
