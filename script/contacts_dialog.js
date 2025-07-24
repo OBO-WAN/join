@@ -18,10 +18,10 @@ function configEditDlgBox(id) {
             document.getElementById("Kind_Of_Dlg" + KindOfDlg_pc).innerHTML =
                 "Edit contact";
             btnText = "Save";
-            document.getElementById("id_Edit_Btn" + KindOfDlg_pc).onclick =
-                function () {
-                    editContact(id);
-                };
+            // document.getElementById("id_Edit_Btn" + KindOfDlg_pc).onclick =
+            //     function () {
+            //         editContact(id);
+            // };
 
             let oldContactData = Contacts[id];
 
@@ -54,29 +54,28 @@ function configEditDlgBox(id) {
  * @param {string} KindOfDlg_pc - Dialog suffix.
  */
 function createContactDialog(KindOfDlg_pc) {
+  let AddNewcontactAvatar = document.getElementById("add_new_contact_avatar");
+  let AddNewcontactAvatar_mobile = document.getElementById("add_new_contact_avatar_mobile");
 
-    let AddNewcontactAvatar = document.getElementById("add_new_contact_avatar");
-    let AddNewcontactAvatar_mobile = document.getElementById("add_new_contact_avatar_mobile");
-    document.getElementById("Kind_Of_Dlg" + KindOfDlg_pc).innerHTML = "Add contact";
+  // Dialog headline
+  const dlgHeadline = document.getElementById("Kind_Of_Dlg" + KindOfDlg_pc);
+  if (dlgHeadline) dlgHeadline.innerHTML = "Add contact";
 
-    document.getElementById("id_Edit_Btn" + KindOfDlg_pc).onclick =
-        function () {
-            createContact();
-        };
+  // Default avatar (desktop)
+  if (AddNewcontactAvatar) {
+    AddNewcontactAvatar.style.backgroundColor = "#eeecec";
+    AddNewcontactAvatar.innerHTML = `
+      <img class="ov_avatar" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
+    `;
+  }
 
-    if (AddNewcontactAvatar) {
-        AddNewcontactAvatar.style.backgroundColor = "#eeecec";
-        AddNewcontactAvatar.innerHTML = `
-                <img class="ov_avatar" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
-            `;
-    }
-
-    if (AddNewcontactAvatar_mobile) {
-        AddNewcontactAvatar_mobile.style.backgroundColor = "#eeecec";
-        AddNewcontactAvatar_mobile.innerHTML = `
-                <img class="ov_avatar" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
-            `;
-    }
+  // Default avatar (mobile)
+  if (AddNewcontactAvatar_mobile) {
+    AddNewcontactAvatar_mobile.style.backgroundColor = "#eeecec";
+    AddNewcontactAvatar_mobile.innerHTML = `
+      <img class="ov_avatar" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
+    `;
+  }
 }
 
 

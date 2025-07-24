@@ -81,9 +81,7 @@ table {
 .user_badge {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin: 10px 0;
+  padding: 10px
 }
 
 .user_name {
@@ -92,20 +90,19 @@ table {
   color: #2a3647;
 }
 
-/* .user_initials_overlay {
+.user_initials_overlay {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
   gap: 8px;
-  height: auto;
-  margin: 10px 0;
-} */
+  flex-wrap: wrap;
+  align-items: center;
+}
 
 .user_initials_group_overlay {
   display: flex;
   gap: 6px;
   align-items: center;
-}
+  flex-wrap: wrap;
+} 
 
 .user_initials_circle_overlay {
   width: 32px;
@@ -117,12 +114,13 @@ table {
   justify-content: center;
   border-radius: 50%;
   box-sizing: border-box;
-}
+} 
 
 .popup-subtasks {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  padding-top: 12px;
   padding-bottom: 12px;
 }
 
@@ -165,24 +163,12 @@ table {
   padding: 12px;
 }
 
-.action-box.delete:hover {
-  background-color: rgba(255, 0, 0, 0.1);
-  transform: scale(1.05);
-  box-shadow: 0 2px 6px rgba(255, 0, 0, 0.2);
-}
-
 .action-box.delete:hover .delete-btn {
-  color: red;
-}
+  color:red;
+} 
 
 .action-box.delete:hover .delete-icon img {
   filter: brightness(0) saturate(100%) invert(25%) sepia(94%) saturate(4373%) hue-rotate(355deg) brightness(90%) contrast(113%);
-}
-
-.action-box.edit:hover {
-  background-color: rgba(41, 171, 226, 0.1);
-  transform: scale(1.05);
-  box-shadow: 0 2px 6px rgba(41, 171, 226, 0.2);
 }
 
 .action-box.edit:hover .edit-btn {
@@ -206,6 +192,7 @@ table {
   align-items: flex-start;
   overflow-y: auto;
   box-sizing: border-box;
+  z-index: 1000;
 }
 
 .overlay_headline {
