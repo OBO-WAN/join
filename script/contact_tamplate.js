@@ -296,6 +296,8 @@ function getAddNewContactTemplate() {
                         <input id="mail_input_pc" class="add_new_contact_input" type="email" placeholder="  Mail" required>                                   
                         <input id="phone_input_pc" class="add_new_contact_input" type="tel" placeholder="  Phone" required>
                     </form>
+
+                    
                     <div class="add_new_contact_btn_section">
                     <button class="cancel_btn">
                         <span class="cancel_btn_txt" onclick="closeContactDialog()">Cancel X</span>
@@ -316,45 +318,73 @@ function getAddNewContactTemplate() {
 
 function getAddNewContactMobileTemplate() {
   return `
-<div class="add_new_contact_mobile_ov" id="add_new_contact_mobile_ov">
-                    <div class="mobile_contact_dialogbox">
-                        <div class="mobile_contact_dialog_header">
-                            <div class="close_mobile_contact_dialog_container">
-                                <div class="close_mobile_contact_dialog_btn_section" onclick="closeContactDialogMobile()">
-                                    <p class="close_mobile_contact_dialog_btn">x</p>
-                                </div>
-                            </div>
-                            <div class="mobile_contact_dialog_header_text_section">
-                                <div class="ov_hl_section_mobile">
-                                    <span class="ov_hl_mobile" id="Kind_Of_Dlg">Add Contact</span> 
-                                </div>
-                                <div class="ov_slogan_section_mobile">
-                                    <span class="ov_slogan_mobile">Tasks are better wiht a team!</span>
-                                </div>
-                                <div class="ov_sloagen_seperator"></div>
-                            </div>
-                        </div>
+    <div class="add_new_contact_mobile_ov" id="add_new_contact_mobile_ov">
+      <div class="mobile_contact_dialogbox">
+        <div class="mobile_contact_dialog_header">
+          <div class="close_mobile_contact_dialog_container">
+            <div class="close_mobile_contact_dialog_btn_section" onclick="closeContactDialogMobile()">
+              <p class="close_mobile_contact_dialog_btn">x</p>
+            </div>
+          </div>
+          <div class="mobile_contact_dialog_header_text_section">
+            <div class="ov_hl_section_mobile">
+              <span class="ov_hl_mobile" id="Kind_Of_Dlg">Add Contact</span>
+            </div>
+            <div class="ov_slogan_section_mobile">
+              <span class="ov_slogan_mobile">Tasks are better wiht a team!</span>
+            </div>
+            <div class="ov_sloagen_seperator"></div>
+          </div>
+        </div>
 
-                        <div class="mobile_contact_dialog_avatar_section">
-                            <div class="add_new_contact_avatar_mobile" id="add_new_contact_avatar_mobile">
-                                <img class="contact_mobile_dialog_avatar_icon" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
-                            </div>
-                        </div>
-                        <form>
-                        <div class="mobile_contact_dialog_input_section">
-                            <input id="name_input" class="add_new_contact_input_mobile" type="text" placeholder ="  Name" required>
-                            <input id="mail_input" class="add_new_contact_input_mobile" type="email" placeholder="  Mail" required>                                   
-                            <input id="phone_input" class="add_new_contact_input_mobile" type="tel" placeholder="  Phone" required>
+        <div class="mobile_contact_dialog_avatar_section">
+          <div class="add_new_contact_avatar_mobile" id="add_new_contact_avatar_mobile">
+            <img class="contact_mobile_dialog_avatar_icon" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
+          </div>
+        </div>
 
-                            <button class="create_btn_mobile" id="id_Edit_Btn">
-                                <span id="id_Edit_Btn_Text">PlaceHolder</span>
-                                <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
-                            </button>
-                        </div>
-                        </form>
-                    </div>
-                </div>`;
+        <form onsubmit="handleMobileContactSubmit(event)">
+          <div class="mobile_contact_dialog_input_section">
+            <input
+              id="name_input"
+              class="add_new_contact_input_mobile"
+              type="text"
+              placeholder="  Name"
+              required
+              minlength="2"
+              title="Please enter at least 2 characters"
+            >
+
+            <input
+              id="mail_input"
+              class="add_new_contact_input_mobile"
+              type="email"
+              placeholder="  Mail"
+              required
+              title="Please enter a valid email address"
+            >
+
+            <input
+              id="phone_input"
+              class="add_new_contact_input_mobile"
+              type="tel"
+              placeholder="  Phone"
+              required
+              pattern="[0-9+\\s\\-\\/]{7,}"
+              title="Enter a valid phone number (min. 7 characters, numbers, +, /, or -)"
+            >
+
+            <button class="create_btn_mobile" type="submit">
+              <span id="id_Edit_Btn_Text">Create</span>
+              <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  `;
 }
+
 
 
 function getGoBackTemplate(tablet_additional_div){

@@ -60,7 +60,6 @@ function updateDatabase(data) {
  */
 function createContact() {
     let newContact = buildContactFromForm();
-    console.log("New contact:", newContact); // to be removed, just testing...
     if (!newContact) return; // Falls Validierung fehlschlägt
 
     addContactAndUpdateUI(newContact);
@@ -454,3 +453,15 @@ function contorlAddNewContactSection(viewMode) {
             addNewContactSectionState_pc(false);
         }
 }
+
+
+function handleMobileContactSubmit(event) {
+  event.preventDefault(); 
+  if (event.target.checkValidity()) {
+    createContact(); 
+  } else {
+    event.target.reportValidity();
+  }
+}
+
+
