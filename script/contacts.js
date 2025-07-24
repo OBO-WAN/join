@@ -122,7 +122,7 @@ function addContactAndUpdateUI(contact) {
     renderContacts(Contacts);
 
     const index = findContactNewIndex(contact);
-    renderViewCard(index); 
+    //renderViewCard(index); *it shows the view card wihtout clicking if the scre becomes biger
 
     closeContactDialog();
     closeContactDialogMobile();
