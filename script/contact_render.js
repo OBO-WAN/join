@@ -1,3 +1,4 @@
+
 window.addEventListener("resize", () => {
     handleWindowResize();
 });
@@ -40,12 +41,19 @@ function handleWindowResize() {
 }
 
 
+/**
+ * Renders the list of contacts in the UI.
+ * - Enables scrolling for the contacts list container.
+ * - Sorts the contacts array.
+ * - Displays the contacts list element.
+ * - Generates and inserts contact cards into the contact card section.
+ * - Activates click events for contact cards.
+ * 
+ * @param {Array<Object>} contacts - The array of contact objects to render.
+ */
 function renderContacts(contacts) {
-      let contactList = document.getElementById("contacts_list");
-    if (contactList) {
-       contactList.style.overflowy = "scroll";
-    }
 
+    scrollEnable();
     sortContacts(contacts); // Kontakte sortieren
 
     let contactsListElem = document.getElementById("contacts_list");
@@ -62,7 +70,15 @@ function renderContacts(contacts) {
     }
 }
 
-/* Mobile Version */
+
+/**
+ * Renders the contact view card for mobile view.
+ * - Hides the contacts list and add new contact section.
+ * - Displays the mobile view card for the selected contact.
+ * - Calls renderViewCard to fill contact details.
+ * 
+ * @param {number} index - The index of the contact to display.
+ */
 function MobileVievCard(index) {
     if (index >= 0) {
         //let contact = Contacts[index];
@@ -85,6 +101,7 @@ function MobileVievCard(index) {
     }
 }
 
+
 /**
  * Renders the header for the tablet view card.
  */
@@ -97,15 +114,15 @@ function getTabletViewCardHeader() {
 }
 
 
-
 /**
  * Renders the contact view card for tablet view.
  * @param {number} index - The contact index.
  */
 function renderTabletVievCard(index) {
+
+    scrollDisable();    
     addNewContactSectionState(true);
     
-
     if (index >= 0) {
         const contact = Contacts[index];
         const color = getColor(index);
@@ -118,6 +135,7 @@ function renderTabletVievCard(index) {
 
     hideContactsList();
 }
+
 
 /**
  * Renders the container for the tablet view card.
@@ -134,6 +152,7 @@ function renderTabletCardContainer(index, color) {
     tabletViewCardHeaderId.innerHTML = getTabletViewCardHeaderTemplate();
 }
 
+
 /**
  * Fills the tablet card fields with contact data.
  * @param {Object} contact - The contact object.
@@ -149,6 +168,7 @@ function fillTabletCardFields(contact) {
     document.getElementById("contact_view_phone").innerText =
         contact.phone || "No phone number available";
 }
+
 
 /**
  * Hides the contacts list in the UI.
@@ -216,6 +236,7 @@ function renderViewCard(index) {
     }
 }
 
+
 /**
  * Generates HTML for all contact cards, grouped by first letter.
  * @param {Array} contacts - The contacts array.
@@ -254,6 +275,7 @@ function generateContactsCards(contacts) {
  * Returns to the contacts list view and resets UI.
  */
 function goBacktoContacts() {
+
     let tablet_additional_div = "";
     let addNewContact = "";
     let viewMode = getViewMode();
@@ -325,4 +347,26 @@ function activateContactCardClick() {
             this.classList.add('active');
         });
     });
+}
+
+
+/**
+ * Enables scrolling for the contacts list container by setting its overflow style to "scroll".
+ */
+function scrollEnable() {
+    let contactListContainer = document.getElementById("contactslist_container");   
+    if (contactListContainer) {
+        contactListContainer.style.overflow = "scroll";
+    }
+}
+
+
+/**
+ * Disables scrolling for the contacts list container by setting its overflow style to "hidden".
+ */
+function scrollDisable() {
+    let contactListContainer = document.getElementById("contactslist_container");
+    if (contactListContainer) {
+        contactListContainer.style.overflow = "hidden";
+    }
 }
