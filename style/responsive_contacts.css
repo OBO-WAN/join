@@ -231,6 +231,9 @@ h1{
     .add_new_contact_Mobile_section {
         bottom: 130px;
         
-    
+    }
+
+    .contactslist_container{
+        height: calc(100% - 90px);
     }
 }
