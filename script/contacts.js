@@ -466,24 +466,23 @@ function handleMobileContactSubmit(event) {
 
 // Modal Window before deleting contacts
 
-let contactToDelete = null;
+let contactToDeleteIndex = null;
 
-function promptDeleteContact(id) {
-  contactToDelete = id;
+function showDeleteConfirm(index) {
+  contactToDeleteIndex = index;
   document.getElementById("deleteConfirmOverlay").classList.remove("hidden");
 }
 
 function closeDeleteConfirm() {
+  contactToDeleteIndex = null;
   document.getElementById("deleteConfirmOverlay").classList.add("hidden");
-  contactToDelete = null;
 }
 
 function confirmDeleteContact() {
-  if (contactToDelete !== null) {
-    Contacts.splice(contactToDelete, 1); // delete from array
-    saveContacts(); // update local storage or Firebase if you use it
-    renderContacts(Contacts); // re-render the list
-    clearViewCard(); // optional: hide view card
+  if (contactToDeleteIndex !== null) {
+    deleteContact(contactToDeleteIndex); // existing logic
+    contactToDeleteIndex = null;
     closeDeleteConfirm();
   }
 }
+
