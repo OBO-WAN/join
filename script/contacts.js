@@ -206,10 +206,10 @@ function saveEditedContact(id, KindOfDlg_pc, name, mail, phone, viewMode){
         renderViewCard(id);
         closeContactDialog();
     } else if (viewMode === 2) {
-        /*      renderContacts(Contacts);
+                renderContacts(Contacts);
                 renderViewCard(id);
                 closeContactDialog();
-        */
+        
         renderViewCard(id);
         closeContactDialogMobile();
     } else if (viewMode === 3) {
@@ -480,10 +480,10 @@ function closeDeleteConfirm() {
 
 function confirmDeleteContact() {
   if (contactToDelete !== null) {
-    Contacts.splice(contactToDelete, 1); // delete from array
-    saveContacts(); // update local storage or Firebase if you use it
-    renderContacts(Contacts); // re-render the list
-    clearViewCard(); // optional: hide view card
+    Contacts.splice(contactToDelete, 1); 
+    // saveContacts(); 
+    renderContacts(Contacts); 
+    clearViewCard();
     closeDeleteConfirm();
   }
 }
