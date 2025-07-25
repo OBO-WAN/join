@@ -464,4 +464,25 @@ function handleMobileContactSubmit(event) {
   }
 }
 
+// Modal Window before deleting contacts
+
+let contactToDeleteIndex = null;
+
+function showDeleteConfirm(index) {
+  contactToDeleteIndex = index;
+  document.getElementById("deleteConfirmOverlay").classList.remove("hidden");
+}
+
+function closeDeleteConfirm() {
+  contactToDeleteIndex = null;
+  document.getElementById("deleteConfirmOverlay").classList.add("hidden");
+}
+
+function confirmDeleteContact() {
+  if (contactToDeleteIndex !== null) {
+    deleteContact(contactToDeleteIndex); // existing logic
+    contactToDeleteIndex = null;
+    closeDeleteConfirm();
+  }
+}
 
