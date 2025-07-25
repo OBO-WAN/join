@@ -4,7 +4,7 @@ window.addEventListener("resize", () => {
 });
 
 /**
- * Handles window resize events and updates the UI accordingly.
+ * tea window resize events and updates the UI accordingly.
  */
 function handleWindowResize() {
     let idx = getActualContactIndex();
