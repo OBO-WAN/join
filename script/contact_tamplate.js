@@ -57,7 +57,7 @@ function getViewCardTemplate(id, color) {
                         </div>
                         <div class="delete_section">
                             <img  class="contactview_icon" src="./assets/img/delete.png" alt="delete">
-                            <span class="delete_txt" onclick="deleteContact(${id})">Delete</span>
+                            <span class="delete_txt" onclick="promptDeleteContact(${id})">Delete</span>
                         </div> 
                     </div>
                 </div>
@@ -105,7 +105,7 @@ function getTabletViewCardTemplate(id, color) {
                     </div>
                     <div class="delete_section">
                         <img  class="contactview_icon" src="./assets/img/delete.png" alt="delete">
-                        <span class="delete_txt" onclick="deleteContact(${id})">Delete</span>
+                        <span class="delete_txt" onclick="promptDeleteContact(${id})">Delete</span>
                     </div> 
                 </div>
             </div>
@@ -138,7 +138,7 @@ function getTabletViewCardTemplate(id, color) {
                             </div>
                             <div class="delete_mobile_section">
                                 <img  class="contactview_icon" src="./assets/icons/contact/delete_mobile.png" alt="delete">
-                                <span class="delete_txt_mobile" onclick="deleteContact(${id})">Delete</span>
+                                <span class="delete_txt_mobile" onclick="promptDeleteContact(${id})">Delete</span>
                             </div> 
                         </div>
                         </div>
@@ -223,7 +223,7 @@ function getMobileViewCardTemplate(id, color) {
                             </div>
                             <div class="delete_section">
                                 <img  class="contactview_icon" src="./assets/img/delete.png" alt="delete">
-                                <span class="delete_txt" onclick="deleteContact(${id})">Delete</span>
+                                <span class="delete_txt" onclick="promptDeleteContact(${id})">Delete</span>
                             </div> 
                         </div>
                     </div>
@@ -257,7 +257,7 @@ function getMobileViewCardTemplate(id, color) {
                                     </div>
                                     <div class="delete_mobile_section">
                                         <img  class="contactview_icon" src="./assets/icons/contact/delete_mobile.png" alt="delete">
-                                        <span class="delete_txt_mobile" onclick="deleteContact(${id})">Delete</span>
+                                        <span class="delete_txt_mobile" onclick="promptDeleteContact(${id})">Delete</span>
                                     </div> 
                                 </div>
                                 </div>
