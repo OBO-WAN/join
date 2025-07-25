@@ -426,38 +426,50 @@ body {
 
 .delete-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 9999;
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.2s ease-out;
 }
 
 .delete-dialog {
-  background-color: white;
-  padding: 20px 30px;
-  border-radius: 10px;
+  background-color: #fff;
+  padding: 24px 32px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  max-width: 320px;
+  width: 90%;
+  animation: scaleIn 0.2s ease-out;
+}
+
+.delete-dialog p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 20px;
 }
 
 .delete-dialog-buttons {
-  margin-top: 20px;
   display: flex;
-  gap: 10px;
   justify-content: center;
+  gap: 12px;
 }
 
 .delete-dialog-buttons button {
-  padding: 8px 16px;
+  padding: 10px 20px;
   border: none;
   border-radius: 6px;
+  font-weight: 600;
   cursor: pointer;
-  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.delete-dialog-buttons button:hover {
+  opacity: 0.9;
 }
 
 .delete-dialog-buttons .danger {
@@ -465,6 +477,18 @@ body {
   color: white;
 }
 
-.hidden {
-  display: none;
+.delete-dialog-buttons .cancel {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+/* Simple fade and scale animations */
+@keyframes fadeIn {
+  from { opacity: 0; } 
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
