@@ -11,15 +11,57 @@ async function submitTask() {
     saveTaskToFirebase(task, newId);
 }
 
+// function collectTaskData() {
+//     const title = document.getElementById("title").value.trim();
+//     const description = document.getElementById("description").value.trim();
+//     const dueDateRaw = document.getElementById("due-date").value;
+//     const categoryValue = document.getElementById("category").value;
+//     const priorityRaw = document.querySelector("input[name='priority']:checked")?.value;
+
+//     const [year, month, day] = dueDateRaw.split("-");
+//     const dueDate = `${day}-${month}-${year}`;
+
+//     const categoryMap = {
+//         "technical-task": "Technical Task",
+//         "user-story": "User Story"
+//     };
+//     const category = categoryMap[categoryValue] || categoryValue;
+
+//     const priority = priorityRaw ? priorityRaw.charAt(0).toUpperCase() + priorityRaw.slice(1).toLowerCase() : null;
+
+//     const checkboxElements = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]:checked');
+//     const assignees = Array.from(checkboxElements).map(cb => cb.value);
+
+//     const subtaskItems = document.querySelectorAll('#subtask-list li');
+//     const subTasks = Array.from(subtaskItems).map(item => ({
+//       task: item.textContent.trim()
+//     }));
+
+//     return {
+//         task: title,
+//         description,
+//         dueDate,
+//         category,
+//         priority,
+//         assignedTo: assignees,
+//         subTasks,
+//         status: "toDo"
+//     };
+// }
+
 function collectTaskData() {
     const title = document.getElementById("title").value.trim();
     const description = document.getElementById("description").value.trim();
     const dueDateRaw = document.getElementById("due-date").value;
-    const categoryValue = document.getElementById("category").value;
-    const priorityRaw = document.querySelector("input[name='priority']:checked")?.value;
+
+    console.log("📥 Raw due date from input field:", dueDateRaw);
 
     const [year, month, day] = dueDateRaw.split("-");
     const dueDate = `${day}-${month}-${year}`;
+    console.log("📅 Formatted due date for saving:", dueDate);
+
+    const categoryValue = document.getElementById("category").value;
+    const priorityRaw = document.querySelector("input[name='priority']:checked")?.value;
 
     const categoryMap = {
         "technical-task": "Technical Task",
@@ -27,18 +69,20 @@ function collectTaskData() {
     };
     const category = categoryMap[categoryValue] || categoryValue;
 
-    const priority = priorityRaw ? priorityRaw.charAt(0).toUpperCase() + priorityRaw.slice(1).toLowerCase() : null;
+    const priority = priorityRaw 
+        ? priorityRaw.charAt(0).toUpperCase() + priorityRaw.slice(1).toLowerCase() 
+        : null;
 
     const checkboxElements = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]:checked');
     const assignees = Array.from(checkboxElements).map(cb => cb.value);
 
     const subtaskItems = document.querySelectorAll('#subtask-list li');
     const subTasks = Array.from(subtaskItems).map(item => ({
-      task: item.textContent.trim()
+        task: item.textContent.trim()
     }));
 
-    return {
-        task: title,
+    const taskObject = {
+        title: title,
         description,
         dueDate,
         category,
@@ -47,7 +91,13 @@ function collectTaskData() {
         subTasks,
         status: "toDo"
     };
+
+    console.log("📝 Final task object being returned:", taskObject);
+
+    return taskObject;
 }
+
+
 
 async function fetchAllTasks() {
     try {

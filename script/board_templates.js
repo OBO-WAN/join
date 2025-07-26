@@ -33,7 +33,7 @@ function getKanbanTemplate(task, assignedUsersHTML, index) {
 
                         <div class="task_information">
                             <p class="task_title" id="task_title">${task.title}</p>
-                            <p class="task_details" id="task_details">${task.details}</p>
+                            <p class="task_details" id="task_details">${task.description}</p>
                         </div>
 
                         <div id="subtask_container_${index}" class="subtask_container"></div>
@@ -162,7 +162,7 @@ function getTaskSheetOverlay(task, assignedUsersHTML, index, formattedDate, prio
 
         <div class="task_information_overlay">
           <p class="task_title_overlay" id="task_title">${task.title}</p>
-          <p class="task_details_overlay" id="task_details">${task.details}</p>
+          <p class="task_details_overlay" id="task_details">${task.description}</p>
 
           <table>
             <tr>
