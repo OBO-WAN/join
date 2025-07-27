@@ -162,6 +162,7 @@ function attachTaskEventHandlers() {
 
 function prepareTaskForTemplate(task) {
   const assignedTo = (task.assignedTo || []).map((name) => {
+
     const user = Object.values(users).find((u) => u.name === name);
     const initials = name
       .split(" ")
@@ -240,7 +241,6 @@ function closeOverlay() {
 
 function openTask(task, assignedUsersHTML, index) {
   const formattedDate = formatDateForOverlay(task.dueDate) || "—";
-
   document.body.classList.add("overlay-active");
 
   const priority = (task.priority || "low").toLowerCase();
@@ -258,19 +258,6 @@ function openTask(task, assignedUsersHTML, index) {
   overlay.classList.remove("d-none");
 }
 
-
-// function formatDateForOverlay(dueDate) {
-//   if (!dueDate) return "";
-
-//   const [day, month, year] = dueDate.split("-");
-//   const dateObj = new Date(`${year}-${month}-${day}`);
-
-//   return new Intl.DateTimeFormat(undefined, {
-//     year: "numeric",
-//     month: "long",
-//     day: "numeric",
-//   }).format(dateObj);
-// }
 function formatDateForOverlay(dueDate) {
   if (!dueDate || !dueDate.includes("-")) return "";
 
@@ -377,20 +364,6 @@ async function saveTaskEdits(taskId) {
   await loadTasksFromFirebase(); // Re-render
 }
 
-// async function saveEditedTask(taskId) {
-//   const updatedTask = collectTaskData();
-//   updatedTask.id = taskId;
-
-//   await fetch(`${BASE_URL}tasks/${taskId}.json`, {
-//     method: "PUT",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(updatedTask),
-//   });
-
-//   showToast("Task updated", "./assets/img/board.png");
-//   closeOverlay();
-//   await loadTasksFromFirebase();
-// }
 async function saveEditedTask(taskId) {
   const updatedTask = collectTaskData();
   updatedTask.id = taskId;
@@ -552,7 +525,6 @@ function prefillEditForm(task) {
   }
 }
 
-
 function preselectAssignees(assignedToArray) {
   if (!Array.isArray(assignedToArray)) return;
 
@@ -580,19 +552,19 @@ function setupEditFormSubmit(taskId) {
   };
 }
 
-function generateSubtasksHTML(subTasks = [], taskId) {
-  return subTasks
-    .map(
-      (subtask, i) => `
-    <div class="subtasks-elements-container" onclick="toggleSubtaskCheckbox(this, '${taskId}', ${i})">
-      <img class="subtask-checkbox-img" src="assets/icons/${
-        subtask.done ? "checkbox-checked" : "checkbox-empty"
-      }.svg" alt="Checkbox">
-      <span>${subtask.task}</span>
-    </div>
-  `
-    )
-    .join("");
+// Diese Funktion muss noch bereinigt werden
+function generateSubtasksHTML(subtasks = [], taskId) {
+  return `
+    <ul>
+      ${subtasks
+        .map((subtask) => {
+          const text = subtask.task || subtask || "";
+          const cleanText = text.replace(/^•+\s*/, "").trim();
+          return `<li>${cleanText}</li>`;
+        })
+        .join("")}
+    </ul>
+  `;
 }
 
 function showConfirmation(message = "Are you sure?") {
