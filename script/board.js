@@ -21,8 +21,12 @@ async function loadTasksFromFirebase() {
 async function init() {
   await loadUsersFromFirebase();
   await loadTasksFromFirebase();
-
+  
+let index = 0; // Beispiel: erster User
+let userColor = users[index]?.color;
+console.log(userColor);
   showCurrentBoard();
+ 
 }
 
 function renderCurrentTasks() {
@@ -138,6 +142,9 @@ function attachTaskEventHandlers() {
 
     if (!task) return;
 
+      
+    let i = 0; // Beispiel: erster User
+    let userColor = users[i]?.color;
     const taskData = prepareTaskForTemplate(task);
     const assignedUsersHTML = taskData.assignedTo
       .map(

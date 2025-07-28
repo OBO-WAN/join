@@ -481,7 +481,7 @@ function closeDeleteConfirm() {
 function confirmDeleteContact() {
   if (contactToDelete !== null) {
     Contacts.splice(contactToDelete, 1); 
-    // saveContacts(); 
+    updateDatabase(Contacts); // <--- Datenbank aktualisieren!
     renderContacts(Contacts); 
     clearViewCard();
     closeDeleteConfirm();
