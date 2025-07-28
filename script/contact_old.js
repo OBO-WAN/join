@@ -21,7 +21,7 @@ function updateContacts(){
 }
 
 //ContactList
-function rederCotacts(){
+function renderContacts(){
     
 }
 
