@@ -117,7 +117,7 @@ body {
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 20px;
-  z-index: 0;
+  z-index: 1200;
 }
 
 .contact_card:hover,
