@@ -40,6 +40,16 @@ function handleWindowResize() {
     }
 }
 
+function deletAllNullElementsFromArray(contacts){
+    // Remove null or undefined elements from the contacts array
+    for (let i = contacts.length - 1; i >= 0; i--) {
+        if (!contacts[i]) {
+            contacts.splice(i, 1);
+        }
+    }
+}
+
+
 
 /**
  * Renders the list of contacts in the UI.
@@ -54,6 +64,9 @@ function handleWindowResize() {
 function renderContacts(contacts) {
 
     scrollEnable();
+
+    deletAllNullElementsFromArray(contacts); // Entfernt null-Elemente aus dem Array
+
     sortContacts(contacts); // Kontakte sortieren
 
     let contactsListElem = document.getElementById("contacts_list");
