@@ -4,6 +4,9 @@ let users = [];
 
 let currentDraggedElement = null;
 
+/**
+ * Loads all tasks from Firebase and updates the global tasks array
+ */
 async function loadTasksFromFirebase() {
   const response = await fetch(`${BASE_URL}tasks.json`);
   const data = await response.json();
@@ -18,6 +21,9 @@ async function loadTasksFromFirebase() {
   renderCurrentTasks();
 }
 
+/**
+ * Initializes the application by loading users and tasks from Firebase
+ */
 async function init() {
   await loadUsersFromFirebase();
   await loadTasksFromFirebase();
@@ -28,6 +34,9 @@ console.log(userColor);
   showCurrentBoard();
 }
 
+/**
+ * Renders all tasks in their respective status columns on the Kanban board
+ */
 function renderCurrentTasks() {
   const statusContainers = proofStatus();
 
@@ -64,6 +73,10 @@ function renderCurrentTasks() {
   attachTaskEventHandlers();
 }
 
+/**
+ * Gets status container elements and clears their content
+ * @returns {Object} Object containing status container elements
+ */
 function proofStatus() {
   const statusContainers = {
     toDo: document.getElementById("toDoContainer"),
@@ -78,6 +91,10 @@ function proofStatus() {
   return statusContainers;
 }
 
+/**
+ * Initializes status count counters for each task status
+ * @returns {Object} Object with count properties for each status
+ */
 function proofStatusCounts() {
   const statusCounts = {
     toDo: 0,
@@ -89,6 +106,11 @@ function proofStatusCounts() {
   return statusCounts;
 }
 
+/**
+ * Displays subtask progress for a task if it has subtasks
+ * @param {Object} task - The task object containing subtasks
+ * @param {number} index - The index of the task for DOM targeting
+ */
 function proofSubtasks(task, index) {
   if (!task.subTasks || task.subTasks.length === 0) return;
 
@@ -113,6 +135,11 @@ function proofSubtasks(task, index) {
   }
 }
 
+/**
+ * Shows placeholder text for empty status columns
+ * @param {Object} statusCounts - Object containing task counts for each status
+ * @param {Object} statusContainers - Object containing DOM container elements
+ */
 function showStatusPlaceholder(statusCounts, statusContainers) {
   for (const [status, count] of Object.entries(statusCounts)) {
     if (count === 0) {
@@ -122,6 +149,9 @@ function showStatusPlaceholder(statusCounts, statusContainers) {
   }
 }
 
+/**
+ * Shows subtask progress container (legacy function)
+ */
 function showSubtasks() {
   container.innerHTML = `
                         <div class="progress_container">
@@ -131,6 +161,9 @@ function showSubtasks() {
 `;
 }
 
+/**
+ * Attaches click and drag event handlers to all task containers
+ */
 function attachTaskEventHandlers() {
   const containers = document.querySelectorAll(".task_container");
 
@@ -164,6 +197,11 @@ function attachTaskEventHandlers() {
   });
 }
 
+/**
+ * Prepares task data for template rendering with formatted properties
+ * @param {Object} task - Raw task object from Firebase
+ * @returns {Object} Formatted task object ready for template rendering
+ */
 function prepareTaskForTemplate(task) {
   const assignedTo = (task.assignedTo || []).map((name) => {
 
@@ -196,10 +234,16 @@ function prepareTaskForTemplate(task) {
   };
 }
 
+/**
+ * Displays the current board by rendering all tasks
+ */
 function showCurrentBoard() {
   renderCurrentTasks();
 }
 
+/**
+ * Loads user data from Firebase
+ */
 async function loadUsersFromFirebase() {
   const response = await fetch(`${BASE_URL}user.json`);
   const data = await response.json();
@@ -231,6 +275,9 @@ window.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+/**
+ * Opens the Add Task overlay with form and functionality
+ */
 function addNewTask() {
   const overlay = document.getElementById("overlay");
   overlay.innerHTML = "";
@@ -242,11 +289,20 @@ function addNewTask() {
   initAddTaskFormEvents();
 }
 
+/**
+ * Closes the currently open overlay
+ */
 function closeOverlay() {
   const overlay = document.getElementById("overlay");
   overlay.classList.add("d-none");
 }
 
+/**
+ * Opens the task detail overlay with full task information
+ * @param {Object} task - Task object to display
+ * @param {string} assignedUsersHTML - HTML string for assigned user avatars
+ * @param {number} index - Task index for DOM targeting
+ */
 function openTask(task, assignedUsersHTML, index) {
   const formattedDate = formatDateForOverlay(task.dueDate) || "—";
   document.body.classList.add("overlay-active");
@@ -266,6 +322,11 @@ function openTask(task, assignedUsersHTML, index) {
   overlay.classList.remove("d-none");
 }
 
+/**
+ * Formats a date string for display in the task overlay
+ * @param {string} dueDate - Date string in DD-MM-YYYY format
+ * @returns {string} Formatted date string for display
+ */
 function formatDateForOverlay(dueDate) {
   if (!dueDate || !dueDate.includes("-")) return "";
 
@@ -293,15 +354,26 @@ function formatDateForOverlay(dueDate) {
   }).format(dateObj);
 }
 
-
+/**
+ * Sets the currently dragged task element for drag and drop
+ * @param {string} taskId - ID of the task being dragged
+ */
 function startDragging(taskId) {
   currentDraggedElement = parseInt(taskId, 10);
 }
 
+/**
+ * Prevents default behavior to allow drop operations
+ * @param {Event} ev - The drag event
+ */
 function allowDrop(ev) {
   ev.preventDefault();
 }
 
+/**
+ * Moves a task to a new status column via drag and drop
+ * @param {string} newStatus - The new status to assign to the task
+ */
 async function moveTo(newStatus) {
   if (!currentDraggedElement && currentDraggedElement !== 0) {
     return;
@@ -319,6 +391,12 @@ async function moveTo(newStatus) {
   currentDraggedElement = null;
 }
 
+/**
+ * Toggles the completion status of a subtask and updates Firebase
+ * @param {Element} element - The checkbox element that was clicked
+ * @param {string} taskId - ID of the parent task
+ * @param {number} subtaskIndex - Index of the subtask within the task
+ */
 async function toggleSubtaskCheckbox(element, taskId, subtaskIndex) {
   const task = tasks.find((t) => t.id == taskId);
   if (!task || !task.subTasks || !task.subTasks[subtaskIndex]) return;
@@ -339,6 +417,11 @@ async function toggleSubtaskCheckbox(element, taskId, subtaskIndex) {
   }
 }
 
+/**
+ * Formats a date from DD-MM-YYYY to YYYY-MM-DD for HTML date inputs
+ * @param {string} dueDate - Date string in DD-MM-YYYY format
+ * @returns {string} Date string in YYYY-MM-DD format
+ */
 function formatDateForInput(dueDate) {
   if (!dueDate) return "";
 
@@ -346,6 +429,10 @@ function formatDateForInput(dueDate) {
   return `${year}-${month}-${day}`;
 }
 
+/**
+ * Saves task edits to Firebase (legacy function)
+ * @param {string} taskId - ID of the task to save
+ */
 async function saveTaskEdits(taskId) {
   const task = tasks.find((t) => t.id == taskId);
   if (!task) return;
@@ -372,6 +459,10 @@ async function saveTaskEdits(taskId) {
   await loadTasksFromFirebase(); // Re-render
 }
 
+/**
+ * Saves an edited task to Firebase and reopens the task overlay
+ * @param {string} taskId - ID of the task to save
+ */
 async function saveEditedTask(taskId) {
 
   const task = tasks.find((t) => t.id == taskId);
@@ -403,7 +494,9 @@ async function saveEditedTask(taskId) {
   }
 }
 
-
+/**
+ * Reindexes all tasks in Firebase with sequential IDs
+ */
 async function reindexTasksInFirebase() {
   const newTasks = {};
 
@@ -421,6 +514,10 @@ async function reindexTasksInFirebase() {
   await loadTasksFromFirebase();
 }
 
+/**
+ * Deletes a task from the board after user confirmation
+ * @param {string} taskId - ID of the task to delete
+ */
 async function deleteTaskFromBoardPopup(taskId) {
   const confirmDelete = await showConfirmation(
     "Are you sure you want to delete this task?"
@@ -437,6 +534,10 @@ async function deleteTaskFromBoardPopup(taskId) {
   }
 }
 
+/**
+ * Opens the edit overlay for a task
+ * @param {string} taskId - ID of the task to edit
+ */
 function editPopupTask(taskId) {
   const task = tasks.find(t => t.id == taskId);
   if (!task) return;
@@ -459,7 +560,10 @@ function editPopupTask(taskId) {
   setupEditFormSubmit(taskId);
 }
 
-
+/**
+ * Shows the edit overlay with the add task form modified for editing
+ * @param {Object} task - Task object to edit
+ */
 function showEditOverlay(task) {
   const overlay = document.getElementById("overlay");
   overlay.innerHTML = "";
@@ -472,6 +576,10 @@ function showEditOverlay(task) {
   ).innerHTML = `Save <img src="./assets/icons/check.png" alt="Save Icon">`;
 }
 
+/**
+ * Prefills the edit form with existing task data
+ * @param {Object} task - Task object containing data to prefill
+ */
 function prefillEditForm(task) {
   const titleInput = document.getElementById("title");
   const descInput = document.getElementById("description");
@@ -536,6 +644,10 @@ function prefillEditForm(task) {
   }
 }
 
+/**
+ * Preselects assignees in the dropdown based on task data
+ * @param {Array} assignedToArray - Array of assigned contact names
+ */
 function preselectAssignees(assignedToArray) {
   if (!Array.isArray(assignedToArray)) return;
 
@@ -549,6 +661,10 @@ function preselectAssignees(assignedToArray) {
   updateAssigneePlaceholder();
 }
 
+/**
+ * Sets up the form submit handler for editing tasks
+ * @param {string} taskId - ID of the task being edited
+ */
 function setupEditFormSubmit(taskId) {
   const form = document.getElementById("taskForm");
   const saveBtn = document.querySelector(".create-btn");
@@ -563,6 +679,12 @@ function setupEditFormSubmit(taskId) {
   };
 }
 
+/**
+ * Generates HTML for subtasks display (needs cleanup)
+ * @param {Array} subtasks - Array of subtask objects
+ * @param {string} taskId - ID of the parent task
+ * @returns {string} HTML string for subtasks
+ */
 // Diese Funktion muss noch bereinigt werden
 function generateSubtasksHTML(subtasks = [], taskId) {
   return `
@@ -578,6 +700,11 @@ function generateSubtasksHTML(subtasks = [], taskId) {
   `;
 }
 
+/**
+ * Shows a confirmation dialog and returns user's choice
+ * @param {string} message - Message to display in the confirmation dialog
+ * @returns {Promise<boolean>} Promise that resolves to true if confirmed, false if cancelled
+ */
 function showConfirmation(message = "Are you sure?") {
   return new Promise((resolve) => {
     const modal = document.getElementById("confirm-modal");

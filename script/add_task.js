@@ -1,7 +1,11 @@
+
 let Contacts = [];
 
 loadContacts();
 
+/**
+ * Submits a new task by collecting form data, generating an ID, and saving to Firebase
+ */
 async function submitTask() {
   const task = collectTaskData();
   const tasks = await fetchAllTasks();
@@ -11,6 +15,10 @@ async function submitTask() {
   saveTaskToFirebase(task, newId);
 }
 
+/**
+ * Collects and formats all task data from the form inputs
+ * @returns {Object} Task object with all necessary properties
+ */
 function collectTaskData() {
   const title = document.getElementById("title").value.trim();
   const description = document.getElementById("description").value.trim();
@@ -61,6 +69,10 @@ function collectTaskData() {
   return taskObject;
 }
 
+/**
+ * Fetches all existing tasks from Firebase
+ * @returns {Promise<Object>} Object containing all tasks or empty object on error
+ */
 async function fetchAllTasks() {
   try {
     const res = await fetch(`${BASE_URL}tasks.json`);
@@ -71,6 +83,11 @@ async function fetchAllTasks() {
   }
 }
 
+/**
+ * Determines the next available task ID by finding the maximum existing ID
+ * @param {Object} tasks - Object containing all existing tasks
+ * @returns {number} Next available task ID
+ */
 function getNextTaskId(tasks) {
   let maxId = 0;
   for (const key in tasks) {
@@ -85,10 +102,16 @@ function getNextTaskId(tasks) {
   return maxId + 1;
 }
 
+/**
+ * Displays a temporary toast notification
+ * @param {string} message - Message to display
+ * @param {string} iconPath - Path to icon image (optional)
+ */
 function showToast(message, iconPath = "./assets/img/board.png") {
   const container = document.getElementById("toast-container");
   if (!container) return;
 
+  // Create toast element
   const toast = document.createElement("div");
   toast.className = "toast";
   toast.innerHTML = `
@@ -98,17 +121,25 @@ function showToast(message, iconPath = "./assets/img/board.png") {
 
   container.appendChild(toast);
 
+  // Auto-remove toast after 4 seconds
   setTimeout(() => {
     toast.remove();
   }, 4000);
 }
 
+/**
+ * Saves the task to Firebase and handles post-save actions
+ * @param {Object} task - Task object to save
+ * @param {number} id - Task ID
+ */
 async function saveTaskToFirebase(task, id) {
   try {
+    // Ensure assignedTo is an array
     if (!Array.isArray(task.assignedTo)) {
       task.assignedTo = Object.values(task.assignedTo || {});
     }
 
+    // Save task to Firebase
     const res = await fetch(`${BASE_URL}tasks/${id}.json`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -116,17 +147,21 @@ async function saveTaskToFirebase(task, id) {
     });
 
     if (res.ok) {
+      // Success actions
       showToast("Task added to Board", "./assets/img/board.png");
       resetForm();
 
+      // Close overlay if exists
       if (document.getElementById("overlay")) {
         closeOverlay();
       }
 
+      // Reload tasks if function is available
       if (typeof loadTasksFromFirebase === "function") {
         await loadTasksFromFirebase();
       }
 
+      // Redirect to board page after delay
       setTimeout(() => {
         window.location.href = "board.html";
       }, 1000);
@@ -136,6 +171,9 @@ async function saveTaskToFirebase(task, id) {
   }
 }
 
+/**
+ * Closes the task creation overlay by hiding it
+ */
 function closeOverlay() {
   const overlay = document.getElementById("overlay");
   if (overlay) {
@@ -143,6 +181,9 @@ function closeOverlay() {
   }
 }
 
+/**
+ * Resets the entire task form to its initial state
+ */
 function resetForm() {
   document.getElementById("taskForm").reset();
   document.getElementById("subtask-list").innerHTML = "";
@@ -153,6 +194,9 @@ function resetForm() {
   updateAssigneePlaceholder();
 }
 
+/**
+ * Initializes event handlers for the add task form
+ */
 function initAddTaskFormEvents() {
   const clearBtn = document.querySelector(".clear-btn");
   if (clearBtn) {
@@ -174,6 +218,9 @@ function initAddTaskFormEvents() {
   }
 }
 
+/**
+ * Loads contacts from Firebase and renders the assignee dropdown
+ */
 async function loadContacts() {
   try {
     const res = await fetch(`${BASE_URL}contacts.json`);
@@ -191,6 +238,11 @@ async function loadContacts() {
   }
 }
 
+/**
+ * Extracts initials from a contact name
+ * @param {string} name - The contact's full name
+ * @returns {string} Uppercase initials
+ */
 function getInitials(name) {
   return name
     .trim()
@@ -199,6 +251,11 @@ function getInitials(name) {
     .join("");
 }
 
+/**
+ * Returns a color from a predefined palette based on the first letter
+ * @param {string} letter - The first letter of initials
+ * @returns {string} Hex color code
+ */
 function getColor(letter) {
   const colorsArray = [
     "#FF6B6B",
@@ -233,6 +290,9 @@ function getColor(letter) {
   return colorsArray[index];
 }
 
+/**
+ * Adds a new subtask to the list from the input field
+ */
 function addSubtask() {
   const input = document.getElementById("subtask");
   const value = input.value.trim();
@@ -243,6 +303,11 @@ function addSubtask() {
   input.value = "";
 }
 
+/**
+ * Creates a subtask list element with edit and delete functionality
+ * @param {string} value - The subtask text
+ * @returns {HTMLElement} List item element for the subtask
+ */
 function createSubtaskElement(value) {
   const li = document.createElement("li");
   li.classList.add("subtask-item");
@@ -262,16 +327,28 @@ function createSubtaskElement(value) {
   return li;
 }
 
+/**
+ * Adds edit functionality to a subtask item
+ * @param {HTMLElement} li - The subtask list item element
+ */
 function addSubtaskEditHandler(li) {
   const editButton = li.querySelector(".edit-subtask");
   editButton.addEventListener("click", () => enterEditMode(li));
 }
 
+/**
+ * Adds delete functionality to a subtask item
+ * @param {HTMLElement} li - The subtask list item element
+ */
 function addSubtaskDeleteHandler(li) {
   const deleteButton = li.querySelector(".delete-subtask");
   deleteButton.addEventListener("click", () => li.remove());
 }
 
+/**
+ * Enables inline editing mode for a subtask
+ * @param {HTMLElement} li - The subtask list item element
+ */
 function enterEditMode(li) {
   const textSpan = li.querySelector(".subtask-text");
   const inputField = li.querySelector(".subtask-edit-input");
@@ -303,6 +380,9 @@ function enterEditMode(li) {
   inputField.addEventListener("blur", onBlur);
 }
 
+/**
+ * Renders the assignee dropdown with contact checkboxes
+ */
 function renderAssigneeDropdown() {
   const container = document.getElementById("assignee-dropdown");
   if (!container) return;
@@ -327,6 +407,9 @@ function renderAssigneeDropdown() {
   });
 }
 
+/**
+ * Updates the assignee selection display with selected contacts
+ */
 function updateAssigneePlaceholder() {
   const selectedAvatars = document.getElementById("selected-assignee-avatars");
   const placeholder = document.getElementById("selected-assignees-placeholder");
@@ -395,18 +478,28 @@ document.addEventListener("click", function (event) {
   });
 });
 
+/**
+ * Toggles the visibility of the assignee dropdown
+ */
 function toggleAssigneeDropdown() {
   document.getElementById("category-dropdown").classList.add("d-none");
   const assigneeDropdown = document.getElementById("assignee-dropdown");
   assigneeDropdown.classList.toggle("d-none");
 }
 
+/**
+ * Toggles the visibility of the category dropdown
+ */
 function toggleCategoryDropdown() {
   document.getElementById("assignee-dropdown").classList.add("d-none");
   const categoryDropdown = document.getElementById("category-dropdown");
   categoryDropdown.classList.toggle("d-none");
 }
 
+/**
+ * Selects a category and updates the display
+ * @param {string} value - The category value to select
+ */
 function selectCategory(value) {
   const label = {
     "technical-task": "Technical Task",
@@ -419,6 +512,10 @@ function selectCategory(value) {
   document.getElementById("category-dropdown").classList.add("d-none");
 }
 
+/**
+ * Handles Enter key press in subtask input to add subtask
+ * @param {KeyboardEvent} event - The keyboard event
+ */
 function handleSubtaskKey(event) {
   if (event.key === "Enter") {
     event.preventDefault();
@@ -426,6 +523,9 @@ function handleSubtaskKey(event) {
   }
 }
 
+/**
+ * Sets the minimum date for the due date input to today's date
+ */
 function setMinDateToday() {
   const dateInput = document.getElementById("due-date");
   if (dateInput) {
@@ -433,6 +533,7 @@ function setMinDateToday() {
     dateInput.min = today;
   }
 }
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("taskForm");
