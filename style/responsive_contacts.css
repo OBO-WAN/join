@@ -70,7 +70,7 @@
 
 .tablate_view_card_container{
     width: 100%;
-    height: calc(100%-190px);
+    height: 100%;
     
     display: none;
     flex-direction: column;
