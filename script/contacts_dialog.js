@@ -18,10 +18,10 @@ function configEditDlgBox(id) {
             document.getElementById("Kind_Of_Dlg" + KindOfDlg_pc).innerHTML =
                 "Edit contact";
             btnText = "Save";
-            // document.getElementById("id_Edit_Btn" + KindOfDlg_pc).onclick =
-            //     function () {
-            //         editContact(id);
-            // };
+            document.getElementById("id_Edit_Btn" + KindOfDlg_pc).onclick =
+                function () {
+                    editContact(id);
+            };
 
             let oldContactData = Contacts[id];
 
@@ -35,7 +35,7 @@ function configEditDlgBox(id) {
             configAvatar_mobile(oldContactData, avatarColor);
 
             break;
-
+    
         case "createContact":
 
             createContactDialog(KindOfDlg_pc);
