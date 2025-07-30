@@ -24,7 +24,6 @@
  * const cardHTML = getKanbanTemplate(task, assignedHTML, 3);
  * document.getElementById('toDoContainer').innerHTML += cardHTML;
  */
-
 function getKanbanTemplate(task, assignedUsersHTML, index) {
   return `    <div class="task_container hover" data-task-id="${task.id}" data-task-index="${index}" draggable="true" ondragstart="startDragging('${task.id}')">
                     
@@ -49,6 +48,10 @@ function getKanbanTemplate(task, assignedUsersHTML, index) {
 `;
 }
 
+/**
+ * Generates the HTML template for the Add Task overlay form
+ * @returns {string} HTML string for the add task overlay with form fields, dropdowns, and buttons
+ */
 function getAddTaskOverlay() {
   return `
             <div class="overlay-content">
@@ -147,9 +150,21 @@ function getAddTaskOverlay() {
     `;
 }
 
-
-
-
+/**
+ * Generates the HTML template for the task detail overlay/popup
+ * @param {Object} task - The task object containing task details
+ * @param {string} task.id - Unique identifier for the task
+ * @param {string} task.category - Task category name
+ * @param {string} task.categoryClass - CSS class for category styling
+ * @param {string} task.title - Task title
+ * @param {string} task.description - Task description
+ * @param {string} assignedUsersHTML - Pre-rendered HTML string for assigned user avatars
+ * @param {number} index - Index of the task in the current list
+ * @param {string} formattedDate - Formatted due date string
+ * @param {string} priority - Task priority level (low, medium, urgent)
+ * @param {string} subtasksHTML - Pre-rendered HTML string for subtasks
+ * @returns {string} HTML string for the task detail overlay
+ */
 function getTaskSheetOverlay(task, assignedUsersHTML, index, formattedDate, priority, subtasksHTML) {
   return `
     <div class="task_container_overlay hover">
