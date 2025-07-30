@@ -206,10 +206,10 @@ function saveEditedContact(id, KindOfDlg_pc, name, mail, phone, viewMode){
         renderViewCard(id);
         closeContactDialog();
     } else if (viewMode === 2) {
-                renderContacts(Contacts);
+        /*      renderContacts(Contacts);
                 renderViewCard(id);
                 closeContactDialog();
-        
+        */
         renderViewCard(id);
         closeContactDialogMobile();
     } else if (viewMode === 3) {
@@ -458,7 +458,7 @@ function contorlAddNewContactSection(viewMode) {
 function handleMobileContactSubmit(event) {
   event.preventDefault(); 
   if (event.target.checkValidity()) {
-    createContact(); 
+    //createContact(); 
   } else {
     event.target.reportValidity();
   }
