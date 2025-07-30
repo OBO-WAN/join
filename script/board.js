@@ -26,7 +26,6 @@ let index = 0; // Beispiel: erster User
 let userColor = users[index]?.color;
 console.log(userColor);
   showCurrentBoard();
- 
 }
 
 function renderCurrentTasks() {
@@ -142,9 +141,7 @@ function attachTaskEventHandlers() {
 
     if (!task) return;
 
-      
-    let i = 0; // Beispiel: erster User
-    let userColor = users[i]?.color;
+    let user = Contacts;
     const taskData = prepareTaskForTemplate(task);
     const assignedUsersHTML = taskData.assignedTo
       .map(
@@ -170,13 +167,17 @@ function attachTaskEventHandlers() {
 function prepareTaskForTemplate(task) {
   const assignedTo = (task.assignedTo || []).map((name) => {
 
-    const user = Object.values(users).find((u) => u.name === name);
+    const user = Object.values(Contacts).find((u) => u.name === name);
     const initials = name
       .split(" ")
       .map((n) => n[0])
       .join("")
       .toUpperCase();
-    const color = user?.color || "#2A3647"; // Fallback-Farbe
+    
+    let color = "#2A3647"; // Fallback color
+    if (user) {
+      color = getColor(initials);//user?.color || "#2A3647"; // Fallback-Farbe
+    }
     return { initials, color };
   });
 
@@ -372,8 +373,11 @@ async function saveTaskEdits(taskId) {
 }
 
 async function saveEditedTask(taskId) {
+
+  const task = tasks.find((t) => t.id == taskId);
   const updatedTask = collectTaskData();
   updatedTask.id = taskId;
+  updatedTask.status = task.status; // Preserve current status
 
   await fetch(`${BASE_URL}tasks/${taskId}.json`, {
     method: 'PUT',
