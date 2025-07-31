@@ -14,7 +14,6 @@ function getContactCardTamplate(name, email, initials, index, color) {
 </div>`;
 }
 
-
 function getViewCardTemplate(id, color) {
   return `
         <div class="Tablet_view_card">
@@ -78,7 +77,6 @@ function getViewCardTemplate(id, color) {
         </div>
     `;
 }
-
 
 function getTabletViewCardTemplate(id, color) {
   return `
@@ -149,7 +147,6 @@ function getTabletViewCardTemplate(id, color) {
    `;
 }
 
-
 function getTabletViewCardHeaderTemplate() {
   return `
         <div class="contact_view_header" id="contact_view_header">  
@@ -176,7 +173,6 @@ function getTabletViewCardHeaderTemplate() {
             </div>
         </div>`;
 }
-
 
 function getMobileViewCardTemplate(id, color) {
   return `
@@ -269,51 +265,54 @@ function getMobileViewCardTemplate(id, color) {
            </div>`;
 }
 
-
 function getAddNewContactTemplate() {
   return `
-        <div class="add_new_contact_ov_container" id="add_new_contact_ov_container">
-            <div class="add_newcontact_sloagen_container">
-                <div class="ov_logo_section" id = "ov_logo_section">
-                    <img class="ov_logo" src="./assets/img/logo-white.svg" alt="join logo">
-                </div>
-                <div class="ov_hl_section"><span class="ov_hl" id="Kind_Of_Dlg_pc">Place</span></div>
-                <div class="ov_slogan_section"><span class="ov_slogan">Tasks are better wiht a team!</span>
-                    <div class="ov_sloagen_seperator"></div>
-                </div>
-            </div>
-            <div class="add_new_contact_entry_section">
-                <div class="add_new_contact_avatar_section">
-                    <div class="add_new_contact_avatar" id="add_new_contact_avatar">
-                        <img class="ov_avatar" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
-                    </div>
-                </div>
-                
-                <div class="add_new_contact_entry">
-                    <div class="overlay_of_btn_sec"><p class="overlay_of_btn"  onclick="closeContactDialog()">X</p></div>
-                    <form onsubmit="handleContactFormSubmit(event)">
-                        <input id="name_input_pc" class="add_new_contact_input" type="text" placeholder ="  Name" required>
-                        <input id="mail_input_pc" class="add_new_contact_input" type="email" placeholder="  Mail" required>                                   
-                        <input id="phone_input_pc" class="add_new_contact_input" type="tel" placeholder="  Phone" required>
-                    </form>
-
-                    <div class="add_new_contact_btn_section">
-                    <button class="cancel_btn">
-                        <span class="cancel_btn_txt" onclick="closeContactDialog()">Cancel X</span>
-                        
-                    </button>
-                    <button class="create_btn" id="id_Edit_Btn_pc">
-                        <span id="id_Edit_Btn_Text_pc">PlaceHolder</span>
-                        <img class="create_btn_img" onclick = "" src="./assets/img/create_contact_btn.png" alt="create button">
-                    </button>
-                </div> 
-                 
-                </div>
-            </div>
+    <div class="add_new_contact_ov_container" id="add_new_contact_ov_container">
+      <div class="add_newcontact_sloagen_container">
+        <div class="ov_logo_section" id="ov_logo_section">
+          <img class="ov_logo" src="./assets/img/logo-white.svg" alt="join logo">
         </div>
-    `;
-}
+        <div class="ov_hl_section">
+          <span class="ov_hl" id="Kind_Of_Dlg_pc">Place</span>
+        </div>
+        <div class="ov_slogan_section">
+          <span class="ov_slogan">Tasks are better with a team!</span>
+          <div class="ov_sloagen_seperator"></div>
+        </div>
+      </div>
 
+      <div class="add_new_contact_entry_section">
+        <div class="add_new_contact_avatar_section">
+          <div class="add_new_contact_avatar" id="add_new_contact_avatar">
+            <img class="ov_avatar" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
+          </div>
+        </div>
+
+        <div class="add_new_contact_entry">
+          <div class="overlay_of_btn_sec">
+            <p class="overlay_of_btn" onclick="closeContactDialog()">X</p>
+          </div>
+
+          <form onsubmit="handleContactFormSubmit(event)">
+            <input id="name_input_pc" class="add_new_contact_input" type="text" placeholder="  Name" required minlength="2" title="Please enter at least 2 characters">
+            <input id="mail_input_pc" class="add_new_contact_input" type="email" placeholder="  Mail" required title="Please enter a valid email address">
+            <input id="phone_input_pc" class="add_new_contact_input" type="tel" placeholder="  Phone" required pattern="[0-9+\\s\\-\\/]{7,}" title="Enter a valid phone number (min. 7 characters, numbers, +, /, or -)">
+
+            <div class="add_new_contact_btn_section">
+              <button type="button" class="cancel_btn" onclick="closeContactDialog()">
+                <span class="cancel_btn_txt">Cancel X</span>
+              </button>
+              <button type="submit" class="create_btn" id="id_Edit_Btn_pc">
+                <span id="id_Edit_Btn_Text_pc">PlaceHolder</span>
+                <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  `;
+}
 
 function getAddNewContactMobileTemplate() {
   return `
@@ -384,10 +383,8 @@ function getAddNewContactMobileTemplate() {
   `;
 }
 
-
-
-function getGoBackTemplate(tablet_additional_div){
-    return `
+function getGoBackTemplate(tablet_additional_div) {
+  return `
             <div id="add_new_contact_ov_section" class="add_new_contact_ov"></div>
             <div id="tablate_view_card_container" class="tablate_view_card_container"></div>
             ${tablet_additional_div}
