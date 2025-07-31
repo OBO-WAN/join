@@ -302,7 +302,7 @@ function getAddNewContactTemplate() {
               <button type="button" class="cancel_btn" onclick="closeContactDialog()">
                 <span class="cancel_btn_txt">Cancel X</span>
               </button>
-              <button type="submit" class="create_btn" id="id_Edit_Btn_pc" disabled>
+              <button type="submit" class="create_btn" id="id_Edit_Btn_pc">
                 <span id="id_Edit_Btn_Text_pc">PlaceHolder</span>
                 <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
               </button>
@@ -372,7 +372,7 @@ function getAddNewContactMobileTemplate() {
               title="Enter a valid phone number (min. 7 characters, numbers, +, /, or -)"
             >
 
-            <button class="create_btn_mobile" type="submit" id="id_Edit_Btn" disabled>
+            <button class="create_btn_mobile" type="submit" id="id_Edit_Btn">
               <span id="id_Edit_Btn_Text">Create</span>
               <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
             </button>
