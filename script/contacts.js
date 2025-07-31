@@ -458,7 +458,7 @@ function contorlAddNewContactSection(viewMode) {
 function handleMobileContactSubmit(event) {
   event.preventDefault(); 
   if (event.target.checkValidity()) {
-    //createContact(); 
+    createContact(); 
   } else {
     event.target.reportValidity();
   }
