@@ -30,7 +30,7 @@ async function init() {
   
 let index = 0; // Beispiel: erster User
 let userColor = users[index]?.color;
-console.log(userColor);
+// console.log(userColor);
   showCurrentBoard();
 }
 
@@ -587,13 +587,13 @@ function prefillEditForm(task) {
   const categoryInput = document.getElementById("category");
   const categoryPlaceholder = document.getElementById("selected-category-placeholder");
 
-  console.log("Elements found:", {
-    titleInput: !!titleInput,
-    descInput: !!descInput,
-    dueInput: !!dueInput,
-    categoryInput: !!categoryInput,
-    categoryPlaceholder: !!categoryPlaceholder,
-  });
+  // console.log("Elements found:", {
+  //   titleInput: !!titleInput,
+  //   descInput: !!descInput,
+  //   dueInput: !!dueInput,
+  //   categoryInput: !!categoryInput,
+  //   categoryPlaceholder: !!categoryPlaceholder,
+  // });
 
   // Title
   if (titleInput) {
@@ -680,20 +680,38 @@ function setupEditFormSubmit(taskId) {
 }
 
 /**
- * Generates HTML for subtasks display (needs cleanup)
- * @param {Array} subtasks - Array of subtask objects
- * @param {string} taskId - ID of the parent task
- * @returns {string} HTML string for subtasks
+ * Generates HTML markup for the list of subtasks displayed in the task overlay.
+ * 
+ * Each subtask is rendered with a clickable checkbox icon and its text,
+ * allowing users to toggle completion status directly from the overlay.
+ * Supports both string-based and object-based subtasks.
+ *
+ * @function generateSubtasksHTML
+ * @param {Array<Object|string>} subtasks - An array of subtasks, each either a string or an object with `task` and `done` fields.
+ * @param {string|number} taskId - The ID of the parent task, used for identifying which task to update on click.
+ * @returns {string} - HTML string of the rendered subtasks list, including icons and toggle handlers.
+ *
+ * @example
+ * const html = generateSubtasksHTML(task.subTasks, task.id);
+ * document.getElementById("subtasks-list-3").innerHTML = html;
  */
-// Diese Funktion muss noch bereinigt werden
 function generateSubtasksHTML(subtasks = [], taskId) {
   return `
     <ul>
       ${subtasks
-        .map((subtask) => {
-          const text = subtask.task || subtask || "";
+        .map((subtask, index) => {
+          const raw = subtask.task ?? subtask ?? "";
+          const text = typeof raw === "string" ? raw : "";
           const cleanText = text.replace(/^•+\s*/, "").trim();
-          return `<li>${cleanText}</li>`;
+          const done = subtask.done === true;
+          const checkbox = done ? "checkbox-checked" : "checkbox-empty";
+
+          return `
+            <li class="overlay-subtask-item" onclick="toggleSubtaskCheckbox(this, '${taskId}', ${index})">
+              <img src="assets/icons/${checkbox}.svg" alt="Checkbox" class="overlay-checkbox">
+              <span class="${done ? 'overlay-subtask-done' : ''}">${cleanText}</span>
+            </li>
+          `;
         })
         .join("")}
     </ul>
@@ -734,3 +752,13 @@ function showConfirmation(message = "Are you sure?") {
     noBtn.addEventListener("click", onNo);
   });
 }
+
+/**
+ * Closes any open overlay when the Escape key is pressed
+ */
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    closeOverlay();
+  }
+});
+

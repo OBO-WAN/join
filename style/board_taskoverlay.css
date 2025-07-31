@@ -255,3 +255,29 @@ table {
   background-color: #1a2533;
 }
 
+/* Overlay-specific subtask list items */
+
+.overlay-subtask-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 2px 4px;
+}
+
+.overlay-subtask-item:hover {
+  background-color: #f3f4f6;
+  border-radius: 6px;
+}
+
+.overlay-checkbox {
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+.overlay-subtask-done {
+  text-decoration: line-through;
+  color: #aab0bc;
+}
