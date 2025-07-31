@@ -13,9 +13,13 @@ function handleWindowResize() {
     switch (getViewMode()) {
         case 1: // 1 = desktop big     | >= 1100
             clearTabletViewCard();
+
+            if(!checkIfTabletViewCardActive()) {
+                goBacktoContacts();
+            }
             addNewContact = getAddNewContactTemplate();
-            document.getElementById("add_new_contact_section").innerHTML =
-                addNewContact;
+            document.getElementById("add_new_contact_section").innerHTML = addNewContact;
+
             renderContacts(Contacts);
             renderViewCard(idx);
             addNewContactSectionState_pc(true);
@@ -38,6 +42,12 @@ function handleWindowResize() {
         default:
             break;
     }
+}
+
+
+function checkIfTabletViewCardActive() {
+    let tabletViewCardHeader = document.getElementById("tablate_view_card_header");
+    return tabletViewCardHeader && tabletViewCardHeader.style.display !== "none";
 }
 
 function deletAllNullElementsFromArray(contacts){
