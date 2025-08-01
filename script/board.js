@@ -30,7 +30,6 @@ async function init() {
   
 let index = 0; // Beispiel: erster User
 let userColor = users[index]?.color;
-// console.log(userColor);
   showCurrentBoard();
 }
 
@@ -586,14 +585,6 @@ function prefillEditForm(task) {
   const dueInput = document.getElementById("due-date");
   const categoryInput = document.getElementById("category");
   const categoryPlaceholder = document.getElementById("selected-category-placeholder");
-
-  // console.log("Elements found:", {
-  //   titleInput: !!titleInput,
-  //   descInput: !!descInput,
-  //   dueInput: !!dueInput,
-  //   categoryInput: !!categoryInput,
-  //   categoryPlaceholder: !!categoryPlaceholder,
-  // });
 
   // Title
   if (titleInput) {

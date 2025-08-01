@@ -14,6 +14,7 @@ function getContactCardTamplate(name, email, initials, index, color) {
 </div>`;
 }
 
+
 function getViewCardTemplate(id, color) {
   return `
         <div class="Tablet_view_card">
@@ -77,6 +78,7 @@ function getViewCardTemplate(id, color) {
         </div>
     `;
 }
+
 
 function getTabletViewCardTemplate(id, color) {
   return `
@@ -147,6 +149,7 @@ function getTabletViewCardTemplate(id, color) {
    `;
 }
 
+
 function getTabletViewCardHeaderTemplate() {
   return `
         <div class="contact_view_header" id="contact_view_header">  
@@ -173,6 +176,7 @@ function getTabletViewCardHeaderTemplate() {
             </div>
         </div>`;
 }
+
 
 function getMobileViewCardTemplate(id, color) {
   return `
@@ -265,6 +269,7 @@ function getMobileViewCardTemplate(id, color) {
            </div>`;
 }
 
+
 function getAddNewContactTemplate() {
   return `
     <div class="add_new_contact_ov_container" id="add_new_contact_ov_container">
@@ -313,6 +318,7 @@ function getAddNewContactTemplate() {
     </div>
   `;
 }
+
 
 function getAddNewContactMobileTemplate() {
   return `
@@ -382,6 +388,7 @@ function getAddNewContactMobileTemplate() {
     </div>
   `;
 }
+
 
 function getGoBackTemplate(tablet_additional_div) {
   return `

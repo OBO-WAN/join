@@ -3,6 +3,7 @@ window.addEventListener("resize", () => {
     handleWindowResize();
 });
 
+
 /**
  * tea window resize events and updates the UI accordingly.
  */
@@ -45,13 +46,23 @@ function handleWindowResize() {
 }
 
 
+/**
+ * Checks if the tablet view card header is currently active (visible).
+ *
+ * @returns {boolean} Returns true if the tablet view card header element exists and is visible; otherwise, false.
+ */
 function checkIfTabletViewCardActive() {
     let tabletViewCardHeader = document.getElementById("tablate_view_card_header");
     return tabletViewCardHeader && tabletViewCardHeader.style.display !== "none";
 }
 
+
+/**
+ * Removes all null or undefined elements from the given contacts array in place.
+ *
+ * @param {Array} contacts - The array of contacts to be cleaned.
+ */
 function deletAllNullElementsFromArray(contacts){
-    // Remove null or undefined elements from the contacts array
     for (let i = contacts.length - 1; i >= 0; i--) {
         if (!contacts[i]) {
             contacts.splice(i, 1);
@@ -200,6 +211,7 @@ function hideContactsList() {
     const contactsListElem = document.getElementById("contacts_list");
     if (contactsListElem) contactsListElem.style.display = "none";
 }
+
 
 /**
  * Clears the tablet view card container.
