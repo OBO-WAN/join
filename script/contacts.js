@@ -27,7 +27,7 @@ function getContacts(data) {
 
     if (getViewMode() === 1) clearViewCard();
     setActualContactIndex(-1);
-    /*versionHandling();*/
+    //versionHandling();
     return data;
 }
 
@@ -236,7 +236,7 @@ function emailIsValid(email) {
  * Deletes a contact by index after confirmation.
  * @param {number} id - The contact index.
  */
-function deleteContact(id) {
+function deleteContact(id){
     if (id < 0 || id >= Contacts.length) {
         return;
     }
@@ -458,7 +458,7 @@ function contorlAddNewContactSection(viewMode) {
 function handleMobileContactSubmit(event) {
   event.preventDefault(); 
   if (event.target.checkValidity()) {
-    createContact(); 
+    //createContact(); 
   } else {
     event.target.reportValidity();
   }
@@ -485,5 +485,6 @@ function confirmDeleteContact() {
     renderContacts(Contacts); 
     clearViewCard();
     closeDeleteConfirm();
+    goBacktoContacts();
   }
 }
