@@ -57,11 +57,9 @@ function createContactDialog(KindOfDlg_pc) {
   let AddNewcontactAvatar = document.getElementById("add_new_contact_avatar");
   let AddNewcontactAvatar_mobile = document.getElementById("add_new_contact_avatar_mobile");
 
-  // Dialog headline
   const dlgHeadline = document.getElementById("Kind_Of_Dlg" + KindOfDlg_pc);
   if (dlgHeadline) dlgHeadline.innerHTML = "Add contact";
 
-  // Default avatar (desktop)
   if (AddNewcontactAvatar) {
     AddNewcontactAvatar.style.backgroundColor = "#eeecec";
     AddNewcontactAvatar.innerHTML = `
@@ -69,7 +67,6 @@ function createContactDialog(KindOfDlg_pc) {
     `;
   }
 
-  // Default avatar (mobile)
   if (AddNewcontactAvatar_mobile) {
     AddNewcontactAvatar_mobile.style.backgroundColor = "#eeecec";
     AddNewcontactAvatar_mobile.innerHTML = `
@@ -107,6 +104,7 @@ function openContactDialog(id) {
     configEditDlgBox(id);
 }
 
+
 /**
  * Closes the contact dialog and clears input fields.
  */
@@ -129,8 +127,8 @@ function closeContactDialog() {
         addNewSection.innerHTML = "";
         addNewContainer.style.display = "none";
     }
-    // dialog beim schliesen lleeren
 }
+
 
 /*contact dialog mobile section*/
 /**
@@ -144,6 +142,7 @@ function openContactDialogMobile(id) {
     configEditDlgBox(id);
     editContactsMobileMenuOff();
 }
+
 
 /**
  * Closes the contact dialog for mobile view.
@@ -173,6 +172,7 @@ function editContactsMobileMenuOn() {
     document.addEventListener("mousedown", handleOutsideClickForMobileMenu);
 }
 
+
 /**
  * Hides the mobile menu for editing contacts.
  */
@@ -183,6 +183,7 @@ function editContactsMobileMenuOff() {
         document.removeEventListener("mousedown", handleOutsideClickForMobileMenu);
     }
 }
+
 
 /**
  * Sets the display state of the add new contact section for desktop.
@@ -215,6 +216,7 @@ function addNewContactSectionState_pc(state) {
         section.style.display = stateStr;
     }
 }
+
 
 /**
  * Sets the display state of the add new contact section for mobile/tablet.
