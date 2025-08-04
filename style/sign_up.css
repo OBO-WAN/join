@@ -1,3 +1,7 @@
+.d-flex {
+  display: flex !important;
+}
+
 .body-sign-up {
   position: relative;
   height: 100dvh;
@@ -108,6 +112,28 @@
   background-color: var(--blue);
   box-shadow: var(--box-shadow-button);
   border: var(--border-buttons-blue);
+}
+
+.button-sign-up:disabled,
+.button-sign-up:disabled:hover {
+  cursor: not-allowed !important;
+  opacity: 0.5;
+}
+
+button:disabled,
+button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+button:disabled:hover,
+button[disabled]:hover {
+  background-color: var(--primary-color-gray);
+  cursor: not-allowed;
+  scale: unset;
+  box-shadow: unset;
+  border: var(--border-buttons-gray);
+  scale: unset;
 }
 
 .visibility-eye-off-icon {
@@ -226,22 +252,6 @@
     min-height: unset;
   }
 
-  /* .vector-sign-up {
-    background-image: url(../assets/icons/vector-mobile.svg);
-    background-repeat: no-repeat;
-    background-size: 100%;
-  }
-
-  .vector-sign-up {
-    height: 3px;
-    width: 95px;
-  }
-
-  .headline-vector {
-    gap: 4px;
-    width: 100%;
-  } */
-
   .form {
     gap: 20px;
   }
@@ -264,13 +274,6 @@
     transform: translateY(45px);
   }
 }
-
-
-
-
-
-
-
 
 .popup-overlay-small-gray {
   position: fixed;
@@ -325,12 +328,12 @@
   color: white;
 }
 
-.portrait-overlay{
+.portrait-overlay {
   display: none;
 }
 
 @media (max-width: 768px) and (orientation: landscape) and (pointer: coarse) {
-  .portrait-overlay{
+  .portrait-overlay {
     display: flex;
   }
 }

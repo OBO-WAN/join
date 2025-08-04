@@ -77,7 +77,7 @@ html, body {
 
   /* Layout Gaps */
   --button-gap: 12px;
-  --form-gap: 24px;
+  --form-gap: 32px;
 
   /* Widths */
   --width-64-100: clamp(64px, 6vw, 100px);

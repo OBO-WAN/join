@@ -150,31 +150,47 @@ function getEmailInputData(emailInputField, isSignUp) {
   return { trimmedEmail, currentEmailRef };
 }
 
-// /**
-//  *
-//  * @function validateEmail
-//  * @description Validates the email input field. It checks if the email is not empty,
-//  * has no leading/trailing whitespace, and matches a basic email pattern using helper functions.
-//  * It updates the visual feedback (error messages and input field styling) based on the validation result.
-//  * @param {HTMLInputElement} emailInputField - The input element for the email.
-//  * @param {boolean} boolean - A boolean indicating if the validation is for the sign-up form (`true`) or login form (`false`).
-//  * @returns {boolean} - Returns true if the email is valid, false otherwise.
-//  */
+/**
+ * @function validateEmail
+ * @description Validates the email input field by trimming its value and testing it against a standard email pattern.
+ * Displays or hides the appropriate error message depending on whether the input is for the sign-up or login form.
+ * Also adds or removes the 'not-valide-error' class to reflect input validity.
+ *
+ * @param {HTMLInputElement} inputField - The email input element to be validated.
+ * @param {boolean} isSignUp - Indicates whether the validation context is for the sign-up form (`true`) or the login form (`false`).
+ * 
+ * @returns {boolean} - Returns `true` if the email is valid, otherwise `false`.
+ */
 function validateEmail(inputField, isSignUp) {
   const value = inputField.value.trim();
-  const errorMessage = document.getElementById('error_message_email_not_valide_login');
+  const {
+    errorMessageEmailNotValideSignUpRef,
+    errorMessageEmailNotValideLoginRef
+  } = getIdRefs();
+
   const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
   if (!isValid) {
     inputField.classList.add('not-valide-error');
-    if (errorMessage) errorMessage.style.display = 'block';
+    if (isSignUp && errorMessageEmailNotValideSignUpRef) {
+      errorMessageEmailNotValideSignUpRef.classList.add('d-flex');
+    }
+    if (!isSignUp && errorMessageEmailNotValideLoginRef) {
+      errorMessageEmailNotValideLoginRef.classList.add('d-flex');
+    }
     return false;
   } else {
     inputField.classList.remove('not-valide-error');
-    if (errorMessage) errorMessage.style.display = 'none';
+    if (isSignUp && errorMessageEmailNotValideSignUpRef) {
+      errorMessageEmailNotValideSignUpRef.classList.remove('d-flex');
+    }
+    if (!isSignUp && errorMessageEmailNotValideLoginRef) {
+      errorMessageEmailNotValideLoginRef.classList.remove('d-flex');
+    }
     return true;
   }
 }
+
 
 
 /**
@@ -255,22 +271,36 @@ function ifEmailPattern(trimmedEmail, errorMessageEmailNotValideSignUpRef, error
   return true;
 }
 
+/**
+ * @function validatePassword
+ * @description Validates a password input field by checking length. 
+ * Shows or hides appropriate error messages based on form context.
+ * 
+ * @param {HTMLInputElement} inputField - The password input element.
+ * @param {boolean} isSignUp - True if validating for sign-up; false for login.
+ * @returns {boolean} - True if the password is valid, otherwise false.
+ */
 function validatePassword(inputField, isSignUp) {
   const password = inputField.value.trim();
-  const errorMessage = document.getElementById('error_message_password_log_in');
   const isValid = password.length >= 8;
+
+  const {
+    errorMessagePasswordLogInRef,
+    errorMessagePasswordSignInRef
+  } = getIdRefs();
+
+  const errorMessage = isSignUp ? errorMessagePasswordSignInRef : errorMessagePasswordLogInRef;
 
   if (!isValid) {
     inputField.classList.add('not-valide-error');
-    if (errorMessage) errorMessage.style.display = 'block';
+    if (errorMessage) errorMessage.classList.add('d-flex');
     return false;
   } else {
     inputField.classList.remove('not-valide-error');
-    if (errorMessage) errorMessage.style.display = 'none';
+    if (errorMessage) errorMessage.classList.remove('d-flex');
     return true;
   }
 }
-
 
 /**
  *
