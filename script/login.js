@@ -7,7 +7,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const nav = document.getElementById("nav_log_in");
     nav.classList.remove("hidden");
     nav.classList.add("fade-in");
-  }, 3000); // delay (adjust if needed)
+  }, 1600);
 });
 
 
@@ -144,6 +144,43 @@ function showLoginError() {
     errorMessageLogInRef.classList.add('d-flex'); // Show the error according to css
   }
 }
+
+function validateEmailLogin(inputField) {
+  const value = inputField.value.trim();
+  const {
+    errorMessageEmailNotValideLoginRef
+  } = getIdRefs();
+
+  const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+  if (!isValid) {
+    inputField.classList.add('not-valide-error');
+    errorMessageEmailNotValideLoginRef?.classList.add('show-error');
+    return false;
+  } else {
+    inputField.classList.remove('not-valide-error');
+    errorMessageEmailNotValideLoginRef?.classList.remove('show-error');
+    return true;
+  }
+}
+
+function validatePasswordLogin(inputField) {
+  const value = inputField.value.trim();
+  const { errorMessagePasswordLogInRef } = getIdRefs();
+
+  const isValid = value.length >= 8;
+
+  if (!isValid) {
+    inputField.classList.add('not-valide-error');
+    errorMessagePasswordLogInRef?.classList.add('show-error');
+    return false;
+  } else {
+    inputField.classList.remove('not-valide-error');
+    errorMessagePasswordLogInRef?.classList.remove('show-error');
+    return true;
+  }
+}
+
   
   /**
    *

@@ -64,11 +64,7 @@
     left: 50%;
     transform: translate(-50%, -50%) scale(1);
   }
-  /* 50% {
-    top: clamp(32px, 20px + 1.5vw, 100px);   roughly halfway between 50% and final 
-    left: clamp(32px, 20px + 1.5vw, 100px);
-    transform: translate(-50%, -50%) scale(0.9);
-  } */
+
   100% {
     top: clamp(15px, 6px + 2.8125vw, 60px);
     left: clamp(15px, 6px + 2.8125vw, 60px);
@@ -89,10 +85,10 @@
   position: absolute;
   top: clamp(15px, 6px + 2.8125vw, 60px);
   left: clamp(15px, 6px + 2.8125vw, 60px);
-  width: var(--width-64-100); /* or a fixed width if you prefer */
+  width: var(--width-64-100);
   height: clamp(60px, 47.6px + 3.875vw, 122px);
   transform: none;
-  z-index: 10; /* Above other content */
+  z-index: 10;
 }
 
 .animation-finished img {
@@ -283,6 +279,10 @@
   display: none;
 }
 
+.show-error {
+  display: flex !important;
+}
+
 .button-container {
   margin-top: 18px;
   gap: var(--button-gap);
@@ -362,7 +362,7 @@ button {
   justify-content: center;
   align-items: center;
   background-color: transparent;
-  height: 35px;
+  height: 36px;
   opacity: 0;
   gap: 25px;
 }
@@ -510,9 +510,9 @@ button {
 
 @media only screen and (max-width: 600px) {
   .nav-log-in {
-    top: unset;
+    top: 80%;
     right: unset;
-    bottom: 145px;
+    bottom: 144px;
   }
 }
 
