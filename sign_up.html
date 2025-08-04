@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="style/style.css" />
     <link rel="stylesheet" href="style/login.css" />
     <link rel="stylesheet" href="style/sign_up.css" />
-    <!-- <link rel="stylesheet" href="style/assets.css"/> -->
   </head>
 
   <body id="body_sign_up" class="body-sign-up">
@@ -43,6 +42,7 @@
                 id="name_sign_up"
                 type="text"
                 placeholder="Firstname Lastname"
+                autocomplete="name"
                 onblur="validateName(this);enableOrDisableSignUpButton()"
               />
               <span class="error-message-name" id="error_message_name"
@@ -60,6 +60,7 @@
                 id="email_sign-up"
                 type="email"
                 placeholder="Email"
+                autocomplete="email"
                 onblur="validateEmail(this, true);enableOrDisableSignUpButton()"
               />
               <span class="error-message-email" id="error_message_email"
@@ -83,6 +84,7 @@
                 id="password_sign_up"
                 type="password"
                 placeholder="Password"
+                autocomplete="new-password"
                 onblur="validatePassword(this, true);enableOrDisableSignUpButton()"
               />
               <div class="input-base-icon cursor-pointer">
@@ -115,6 +117,7 @@
                 id="confirm_sign_up"
                 type="password"
                 placeholder="Confirm Password"
+                autocomplete="new-password"
                 onblur="checkPasswordConfirm(this);enableOrDisableSignUpButton()"
               />
               <div class="input-base-icon cursor-pointer">
@@ -195,7 +198,6 @@
 
   <script src="./script/scripts.js"></script>
   <script src="./script/register.js"></script>
-  <!-- <script src="./script/login.js"></script> -->
   <script src="./script/newUser.js"></script>
   <script src="./script/firebase.js"></script>
   <script src="./script/summary.js"></script>
