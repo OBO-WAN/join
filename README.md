@@ -1,1 +1,1 @@
-http://join-456.developerakademie.net/login.html
+http://join-456.developerakademie.net/join/login.html
