@@ -27,6 +27,7 @@ function getContacts(data) {
 
     if (getViewMode() === 1) clearViewCard();
     setActualContactIndex(-1);
+    /*versionHandling();*/
     return data;
 }
 
@@ -59,7 +60,7 @@ function updateDatabase(data) {
  */
 function createContact() {
     let newContact = buildContactFromForm();
-    if (!newContact) return; 
+    if (!newContact) return; // Falls Validierung fehlschlägt
 
     addContactAndUpdateUI(newContact);
 }
@@ -110,7 +111,6 @@ function buildContactFromForm() {
         phone: phone || "No phone number available"
     };
 }
-
 
 /**
  * Adds a contact to the list, updates the database, and refreshes the UI.
@@ -206,6 +206,10 @@ function saveEditedContact(id, KindOfDlg_pc, name, mail, phone, viewMode){
         renderViewCard(id);
         closeContactDialog();
     } else if (viewMode === 2) {
+        /*      renderContacts(Contacts);
+                renderViewCard(id);
+                closeContactDialog();
+        */
         renderViewCard(id);
         closeContactDialogMobile();
     } else if (viewMode === 3) {
@@ -232,7 +236,7 @@ function emailIsValid(email) {
  * Deletes a contact by index after confirmation.
  * @param {number} id - The contact index.
  */
-function deleteContact(id){
+function deleteContact(id) {
     if (id < 0 || id >= Contacts.length) {
         return;
     }
@@ -451,16 +455,10 @@ function contorlAddNewContactSection(viewMode) {
 }
 
 
-/**
- * Handles the submission of a mobile contact form.
- * Prevents the default form submission behavior and checks form validity.
- * If the form is invalid, displays validation messages to the user.
- *
- * @param {Event} event - The form submission event.
- */
 function handleMobileContactSubmit(event) {
   event.preventDefault(); 
   if (event.target.checkValidity()) {
+    //createContact(); 
   } else {
     event.target.reportValidity();
   }
@@ -470,43 +468,22 @@ function handleMobileContactSubmit(event) {
 
 let contactToDelete = null;
 
-/**
- * Displays a confirmation overlay to prompt the user before deleting a contact.
- * Sets the global variable `contactToDelete` to the specified contact ID.
- *
- * @param {number|string} id - The unique identifier of the contact to be deleted.
- */
 function promptDeleteContact(id) {
   contactToDelete = id;
   document.getElementById("deleteConfirmOverlay").classList.remove("hidden");
 }
 
-
-/**
- * Closes the delete confirmation overlay and resets the contact to delete.
- *
- * Hides the overlay element with the ID "deleteConfirmOverlay" by adding the "hidden" class,
- * and sets the global variable `contactToDelete` to null.
- */
 function closeDeleteConfirm() {
   document.getElementById("deleteConfirmOverlay").classList.add("hidden");
   contactToDelete = null;
 }
 
-
-/**
- * Confirms and deletes the selected contact from the Contacts list.
- * If a contact is selected (contactToDelete is not null), removes it from the array,
- * updates the database, re-renders the contacts list, clears the view card,
- * closes the delete confirmation dialog, and navigates back to the contacts view.
- */
 function confirmDeleteContact() {
   if (contactToDelete !== null) {
     Contacts.splice(contactToDelete, 1); 
-    updateDatabase(Contacts); 
+    updateDatabase(Contacts); // <--- Datenbank aktualisieren!
     renderContacts(Contacts); 
     clearViewCard();
     closeDeleteConfirm();
-    goBacktoContacts();
   }
 }
