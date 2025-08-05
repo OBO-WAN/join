@@ -68,7 +68,8 @@
   100% {
     top: clamp(15px, 6px + 2.8125vw, 60px);
     left: clamp(15px, 6px + 2.8125vw, 60px);
-    transform: scale(0.8);
+    transform: translate(-50%, -50%) scale(0.25);
+
   }
 }
 
