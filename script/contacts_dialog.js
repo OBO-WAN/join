@@ -18,8 +18,7 @@ function configEditDlgBox(id) {
             document.getElementById("Kind_Of_Dlg" + KindOfDlg_pc).innerHTML =
                 "Edit contact";
             btnText = "Save";
-            document.getElementById("id_Edit_Btn" + KindOfDlg_pc).onclick =
-                function () {
+            document.getElementById("id_Edit_Btn" + KindOfDlg_pc).onclick = function () {
                     editContact(id);
             };
 
@@ -37,6 +36,10 @@ function configEditDlgBox(id) {
             break;
     
         case "createContact":
+
+            document.getElementById("id_Edit_Btn" + KindOfDlg_pc).onclick = function () {
+                    createContact(id);
+            };
 
             createContactDialog(KindOfDlg_pc);
             btnText = "Create";
