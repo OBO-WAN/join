@@ -55,7 +55,7 @@
   top: 0;
   left: 0;
   object-fit: contain;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.4s ease-in-out;
 }
 
 @keyframes logoAnimation {
@@ -69,7 +69,6 @@
     top: clamp(15px, 6px + 2.8125vw, 60px);
     left: clamp(15px, 6px + 2.8125vw, 60px);
     transform: translate(-50%, -50%) scale(0.25);
-
   }
 }
 
