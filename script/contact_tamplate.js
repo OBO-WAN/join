@@ -378,7 +378,7 @@ function getAddNewContactMobileTemplate() {
               title="Enter a valid phone number (min. 7 characters, numbers, +, /, or -)"
             >
 
-            <button class="create_btn_mobile" type="submit" id="id_Edit_Btn">
+            <button class="create_btn_mobile" type="submit" id="id_Edit_Btn"  >
               <span id="id_Edit_Btn_Text">Create</span>
               <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
             </button>
