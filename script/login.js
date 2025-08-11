@@ -20,7 +20,7 @@ async function runIntroAnimation() {
     await delay(1500); // Wait for animation duration
 
     // Hide the animated logo overlay
-    if (overlay) overlay.style.display = 'flex';
+    if (overlay) overlay.style.pointerEvents = 'none';
 
     // Reveal content with fade
     revealElement(loginMain);
