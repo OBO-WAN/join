@@ -20,7 +20,7 @@
 }
 
 .animations-logo-overlay {
-  height: 100dvh;
+  height: 100vh;
   width: 100%;
   position: absolute;
   top: 0;
@@ -31,7 +31,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  animation: var(--animation-logo-overlay-responsive);
+  /* animation: var(--animation-logo-overlay-responsive); */
 }
 
 .animation-join-logo {
@@ -46,6 +46,8 @@
   justify-content: center;
   align-items: center;
   animation: logoAnimation 0.7s ease forwards 1s;
+  transform-origin: top left;
+
 }
 
 .animation-join-logo img {
@@ -68,7 +70,9 @@
   100% {
     top: clamp(15px, 6px + 2.8125vw, 60px);
     left: clamp(15px, 6px + 2.8125vw, 60px);
-    transform: translate(-50%, -50%) scale(0.25);
+    width: var(--width-64-100);
+    height: clamp(60px, 47.6px + 3.875vw, 122px);
+    transform: none; 
   }
 }
 
