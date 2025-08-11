@@ -7,7 +7,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const nav = document.getElementById("nav_log_in");
     nav.classList.remove("hidden");
     nav.classList.add("fade-in");
-  }, 1000);
+  }, 1500);
 });
 
 
