@@ -7,7 +7,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const nav = document.getElementById("nav_log_in");
     nav.classList.remove("hidden");
     nav.classList.add("fade-in");
-  }, 1600);
+  }, 1000);
 });
 
 
@@ -17,10 +17,10 @@ async function runIntroAnimation() {
     const footerLogin = document.getElementById('footerLogin');
     const animationFinished = document.getElementById('animationFinished');
 
-    await delay(1700); // Wait for animation duration
+    await delay(1500); // Wait for animation duration
 
     // Hide the animated logo overlay
-    if (overlay) overlay.style.display = 'none';
+    if (overlay) overlay.style.display = 'flex';
 
     // Reveal content with fade
     revealElement(loginMain);
