@@ -7,7 +7,7 @@
 
 .body-log-in {
   position: relative;
-  height: 100dvh;
+  height: 100vh;
   width: 100%;
   background-color: var(--light-gray-bg);
   display: flex;
@@ -31,7 +31,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* animation: var(--animation-logo-overlay-responsive); */
 }
 
 .animation-join-logo {
@@ -47,7 +46,6 @@
   align-items: center;
   animation: logoAnimation 0.7s ease forwards 1s;
   transform-origin: top left;
-
 }
 
 .animation-join-logo img {
@@ -361,7 +359,7 @@ button {
 
 .footer-log-in {
   position: absolute;
-  bottom: 50px;
+  bottom: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
