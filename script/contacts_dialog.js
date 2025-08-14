@@ -49,6 +49,24 @@ function configEditDlgBox(id) {
             break;
     }
     document.getElementById("id_Edit_Btn_Text" + KindOfDlg_pc).innerText = btnText;
+
+        const contactFormPc = document.getElementById("contact_form_pc");
+        if (contactFormPc){
+            contactFormPc.addEventListener("keyup", (e) => {
+                validateName(e);
+                validateMail(e);
+                validatePhone(e);
+            });
+        }
+
+          const contactFormMobile = document.getElementById("contact_form_mobile");
+        if (contactFormMobile){
+            contactFormMobile.addEventListener("keyup", (e) => {
+                validateNameMobile(e);
+                validateMailMobile(e);
+                validatePhoneMobile(e);
+            });
+        }
 }
 
 
