@@ -20,8 +20,18 @@ body {
     color: red;
     font-size: 12px;
     font-weight: 300;
+    margin-bottom: 10px; 
+  }
 
-    margin-bottom: 10px; ;
+  .form_erro_mobile{
+    width: 250px;
+    height: 12px;
+    margin-top: 3px;
+    color: red;
+    font-size: 12px;
+    font-weight: 300;
+    margin-bottom: 5px; 
+    margin-left: 12px;
   }
 
   .add_new_contact_form_pc{

@@ -369,7 +369,7 @@ function getAddNewContactMobileTemplate() {
             <div class="form_erro_mobile" id="form_name_erro_mobile"></div>
 
             <input
-              id="mail_input"
+              id="mail_input_mobile"
               class="add_new_contact_input_mobile"
               type="email"
               placeholder="  Mail"
@@ -379,7 +379,7 @@ function getAddNewContactMobileTemplate() {
             <div class="form_erro_mobile" id="form_mail_erro_mobile"></div>
 
             <input
-              id="phone_input"
+              id="phone_input_mobile"
               class="add_new_contact_input_mobile"
               type="tel"
               placeholder="Phone"
@@ -399,48 +399,6 @@ function getAddNewContactMobileTemplate() {
       </div>
     </div>
   `;
-
-  /*        <form onsubmit="handleMobileContactSubmit(event)">
-          <div class="mobile_contact_dialog_input_section">
-            <input
-              id="name_input"
-              class="add_new_contact_input_mobile"
-              type="text"
-              placeholder="  Name"
-              required
-              minlength="2"
-              title="Please enter at least 2 characters"
-            >
-
-            <input
-              id="mail_input"
-              class="add_new_contact_input_mobile"
-              type="email"
-              placeholder="  Mail"
-              required
-              title="Please enter a valid email address"
-            >
-
-            <input
-              id="phone_input"
-              class="add_new_contact_input_mobile"
-              type="tel"
-              placeholder="Phone"
-              required
-              pattern="[0-9+\\s\\-\\/]{7,}"
-              title="Enter a valid phone number (min. 7 characters, numbers, +, /, or -)"
-            >
-
-            <button class="create_btn_mobile" type="submit" id="id_Edit_Btn"  >
-              <span id="id_Edit_Btn_Text">Create</span>
-              <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
-            </button>
-          </div>
-        </form>
-        
-      </div>
-    </div>
-  `;*/
 }
 
 
