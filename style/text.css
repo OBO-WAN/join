@@ -6,9 +6,9 @@
 }
 
 h2 {
-  margin-bottom: 50px;
+  /* margin-bottom: 50px; */
   color: #2a3647;
-  font-size: 50px;
+  font-size: 46px;
 }
 
 h3 {
@@ -39,8 +39,8 @@ section {
     padding-top: 100px;
   }
   h2 {
-    font-size: 32px;
-    margin-bottom: 30px;
+    font-size: 38px;
+    margin-bottom: 10px;
   }
 
   h3 {
