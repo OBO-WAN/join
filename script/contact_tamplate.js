@@ -298,12 +298,18 @@ function getAddNewContactTemplate() {
             <p class="overlay_of_btn" onclick="closeContactDialog()">X</p>
           </div>
 
-          <form onsubmit="handleContactFormSubmit(event)">
+          <div  class="add_new_contact_form_pc" >
+          <form id="contact_form_pc" action = "/" method = "GET"> <!--   <form onsubmit="handleContactFormSubmit(event)" id="contact_form_pc">-->
             <input id="name_input_pc" class="add_new_contact_input" type="text" placeholder="  Name" required minlength="2" title="Please enter at least 2 characters">
-            <input id="mail_input_pc" class="add_new_contact_input" type="email" placeholder="  Mail" required title="Please enter a valid email address">
-            <input id="phone_input_pc" class="add_new_contact_input" type="tel" placeholder="  Phone" required pattern="[0-9+\\s\\-\\/]{7,}" title="Enter a valid phone number (min. 7 characters, numbers, +, /, or -)">
-
-            <div class="add_new_contact_btn_section">
+              <div class="form_erro_pc" id="form_name_erro_pc"></div>
+            
+              <input id="mail_input_pc" class="add_new_contact_input" type="email" placeholder="  Mail" required title="Please enter a valid email address">
+              <div class="form_erro_pc" id="form_mail_erro_pc"></div>
+            
+              <input id="phone_input_pc" class="add_new_contact_input" type="tel" placeholder="  Phone" required pattern="[0-9+\\s\\-\\/]{7,}" title="Enter a valid phone number (min. 7 characters, numbers, +, /, or -)">
+              <div class="form_erro_pc" id="form_phone_erro_pc"></div>
+            
+              <div class="add_new_contact_btn_section">
               <button type="button" class="cancel_btn" onclick="closeContactDialog()">
                 <span class="cancel_btn_txt">Cancel X</span>
               </button>
@@ -313,6 +319,8 @@ function getAddNewContactTemplate() {
               </button>
             </div>
           </form>
+          </div>
+
         </div>
       </div>
     </div>
@@ -347,7 +355,52 @@ function getAddNewContactMobileTemplate() {
           </div>
         </div>
 
-        <form onsubmit="handleMobileContactSubmit(event)">
+        <form id="contact_form_mobile" action = "/" method = "GET"">
+          <div class="mobile_contact_dialog_input_section">
+            <input
+              id="name_input_mobile"
+              class="add_new_contact_input_mobile"
+              type="text"
+              placeholder="  Name"
+              required
+              minlength="2"
+              title="Please enter at least 2 characters"
+            >
+            <div class="form_erro_mobile" id="form_name_erro_mobile"></div>
+
+            <input
+              id="mail_input"
+              class="add_new_contact_input_mobile"
+              type="email"
+              placeholder="  Mail"
+              required
+              title="Please enter a valid email address"
+            >
+            <div class="form_erro_mobile" id="form_mail_erro_mobile"></div>
+
+            <input
+              id="phone_input"
+              class="add_new_contact_input_mobile"
+              type="tel"
+              placeholder="Phone"
+              required
+              pattern="[0-9+\\s\\-\\/]{7,}"
+              title="Enter a valid phone number (min. 7 characters, numbers, +, /, or -)"
+            >
+            <div class="form_erro_mobile" id="form_phone_erro_mobile"></div>
+
+            <button class="create_btn_mobile" type="submit" id="id_Edit_Btn"  >
+              <span id="id_Edit_Btn_Text">Create</span>
+              <img class="create_btn_img" src="./assets/img/create_contact_btn.png" alt="create button">
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  `;
+
+  /*        <form onsubmit="handleMobileContactSubmit(event)">
           <div class="mobile_contact_dialog_input_section">
             <input
               id="name_input"
@@ -384,9 +437,10 @@ function getAddNewContactMobileTemplate() {
             </button>
           </div>
         </form>
+        
       </div>
     </div>
-  `;
+  `;*/
 }
 
 

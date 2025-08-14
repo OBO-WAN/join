@@ -94,7 +94,7 @@
     width: 60%;
     height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content:  center;
     align-items: center;
 }
 
@@ -129,7 +129,7 @@
     width: calc(100% - 200px);
     height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     flex-direction: column;
 }
@@ -141,7 +141,7 @@
     border-radius: 8px;
     width: 300px;
     height: 40px;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 .add_new_contact_input:focus{
@@ -174,13 +174,13 @@
 
 .add_new_contact_btn_section{
     width: 300px;
-    height: 100px;
+    height: 70px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-direction: row;
     gap:15px;
-    margin-top: 30px;
+   
 }
 
  .cancel_btn{
