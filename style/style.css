@@ -1,33 +1,34 @@
 * {
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-    margin: 0;
-    padding: 0;
-    font-family: "inter";
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  font-family: "inter";
 }
 
-html, body {
+html,
+body {
   max-width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
 @font-face {
-    font-family: "Inter";
-    src: url("../assets/font/Inter-VariableFont_opsz\,wght.ttf")
+  font-family: "Inter";
+  src: url("../assets/font/Inter-VariableFont_opsz\,wght.ttf")
     format("truetype");
 }
 
-::-webkit-scrollbar{
-    width: 14px;
+::-webkit-scrollbar {
+  width: 14px;
 }
-::-webkit-scrollbar-thumb{
-    background: #2A3647 ;
-    border-radius: 10px;
+::-webkit-scrollbar-thumb {
+  background: #2a3647;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 :root {
@@ -81,22 +82,21 @@ html, body {
 
   /* Widths */
   --width-64-100: clamp(64px, 6vw, 100px);
-
 }
 
 header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 80px;
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 0 0 348px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    z-index: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 0 348px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  z-index: 0;
 }
 
 @media (max-width: 768px) {
@@ -106,10 +106,10 @@ header {
 }
 
 header h1 {
-    font-size: 20px;
-    font-weight: 400;
-    font-family: "Inter";
-    color: #2a3647;
+  font-size: 20px;
+  font-weight: 400;
+  font-family: "Inter";
+  color: #2a3647;
 }
 
 @media (max-width: 768px) {
@@ -119,17 +119,17 @@ header h1 {
 }
 
 nav.sidebar {
-    background-color: #2a3647;
-    position: fixed;
-    top: 0;
-    font-size: 16px;
-    font-weight: 200;
-    height: 100vh;
-    width: 232px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+  background-color: #2a3647;
+  position: fixed;
+  top: 0;
+  font-size: 16px;
+  font-weight: 200;
+  height: 100vh;
+  width: 232px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Optional: Hide sidebar on mobile */
@@ -151,114 +151,158 @@ nav.sidebar {
 }
 
 .logonav {
-    padding: 65px;
+  padding: 65px;
 }
 
 .menu {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding-bottom: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 200px;
 }
 
 .menu-button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background-color: #2a3647;
-    border: none;
-    padding: 10px 65px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #2a3647;
+  border: none;
+  padding: 10px 65px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .menu-button:hover {
-    background-color: #2a3d59;
+  background-color: #2a3d59;
 }
 
 .menu-button.active {
-    background-color: #091931;
+  background-color: #091931;
 }
 
 .menu-button.active img {
-    filter: brightness(0) invert(1);
+  filter: brightness(0) invert(1);
 }
 
 .menu-button img {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 }
 
 .menu-button span {
-    font-family: "Inter";
-    font-weight: 200;
-    font-size: 16px;
-    color: #cdcdcd;
+  font-family: "Inter";
+  font-weight: 200;
+  font-size: 16px;
+  color: #cdcdcd;
 }
 
 .menu-login {
-    padding-bottom: 400px;
+  padding-bottom: 400px;
 }
 
 .menu-button-login {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background-color: #2a3647;
-    border: none;
-    padding: 10px 79px;
-    cursor: pointer;
-    color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #2a3647;
+  border: none;
+  padding: 10px 79px;
+  cursor: pointer;
+  color: white;
 }
 
 .menu-button-login span {
-    font-family: "Inter";
-    font-weight: 200;
-    font-size: 16px;
-    color: #cdcdcd;
+  font-family: "Inter";
+  font-weight: 200;
+  font-size: 16px;
+  color: #cdcdcd;
 }
 
 .menu-button-login:hover {
-    background-color: #2a3d59;
+  background-color: #2a3d59;
+}
+
+.headline-img-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 10px;
+  margin-bottom: 26px;
 }
 
 .legal-policy {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 50px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+  width: 100%;
 }
 
 .legal-policy-background {
-    width: 100%;
-    background-color: #2a3647;
-    display: flex;
-    justify-content: center;
-    padding: 8px 0;
+  width: 100%;
+  background-color: #2a3647;
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
 }
 
 .legal-policy-background.active {
-    background-color: #091931;
+  background-color: #091931;
 }
 
 .legal-policy-button {
-    border: none;
-    background: none;
-    font-family: "Inter";
-    color: #cdcdcd;
-    font-size: 16px;
-    font-weight: 200;
-    text-decoration: none;
-    cursor: pointer;
-    padding: 0;
-    transition: color 0.3s, transform 0.2s;
+  border: none;
+  background: none;
+  font-family: "Inter";
+  color: #cdcdcd;
+  font-size: 16px;
+  font-weight: 200;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.3s, transform 0.2s;
 }
 
 .legal-policy-button:hover {
-    color: #29abe2;
-    transform: scale(1.05);
+  color: #29abe2;
+  transform: scale(1.05);
 }
 
+.arrow-left{
+  width: 35px;
+  aspect-ratio: 1 / 1;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.arrow-left {
+  margin-top: 10px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-left img {
+  width: 21px;
+}
+
+.arrow-left:hover {
+  background-color: var(--light-gray-bg);
+}
+
+.arrow-left:hover img {
+  transform: scale(1.2);
+}
+
+@media screen and (max-width: 768px) {
+  .mobile-view-links-container {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+    align-items: center;
+  }
+}
 
 /* === Responsive fixes for mobile view === */
 
@@ -288,8 +332,8 @@ nav.sidebar {
 }
 
 body {
-    overflow-x: hidden;
-}    
+  overflow-x: hidden;
+}
 
 /* Confirmation Modal */
 
@@ -305,7 +349,7 @@ body {
 .modal-backdrop {
   position: absolute;
   inset: 0;
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .modal-content {
@@ -313,7 +357,7 @@ body {
   background: white;
   padding: 24px 32px;
   border-radius: 10px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   z-index: 1;
   text-align: center;
 }
@@ -335,7 +379,7 @@ body {
 }
 
 .confirm-btn {
-  background-color: #FF3D00;
+  background-color: #ff3d00;
   color: white;
 }
 
@@ -343,5 +387,3 @@ body {
   background-color: #ccc;
   color: #333;
 }
-
-
