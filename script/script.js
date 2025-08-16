@@ -4,17 +4,19 @@
  */
 function toggleMenu(){
     let goBackBtn = document.getElementById("go_back_btn_container");
-    let contactViewCard = document.getElementById("contact_view_card");
+  
+    let contactViewCardMobile = document.getElementById("mobile_view_card_header");
+    let contactViewCardTablate = document.getElementById("Tablet_view_card_header");
     const menu = document.getElementById("dropdown_menu");
 
     if (menu.style.display == "flex") {
         menu.style.display = "none";
-        if (contactViewCard && menu.style.display == "none") {
+        if (contactViewCardMobile|| contactViewCardTablate && menu.style.display == "none") {
            goBackBtn.style.display = "flex";
         }           
     } else {
         menu.style.display = "flex";
-        if (contactViewCard){
+        if (contactViewCardMobile|| contactViewCardTablate){
         goBackBtn.style.display = "none";
         }      
     }

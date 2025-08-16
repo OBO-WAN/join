@@ -1,3 +1,6 @@
+#dropdown_container{
+  z-index: 4000;
+}
 input {
   padding-left: 12px;
 }
@@ -150,6 +153,7 @@ body {
   align-items: center;
   margin-bottom: 20px;
   z-index: 1200;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .contact_card:hover,
@@ -158,12 +162,9 @@ body {
   color: white;
   cursor: pointer;
 }
+
 .contact_card:hover .contact_name {
   color: white;
-}
-
-.contact_card {
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .contact_avatar_section {
