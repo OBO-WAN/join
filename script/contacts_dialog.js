@@ -103,6 +103,7 @@ function createContactDialog(KindOfDlg_pc) {
  * @param {number} id - The contact index or -1 for new contact.
  */
 function openContactDialog(id) {
+    switchoffMenu();
     //index > 0 entspricht Contacs editieren
     //index <0 entspricht neuen Kontakt erstellen
     let addNewContactButton = document.getElementById("add_new_contact_button");
