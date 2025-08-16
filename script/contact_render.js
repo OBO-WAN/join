@@ -132,6 +132,7 @@ function MobileVievCard(index) {
         let contactsContainer = document.getElementById("contactslist_container");
         contactsContainer.innerHTML = viewCardTemp;
         renderViewCard(index);
+        document.getElementById("contactslist_container").style.overflow = "hidden";
     }
 }
 

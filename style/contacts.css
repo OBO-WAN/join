@@ -155,7 +155,7 @@ body {
 .contact_card:hover,
 .contact_card.active {
   background-color: #2a3647;
-  color: rgb(0, 0, 0);
+  color: white;
   cursor: pointer;
 }
 .contact_card:hover .contact_name {

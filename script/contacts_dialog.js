@@ -67,6 +67,7 @@ function configEditDlgBox(id) {
                 validatePhoneMobile(e);
             });
         }
+
 }
 
 
@@ -116,9 +117,7 @@ function openContactDialog(id) {
     if (addNewContactOvSection) {
         addNewContactOvSection.style.display = "flex";
         addNewContactOvSection.innerHTML = getAddNewContactTemplate();
-
-        document.getElementById("add_new_contact_ov_container").style.display =
-            "flex";
+        document.getElementById("add_new_contact_ov_container").style.display ="flex";
     }
 
     addNewContactSectionState_pc(true);
@@ -148,6 +147,10 @@ function closeContactDialog() {
         addNewSection.innerHTML = "";
         addNewContainer.style.display = "none";
     }
+    /*document.getElementById("contact_form_pc").addEventListener('submit', function (e) {
+    e.preventDefault(); // verhindert das native Submit-Verhalten
+      saveEditedContact()    // deine Speicherfunktion
+});*/
 }
 
 
@@ -162,6 +165,9 @@ function openContactDialogMobile(id) {
     mobileDialogTemplate;
     configEditDlgBox(id);
     editContactsMobileMenuOff();
+    document.getElementById("contact_form_mobile")?.addEventListener("submit", function(event) {
+    event.preventDefault()
+});
 }
 
 

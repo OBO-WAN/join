@@ -299,7 +299,7 @@ function getAddNewContactTemplate() {
           </div>
 
           <div  class="add_new_contact_form_pc" >
-          <form id="contact_form_pc" action = "/" method = "GET"> <!--   <form onsubmit="handleContactFormSubmit(event)" id="contact_form_pc">-->
+          <form id="contact_form_pc" method = "GET"> <!--   <form onsubmit="handleContactFormSubmit(event)" id="contact_form_pc">-->
             <input id="name_input_pc" class="add_new_contact_input" type="text" placeholder="  Name" required minlength="2" title="Please enter at least 2 characters">
               <div class="form_erro_pc" id="form_name_erro_pc"></div>
             
@@ -355,10 +355,10 @@ function getAddNewContactMobileTemplate() {
           </div>
         </div>
 
-        <form id="contact_form_mobile" action = "/" method = "GET"">
+        <form id="contact_form_mobile" method = "GET"">
           <div class="mobile_contact_dialog_input_section">
             <input
-              id="name_input_mobile"
+              id="name_input"
               class="add_new_contact_input_mobile"
               type="text"
               placeholder="  Name"
@@ -369,7 +369,7 @@ function getAddNewContactMobileTemplate() {
             <div class="form_erro_mobile" id="form_name_erro_mobile"></div>
 
             <input
-              id="mail_input_mobile"
+              id="mail_input"
               class="add_new_contact_input_mobile"
               type="email"
               placeholder="  Mail"
@@ -379,7 +379,7 @@ function getAddNewContactMobileTemplate() {
             <div class="form_erro_mobile" id="form_mail_erro_mobile"></div>
 
             <input
-              id="phone_input_mobile"
+              id="phone_input"
               class="add_new_contact_input_mobile"
               type="tel"
               placeholder="Phone"
