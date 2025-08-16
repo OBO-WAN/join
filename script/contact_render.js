@@ -10,7 +10,7 @@ window.addEventListener("resize", () => {
 function handleWindowResize() {
     let idx = getActualContactIndex();
     getViewMode();
-
+    switchoffMenu();
     switch (getViewMode()) {
         case 1: // 1 = desktop big     | >= 1100
             clearTabletViewCard();
@@ -83,7 +83,7 @@ function deletAllNullElementsFromArray(contacts){
  * @param {Array<Object>} contacts - The array of contact objects to render.
  */
 function renderContacts(contacts) {
-
+    switchoffMenu();
     scrollEnable();
 
     deletAllNullElementsFromArray(contacts); // Entfernt null-Elemente aus dem Array
@@ -114,6 +114,7 @@ function renderContacts(contacts) {
  * @param {number} index - The index of the contact to display.
  */
 function MobileVievCard(index) {
+    switchoffMenu();
     if (index >= 0) {
         //let contact = Contacts[index];
         //let initials = getInitials(contact.name);
@@ -154,7 +155,7 @@ function getTabletViewCardHeader() {
  * @param {number} index - The contact index.
  */
 function renderTabletVievCard(index) {
-
+    switchoffMenu();
     scrollDisable();    
     addNewContactSectionState(true);
     
@@ -178,6 +179,7 @@ function renderTabletVievCard(index) {
  * @param {string} color - The avatar color.
  */
 function renderTabletCardContainer(index, color) {
+    switchoffMenu();
     const TabletViewContainer = document.getElementById("tablate_view_card_container");
     TabletViewContainer.style.display = "flex";
     TabletViewContainer.innerHTML = getTabletViewCardTemplate(index, color);
@@ -193,6 +195,7 @@ function renderTabletCardContainer(index, color) {
  * @param {Object} contact - The contact object.
  */
 function fillTabletCardFields(contact) {
+    switchoffMenu();
     document.getElementById("contact_view_avatar_initials").innerText =
         contact.name
             .split(" ")
@@ -218,6 +221,7 @@ function hideContactsList() {
  * Clears the tablet view card container.
  */
 function clearTabletViewCard() {
+    switchoffMenu();
     let tabletViewCardContainer = document.getElementById(
         "tablate_view_card_container"
     );
@@ -232,6 +236,7 @@ function clearTabletViewCard() {
  * Clears the contact view card based on view mode.
  */
 function clearViewCard() {
+    switchoffMenu();
     let contactViewCard = document.getElementById("contactViewCard");
     let contact_view_card = document.getElementById("contact_view_card");
 
@@ -255,6 +260,7 @@ function clearViewCard() {
  * @param {number} index - The contact index.
  */
 function renderViewCard(index) {
+    switchoffMenu();
     setActualContactIndex(index);
 
     if (index >= 0) {
@@ -312,6 +318,7 @@ function generateContactsCards(contacts) {
  */
 function goBacktoContacts() {
 
+    switchoffMenu();
     let tablet_additional_div = "";
     let addNewContact = "";
     let viewMode = getViewMode();

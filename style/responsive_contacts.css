@@ -154,7 +154,7 @@ h1{
     background-color: #afb1b1af;
 }
 
-.go_back_btn_section{
+/*.go_back_btn_section{
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -164,7 +164,7 @@ h1{
     margin-right:  10px;
     cursor: pointer;
     position: absolute;
-}
+}*/
 
 .contact_view_header{
     width: 95%;

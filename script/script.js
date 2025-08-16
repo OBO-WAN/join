@@ -3,37 +3,34 @@
  * for mobile view.
  */
 function toggleMenu(){
-    let goBackBtn = document.getElementById("go_back_btn_section");
-    let contactListContainer = document.getElementById("contactslist_container");
+    let goBackBtn = document.getElementById("go_back_btn_container");
+    let contactViewCard = document.getElementById("contact_view_card");
     const menu = document.getElementById("dropdown_menu");
 
     if (menu.style.display == "flex") {
         menu.style.display = "none";
-        if (contactListContainer){
+        if (contactViewCard && menu.style.display == "none") {
            goBackBtn.style.display = "flex";
         }           
     } else {
         menu.style.display = "flex";
-        if (contactListContainer ){
+        if (contactViewCard){
         goBackBtn.style.display = "none";
         }      
     }
-
-    /*if (menu.style.display === "flex") {
-        menu.style.display = "none";
-        
-    } else {
-        menu.style.display = "flex";    
-    }
-
-    if ( menu.style.display === "flex" && mobileViewCard) {
-       goBackBtn.style.display = "none";
-      
-    } else {
-      goBackBtn.style.display = "flex";
-    }*/
 }
 
+function switchoffMenu(){
+    let goBackBtn = document.getElementById("go_back_btn_container");
+    const menu = document.getElementById("dropdown_menu");
+
+    if (menu.style.display == "flex") {
+        menu.style.display = "none";
+        if (goBackBtn) {
+            goBackBtn.style.display = "flex";
+        }
+    }
+} 
 
 
 
