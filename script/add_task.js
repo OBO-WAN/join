@@ -209,13 +209,66 @@ function initAddTaskFormEvents() {
   if (submitBtn && form) {
     submitBtn.onclick = function (event) {
       event.preventDefault();
-      if (!form.checkValidity()) {
-        form.reportValidity();
+
+      if (!validateForm()) {
         return;
       }
+
       submitTask();
     };
   }
+}
+
+function validateForm() {
+  let valid = true;
+
+  const title = document.getElementById("title");
+  const titleError = document.getElementById("error-title");
+
+  const dueDate = document.getElementById("due-date");
+  const dueDateError = document.getElementById("error-due-date");
+
+  if (!title.value.trim()) {
+    title.classList.add("input-error");
+    titleError.classList.add("active");
+    valid = false;
+  } else {
+    title.classList.remove("input-error");
+    titleError.classList.remove("active");
+  }
+
+  if (!dueDate.value.trim()) {
+    dueDate.classList.add("input-error");
+    dueDateError.classList.add("active");
+    valid = false;
+  } else {
+    dueDate.classList.remove("input-error");
+    dueDateError.classList.remove("active");
+  }
+
+  return valid;
+}
+
+function addFieldValidationListeners() {
+  const title = document.getElementById("title");
+  const titleError = document.getElementById("error-title");
+
+  const dueDate = document.getElementById("due-date");
+  const dueDateError = document.getElementById("error-due-date");
+
+  title.addEventListener("input", () => {
+    if (title.value.trim()) {
+      title.classList.remove("input-error");
+      titleError.classList.remove("active");
+    }
+  });
+
+  dueDate.addEventListener("input", () => {
+    if (dueDate.value.trim()) {
+      dueDate.classList.remove("input-error");
+      dueDateError.classList.remove("active");
+    }
+  });
 }
 
 /**
@@ -539,6 +592,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("taskForm");
   if (form) {
     initAddTaskFormEvents();
+    addFieldValidationListeners();
     loadContacts();
   }
 });

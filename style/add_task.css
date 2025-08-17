@@ -491,6 +491,21 @@ input[type="radio"]:checked + .priority-button {
     height: 28px;
 }
 
+.input-error {
+    border-color: #ff3d00 !important;
+}
+
+.field-error-message {
+    font-size: 12px;
+    color: #ff3d00;
+    margin-top: -8px;
+    display: none;
+}
+  
+.field-error-message.active {
+    display: block;
+}
+
 @keyframes fadeInOut {
   0% {
     opacity: 0;
