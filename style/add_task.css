@@ -506,6 +506,10 @@ input[type="radio"]:checked + .priority-button {
     display: block;
 }
 
+.category-select-header.input-error {
+    border-color: #ff3d00 !important;
+}
+
 @keyframes fadeInOut {
   0% {
     opacity: 0;

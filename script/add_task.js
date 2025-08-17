@@ -187,11 +187,31 @@ function closeOverlay() {
 function resetForm() {
   document.getElementById("taskForm").reset();
   document.getElementById("subtask-list").innerHTML = "";
-  const checkboxes = document.querySelectorAll(
-    '#assignee-dropdown input[type="checkbox"]'
-  );
-  checkboxes.forEach((cb) => (cb.checked = false));
+
+  const checkboxes = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]');
+  checkboxes.forEach(cb => cb.checked = false);
   updateAssigneePlaceholder();
+
+  const inputs = document.querySelectorAll("#taskForm input, #taskForm textarea");
+  inputs.forEach(input => {
+      input.classList.remove("input-error");
+      input.setCustomValidity?.("");
+  });
+
+  const errorMessages = document.querySelectorAll(".field-error-message");
+  errorMessages.forEach(error => error.classList.remove("active"));
+
+  const categoryInput = document.getElementById("category");
+  const categoryPlaceholder = document.getElementById("selected-category-placeholder");
+  const categoryHeader = document.querySelector(".category-select-header");
+  const categoryError = document.getElementById("error-category");
+
+  if (categoryInput && categoryPlaceholder && categoryHeader && categoryError) {
+      categoryInput.value = "";
+      categoryPlaceholder.textContent = "Select category";
+      categoryHeader.classList.remove("input-error");
+      categoryError.classList.remove("active");
+  }
 }
 
 /**
@@ -228,6 +248,10 @@ function validateForm() {
   const dueDate = document.getElementById("due-date");
   const dueDateError = document.getElementById("error-due-date");
 
+  const category = document.getElementById("category");
+  const categoryError = document.getElementById("error-category");
+  const categoryHeader = document.querySelector(".category-select-header");
+
   if (!title.value.trim()) {
     title.classList.add("input-error");
     titleError.classList.add("active");
@@ -244,6 +268,15 @@ function validateForm() {
   } else {
     dueDate.classList.remove("input-error");
     dueDateError.classList.remove("active");
+  }
+
+  if (!category.value.trim()) {
+    categoryHeader.classList.add("input-error");
+    categoryError.classList.add("active");
+    valid = false;
+  } else {
+    categoryHeader.classList.remove("input-error");
+    categoryError.classList.remove("active");
   }
 
   return valid;
