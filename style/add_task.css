@@ -1,12 +1,14 @@
 .add-task-container {
     max-width: 1100px;
     min-height: 100vh;
-    padding: 160px 20px 80px 20px; /* responsive padding */
+    padding: 160px 20px 80px 20px;
     padding-left: 329px;
-    padding-top: 96px;
     background-color: #fff;
     border-radius: 8px;
     font-family: "Inter", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .add-task-container-overlay {
