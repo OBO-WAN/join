@@ -300,6 +300,7 @@ function getAddNewContactTemplate() {
 
           <div  class="add_new_contact_form_pc" >
           <form id="contact_form_pc" method = "GET"> <!--   <form onsubmit="handleContactFormSubmit(event)" id="contact_form_pc">-->
+<<<<<<< HEAD
             <input id="name_input_pc" class="add_new_contact_input" type="text" placeholder="  Name"  minlength="2" title="Please enter at least 2 characters">
               <div class="form_erro_pc" id="form_name_erro_pc"></div>
             
@@ -307,6 +308,15 @@ function getAddNewContactTemplate() {
               <div class="form_erro_pc" id="form_mail_erro_pc"></div>
             
               <input id="phone_input_pc" class="add_new_contact_input" type="tel" placeholder="  Phone" pattern="[0-9+\\s\\-\\/]{7,}" title="Enter a valid phone number (min. 7 characters, numbers, +, /, or -)">
+=======
+            <input id="name_input_pc" class="add_new_contact_input" type="text" placeholder="  Name" required minlength="2" title="Please enter at least 2 characters">
+              <div class="form_erro_pc" id="form_name_erro_pc"></div>
+            
+              <input id="mail_input_pc" class="add_new_contact_input" type="email" placeholder="  Mail" required title="Please enter a valid email address">
+              <div class="form_erro_pc" id="form_mail_erro_pc"></div>
+            
+              <input id="phone_input_pc" class="add_new_contact_input" type="tel" placeholder="  Phone" required pattern="[0-9+\\s\\-\\/]{7,}" title="Enter a valid phone number (min. 7 characters, numbers, +, /, or -)">
+>>>>>>> e1635162501c2516b832f3f7a023944516569fc0
               <div class="form_erro_pc" id="form_phone_erro_pc"></div>
             
               <div class="add_new_contact_btn_section">
@@ -362,6 +372,10 @@ function getAddNewContactMobileTemplate() {
               class="add_new_contact_input_mobile"
               type="text"
               placeholder="  Name"
+<<<<<<< HEAD
+=======
+              required
+>>>>>>> e1635162501c2516b832f3f7a023944516569fc0
               minlength="2"
               title="Please enter at least 2 characters"
             >
@@ -372,6 +386,10 @@ function getAddNewContactMobileTemplate() {
               class="add_new_contact_input_mobile"
               type="email"
               placeholder="  Mail"
+<<<<<<< HEAD
+=======
+              required
+>>>>>>> e1635162501c2516b832f3f7a023944516569fc0
               title="Please enter a valid email address"
             >
             <div class="form_erro_mobile" id="form_mail_erro_mobile"></div>
@@ -381,6 +399,10 @@ function getAddNewContactMobileTemplate() {
               class="add_new_contact_input_mobile"
               type="tel"
               placeholder="Phone"
+<<<<<<< HEAD
+=======
+              required
+>>>>>>> e1635162501c2516b832f3f7a023944516569fc0
               pattern="[0-9+\\s\\-\\/]{7,}"
               title="Enter a valid phone number (min. 7 characters, numbers, +, /, or -)"
             >

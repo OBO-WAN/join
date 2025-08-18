@@ -152,7 +152,11 @@ body {
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 20px;
+<<<<<<< HEAD
 
+=======
+  z-index: 1200;
+>>>>>>> e1635162501c2516b832f3f7a023944516569fc0
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
