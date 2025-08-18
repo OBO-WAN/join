@@ -415,5 +415,5 @@ function getGoBackTemplate(tablet_additional_div) {
                     <img class="add_new_contact_mobile_icon" src="./assets/icons/contact/addcontact.png" alt="icon">
                 </div>
             </div>
-        `;
+        `;  
 }
