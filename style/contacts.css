@@ -152,7 +152,7 @@ body {
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 20px;
-  z-index: 1200;
+
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
