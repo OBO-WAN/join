@@ -66,12 +66,14 @@ function getAddTaskOverlay() {
             <div class="form-left">
                 <label for="title">Title <span class="required-marker">*</span></label>
                 <input type="text" id="title" name="title" placeholder="Enter a title" required>
+                <div class="field-error-message" id="error-title">This field is required</div>
 
                 <label for="description">Description</label>
                 <textarea id="description" name="description" rows="4" placeholder="Enter a Description"></textarea>
 
                 <label for="due-date">Due Date <span class="required-marker">*</span></label>
                 <input type="date" id="due-date" name="due-date" required>
+                <div class="field-error-message" id="error-due-date">This field is required</div>
             </div>
 
             <div class="form-divider"></div>
@@ -84,7 +86,7 @@ function getAddTaskOverlay() {
                         Urgent <img src="./assets/icons/priority/priority_urgent.png" alt="Urgent icon">
                     </label>
 
-                    <input type="radio" id="priority-medium" name="priority" value="medium">
+                    <input type="radio" id="priority-medium" name="priority" value="medium" checked>
                     <label for="priority-medium" class="priority-button medium">
                         Medium <img src="./assets/icons/priority/priority_medium.png" alt="Medium icon">
                     </label>
@@ -120,6 +122,7 @@ function getAddTaskOverlay() {
                     </div>
                 </div>
                 <input type="hidden" id="category" name="category" required>
+                <div class="field-error-message" id="error-category">This field is required</div>
 
                 <label for="subtask">Subtasks</label>
                 <div class="subtask-input-container">
