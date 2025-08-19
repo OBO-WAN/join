@@ -34,6 +34,26 @@ function switchoffMenu(){
     }
 } 
 
+/*window.onclick =  (event) =>{
+if (event.target.id === "contact_icon") {
+      closeTogelMenu()
+    }
+}*/
+
+/*function closeTogelMenu(){
+  const menu = document.getElementById("dropdown_menu");
+  menu.style.display = "none";
+}*/
+
+
+
+
+ /*window.onclick =  (event) =>{
+if (event.target.id === "contact_icon") {
+      closeTogelMenu()
+    }
+}*/
+
 
 
 /**

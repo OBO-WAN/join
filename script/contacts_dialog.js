@@ -152,9 +152,14 @@ function closeContactDialog() {
     e.preventDefault(); // verhindert das native Submit-Verhalten
       saveEditedContact()    // deine Speicherfunktion
 });*/
+
 }
 
-
+window.onclick =  (event) =>{
+if (event.target.id === "add_new_contact_ov_section") {
+        closeContactDialog();
+    }
+}
 /*contact dialog mobile section*/
 /**
  * Opens the contact dialog for mobile view.
@@ -191,6 +196,11 @@ function closeContactDialogMobile() {
     }
 }
 
+window.onclick =  (event) =>{
+if (event.target.id === "add_new_contact_mobile_ov") {
+        closeContactDialogMobile();
+    }
+}
 
 /**
  * Shows the mobile menu for editing contacts.

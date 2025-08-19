@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
 function validateName(){
     const name = document.getElementById("name_input_pc");
     const nameError = document.getElementById("form_name_erro_pc");
-    let msgName = "First Name and Last Name is required";
+    let msgName = "Please enter your first and last name";
 
     if (validateName_LowLevel(name.value)) {
         nameError.innerHTML = "";
@@ -42,7 +42,7 @@ function validateName(){
 function validateNameMobile(){
     const name = document.getElementById("name_input");
     const nameError = document.getElementById("form_name_erro_mobile");
-    let msgName = "First Name and Last Name is required";
+    let msgName = "Please enter your first and last name";
 
     if (validateName_LowLevel(name.value)) {
         nameError.innerHTML = "";
@@ -82,7 +82,7 @@ function validateName_LowLevel(name){
 function validateMail(){
     const mail = document.getElementById("mail_input_pc");
     const mailError = document.getElementById("form_mail_erro_pc");
-    let msgMail = "Valid Maile is requerd";
+    let msgMail = "A valid email address is required";
 
 
     if (validateMail_LowLevel(mail.value)) {
@@ -100,7 +100,7 @@ function validateMail(){
 function validateMailMobile(){
     const mail = document.getElementById("mail_input");
     const mailError = document.getElementById("form_mail_erro_mobile");
-    let msgMail = "Valid Maile is requerd";
+    let msgMail = "A valid email address is required";
 
 
     if (validateMail_LowLevel(mail.value)) {
@@ -132,7 +132,7 @@ function validateMail_LowLevel(mail){
 function validatePhone(){
     const phone = document.getElementById("phone_input_pc");
     const phoneError = document.getElementById("form_phone_erro_pc");
-    let msgPhone = "Valid Phone nuber is requerd";
+    let msgPhone = "A Valid phone number is required";
 
     if (validatePhone_LowLevel(phone.value)) {
         phoneError.innerHTML = "";
@@ -150,7 +150,7 @@ function validatePhone(){
 function validatePhoneMobile(){
     const phone = document.getElementById("phone_input");
     const phoneError = document.getElementById("form_phone_erro_mobile");
-    let msgPhone = "Valid Phone nuber is requerd";
+    let msgPhone = "A Valid phone number is required";
 
     if (validatePhone_LowLevel(phone.value)) {
         phoneError.innerHTML = "";

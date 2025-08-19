@@ -286,7 +286,7 @@ function getAddNewContactTemplate() {
         </div>
       </div>
 
-      <div class="add_new_contact_entry_section">
+      <div class="add_new_contact_entry_section" id="add_new_contact_entry_section">
         <div class="add_new_contact_avatar_section">
           <div class="add_new_contact_avatar" id="add_new_contact_avatar">
             <img class="ov_avatar" src="./assets/img/add_new_contact_ov_avatar.png" alt="add new contact avatar">
@@ -361,7 +361,7 @@ function getAddNewContactMobileTemplate() {
               id="name_input"
               class="add_new_contact_input_mobile"
               type="text"
-              placeholder="  Name"
+              placeholder=" Name"
               minlength="2"
               title="Please enter at least 2 characters"
             >
@@ -371,7 +371,7 @@ function getAddNewContactMobileTemplate() {
               id="mail_input"
               class="add_new_contact_input_mobile"
               type="email"
-              placeholder="  Mail"
+              placeholder=" Mail"
               title="Please enter a valid email address"
             >
             <div class="form_erro_mobile" id="form_mail_erro_mobile"></div>
@@ -380,7 +380,7 @@ function getAddNewContactMobileTemplate() {
               id="phone_input"
               class="add_new_contact_input_mobile"
               type="tel"
-              placeholder="Phone"
+              placeholder=" Phone"
               pattern="[0-9+\\s\\-\\/]{7,}"
               title="Enter a valid phone number (min. 7 characters, numbers, +, /, or -)"
             >
