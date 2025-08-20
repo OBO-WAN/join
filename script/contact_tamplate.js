@@ -300,13 +300,13 @@ function getAddNewContactTemplate() {
 
           <div  class="add_new_contact_form_pc" >
           <form id="contact_form_pc" method = "GET"> <!--   <form onsubmit="handleContactFormSubmit(event)" id="contact_form_pc">-->
-            <input id="name_input_pc" class="add_new_contact_input" type="text" placeholder="  Name"  minlength="2" title="Please enter at least 2 characters">
+            <input id="name_input_pc" class="add_new_contact_input" type="text" placeholder="Name"  minlength="2" title="Please enter at least 2 characters">
               <div class="form_erro_pc" id="form_name_erro_pc"></div>
             
-              <input id="mail_input_pc" class="add_new_contact_input" type="email" placeholder="  Mail"  title="Please enter a valid email address">
+              <input id="mail_input_pc" class="add_new_contact_input" type="email" placeholder="Mail"  title="Please enter a valid email address">
               <div class="form_erro_pc" id="form_mail_erro_pc"></div>
             
-              <input id="phone_input_pc" class="add_new_contact_input" type="tel" placeholder="  Phone" pattern="[0-9+\\s\\-\\/]{7,}" title="Enter a valid phone number (min. 7 characters, numbers, +, /, or -)">
+              <input id="phone_input_pc" class="add_new_contact_input" type="tel" placeholder="Phone" pattern="[0-9+\\s\\-\\/]{7,}" title="Enter a valid phone number (min. 7 characters, numbers, +, /, or -)">
               <div class="form_erro_pc" id="form_phone_erro_pc"></div>
             
               <div class="add_new_contact_btn_section">
@@ -361,7 +361,7 @@ function getAddNewContactMobileTemplate() {
               id="name_input"
               class="add_new_contact_input_mobile"
               type="text"
-              placeholder=" Name"
+              placeholder="Name"
               minlength="2"
               title="Please enter at least 2 characters"
             >
@@ -371,7 +371,7 @@ function getAddNewContactMobileTemplate() {
               id="mail_input"
               class="add_new_contact_input_mobile"
               type="email"
-              placeholder=" Mail"
+              placeholder="Mail"
               title="Please enter a valid email address"
             >
             <div class="form_erro_mobile" id="form_mail_erro_mobile"></div>
@@ -380,7 +380,7 @@ function getAddNewContactMobileTemplate() {
               id="phone_input"
               class="add_new_contact_input_mobile"
               type="tel"
-              placeholder=" Phone"
+              placeholder="Phone"
               pattern="[0-9+\\s\\-\\/]{7,}"
               title="Enter a valid phone number (min. 7 characters, numbers, +, /, or -)"
             >
