@@ -101,6 +101,7 @@ a {
     font-size: 14px;
     font-weight: 300;
     padding-left: 16px;
+    cursor: pointer;
 }
 
 .hl_logo_section{
