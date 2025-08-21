@@ -155,7 +155,7 @@
 .undertask:hover {
   background-color: #2a3647;
   color: #ffffff;
-  transform: scale(1.1);
+  transform: scale(1.0);
   transition: 0.1s;
 }
 
