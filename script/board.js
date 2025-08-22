@@ -4,6 +4,12 @@ let users = [];
 
 let currentDraggedElement = null;
 
+window.onclick =  (event) =>{
+if (event.target.id === "overlay") {
+        closeOverlay();
+    }
+}
+
 /**
  * Loads all tasks from Firebase and updates the global tasks array
  */
