@@ -4,23 +4,51 @@
  */
 function toggleMenu(){
     let goBackBtn = document.getElementById("go_back_btn_container");
-  
+    let arrowLeft = document.getElementById("arrow-left");
+    let headlineImageContainer = document.getElementById("headline-img-container");
     let contactViewCardMobile = document.getElementById("mobile_view_card_header");
     let contactViewCardTablate = document.getElementById("Tablet_view_card_header");
     const menu = document.getElementById("dropdown_menu");
 
     if (menu.style.display == "flex") {
         menu.style.display = "none";
-        if (contactViewCardMobile|| contactViewCardTablate && menu.style.display == "none") {
-           goBackBtn.style.display = "flex";
-        }           
+
+        if( goBackBtn ) {
+            goBackBtn.style.display = "flex";
+        }
+        if (arrowLeft) {
+            arrowLeft.style.display = "flex";
+        }
+
+        //if ( (contactViewCardMobile || contactViewCardTablate) && menu.style.display == "none" ) {
+        if ( contactViewCardMobile || contactViewCardTablate  ) {
+           goBackBtn.style.display = "flex"; 
+        }  
+        if (headlineImageContainer && menu.style.display == "none") {
+            arrowLeft.style.display = "flex";      
+        }
+          
     } else {
         menu.style.display = "flex";
+        if( goBackBtn ){
+          goBackBtn.style.display = "none";
+        } 
+        if (arrowLeft) {
+          arrowLeft.style.display = "none";
+        }
+
+
         if (contactViewCardMobile|| contactViewCardTablate){
-        goBackBtn.style.display = "none";
-        }      
+          goBackBtn.style.display = "none";
+        }
+         if (headlineImageContainer){
+          arrowLeft.style.display = "none";
+        }
+          
     }
 }
+
+
 
 function switchoffMenu(){
     let goBackBtn = document.getElementById("go_back_btn_container");
