@@ -444,64 +444,96 @@ async function checkUserIsPresent(parameter = false) {
 }
 
 /**
- *
  * @async
  * @function handleUserPresenceCheck
- * @description Checks user presence based on the provided parameter. 
- * If the parameter is true (sign-up), it checks for duplicate emails.
- * If false (login), it validates login credentials and stores user info in sessionStorage.
- * @param {*} parameter - A boolean flag determining which check to perform.
- * @param {object} user - The user object to check against.
- * @param {string} userId - The ID of the user (only relevant when parameter is false).
- * @returns {Promise<boolean>} - Returns the boolean result of either `ifParameterTrue` or `ifParameterFalse`.
+ * @description
+ * Determines how to handle a user record depending on the context:
+ * - **Sign-up mode (`parameter === true`)** → checks for duplicate email addresses
+ *   using `ifParameterTrue`.
+ * - **Login mode (`parameter === false`)** → compares the provided login credentials
+ *   with the current user record. On a match, persists user session data and calls
+ *   `loginSuccessful()`. On failure, highlights input fields and may display a
+ *   generic login error message.
+ *
+ * @param {boolean} parameter - Context flag.
+ *   - `true`: Sign-up flow (check for duplicate email).
+ *   - `false`: Login flow (validate email + password).
+ * @param {Object} user - The user object to validate against.
+ * @param {string} user.email - The user's email address.
+ * @param {string} user.password - The user's password.
+ * @param {string} [user.initials] - Optional user initials (stored on successful login).
+ * @param {string} [user.firstname] - Optional user first name (stored on successful login).
+ * @param {string} [user.lastname] - Optional user last name (stored on successful login).
+ * @param {string} userId - Unique identifier of the user (used to persist the session).
+ *
+ * @returns {Promise<boolean>} Resolves to:
+ *   - `true` → if the email is already registered (sign-up) OR credentials are valid (login).
+ *   - `false` → if the email is free (sign-up) OR credentials are invalid (login).
+ *
+ * @throws {Error} Propagates unexpected errors from dependent functions like `loadUserData`.
  */
-async function handleUserPresenceCheck(parameter, user, userId) {
-  if (parameter) {
-    return ifParameterTrue(parameter, user);
-  } else {
-    const { emailLogIn, passwordLogIn } = setIdRefValueTrimLogIn();
-    const { loginFormRef } = getIdRefs();
 
-    if (user.email === emailLogIn && user.password === passwordLogIn) {
-      sessionStorage.setItem('loggedInUserId', userId);
-      sessionStorage.setItem('userInitials', user.initials);
-      sessionStorage.setItem('firstName', user.firstname);
-      sessionStorage.setItem('lastName', user.lastname);
-      await loadUserData();
-      loginFormRef.reset();
-      loginSuccessful();
-      return true;
-    // } else {
-    //   showLoginError();
-    //   return false;
-    // }
-    } else {
+async function handleUserPresenceCheck(parameter, user, userId) {
+  if (parameter) return ifParameterTrue(parameter, user);
+  const { emailLogIn, passwordLogIn } = setIdRefValueTrimLogIn();
+
+  if (credentialsMatch(user, emailLogIn, passwordLogIn)) {
+    return onLoginSuccess(userId, user);
+  }
+
+  showLoginFieldErrors();
+  maybeShowGenericLoginError();
+  return false;
+}
+
+function credentialsMatch(user, email, password) {
+  return user?.email === email && user?.password === password;
+}
+
+function persistLoggedInUser(userId, user) {
+  sessionStorage.setItem('loggedInUserId', userId);
+  if (user) {
+    if (user.initials)   sessionStorage.setItem('userInitials', user.initials);
+    if (user.firstname)  sessionStorage.setItem('firstName', user.firstname);
+    if (user.lastname)   sessionStorage.setItem('lastName', user.lastname);
+  }
+}
+
+function showLoginFieldErrors() {
+  const { emailLogInRef, passwordLogInRef } = getIdRefs();
+  emailLogInRef?.classList.add('not-valide-error');
+  passwordLogInRef?.classList.add('not-valide-error');
+}
+
+function maybeShowGenericLoginError() {
   const {
     errorMessageLogInRef,
     errorMessageEmailNotValideLoginRef,
-    errorMessagePasswordLogInRef,
-    emailLogInRef,
-    passwordLogInRef
+    errorMessagePasswordLogInRef
   } = getIdRefs();
 
   const isEmailErrorVisible = isErrorVisible(errorMessageEmailNotValideLoginRef);
   const isPasswordErrorVisible = isErrorVisible(errorMessagePasswordLogInRef);
 
-  // Show generic error ONLY if neither field-specific error is visible
   handleGenericLoginErrorDisplay(
     errorMessageLogInRef,
     isEmailErrorVisible,
     isPasswordErrorVisible
   );
-
-  // Keep the red borders to signal which fields need attention
-  emailLogInRef?.classList.add('not-valide-error');
-  passwordLogInRef?.classList.add('not-valide-error');
-
-  return false;
 }
 
-  }
+async function onLoginSuccess(userId, user) {
+  const { loginFormRef } = getIdRefs();
+  persistLoggedInUser(userId, user);
+  await loadUserData();
+  loginFormRef?.reset();
+  loginSuccessful();
+  return true;
+}
+
+function loginSuccessful() {
+  // Redirect to main App page
+  window.location.href = "summary.html";
 }
 
 /**
