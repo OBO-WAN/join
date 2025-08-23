@@ -255,8 +255,14 @@
   display: none;
 }
 
-.error-message-log-in {
+#error_message_log_in {
   display: none;
+}
+
+#error_message_log_in.d-flex {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .error-message-email {
@@ -639,3 +645,6 @@ user agent stylesheet ul {
   padding-inline-start: 40px;
   unicode-bidi: isolate;
 }
+
+
+

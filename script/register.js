@@ -471,10 +471,36 @@ async function handleUserPresenceCheck(parameter, user, userId) {
       loginFormRef.reset();
       loginSuccessful();
       return true;
+    // } else {
+    //   showLoginError();
+    //   return false;
+    // }
     } else {
-      showLoginError();
-      return false;
-    }
+  const {
+    errorMessageLogInRef,
+    errorMessageEmailNotValideLoginRef,
+    errorMessagePasswordLogInRef,
+    emailLogInRef,
+    passwordLogInRef
+  } = getIdRefs();
+
+  const isEmailErrorVisible = isErrorVisible(errorMessageEmailNotValideLoginRef);
+  const isPasswordErrorVisible = isErrorVisible(errorMessagePasswordLogInRef);
+
+  // Show generic error ONLY if neither field-specific error is visible
+  handleGenericLoginErrorDisplay(
+    errorMessageLogInRef,
+    isEmailErrorVisible,
+    isPasswordErrorVisible
+  );
+
+  // Keep the red borders to signal which fields need attention
+  emailLogInRef?.classList.add('not-valide-error');
+  passwordLogInRef?.classList.add('not-valide-error');
+
+  return false;
+}
+
   }
 }
 
@@ -571,7 +597,6 @@ function showLoginError() {
   }
 }
 
-
   /**
  * 
  * @function removeLoginError
@@ -585,3 +610,13 @@ function removeLoginError(){
     emailLogInRef.classList.remove('not-valide-error');
     passwordLogInRef.classList.remove('not-valide-error');
   }
+
+
+  function isErrorVisible(el) {
+  if (!el) return false;
+  // Works for both of your styles: .d-flex (some places) and .show-error (email/password validators)
+  if (el.classList.contains('d-flex') || el.classList.contains('show-error')) return true;
+  // Fallback for any CSS that sets display directly
+  const cs = window.getComputedStyle(el);
+  return cs.display !== 'none' && cs.visibility !== 'hidden' && cs.opacity !== '0';
+}

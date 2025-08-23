@@ -18,7 +18,11 @@
     </div>
 
     <!-- Static logo after animation -->
-    <div class="animation-finished d-flex hidden" id="animationFinished" style="display: none">
+    <div
+      class="animation-finished d-flex hidden"
+      id="animationFinished"
+      style="display: none"
+    >
       <img src="assets/img/loginLogo.svg" alt="Join Logo" />
     </div>
 
@@ -30,8 +34,12 @@
           <h1>Log in</h1>
         </div>
 
-        <form novalidate id="login_form" onsubmit="checkUserIsPresent(); return false;" class="form with-100-percent-max-width-422px">
-          
+        <form
+          novalidate
+          id="login_form"
+          onsubmit="checkUserIsPresent(); return false;"
+          class="form with-100-percent-max-width-422px"
+        >
           <!-- Email Input -->
           <label class="input-base-container" for="email_log_in">
             <input
@@ -48,7 +56,11 @@
             <div class="input-base-icon cursor-pointer">
               <img src="assets/icons/mail.svg" alt="Mail Icon" />
             </div>
-            <span class="error-message-email-not-valide-login" id="error_message_email_not_valide_login">This is not a valid email address.</span>
+            <span
+              class="error-message-email-not-valide-login"
+              id="error_message_email_not_valide_login"
+              >This is not a valid email address.</span
+            >
           </label>
 
           <!-- Password Input -->
@@ -72,11 +84,18 @@
                 onclick="togglePasswordVisibility('password_log_in', this)"
               />
             </div>
-            <span class="error-message-password-log-in" id="error_message_password_log_in">Please enter at least 8 characters.</span>
+            <span
+              class="error-message-password-log-in"
+              id="error_message_password_log_in"
+              >Please enter at least 8 characters.</span
+            >
+            <!-- Central Error Message (generic login fail) -->
+            <div class="input-base-container" id="form_generic_error_anchor">
+              <span class="error-message-log-in" id="error_message_log_in">
+                Check your email and password.
+              </span>
+            </div>
           </label>
-
-          <!-- Central Error Message (generic login fail) -->
-          <span class="error-message-log-in" id="error_message_log_in">Check your email and password.</span>
 
           <!-- Remember Me & Buttons -->
           <div class="remember-me">
@@ -86,7 +105,13 @@
 
           <div class="button-container">
             <button type="submit" class="button-log-in">Log in</button>
-            <button type="button" class="button-guest-log-in" onclick="guestLogin()">Guest Log in</button>
+            <button
+              type="button"
+              class="button-guest-log-in"
+              onclick="guestLogin()"
+            >
+              Guest Log in
+            </button>
           </div>
         </form>
       </section>
@@ -94,7 +119,9 @@
 
     <nav class="nav-log-in hidden" id="nav_log_in">
       <span>Not a Join user?</span>
-      <button onclick="goToUrl('sign_up.html')" class="button-base-gray">Sign up</button>
+      <button onclick="goToUrl('sign_up.html')" class="button-base-gray">
+        Sign up
+      </button>
     </nav>
 
     <footer class="footer-log-in hidden" id="footerLogin">

@@ -137,11 +137,10 @@ function setIdRefValueTrimLogIn() {
     };
   }
 
-
-function showLoginError() {
+function showLoginOverlayErrorOnly() {
   const { errorMessageLogInRef } = getIdRefs();
   if (errorMessageLogInRef) {
-    errorMessageLogInRef.classList.add('d-flex'); // Show the error according to css
+    errorMessageLogInRef.classList.add('d-flex');
   }
 }
 
