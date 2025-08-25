@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join | Help</title>
     <link rel="icon" href="./assets/img/favicon.png" />
-    <link rel="stylesheet" href="style/style.css"> 
-    <link rel="stylesheet" href="style/text.css">
-    <link rel="stylesheet" href="style/user_icon_menu.css">
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="style/text.css" />
+    <link rel="stylesheet" href="style/user_icon_menu.css" />
     <link rel="stylesheet" href="style/nav_mobile.css" />
-
 
     <script src="./script/script.js"></script>
     <script src="./script/scripts.js"></script>
@@ -84,7 +83,17 @@
     </nav>
 
     <div class="container">
-      <h2>Help</h2>
+      <div class="headline-img-container">
+        <h2>Help</h2>
+
+        <div
+          onclick="goToUrl('summary.html')"
+          class="arrow-left"
+          id="arrow-left"
+        >
+          <img src="assets/icons/arrow-left.svg" alt="go back" />
+        </div>
+      </div>
 
       <section>
         <h3>Welcome to the Help Page</h3>
@@ -171,5 +180,61 @@
         <p><strong>Enjoy using Join!</strong></p>
       </section>
     </div>
+
+    <!-- Responsive Menu -->
+    <ul class="nav-links">
+      <li class="link-button hide-before-log-in">
+        <a
+          onclick="toHrefFocus('summary.html', this); return false;"
+          href="summary.html"
+        >
+          <div class="img-box">
+            <img
+              class="boaimg"
+              src="assets/img/summary.png"
+              alt="Summary Icon"
+            />
+          </div>
+          <span>Summary</span>
+        </a>
+      </li>
+      <li class="link-button hide-before-log-in">
+        <a
+          onclick="toHrefFocus('add_task.html',this); return false;"
+          href="add_task.html"
+        >
+          <div class="img-box">
+            <img class="boaimg" src="assets/img/add-task.png" alt="Task Icon" />
+          </div>
+          <span>Add Task</span>
+        </a>
+      </li>
+      <li class="link-button active hide-before-log-in">
+        <a
+          onclick="toHrefFocus('board.html', this); return false;"
+          href="board.html"
+        >
+          <div class="img-box">
+            <img class="boaimg" src="assets/img/board.png" alt="Board Icon" />
+          </div>
+          <span>Board</span>
+        </a>
+      </li>
+      <li class="link-button hide-before-log-in">
+        <a
+          onclick="toHrefFocus('contacts.html', this); return false;"
+          href="contacts.html"
+        >
+          <div class="img-box">
+            <img
+              class="boaimg"
+              src="assets/img/contacts.png"
+              alt="Contacts Icon"
+            />
+          </div>
+          <span>Contacts</span>
+        </a>
+      </li>
+    </ul>
   </body>
 </html>
