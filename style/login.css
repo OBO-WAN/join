@@ -33,6 +33,29 @@
   justify-content: center;
 }
 
+@media (max-width: 768px) {
+  .animations-logo-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--primary-color-gray);
+    animation: fadeOutBg 2.5s ease forwards;
+    z-index: 0;
+  }
+}
+
+@keyframes fadeOutBg {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .animation-join-logo {
   position: absolute;
   top: 50%;
@@ -70,20 +93,41 @@
     left: clamp(15px, 6px + 2.8125vw, 60px);
     width: var(--width-64-100);
     height: clamp(60px, 47.6px + 3.875vw, 122px);
-    transform: none; 
+    transform: none;
   }
 }
 
+/* --- LOGO STATES --- */
+/* Desktop default: no animation */
 .logo-white {
   opacity: 0;
+  animation: none;
+  z-index: 2;
 }
 
 .logo-gray {
-  opacity: 1;
+  opacity: 1;      /* show gray logo immediately on desktop */
+  animation: none; /* avoid delayed fade on desktop */
+  z-index: 1;
+}
+
+/* Mobile (<= 768px): run the crossfade */
+@media (max-width: 768px) {
+  .logo-white {
+    opacity: 1; /* start visible so it can fade out */
+    animation: fadeOutLogo 0.7s ease forwards 1s;
+  }
+  .logo-gray {
+    opacity: 0; /* start hidden and fade in */
+    animation: fadeInLogo 0.7s ease forwards 1s;
+  }
+
+  .animations-logo-overlay {
+    animation: backgroundAnimationResponsive 2.8s ease forwards;
+  }
 }
 
 .animation-finished {
-  /* display: none; */
   position: absolute;
   top: clamp(15px, 6px + 2.8125vw, 60px);
   left: clamp(15px, 6px + 2.8125vw, 60px);
@@ -141,7 +185,6 @@
   background-color: white;
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
-  /* opacity: 1; */
 }
 
 .fade-in {
@@ -395,18 +438,6 @@ button {
   width: 100%;
 }
 
-.logo-white {
-  animation: fadeOutLogo 0.7s ease forwards 1s;
-  z-index: 2;
-  opacity: 1;
-}
-
-.logo-gray {
-  animation: fadeInLogo 0.7s ease forwards 1s;
-  z-index: 1;
-  opacity: 0;
-}
-
 @keyframes backgroundAnimationResponsive {
   0% {
     background-color: var(--primary-color-gray);
@@ -630,6 +661,7 @@ button {
   flex-direction: column;
   gap: 15px;
 }
+
 * {
   box-sizing: border-box;
   scroll-behavior: smooth;
@@ -637,14 +669,3 @@ button {
   padding: 0;
   font-family: "inter";
 }
-user agent stylesheet ul {
-  display: block;
-  list-style-type: disc;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  padding-inline-start: 40px;
-  unicode-bidi: isolate;
-}
-
-
-
