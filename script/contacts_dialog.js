@@ -148,10 +148,6 @@ function closeContactDialog() {
         addNewSection.innerHTML = "";
         addNewContainer.style.display = "none";
     }
-    /*document.getElementById("contact_form_pc").addEventListener('submit', function (e) {
-    e.preventDefault(); // verhindert das native Submit-Verhalten
-      saveEditedContact()    // deine Speicherfunktion
-});*/
 
 }
 

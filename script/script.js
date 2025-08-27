@@ -62,28 +62,6 @@ function switchoffMenu(){
     }
 } 
 
-/*window.onclick =  (event) =>{
-if (event.target.id === "contact_icon") {
-      closeTogelMenu()
-    }
-}*/
-
-/*function closeTogelMenu(){
-  const menu = document.getElementById("dropdown_menu");
-  menu.style.display = "none";
-}*/
-
-
-
-
- /*window.onclick =  (event) =>{
-if (event.target.id === "contact_icon") {
-      closeTogelMenu()
-    }
-}*/
-
-
-
 /**
  * Sets the active class on the clicked navigation link and navigates to the target href.
  * @param {string} targetHref - The URL to navigate to.

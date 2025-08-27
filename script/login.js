@@ -10,6 +10,34 @@ window.addEventListener("DOMContentLoaded", () => {
   }, 1500);
 });
 
+/**
+ * Runs the introductory login animation sequence.
+ *
+ * This async function coordinates the staged reveal of the login UI
+ * after the splash/logo animation finishes. It waits for a short delay,
+ * disables pointer events on the overlay, and then reveals the main
+ * login content, footer, and the static logo container.
+ *
+ * @async
+ * @function runIntroAnimation
+ * @returns {Promise<void>} Resolves once the intro animation sequence completes.
+ *
+ * @example
+ * // Trigger the intro animation on page load
+ * window.addEventListener("load", () => {
+ *   runIntroAnimation();
+ * });
+ *
+ * @description
+ * Steps performed:
+ * 1. Waits 1500ms using `delay`.
+ * 2. Disables pointer events on the `#animationsLogoOverlay` element
+ *    so the user can interact with the UI underneath.
+ * 3. Calls `revealElement` on:
+ *    - `#loginMain` (the login form container)
+ *    - `#footerLogin` (the footer links)
+ *    - `#animationFinished` (the static logo shown after the animated logo)
+ */
 
 async function runIntroAnimation() {
     const overlay = document.getElementById('animationsLogoOverlay');
@@ -17,9 +45,8 @@ async function runIntroAnimation() {
     const footerLogin = document.getElementById('footerLogin');
     const animationFinished = document.getElementById('animationFinished');
 
-    await delay(1500); // Wait for animation duration
+    await delay(1500); 
 
-    // Hide the animated logo overlay
     if (overlay) overlay.style.pointerEvents = 'none';
 
     // Reveal content with fade
@@ -179,7 +206,6 @@ function validatePasswordLogin(inputField) {
     return true;
   }
 }
-
   
   /**
    *

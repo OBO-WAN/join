@@ -70,28 +70,7 @@ function createContact() {
  * Builds a contact object from the form inputs.
  * @returns {Object|null} The contact object or null if validation fails.
  */
-// function buildContactFromForm() {
-    
-//     let KindOfDlg_pc = "";
-//     if (getViewMode() === 1) KindOfDlg_pc = "_pc";
 
-//     let name = document.getElementById("name_input" + KindOfDlg_pc).value.trim();
-//     let mail = document.getElementById("mail_input" + KindOfDlg_pc).value.trim();
-//     let phone = document.getElementById("phone_input" + KindOfDlg_pc).value.trim();
-
-//     if (!name || !mail || !phone) return null;
-//     if (!emailIsValid(mail)) return null;
-
-//     name = capitalizeWords(name);
-
-//     let contact = {
-//         mail: mail,
-//         name: name,
-//         phone: phone || "No phone number available",
-//     };
-
-//     return contact;
-// }
 function buildContactFromForm() {
     let KindOfDlg_pc = "";
     if (getViewMode() === 1) KindOfDlg_pc = "_pc";

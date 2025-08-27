@@ -132,10 +132,7 @@ async function createUserProfileDataFromParts(nameParts){
  * It triggers the display of a sign-up success popup using `showPupupOverlaySignUp` and then initiates
  * a delayed redirection and form reset using `delayedRedirectAndReset`.
  */
-// function handleSignUpSuccess(){
-//     showPupupOverlaySignUp();
-//     delayedRedirectAndReset();
-//   }
+
 function handleSignUpSuccess(profileData){
     showPupupOverlaySignUp();
     // Store initials and names for UI use
@@ -145,7 +142,6 @@ function handleSignUpSuccess(profileData){
     delayedRedirectAndReset();
     delayedRedirectAndReset();
 }
-
 
   /**
  * 
