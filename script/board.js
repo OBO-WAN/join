@@ -41,28 +41,23 @@ let userColor = users[index]?.color;
 
 /**
  * Renders all tasks in their respective status columns on the Kanban board
+ * - De-dups assignees
+ * - Caps visible avatars at 4 and shows a +N counter
  */
 function renderCurrentTasks() {
   const statusContainers = proofStatus();
-
   const statusCounts = proofStatusCounts();
 
   for (let i = 0; i < tasks.length; i++) {
     const task = tasks[i];
     const taskData = prepareTaskForTemplate(task);
 
-    const assignedUsersHTML = taskData.assignedTo
-      .map(
-        (user) => `
-            <div class="user_initials_circle" style="background-color: ${user.color}; color: white;">${user.initials}</div>
-        `
-      )
-      .join("");
+    const assignedUsersHTML = buildAssignedUsersHTML(task.assignedTo);
 
     const container = statusContainers[task.status];
     if (container) {
       container.innerHTML += getKanbanTemplate(taskData, assignedUsersHTML, i);
-      statusCounts[task.status]++;
+      statusCounts[task.status] = (statusCounts[task.status] || 0) + 1;
     }
 
     setTimeout(() => {
@@ -71,11 +66,11 @@ function renderCurrentTasks() {
   }
 
   showStatusPlaceholder(statusCounts, statusContainers);
+
+  // Attach events after DOM paint (once)
   setTimeout(() => {
     attachTaskEventHandlers();
   }, 0);
-
-  attachTaskEventHandlers();
 }
 
 /**
@@ -168,6 +163,7 @@ function showSubtasks() {
 
 /**
  * Attaches click and drag event handlers to all task containers
+ * - Uses the same avatar builder as the board card so the overlay matches
  */
 function attachTaskEventHandlers() {
   const containers = document.querySelectorAll(".task_container");
@@ -176,26 +172,18 @@ function attachTaskEventHandlers() {
     const id = container.dataset.taskId;
     const index = parseInt(container.dataset.taskIndex, 10);
     const task = tasks.find((t) => t.id == id);
-
     if (!task) return;
 
-    let user = Contacts;
     const taskData = prepareTaskForTemplate(task);
-    const assignedUsersHTML = taskData.assignedTo
-      .map(
-        (user) => `
-            <div class="user_initials_circle" style="background-color: ${user.color}; color: white;">
-                ${user.initials}
-            </div>
-        `
-      )
-      .join("");
+    // Build avatars with de-dup + +N overflow (use raw names)
+    const assignedUsersHTML = buildAssignedUsersHTML(task.assignedTo);
 
-    // das Overlay wird per JS geöffnet
+    // Open details overlay on click
     container.addEventListener("click", () => {
       openTask(taskData, assignedUsersHTML, index);
     });
 
+    // Support drag start (template also has ondragstart; keeping for robustness)
     container.addEventListener("dragstart", () => {
       startDragging(task.id);
     });
@@ -208,18 +196,19 @@ function attachTaskEventHandlers() {
  * @returns {Object} Formatted task object ready for template rendering
  */
 function prepareTaskForTemplate(task) {
-  const assignedTo = (task.assignedTo || []).map((name) => {
+  const uniqueAssigned = [...new Set(task.assignedTo || [])];
 
+  const assignedTo = uniqueAssigned.map((name) => {
     const user = Object.values(Contacts).find((u) => u.name === name);
     const initials = name
       .split(" ")
       .map((n) => n[0])
       .join("")
       .toUpperCase();
-    
-    let color = "#2A3647"; // Fallback color
+
+    let color = "#2A3647";
     if (user) {
-      color = getColor(initials);//user?.color || "#2A3647"; // Fallback-Farbe
+      color = getColor(initials); // uses add_task.js palette
     }
     return { initials, color };
   });
@@ -227,9 +216,7 @@ function prepareTaskForTemplate(task) {
   return {
     id: task.id,
     category: task.category || "General",
-    categoryClass: (task.category || "general")
-      .toLowerCase()
-      .replace(/\s/g, "_"),
+    categoryClass: (task.category || "general").toLowerCase().replace(/\s/g, "_"),
     dueDate: task.dueDate,
     title: task.title || task.task || "Untitled",
     description: task.description || "",
@@ -469,7 +456,6 @@ async function saveTaskEdits(taskId) {
  * @param {string} taskId - ID of the task to save
  */
 async function saveEditedTask(taskId) {
-
   const task = tasks.find((t) => t.id == taskId);
   const updatedTask = collectTaskData();
   updatedTask.id = taskId;
@@ -489,15 +475,13 @@ async function saveEditedTask(taskId) {
   if (updated) {
     const taskData = prepareTaskForTemplate(updated);
     const index = tasks.findIndex(t => t.id == taskId);
-    const assignedUsersHTML = taskData.assignedTo.map(user => `
-      <div class="user_initials_circle" style="background-color: ${user.color}; color: white;">
-        ${user.initials}
-      </div>
-    `).join('');
+
+    const assignedUsersHTML = buildAssignedUsersHTML(updated.assignedTo);
 
     openTask(taskData, assignedUsersHTML, index);
   }
 }
+
 
 /**
  * Reindexes all tasks in Firebase with sequential IDs
@@ -759,3 +743,22 @@ document.addEventListener("keydown", function (event) {
   }
 });
 
+
+
+function buildAssignedUsersHTML(assignedTo, maxVisible = 4) {
+  const uniq = [...new Set(assignedTo || [])];
+  const visible = uniq.slice(0, maxVisible);
+  const extra = Math.max(0, uniq.length - maxVisible);
+
+  const avatars = visible.map(name => {
+    const initials = name.split(" ").map(n => n[0]).join("").toUpperCase();
+    const color = getColor(initials[0]); // from add_task.js
+    return `<div class="user_initials_circle" style="background-color:${color};color:white;">${initials}</div>`;
+  }).join("");
+
+  const counter = extra > 0
+    ? `<div class="user_initials_circle" style="background-color:#2A3647;color:white;">+${extra}</div>`
+    : "";
+
+  return avatars + counter;
+}

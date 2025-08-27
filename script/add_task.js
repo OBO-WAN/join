@@ -24,49 +24,51 @@ function collectTaskData() {
   const description = document.getElementById("description").value.trim();
   const dueDateRaw = document.getElementById("due-date").value;
 
-  const [year, month, day] = dueDateRaw.split("-");
-  const dueDate = `${day}-${month}-${year}`;
+  // Format due date: YYYY-MM-DD -> DD-MM-YYYY
+  let dueDate = "";
+  if (dueDateRaw) {
+    const [year, month, day] = dueDateRaw.split("-");
+    dueDate = `${day}-${month}-${year}`;
+  }
 
   const categoryValue = document.getElementById("category").value;
-  const priorityRaw = document.querySelector(
-    "input[name='priority']:checked"
-  )?.value;
+  const priorityRaw = document.querySelector("input[name='priority']:checked")?.value;
 
+  // Match existing label mapping used in your app
   const categoryMap = {
     "technical-task": "Technical Task",
     "user-story": "User Story",
   };
   const category = categoryMap[categoryValue] || categoryValue;
 
+  // Capitalize priority the same way as before ("urgent" -> "Urgent")
   const priority = priorityRaw
     ? priorityRaw.charAt(0).toUpperCase() + priorityRaw.slice(1).toLowerCase()
     : null;
 
-  const checkboxElements = document.querySelectorAll(
-    '#assignee-dropdown input[type="checkbox"]:checked'
-  );
+  // Build assignees from checked boxes, then de-dup to prevent duplicates on the board
+  const checkboxElements = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]:checked');
   const assignees = Array.from(checkboxElements).map((cb) => cb.value);
+  const uniqueAssignees = [...new Set(assignees)];
 
+  // Collect subtasks, strip any leading bullets
   const subtaskItems = document.querySelectorAll("#subtask-list li");
   const subTasks = Array.from(subtaskItems).map((item) => {
     const raw = item.textContent.trim();
-    return {
-      task: raw.replace(/^•+\s*/, ""),
-    };
+    return { task: raw.replace(/^•+\s*/, "") };
   });
 
-  const taskObject = {
-    title: title,
+  // Return the exact shape consumed by the board
+  return {
+    title,
     description,
     dueDate,
     category,
     priority,
-    assignedTo: assignees,
+    assignedTo: uniqueAssignees,
     subTasks,
     status: "toDo",
   };
-
-  return taskObject;
 }
 
 /**
