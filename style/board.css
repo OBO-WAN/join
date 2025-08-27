@@ -40,9 +40,11 @@
   padding-left: 16px;
   padding-right: 16px;
   margin-right: 32px;
-  z-index: -1;
 }
 
+.search_container:focus-within {
+  border-color: #44AFFF;
+}
 .search_input {
   border: none;
   flex: 1;
@@ -51,6 +53,7 @@
   font-size: 20px;
   font-weight: 400;
   color: black;
+  width: 90%;
 }
 
 .search_separator {
@@ -66,6 +69,7 @@
   object-fit: contain;
   width: 24px;
   height: 24px;
+  margin-right: 16px;
 }
 
 .add_task_headline {

@@ -248,7 +248,6 @@ window.addEventListener("DOMContentLoaded", function () {
 
   searchInput.addEventListener("input", function () {
     var searchTerm = searchInput.value.toLowerCase();
-
     for (var i = 0; i < taskElements.length; i++) {
       var task = taskElements[i];
       var titleElements = task.getElementsByClassName("task_title");
