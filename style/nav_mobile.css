@@ -4,7 +4,9 @@
     height: 100dvh;
     position: relative;
   }
-  
+  .sidebar {
+    z-index: 2;
+  }
   .header {
     display: flex;
     justify-content: space-between;
