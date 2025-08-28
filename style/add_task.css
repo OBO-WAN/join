@@ -52,7 +52,6 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-    min-width: 0;
     width: 440px;
 }
 
@@ -532,102 +531,5 @@ input[type="radio"]:checked + .priority-button {
   100% {
     opacity: 0;
     transform: translate(-50%, -60%);
-  }
-}
-
-@media (max-width: 998px) {
-  .priority-options {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 968px) {
-  .add-task-container {
-    padding-left: 280px;
-    padding-right: 40px;
-  }
-}
-
-@media (max-width: 880px) {
-  .form-grid {
-    gap: 20px;
-  }
-
-  .priority-options {
-    font-size: 12px;
-  }
-
-  .add-task-container {
-    padding-left: 250px;
-    padding-right: 30px;
-  }
-}
-
-@media (max-width: 800px) {
-  .priority-options {
-    gap: 8px;
-  }
-}
-
-@media (max-width: 770px) {
-  .form-grid {
-    display: block;
-    gap: 0;
-  }
-
-  .form-footer {
-    margin-top: 0;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .task-buttons {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .clear-btn,
-  .create-btn {
-    width: 100%;
-  }
-
-  .task-buttons {
-    display: flex;
-    gap: 12px;
-  }
-}
-
-@media (max-width: 768px) {
-  .add-task-container {
-    padding-left: 20px;
-    padding-bottom: 120px;
-  }
-
-  .form-divider {
-    padding-bottom: 10px;
-  }
-
-  .priority-button {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .add-task-container h2 {
-    font-size: 28px;
-  }
-
-  .form-footer {
-    flex-direction: column;
-  }
-}
-
-@media (max-width: 400px) {
-  .priority-button {
-    padding: 3px 7px;
-    font-size: 14px;
-  }
-
-  .priority-options {
-    gap: 6px;
   }
 }
