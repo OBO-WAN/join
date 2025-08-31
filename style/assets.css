@@ -13,11 +13,11 @@
 }
 
 .portrait-overlay-content{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* width: 315px; */
-    gap: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* width: 315px; */
+  gap: 16px;
   
 }
 
@@ -198,9 +198,6 @@ button[disabled]:hover {
   font-weight: var(--font-weight-400);
 }
 
-
-
-
 .button-primary-dark-gray:hover {
   background-color: var(--blue);
   box-shadow: var(--box-shadow-button);
@@ -272,7 +269,7 @@ button[disabled]:hover {
   font-weight: var(--font-weight-700);
 }
 
-.button-add-new-contact-gray:hover {
+.button-add-new-contact-gray:hover { 
   scale: var(--scale-hover);
   color: var(--blue);
   box-shadow: var(--box-shadow-button);
