@@ -12,7 +12,7 @@ function toggleMenu(){
 
     if (menu.style.display == "flex") {
         menu.style.display = "none";
-
+        document.getElementById("dropdown_container").style.zIndex = "1";
         if( goBackBtn ) {
             goBackBtn.style.display = "flex";
         }
@@ -20,7 +20,6 @@ function toggleMenu(){
             arrowLeft.style.display = "flex";
         }
 
-        //if ( (contactViewCardMobile || contactViewCardTablate) && menu.style.display == "none" ) {
         if ( contactViewCardMobile || contactViewCardTablate  ) {
            goBackBtn.style.display = "flex"; 
         }  

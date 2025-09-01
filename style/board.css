@@ -90,6 +90,11 @@
   background-color: #2a3647;
 }
 
+.add_new_task_btn{
+  z-index: 2;
+
+}
+
 .add_icon {
   height: 18px;
   width: 18px;
