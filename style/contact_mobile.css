@@ -1,16 +1,16 @@
 ::-webkit-scrollbar {
-  width: 10px;
+    width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #ffffff; 
+    background: #ffffff; 
 }
  
 ::-webkit-scrollbar-thumb {
-  background: #bebdbd; 
-  max-height: 30px;
-  width: 10px;
-  border-radius: 8px;
+    background: #bebdbd; 
+    max-height: 30px;
+    width: 10px;
+    border-radius: 8px;
 }
 
 body{
@@ -91,7 +91,7 @@ body{
 .edtit_mobile_section:hover,
 .delete_mobile_section:hover{
     color: #1baefd;
-      transform: scale(1.1); 
+    transform: scale(1.1); 
     cursor: pointer; 
     background-color: #cfcfcf9c;
 }
@@ -104,11 +104,11 @@ body{
 }
 
 .edtit_mobile_section:hover img{
-  content: url(../assets/img/edit_blue.png);
+    content: url(../assets/img/edit_blue.png);
 }
 
 .delete_mobile_section:hover img{
-  content: url(../assets/img/delete_blue.png);
+    content: url(../assets/img/delete_blue.png);
 }
 
 .mobile_view_card_edit_btn:hover{

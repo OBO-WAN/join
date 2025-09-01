@@ -229,6 +229,7 @@
   width: 130px;
   width: clamp(108px, 103.6px + 1.375vw, 130px);
   gap: 8px;
+  padding-right: inherit;
 }
 
 .urgentimg {
@@ -261,6 +262,23 @@
   justify-content: center;
   flex-direction: column;
   gap: 5px;
+}
+
+@media (max-width: 380px) {
+  .datetext {
+    align-items: center;
+    text-align: center;
+    gap: 2px;
+    padding-left: inherit;
+  }
+
+  .datetext .date {
+    font-size: 16px; 
+  }
+
+  .datetext .underdate {
+    font-size: 13px; 
+  }
 }
 
 .date {

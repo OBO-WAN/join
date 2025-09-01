@@ -1,4 +1,3 @@
-
 let Contacts = [];
 
 loadContacts();
@@ -241,47 +240,59 @@ function initAddTaskFormEvents() {
   }
 }
 
+/**
+ * Validates all required form fields before task submission.
+ * Calls individual field validation functions for each relevant input.
+ * 
+ * @returns {boolean} Returns true if all required fields are valid, otherwise false.
+ */
+
 function validateForm() {
   let valid = true;
 
-  const title = document.getElementById("title");
-  const titleError = document.getElementById("error-title");
-
-  const dueDate = document.getElementById("due-date");
-  const dueDateError = document.getElementById("error-due-date");
-
-  const category = document.getElementById("category");
-  const categoryError = document.getElementById("error-category");
-  const categoryHeader = document.querySelector(".category-select-header");
-
-  if (!title.value.trim()) {
-    title.classList.add("input-error");
-    titleError.classList.add("active");
-    valid = false;
-  } else {
-    title.classList.remove("input-error");
-    titleError.classList.remove("active");
-  }
-
-  if (!dueDate.value.trim()) {
-    dueDate.classList.add("input-error");
-    dueDateError.classList.add("active");
-    valid = false;
-  } else {
-    dueDate.classList.remove("input-error");
-    dueDateError.classList.remove("active");
-  }
-
-  if (!category.value.trim()) {
-    categoryHeader.classList.add("input-error");
-    categoryError.classList.add("active");
-    valid = false;
-  } else {
-    categoryHeader.classList.remove("input-error");
-    categoryError.classList.remove("active");
-  }
+  if (!validateField("title", "error-title")) valid = false;
+  if (!validateField("due-date", "error-due-date")) valid = false;
+  if (!validateCategory()) valid = false;
 
   return valid;
+}
+
+function validateField(inputId, errorId) {
+  const input = document.getElementById(inputId);
+  const error = document.getElementById(errorId);
+
+  if (!input.value.trim()) {
+    input.classList.add("input-error");
+    error.classList.add("active");
+    return false;
+  } else {
+    input.classList.remove("input-error");
+    error.classList.remove("active");
+    return true;
+  }
+}
+
+/**
+ * Special validation function for the custom category select component.
+ * Checks if a category has been selected and handles error styling.
+ * 
+ * @returns {boolean} True if a category is selected, false otherwise.
+ */
+
+function validateCategory() {
+  const category = document.getElementById("category");
+  const error = document.getElementById("error-category");
+  const header = document.querySelector(".category-select-header");
+
+  if (!category.value.trim()) {
+    header.classList.add("input-error");
+    error.classList.add("active");
+    return false;
+  } else {
+    header.classList.remove("input-error");
+    error.classList.remove("active");
+    return true;
+  }
 }
 
 function addFieldValidationListeners() {
