@@ -8,11 +8,14 @@ function toggleMenu(){
     let headlineImageContainer = document.getElementById("headline-img-container");
     let contactViewCardMobile = document.getElementById("mobile_view_card_header");
     let contactViewCardTablate = document.getElementById("Tablet_view_card_header");
+    let boardAddTaskBtnResp = document.getElementById("add_task_headline_responsive");
     const menu = document.getElementById("dropdown_menu");
+ 
 
     if (menu.style.display == "flex") {
         menu.style.display = "none";
-        document.getElementById("dropdown_container").style.zIndex = "1";
+        boardAddTaskBtnResp.style.position = "static";
+        menu.style.zIndex = "1";
         if( goBackBtn ) {
             goBackBtn.style.display = "flex";
         }
@@ -26,24 +29,24 @@ function toggleMenu(){
         if (headlineImageContainer && menu.style.display == "none") {
             arrowLeft.style.display = "flex";      
         }
-          
+
     } else {
+        menu.style.zIndex = "4000";
         menu.style.display = "flex";
+        boardAddTaskBtnResp.style.position = "relative";
+        
         if( goBackBtn ){
           goBackBtn.style.display = "none";
         } 
         if (arrowLeft) {
           arrowLeft.style.display = "none";
         }
-
-
         if (contactViewCardMobile|| contactViewCardTablate){
           goBackBtn.style.display = "none";
         }
          if (headlineImageContainer){
           arrowLeft.style.display = "none";
         }
-          
     }
 }
 

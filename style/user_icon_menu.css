@@ -9,7 +9,7 @@
     justify-content: flex-end;
     align-items: center;
     flex-direction: column;
-    z-index: 4000;
+    /*z-index: 4000;*/
 }
 
 a {
@@ -84,7 +84,7 @@ a {
     justify-content: center;
     align-items: center;
     z-index: 4000;
-    position: absolute;  
+    position: relative;  
 }
 
 .dropdown_menu.active {
