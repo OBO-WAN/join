@@ -8,14 +8,18 @@ function toggleMenu(){
     let headlineImageContainer = document.getElementById("headline-img-container");
     let contactViewCardMobile = document.getElementById("mobile_view_card_header");
     let contactViewCardTablate = document.getElementById("Tablet_view_card_header");
-    let boardAddTaskBtnResp = document.getElementById("add_task_headline_responsive");
+    const boardAddTaskBtnResp = document.getElementById("add_task_headline_responsive");
+    const boardAddTaskBtn = document.getElementById("add_task_headline");
     const menu = document.getElementById("dropdown_menu");
  
 
     if (menu.style.display == "flex") {
+       
         menu.style.display = "none";
-        boardAddTaskBtnResp.style.position = "static";
         menu.style.zIndex = "1";
+       
+      
+        
         if( goBackBtn ) {
             goBackBtn.style.display = "flex";
         }
@@ -29,11 +33,18 @@ function toggleMenu(){
         if (headlineImageContainer && menu.style.display == "none") {
             arrowLeft.style.display = "flex";      
         }
+        if (boardAddTaskBtnResp) {
+            boardAddTaskBtnResp.style.zIndex = "3";
+            boardAddTaskBtnResp.style.display = "flex";
+        }
+        if (boardAddTaskBtnResp) {
+            boardAddTaskBtn.style.zIndex = "3";
+        }
 
     } else {
         menu.style.zIndex = "4000";
         menu.style.display = "flex";
-        boardAddTaskBtnResp.style.position = "relative";
+       // boardAddTaskBtnResp.style.position = "relative";
         
         if( goBackBtn ){
           goBackBtn.style.display = "none";
@@ -46,6 +57,13 @@ function toggleMenu(){
         }
          if (headlineImageContainer){
           arrowLeft.style.display = "none";
+        }
+        if (boardAddTaskBtnResp) {
+            boardAddTaskBtnResp.style.zIndex = "3";
+            boardAddTaskBtnResp.style.display = "none";
+        }
+         if (boardAddTaskBtnResp) {
+            boardAddTaskBtn.style.zIndex = "1";
         }
     }
 }

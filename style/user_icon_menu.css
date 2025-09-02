@@ -69,7 +69,6 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 4000;
 }
 
 .dropdown_menu{
@@ -83,8 +82,8 @@ a {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 4000;
-    position: relative;  
+    position: absolute;
+    
 }
 
 .dropdown_menu.active {

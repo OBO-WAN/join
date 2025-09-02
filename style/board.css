@@ -89,6 +89,7 @@
   font-weight: 700;
   color: white;
   background-color: #2a3647;
+  z-index: 3;
 }
 
 .add_new_task_btn{
@@ -399,10 +400,7 @@ h3 {
     position: relative;
   }
 
-  .add_new_task_btn{
-    z-index: 1;
-
-  }
+ 
 
   .add_icon_responsive {
     height: 25px;
