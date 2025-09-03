@@ -242,9 +242,9 @@ async function loadUsersFromFirebase() {
   users = data || [];
 }
 
-window.addEventListener("DOMContentLoaded", function () {
+/*window.addEventListener("DOMContentLoaded", function () {
   var searchInput = document.getElementsByClassName("search_input")[0];
-  var taskElements = document.getElementsByClassName("task");
+  var taskElements = document.getElementsByClassName("task_container hover");//"task"
 
   searchInput.addEventListener("input", function () {
     var searchTerm = searchInput.value.toLowerCase();
@@ -262,9 +262,61 @@ window.addEventListener("DOMContentLoaded", function () {
 
       var match = title.includes(searchTerm) || details.includes(searchTerm);
       task.style.display = match ? "block" : "none";
+     
     }
   });
+});*/
+
+window.addEventListener("DOMContentLoaded", function () {
+  var searchInput = document.getElementsByClassName("search_input")[0];
+  var taskElements = document.getElementsByClassName("task_container hover"); //"task"
+
+  searchInput.addEventListener("input", function () {
+    var searchTerm = searchInput.value.toLowerCase();
+
+    // Alle Aufgaben filtern
+    for (var i = 0; i < taskElements.length; i++) {
+      var task = taskElements[i];
+      var titleElements = task.getElementsByClassName("task_title");
+      var detailElements = task.getElementsByClassName("task_details");
+
+      var title = titleElements.length
+        ? titleElements[0].textContent.toLowerCase()
+        : "";
+      var details = detailElements.length
+        ? detailElements[0].textContent.toLowerCase()
+        : "";
+
+      var match = title.includes(searchTerm) || details.includes(searchTerm);
+      task.style.display = match ? "block" : "none";
+    }
+    var statusIds = ["toDoContainer", "inProgressContainer", "awaitFeedbackContainer", "doneContainer"];
+    showSearchPlaceholders(statusIds, "task_container");
+  });
 });
+
+function showSearchPlaceholders(statusIds, taskClass) {
+  statusIds.forEach(function (id) {
+    var container = document.getElementById(id);
+    if (!container) return;
+
+    // Prüfe, ob noch sichtbare Aufgaben in der Spalte sind
+    var visibleTasks = Array.from(container.getElementsByClassName(taskClass))
+      .filter(function (el) { return el.style.display !== "none"; });
+
+    // Entferne alten Platzhalter
+    var oldPlaceholder = container.querySelector(".no_task_placeholder");
+    if (oldPlaceholder) oldPlaceholder.remove();
+
+    // Wenn keine Aufgaben sichtbar, Platzhalter einfügen
+    if (visibleTasks.length === 0) {
+      var placeholder = document.createElement("div");
+      placeholder.className = "no_task_placeholder";
+      placeholder.textContent = "No tasks";
+      container.appendChild(placeholder);
+    }
+  });
+}
 
 /**
  * Opens the Add Task overlay with form and functionality
