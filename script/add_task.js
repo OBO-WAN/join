@@ -633,7 +633,6 @@ function setMinDateToday() {
   }
 }
 
-
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("taskForm");
   if (form) {
