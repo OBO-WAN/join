@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById("contact_form_mobile");
     if (form) {
@@ -38,7 +37,6 @@ function validateName(){
     }
 }
 
-
 function validateNameMobile(){
     const name = document.getElementById("name_input");
     const nameError = document.getElementById("form_name_erro_mobile");
@@ -54,7 +52,6 @@ function validateNameMobile(){
         name.style.borderColor = "red";
     }   
 }
-
 
 function validateName_LowLevel(name){
 
@@ -77,7 +74,6 @@ function validateName_LowLevel(name){
     return result;
 }
 
-
 /*Validate mail*/ 
 function validateMail(){
     const mail = document.getElementById("mail_input_pc");
@@ -96,12 +92,10 @@ function validateMail(){
     }
 }
 
-
 function validateMailMobile(){
     const mail = document.getElementById("mail_input");
     const mailError = document.getElementById("form_mail_erro_mobile");
     let msgMail = "A valid email address is required";
-
 
     if (validateMail_LowLevel(mail.value)) {
         mailError.innerHTML = "";
@@ -114,7 +108,6 @@ function validateMailMobile(){
     }
 }
 
-
 function validateMail_LowLevel(mail){
     let result = false;
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) {
@@ -126,7 +119,6 @@ function validateMail_LowLevel(mail){
     }
     return result;
 }
-
 
 /*Validate phone*/
 function validatePhone(){
@@ -161,9 +153,7 @@ function validatePhoneMobile(){
         phoneError.innerHTML = msgPhone;
         phone.style.borderColor = "red";
     }
-
 }
-
 
 function validatePhone_LowLevel(phone){
     let result = false;
@@ -176,4 +166,3 @@ function validatePhone_LowLevel(phone){
     }
     return result;
 }
-

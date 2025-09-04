@@ -18,14 +18,6 @@ async function submitTask() {
 /**
  * Collects and formats all task-related input data from the task form.
  *
- * This function performs the following:
- * 1. Reads and trims the title and description inputs.
- * 2. Converts the due date from `YYYY-MM-DD` to `DD-MM-YYYY` format.
- * 3. Maps the internal category value to its display label.
- * 4. Normalizes the selected priority (e.g., "urgent" → "Urgent").
- * 5. Collects and deduplicates selected assignees from checkboxes.
- * 6. Extracts subtasks from the subtask list and formats them as objects.
- *
  * @returns {Object} The compiled task data object, ready to be saved or submitted.
  * @returns {string} return.title - The task title.
  * @returns {string} return.description - The task description.
@@ -146,14 +138,6 @@ function showToast(message, iconPath = "./assets/img/board.png") {
 /**
  * Saves a task object to Firebase under the given task ID.
  *
- * This function:
- * 1. Converts the `assignedTo` property to an array (if not already).
- * 2. Sends a PUT request to Firebase with the task data.
- * 3. Displays a toast notification upon success.
- * 4. Resets the task form and closes any open overlays.
- * 5. Reloads tasks from Firebase (if the function exists).
- * 6. Redirects to the board view after a short delay.
- *
  * @async
  * @function
  * @param {Object} task - The task object to be saved.
@@ -210,15 +194,6 @@ function closeOverlay() {
 /**
  * Resets the task form to its initial default state.
  *
- * This function performs the following actions:
- * 1. Clears all input and textarea values in the form.
- * 2. Empties the subtask list.
- * 3. Unchecks all checkboxes in the "Assigned to" dropdown.
- * 4. Updates the assignee placeholder accordingly.
- * 5. Removes input error styles and clears custom validation messages.
- * 6. Hides all visible field error messages.
- * 7. Resets the selected category display and removes any associated error state.
- *
  * Typically used after submitting or cancelling the task form.
  */
 function resetForm() {
@@ -254,15 +229,6 @@ function resetForm() {
 /**
  * Initializes event listeners for the "Add Task" form.
  *
- * This function performs the following actions:
- * 1. Attaches a click event to the "Clear" button to reset the form.
- * 2. Attaches a click event to the "Create Task" button to validate and submit the form.
- * 3. Prevents default form submission behavior.
- *
- * The function ensures that:
- * 1. The form is only submitted if validation passes.
- * 2. A graceful fallback is in place if buttons or the form are not found in the DOM.
- *
  * Typically called on page load to activate form interactivity.
  */
 function initAddTaskFormEvents() {
@@ -290,11 +256,6 @@ function initAddTaskFormEvents() {
 /**
  * Validates the required fields of the task form.
  *
- * This function checks:
- * 1. If the title input is filled.
- * 2. If the due date input is provided.
- * 3. If a category has been selected.
- *
  * Each validation step is delegated to helper functions (e.g., `validateField`, `validateCategory`).
  * 
  * @returns {boolean} `true` if all validations pass, otherwise `false`.
@@ -312,12 +273,9 @@ function validateForm() {
 /**
  * Validates a single input field by checking if it has a non-empty value.
  *
- * If the field is empty:
- * 1. An error class (`input-error`) is added to the input element.
- * 2. The associated error message element is shown by adding the `active` class.
+ * If the field is empty: (`input-error`) 
  *
- * If the field is valid:
- * - Any error styles and messages are removed.
+ * If the field is valid: Any error styles and messages are removed.
  *
  * @param {string} inputId - The ID of the input or textarea element to validate.
  * @param {string} errorId - The ID of the associated error message element.
@@ -366,11 +324,7 @@ function validateCategory() {
  *
  * This function adds `input` event listeners to specific fields (e.g., title and due date)
  * to remove validation error styles and messages as soon as the user corrects the input.
- *
- * Specifically:
- * 1. Removes the `input-error` class from the input element when it becomes non-empty.
- * 2. Hides the associated error message element by removing the `active` class.
- *
+ * 
  * Typically called on form initialization to enhance user feedback during input.
  */
 function addFieldValidationListeners() {
@@ -397,12 +351,6 @@ function addFieldValidationListeners() {
 
 /**
  * Loads the contact list from Firebase and updates the global `Contacts` array.
- *
- * This function performs the following actions:
- * 1. Fetches contact data from the `contacts.json` endpoint in Firebase.
- * 2. Checks if the returned data is a valid array.
- * 3. Assigns the data to the global `Contacts` variable.
- * 4. Triggers rendering of the "Assigned to" dropdown using `renderAssigneeDropdown()`.
  *
  * @async
  * @function
@@ -599,16 +547,6 @@ function renderAssigneeDropdown() {
 /**
  * Updates the visual placeholder for selected assignees in the task form.
  *
- * This function performs the following:
- * 1. Collects all checked assignee checkboxes from the dropdown.
- * 2. Updates the selection state (adds or removes the "selected" class) for each checkbox label.
- * 3. Generates colored avatar circles for up to 4 selected assignees.
- * 4. If more than 4 assignees are selected, displays a "+X" avatar indicating additional selections.
- * 5. Resets the "Select contacts" placeholder text when any selection is present.
- *
- * Dependencies:
- * 1.`getInitials(name: string): string` – extracts initials from the contact name.
- * 2. `getColor(char: string): string` – returns a color string based on the initial character.
  *
  * Typically called when checkboxes in the "Assigned to" dropdown are toggled.
  */
@@ -645,13 +583,7 @@ function updateAssigneePlaceholder() {
 /**
  * Closes custom dropdowns when clicking outside of them.
  *
- * This event listener runs on every click within the document and performs the following:
- * - Detects clicks outside of the "Assigned to" and "Category" dropdown components.
- * - If a click occurs outside both the dropdown and its header, the dropdown is hidden by adding the `d-none` class.
- *
- * Applies to:
- * - The assignee multiselect dropdown.
- * - The category selection dropdown.
+ * Applies to: assignee multiselect dropdown & category selection dropdown
  *
  * This helps ensure that dropdowns do not remain open unintentionally when interacting elsewhere on the page.
  */
@@ -733,12 +665,6 @@ function setMinDateToday() {
 
 /**
  * Initializes the Add Task form once the DOM is fully loaded.
- *
- * This includes:
- * 1. Setting up event listeners for form interactions.
- * 2. Enabling real-time validation for required fields.
- * 3. Loading contact data from Firebase.
- * 4. Setting the minimum allowed due date to today's date.
  */
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("taskForm");

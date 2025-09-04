@@ -394,7 +394,3 @@ function validateField(inputField) {
     }
   }
 }
-
-
-
-
