@@ -3,6 +3,7 @@ let Contacts = [];
 loadContacts();
 
 /**
+ * 
  * Submits a new task by collecting form data, generating an ID, and saving to Firebase
  */
 async function submitTask() {
@@ -15,15 +16,31 @@ async function submitTask() {
 }
 
 /**
- * Collects and formats all task data from the form inputs
- * @returns {Object} Task object with all necessary properties
+ * Collects and formats all task-related input data from the task form.
+ *
+ * This function performs the following:
+ * 1. Reads and trims the title and description inputs.
+ * 2. Converts the due date from `YYYY-MM-DD` to `DD-MM-YYYY` format.
+ * 3. Maps the internal category value to its display label.
+ * 4. Normalizes the selected priority (e.g., "urgent" → "Urgent").
+ * 5. Collects and deduplicates selected assignees from checkboxes.
+ * 6. Extracts subtasks from the subtask list and formats them as objects.
+ *
+ * @returns {Object} The compiled task data object, ready to be saved or submitted.
+ * @returns {string} return.title - The task title.
+ * @returns {string} return.description - The task description.
+ * @returns {string} return.dueDate - The formatted due date (DD-MM-YYYY).
+ * @returns {string} return.category - The mapped category label.
+ * @returns {string|null} return.priority - The capitalized priority level, or null if none selected.
+ * @returns {string[]} return.assignedTo - A unique array of selected contact names.
+ * @returns {{task: string}[]} return.subTasks - A list of subtasks, each as an object with a task string.
+ * @returns {string} return.status - Default task status (e.g., "toDo").
  */
 function collectTaskData() {
   const title = document.getElementById("title").value.trim();
   const description = document.getElementById("description").value.trim();
   const dueDateRaw = document.getElementById("due-date").value;
 
-  // Format due date: YYYY-MM-DD -> DD-MM-YYYY
   let dueDate = "";
   if (dueDateRaw) {
     const [year, month, day] = dueDateRaw.split("-");
@@ -33,31 +50,26 @@ function collectTaskData() {
   const categoryValue = document.getElementById("category").value;
   const priorityRaw = document.querySelector("input[name='priority']:checked")?.value;
 
-  // Match existing label mapping used in your app
   const categoryMap = {
     "technical-task": "Technical Task",
     "user-story": "User Story",
   };
   const category = categoryMap[categoryValue] || categoryValue;
 
-  // Capitalize priority the same way as before ("urgent" -> "Urgent")
   const priority = priorityRaw
     ? priorityRaw.charAt(0).toUpperCase() + priorityRaw.slice(1).toLowerCase()
     : null;
 
-  // Build assignees from checked boxes, then de-dup to prevent duplicates on the board
   const checkboxElements = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]:checked');
   const assignees = Array.from(checkboxElements).map((cb) => cb.value);
   const uniqueAssignees = [...new Set(assignees)];
 
-  // Collect subtasks, strip any leading bullets
   const subtaskItems = document.querySelectorAll("#subtask-list li");
   const subTasks = Array.from(subtaskItems).map((item) => {
     const raw = item.textContent.trim();
     return { task: raw.replace(/^•+\s*/, "") };
   });
 
-  // Return the exact shape consumed by the board
   return {
     title,
     description,
@@ -71,6 +83,7 @@ function collectTaskData() {
 }
 
 /**
+ * 
  * Fetches all existing tasks from Firebase
  * @returns {Promise<Object>} Object containing all tasks or empty object on error
  */
@@ -85,6 +98,7 @@ async function fetchAllTasks() {
 }
 
 /**
+ * 
  * Determines the next available task ID by finding the maximum existing ID
  * @param {Object} tasks - Object containing all existing tasks
  * @returns {number} Next available task ID
@@ -104,15 +118,17 @@ function getNextTaskId(tasks) {
 }
 
 /**
+ * 
  * Displays a temporary toast notification
  * @param {string} message - Message to display
  * @param {string} iconPath - Path to icon image (optional)
+ * Create toast element
+ * Auto-remove toast after 4 seconds
  */
 function showToast(message, iconPath = "./assets/img/board.png") {
   const container = document.getElementById("toast-container");
   if (!container) return;
 
-  // Create toast element
   const toast = document.createElement("div");
   toast.className = "toast";
   toast.innerHTML = `
@@ -122,25 +138,37 @@ function showToast(message, iconPath = "./assets/img/board.png") {
 
   container.appendChild(toast);
 
-  // Auto-remove toast after 4 seconds
   setTimeout(() => {
     toast.remove();
   }, 4000);
 }
 
 /**
- * Saves the task to Firebase and handles post-save actions
- * @param {Object} task - Task object to save
- * @param {number} id - Task ID
+ * Saves a task object to Firebase under the given task ID.
+ *
+ * This function:
+ * 1. Converts the `assignedTo` property to an array (if not already).
+ * 2. Sends a PUT request to Firebase with the task data.
+ * 3. Displays a toast notification upon success.
+ * 4. Resets the task form and closes any open overlays.
+ * 5. Reloads tasks from Firebase (if the function exists).
+ * 6. Redirects to the board view after a short delay.
+ *
+ * @async
+ * @function
+ * @param {Object} task - The task object to be saved.
+ * @param {string} id - The unique ID under which the task will be stored in Firebase.
+ *
+ * @returns {Promise<void>} A promise that resolves when the operation is complete.
+ *
+ * @throws {Error} Logs a warning if the request fails or another error occurs during execution.
  */
 async function saveTaskToFirebase(task, id) {
   try {
-    // Ensure assignedTo is an array
     if (!Array.isArray(task.assignedTo)) {
       task.assignedTo = Object.values(task.assignedTo || {});
     }
 
-    // Save task to Firebase
     const res = await fetch(`${BASE_URL}tasks/${id}.json`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -148,21 +176,17 @@ async function saveTaskToFirebase(task, id) {
     });
 
     if (res.ok) {
-      // Success actions
       showToast("Task added to Board", "./assets/img/board.png");
       resetForm();
 
-      // Close overlay if exists
       if (document.getElementById("overlay")) {
         closeOverlay();
       }
 
-      // Reload tasks if function is available
       if (typeof loadTasksFromFirebase === "function") {
         await loadTasksFromFirebase();
       }
 
-      // Redirect to board page after delay
       setTimeout(() => {
         window.location.href = "board.html";
       }, 1000);
@@ -174,6 +198,7 @@ async function saveTaskToFirebase(task, id) {
 
 /**
  * Closes the task creation overlay by hiding it
+ * 
  */
 function closeOverlay() {
   const overlay = document.getElementById("overlay");
@@ -183,7 +208,18 @@ function closeOverlay() {
 }
 
 /**
- * Resets the entire task form to its initial state
+ * Resets the task form to its initial default state.
+ *
+ * This function performs the following actions:
+ * 1. Clears all input and textarea values in the form.
+ * 2. Empties the subtask list.
+ * 3. Unchecks all checkboxes in the "Assigned to" dropdown.
+ * 4. Updates the assignee placeholder accordingly.
+ * 5. Removes input error styles and clears custom validation messages.
+ * 6. Hides all visible field error messages.
+ * 7. Resets the selected category display and removes any associated error state.
+ *
+ * Typically used after submitting or cancelling the task form.
  */
 function resetForm() {
   document.getElementById("taskForm").reset();
@@ -216,7 +252,18 @@ function resetForm() {
 }
 
 /**
- * Initializes event handlers for the add task form
+ * Initializes event listeners for the "Add Task" form.
+ *
+ * This function performs the following actions:
+ * 1. Attaches a click event to the "Clear" button to reset the form.
+ * 2. Attaches a click event to the "Create Task" button to validate and submit the form.
+ * 3. Prevents default form submission behavior.
+ *
+ * The function ensures that:
+ * 1. The form is only submitted if validation passes.
+ * 2. A graceful fallback is in place if buttons or the form are not found in the DOM.
+ *
+ * Typically called on page load to activate form interactivity.
  */
 function initAddTaskFormEvents() {
   const clearBtn = document.querySelector(".clear-btn");
@@ -241,12 +288,17 @@ function initAddTaskFormEvents() {
 }
 
 /**
- * Validates all required form fields before task submission.
- * Calls individual field validation functions for each relevant input.
+ * Validates the required fields of the task form.
+ *
+ * This function checks:
+ * 1. If the title input is filled.
+ * 2. If the due date input is provided.
+ * 3. If a category has been selected.
+ *
+ * Each validation step is delegated to helper functions (e.g., `validateField`, `validateCategory`).
  * 
- * @returns {boolean} Returns true if all required fields are valid, otherwise false.
+ * @returns {boolean} `true` if all validations pass, otherwise `false`.
  */
-
 function validateForm() {
   let valid = true;
 
@@ -257,6 +309,20 @@ function validateForm() {
   return valid;
 }
 
+/**
+ * Validates a single input field by checking if it has a non-empty value.
+ *
+ * If the field is empty:
+ * 1. An error class (`input-error`) is added to the input element.
+ * 2. The associated error message element is shown by adding the `active` class.
+ *
+ * If the field is valid:
+ * - Any error styles and messages are removed.
+ *
+ * @param {string} inputId - The ID of the input or textarea element to validate.
+ * @param {string} errorId - The ID of the associated error message element.
+ * @returns {boolean} `true` if the field has a valid (non-empty) value, otherwise `false`.
+ */
 function validateField(inputId, errorId) {
   const input = document.getElementById(inputId);
   const error = document.getElementById(errorId);
@@ -295,6 +361,18 @@ function validateCategory() {
   }
 }
 
+/**
+ * Attaches real-time validation listeners to form fields.
+ *
+ * This function adds `input` event listeners to specific fields (e.g., title and due date)
+ * to remove validation error styles and messages as soon as the user corrects the input.
+ *
+ * Specifically:
+ * 1. Removes the `input-error` class from the input element when it becomes non-empty.
+ * 2. Hides the associated error message element by removing the `active` class.
+ *
+ * Typically called on form initialization to enhance user feedback during input.
+ */
 function addFieldValidationListeners() {
   const title = document.getElementById("title");
   const titleError = document.getElementById("error-title");
@@ -318,7 +396,19 @@ function addFieldValidationListeners() {
 }
 
 /**
- * Loads contacts from Firebase and renders the assignee dropdown
+ * Loads the contact list from Firebase and updates the global `Contacts` array.
+ *
+ * This function performs the following actions:
+ * 1. Fetches contact data from the `contacts.json` endpoint in Firebase.
+ * 2. Checks if the returned data is a valid array.
+ * 3. Assigns the data to the global `Contacts` variable.
+ * 4. Triggers rendering of the "Assigned to" dropdown using `renderAssigneeDropdown()`.
+ *
+ * @async
+ * @function
+ * @returns {Promise<void>} A promise that resolves when contacts are successfully loaded and rendered.
+ *
+ * @throws {Error} Logs a warning if the fetch operation fails or if the returned data is not an array.
  */
 async function loadContacts() {
   try {
@@ -507,56 +597,64 @@ function renderAssigneeDropdown() {
 }
 
 /**
- * Updates the assignee selection display with selected contacts
+ * Updates the visual placeholder for selected assignees in the task form.
+ *
+ * This function performs the following:
+ * 1. Collects all checked assignee checkboxes from the dropdown.
+ * 2. Updates the selection state (adds or removes the "selected" class) for each checkbox label.
+ * 3. Generates colored avatar circles for up to 4 selected assignees.
+ * 4. If more than 4 assignees are selected, displays a "+X" avatar indicating additional selections.
+ * 5. Resets the "Select contacts" placeholder text when any selection is present.
+ *
+ * Dependencies:
+ * 1.`getInitials(name: string): string` – extracts initials from the contact name.
+ * 2. `getColor(char: string): string` – returns a color string based on the initial character.
+ *
+ * Typically called when checkboxes in the "Assigned to" dropdown are toggled.
  */
 function updateAssigneePlaceholder() {
-  const selectedAvatars = document.getElementById("selected-assignee-avatars");
+  const avatars = document.getElementById("selected-assignee-avatars");
   const placeholder = document.getElementById("selected-assignees-placeholder");
-  const checkboxes = document.querySelectorAll(
-    '#assignee-dropdown input[type="checkbox"]'
-  );
+  const checkboxes = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]');
+  if (!avatars || !placeholder) return;
 
-  if (!selectedAvatars || !placeholder) return;
-
-  let selected = [];
-  checkboxes.forEach((cb) => {
+  const selected = Array.from(checkboxes).filter(cb => {
     const label = cb.closest(".checkbox-label");
-    if (cb.checked) {
-      selected.push(cb.value);
-      label.classList.add("selected");
-    } else {
-      label.classList.remove("selected");
-    }
-  });
+    label?.classList.toggle("selected", cb.checked);
+    return cb.checked;
+  }).map(cb => cb.value);
 
-  // Reset Anzeige
-  selectedAvatars.innerHTML = "";
+  avatars.innerHTML = "";
   placeholder.textContent = "Select contacts";
 
-  // Avatare anzeigen
-  const maxVisible = 4;
-  const visible = selected.slice(0, maxVisible);
-  const extraCount = selected.length - maxVisible;
-
-  visible.forEach((name) => {
+  selected.slice(0, 4).forEach(name => {
     const initials = getInitials(name);
     const color = getColor(initials[0]);
-    selectedAvatars.innerHTML += `
-            <div class="avatar" style="background-color: ${color};">
-                ${initials}
-            </div>
-        `;
+    avatars.innerHTML += `
+      <div class="avatar" style="background-color: ${color};">${initials}</div>
+    `;
   });
 
-  if (extraCount > 0) {
-    selectedAvatars.innerHTML += `
-            <div class="avatar" style="background-color: #2a3647;">
-                +${extraCount}
-            </div>
-        `;
+  if (selected.length > 4) {
+    avatars.innerHTML += `
+      <div class="avatar" style="background-color: #2a3647;">+${selected.length - 4}</div>
+    `;
   }
 }
 
+/**
+ * Closes custom dropdowns when clicking outside of them.
+ *
+ * This event listener runs on every click within the document and performs the following:
+ * - Detects clicks outside of the "Assigned to" and "Category" dropdown components.
+ * - If a click occurs outside both the dropdown and its header, the dropdown is hidden by adding the `d-none` class.
+ *
+ * Applies to:
+ * - The assignee multiselect dropdown.
+ * - The category selection dropdown.
+ *
+ * This helps ensure that dropdowns do not remain open unintentionally when interacting elsewhere on the page.
+ */
 document.addEventListener("click", function (event) {
   const dropdowns = [
     {
@@ -633,16 +731,22 @@ function setMinDateToday() {
   }
 }
 
-
+/**
+ * Initializes the Add Task form once the DOM is fully loaded.
+ *
+ * This includes:
+ * 1. Setting up event listeners for form interactions.
+ * 2. Enabling real-time validation for required fields.
+ * 3. Loading contact data from Firebase.
+ * 4. Setting the minimum allowed due date to today's date.
+ */
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("taskForm");
+
   if (form) {
     initAddTaskFormEvents();
     addFieldValidationListeners();
     loadContacts();
+    setMinDateToday();
   }
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  setMinDateToday();
 });
