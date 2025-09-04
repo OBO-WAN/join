@@ -10,6 +10,7 @@ if (event.target.id === "overlay") {
     }
 }
 
+
 /**
  * Loads all tasks from Firebase and updates the global tasks array
  */
@@ -27,6 +28,7 @@ async function loadTasksFromFirebase() {
   renderCurrentTasks();
 }
 
+
 /**
  * Initializes the application by loading users and tasks from Firebase
  */
@@ -38,6 +40,7 @@ let index = 0; // Beispiel: erster User
 let userColor = users[index]?.color;
   showCurrentBoard();
 }
+
 
 /**
  * Renders all tasks in their respective status columns on the Kanban board
@@ -73,6 +76,7 @@ function renderCurrentTasks() {
   }, 0);
 }
 
+
 /**
  * Gets status container elements and clears their content
  * @returns {Object} Object containing status container elements
@@ -91,6 +95,7 @@ function proofStatus() {
   return statusContainers;
 }
 
+
 /**
  * Initializes status count counters for each task status
  * @returns {Object} Object with count properties for each status
@@ -105,6 +110,7 @@ function proofStatusCounts() {
 
   return statusCounts;
 }
+
 
 /**
  * Displays subtask progress for a task if it has subtasks
@@ -135,6 +141,7 @@ function proofSubtasks(task, index) {
   }
 }
 
+
 /**
  * Shows placeholder text for empty status columns
  * @param {Object} statusCounts - Object containing task counts for each status
@@ -149,6 +156,7 @@ function showStatusPlaceholder(statusCounts, statusContainers) {
   }
 }
 
+
 /**
  * Shows subtask progress container (legacy function)
  */
@@ -160,6 +168,7 @@ function showSubtasks() {
                         </div>
 `;
 }
+
 
 /**
  * Attaches click and drag event handlers to all task containers
@@ -226,12 +235,14 @@ function prepareTaskForTemplate(task) {
   };
 }
 
+
 /**
  * Displays the current board by rendering all tasks
  */
 function showCurrentBoard() {
   renderCurrentTasks();
 }
+
 
 /**
  * Loads user data from Firebase
@@ -242,51 +253,28 @@ async function loadUsersFromFirebase() {
   users = data || [];
 }
 
-/*window.addEventListener("DOMContentLoaded", function () {
-  var searchInput = document.getElementsByClassName("search_input")[0];
-  var taskElements = document.getElementsByClassName("task_container hover");//"task"
 
-  searchInput.addEventListener("input", function () {
-    var searchTerm = searchInput.value.toLowerCase();
-    for (var i = 0; i < taskElements.length; i++) {
-      var task = taskElements[i];
-      var titleElements = task.getElementsByClassName("task_title");
-      var detailElements = task.getElementsByClassName("task_details");
-
-      var title = titleElements.length
-        ? titleElements[0].textContent.toLowerCase()
-        : "";
-      var details = detailElements.length
-        ? detailElements[0].textContent.toLowerCase()
-        : "";
-
-      var match = title.includes(searchTerm) || details.includes(searchTerm);
-      task.style.display = match ? "block" : "none";
-     
-    }
-  });
-});*/
-
+  /**
+   * A live HTMLCollection of all elements with the class "task_container hover".
+   * Used to access and manipulate all task container elements currently present in the DOM.
+   * 
+   * @type {HTMLCollectionOf<Element>}
+   */
 window.addEventListener("DOMContentLoaded", function () {
   var searchInput = document.getElementsByClassName("search_input")[0];
-  var taskElements = document.getElementsByClassName("task_container hover"); //"task"
-
+  var taskElements = document.getElementsByClassName("task_container hover"); 
   searchInput.addEventListener("input", function () {
     var searchTerm = searchInput.value.toLowerCase();
-
-    // Alle Aufgaben filtern
     for (var i = 0; i < taskElements.length; i++) {
       var task = taskElements[i];
       var titleElements = task.getElementsByClassName("task_title");
       var detailElements = task.getElementsByClassName("task_details");
-
       var title = titleElements.length
         ? titleElements[0].textContent.toLowerCase()
         : "";
       var details = detailElements.length
         ? detailElements[0].textContent.toLowerCase()
         : "";
-
       var match = title.includes(searchTerm) || details.includes(searchTerm);
       task.style.display = match ? "block" : "none";
     }
@@ -295,20 +283,22 @@ window.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+
+/**
+ * Displays a placeholder message ("No tasks") in containers when no visible tasks are present.
+ * Removes any existing placeholder before adding a new one.
+ *
+ * @param {string[]} statusIds - Array of container element IDs to check for tasks.
+ * @param {string} taskClass - The class name used to identify task elements within each container.
+ */
 function showSearchPlaceholders(statusIds, taskClass) {
   statusIds.forEach(function (id) {
     var container = document.getElementById(id);
     if (!container) return;
-
-    // Prüfe, ob noch sichtbare Aufgaben in der Spalte sind
     var visibleTasks = Array.from(container.getElementsByClassName(taskClass))
       .filter(function (el) { return el.style.display !== "none"; });
-
-    // Entferne alten Platzhalter
     var oldPlaceholder = container.querySelector(".no_task_placeholder");
     if (oldPlaceholder) oldPlaceholder.remove();
-
-    // Wenn keine Aufgaben sichtbar, Platzhalter einfügen
     if (visibleTasks.length === 0) {
       var placeholder = document.createElement("div");
       placeholder.className = "no_task_placeholder";
@@ -317,6 +307,7 @@ function showSearchPlaceholders(statusIds, taskClass) {
     }
   });
 }
+
 
 /**
  * Opens the Add Task overlay with form and functionality
@@ -332,6 +323,7 @@ function addNewTask() {
   initAddTaskFormEvents();
 }
 
+
 /**
  * Closes the currently open overlay
  */
@@ -339,6 +331,7 @@ function closeOverlay() {
   const overlay = document.getElementById("overlay");
   overlay.classList.add("d-none");
 }
+
 
 /**
  * Opens the task detail overlay with full task information
@@ -364,6 +357,7 @@ function openTask(task, assignedUsersHTML, index) {
   );
   overlay.classList.remove("d-none");
 }
+
 
 /**
  * Formats a date string for display in the task overlay
@@ -397,6 +391,7 @@ function formatDateForOverlay(dueDate) {
   }).format(dateObj);
 }
 
+
 /**
  * Sets the currently dragged task element for drag and drop
  * @param {string} taskId - ID of the task being dragged
@@ -405,6 +400,7 @@ function startDragging(taskId) {
   currentDraggedElement = parseInt(taskId, 10);
 }
 
+
 /**
  * Prevents default behavior to allow drop operations
  * @param {Event} ev - The drag event
@@ -412,6 +408,7 @@ function startDragging(taskId) {
 function allowDrop(ev) {
   ev.preventDefault();
 }
+
 
 /**
  * Moves a task to a new status column via drag and drop
@@ -433,6 +430,7 @@ async function moveTo(newStatus) {
   await loadTasksFromFirebase();
   currentDraggedElement = null;
 }
+
 
 /**
  * Toggles the completion status of a subtask and updates Firebase
@@ -460,6 +458,7 @@ async function toggleSubtaskCheckbox(element, taskId, subtaskIndex) {
   }
 }
 
+
 /**
  * Formats a date from DD-MM-YYYY to YYYY-MM-DD for HTML date inputs
  * @param {string} dueDate - Date string in DD-MM-YYYY format
@@ -472,11 +471,12 @@ function formatDateForInput(dueDate) {
   return `${year}-${month}-${day}`;
 }
 
+
 /**
  * Saves task edits to Firebase (legacy function)
  * @param {string} taskId - ID of the task to save
  */
-async function saveTaskEdits(taskId) {
+async function saveTaskEdits(taskId){
   const task = tasks.find((t) => t.id == taskId);
   if (!task) return;
 
@@ -501,6 +501,7 @@ async function saveTaskEdits(taskId) {
   closeOverlay();
   await loadTasksFromFirebase(); // Re-render
 }
+
 
 /**
  * Saves an edited task to Firebase and reopens the task overlay
@@ -554,6 +555,7 @@ async function reindexTasksInFirebase() {
   await loadTasksFromFirebase();
 }
 
+
 /**
  * Deletes a task from the board after user confirmation
  * @param {string} taskId - ID of the task to delete
@@ -573,6 +575,7 @@ async function deleteTaskFromBoardPopup(taskId) {
     console.error("Delete error:", error);
   }
 }
+
 
 /**
  * Opens the edit overlay for a task
@@ -600,6 +603,7 @@ function editPopupTask(taskId) {
   setupEditFormSubmit(taskId);
 }
 
+
 /**
  * Shows the edit overlay with the add task form modified for editing
  * @param {Object} task - Task object to edit
@@ -615,6 +619,7 @@ function showEditOverlay(task) {
     ".create-btn"
   ).innerHTML = `Save <img src="./assets/icons/check.png" alt="Save Icon">`;
 }
+
 
 /**
  * Prefills the edit form with existing task data
@@ -676,6 +681,7 @@ function prefillEditForm(task) {
   }
 }
 
+
 /**
  * Preselects assignees in the dropdown based on task data
  * @param {Array} assignedToArray - Array of assigned contact names
@@ -692,6 +698,7 @@ function preselectAssignees(assignedToArray) {
 
   updateAssigneePlaceholder();
 }
+
 
 /**
  * Sets up the form submit handler for editing tasks
@@ -710,6 +717,7 @@ function setupEditFormSubmit(taskId) {
     await saveEditedTask(taskId);
   };
 }
+
 
 /**
  * Generates HTML markup for the list of subtasks displayed in the task overlay.
@@ -750,6 +758,7 @@ function generateSubtasksHTML(subtasks = [], taskId) {
   `;
 }
 
+
 /**
  * Shows a confirmation dialog and returns user's choice
  * @param {string} message - Message to display in the confirmation dialog
@@ -785,6 +794,7 @@ function showConfirmation(message = "Are you sure?") {
   });
 }
 
+
 /**
  * Closes any open overlay when the Escape key is pressed
  */
@@ -795,7 +805,20 @@ document.addEventListener("keydown", function (event) {
 });
 
 
-
+/**
+ * Generates HTML markup for displaying assigned user avatars in a task card.
+ * - Removes duplicate assignees.
+ * - Shows up to a maximum number of avatars (default: 4).
+ * - If there are more assignees, displays a "+N" counter for overflow.
+ *
+ * @param {string[]} assignedTo - Array of user names assigned to the task.
+ * @param {number} [maxVisible=4] - Maximum number of avatars to display before showing a counter.
+ * @returns {string} HTML string containing user avatar circles and an optional overflow counter.
+ *
+ * @example
+ * // Returns HTML for up to 4 user avatars and a "+2" counter if there are 6 assignees
+ * buildAssignedUsersHTML(['Alice Smith', 'Bob Jones', 'Carol Lee', 'Dan Wu', 'Eve Kim', 'Frank Li']);
+ */
 function buildAssignedUsersHTML(assignedTo, maxVisible = 4) {
   const uniq = [...new Set(assignedTo || [])];
   const visible = uniq.slice(0, maxVisible);
