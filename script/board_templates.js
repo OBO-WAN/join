@@ -76,7 +76,7 @@ function getAddTaskOverlay() {
             <div class="field-error-message" id="error-due-date">This field is required</div>
           </div>
 
-          <div class="form-divider"></div>
+          <!--<div class="form-divider"></div>-->
 
           <div class="form-right">
             <label>Priority</label>
