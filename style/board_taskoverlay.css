@@ -210,8 +210,6 @@ table {
   color: #2a3647;
 }
 
-/* Edit Overlay */
-
 .edit_task_form {
   display: flex;
   flex-direction: column;
@@ -256,8 +254,6 @@ table {
 .save-btn:hover {
   background-color: #1a2533;
 }
-
-/* Overlay-specific subtask list items */
 
 .overlay-subtask-item {
   display: flex;
