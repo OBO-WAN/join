@@ -12,7 +12,7 @@
 }
   
 @media (max-width: 880px) {
-    .form-grid {
+    .form-grid-add {
         gap: 20px;
     }
   
@@ -33,7 +33,7 @@
 }
   
 @media (max-width: 770px) {
-    .form-grid {
+    .form-grid-add {
         display: block;
         gap: 0;
     }

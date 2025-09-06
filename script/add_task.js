@@ -461,6 +461,7 @@ function createSubtaskElement(value) {
 
   addSubtaskEditHandler(li);
   addSubtaskDeleteHandler(li);
+  li.addEventListener("dblclick", () => enterEditMode(li));
   return li;
 }
 

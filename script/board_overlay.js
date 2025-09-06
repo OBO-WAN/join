@@ -123,7 +123,7 @@ function showEditOverlay(task) {
   const overlay = document.getElementById("overlay");
   overlay.innerHTML = "";
   overlay.classList.remove("d-none");
-  overlay.innerHTML = getAddTaskOverlay();
+  overlay.innerHTML = getAddTaskOverlay("edit");
 
   document.querySelector(".add-task-title h2").textContent = "Edit Task";
   document.querySelector(

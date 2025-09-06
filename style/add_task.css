@@ -42,7 +42,12 @@
     font-size: 44px;
 }
 
-.form-grid {
+.form-grid-add {
+    display: flex;
+    gap: 30px;
+}
+
+.form-grid-edit {
     display: flex;
     gap: 30px;
     flex-direction: column;

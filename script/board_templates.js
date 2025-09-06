@@ -53,16 +53,21 @@ function getKanbanTemplate(task, assignedUsersHTML, index) {
  * @returns {string} HTML string for the add task overlay with form fields, dropdowns, and buttons
  */
 
-function getAddTaskOverlay() {
+function getAddTaskOverlay(type = "add") {
+  const formClass = type === "edit" ? "form-grid-edit" : "form-grid-add";
+  const headline = type === "edit" ? "Edit Task" : "Add Task";
+  const buttonText = type === "edit" ? "Save Changes" : "Create Task";
+
   return `
     <div class="overlay-content">
       <div class="add-task-container-overlay">
         <div class="add-task-title">
-          <h2>Add Task</h2> 
+          <h2>${headline}</h2> 
           <button onclick="closeOverlay()" class="close_button_task hover">X</button>
         </div>
-        <form id="taskForm" class="form-grid">
+        <form id="taskForm" class="${formClass}">
 
+          <!-- Linke Spalte -->
           <div class="form-left">
             <label for="title">Title <span class="required-marker">*</span></label>
             <input type="text" id="title" name="title" placeholder="Enter a title" required>
@@ -76,8 +81,7 @@ function getAddTaskOverlay() {
             <div class="field-error-message" id="error-due-date">This field is required</div>
           </div>
 
-          <!--<div class="form-divider"></div>-->
-
+          <!-- Rechte Spalte -->
           <div class="form-right">
             <label>Priority</label>
             <div class="priority-options">
@@ -130,6 +134,7 @@ function getAddTaskOverlay() {
           </div>
         </form>
 
+        <!-- Footer -->
         <div class="form-footer">
           <div class="form-hint">
             <span class="required-marker">*</span>This field is required
@@ -139,7 +144,7 @@ function getAddTaskOverlay() {
               Clear <span class="x-icon">X</span>
             </button>
             <button type="submit" class="create-btn">
-              Create Task
+              ${buttonText}
               <img src="./assets/icons/check.png" alt="Create Icon">
             </button>
           </div>
