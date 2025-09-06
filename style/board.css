@@ -93,7 +93,6 @@
 
 .add_new_task_btn{
   z-index: 1;
-
 }
 
 .add_icon {
@@ -316,7 +315,6 @@ h3 {
 
 .hover {
   cursor: pointer;
-  
 }
 
 .add_task_headline_responsive {
@@ -326,7 +324,6 @@ h3 {
 .Board_headline_responsive{
   display: none;
 }
-/* ===== Responsive Fixes for Board Page ===== */
 
 @media (min-width: 451px) and (max-width: 1024px) {
   .overlay {
@@ -334,6 +331,10 @@ h3 {
     align-items: flex-start;
     justify-content: center;
     overflow-y: auto;
+  }
+
+  .kanban_section {
+    width: fit-content;
   }
 }
 
@@ -373,7 +374,6 @@ h3 {
     display: none;
   }
 
-
   .headline_responsive{
      color: black;
     font-size: 50px;
@@ -395,11 +395,8 @@ h3 {
     height: 45px;
     background-color: #2a3647;
     color: white;
-    z-index: 3;
     position: relative;
   }
-
- 
 
   .add_icon_responsive {
     height: 25px;
@@ -409,24 +406,59 @@ h3 {
 
 @media (max-width: 768px) {
   .board_container {
-    padding: 100px 16px 16px 16px; /* top space for fixed header */
+    padding: 100px 16px 16px 7px; 
   }
 
+  .section_header {
+    width: 100%;
+  }
+
+  #toDoContainer,
+  #inProgressContainer, 
+  #awaitFeedbackContainer,
+  #doneContainer {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+  }
 
   .kanban_container {
-    overflow-x: auto;
     flex-wrap: wrap;
-    padding-bottom: 20px;
+    padding-bottom: 80px;
+    padding-top: 20px;
+    width: 100%;
   }
 
   .kanban_section {
-    min-width: 280px;
     flex: 0 0 auto;
   }
 
   .task_information {
     width: 100%;
   }
+
+  .task {
+    width: 200px;
+  }
 }
 
+@media (max-width: 580px) {
+  .kanban_section {
+    max-width: none;
+    min-width: none;
+    overflow-x: auto;
+    width: 100%;
+  }
 
+  #toDoContainer,
+  #inProgressContainer, 
+  #awaitFeedbackContainer,
+  #doneContainer {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .task {
+    width: 180px;
+  }
+}
