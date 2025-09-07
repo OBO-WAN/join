@@ -172,7 +172,7 @@ function getAddTaskOverlay(type = "add") {
 function getTaskSheetOverlay(task, assignedUsersHTML, index, formattedDate, priority, subtasksHTML) {
   return `
     <div class="task_container_overlay hover">
-      <div class="task">
+      <div class="task_overlay">
 
         <div class="overlay_headline"> 
           <div class="task_category_overlay ${task.categoryClass}">${task.category}</div>

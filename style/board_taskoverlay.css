@@ -4,6 +4,12 @@
   gap: 16px;
 }
 
+.task_overlay {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .task_container_overlay {
   width: 90vw;
   max-width: 600px;
