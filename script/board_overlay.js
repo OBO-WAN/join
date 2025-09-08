@@ -58,7 +58,6 @@ function formatDateForOverlay(dueDate) {
 
   const [day, month, year] = parts;
 
-  // Pad values to ensure correct format
   const paddedDay = day.padStart(2, "0");
   const paddedMonth = month.padStart(2, "0");
 
@@ -138,27 +137,22 @@ function prefillEditForm(task) {
   const categoryInput = document.getElementById("category");
   const categoryPlaceholder = document.getElementById("selected-category-placeholder");
 
-  // Title
   if (titleInput) {
     titleInput.value = task.task || task.title || "";
   }
-  // Description
   if (descInput) {
     descInput.value = task.description || "";
   }
-  // Due Date
   if (dueInput) {
     const formattedDueDate = formatDateForInput(task.dueDate);
     dueInput.value = formattedDueDate;
   } else {
     console.warn("⚠️ 'due-date' input not found in the DOM.");
   }
-  // Category
   if (categoryInput && categoryPlaceholder) {
     categoryInput.value = task.category;
     categoryPlaceholder.textContent = task.category;
   }
-  // Priority
   if (task.priority) {
     const priorityValue = task.priority.toLowerCase();
     const priorityInput = document.querySelector(
@@ -171,7 +165,6 @@ function prefillEditForm(task) {
     }
   }
 
-  // Subtasks
   if (task.subTasks && Array.isArray(task.subTasks)) {
     const subtaskList = document.getElementById("subtask-list");
     if (subtaskList) {
@@ -230,7 +223,7 @@ async function saveEditedTask(taskId) {
   const task = tasks.find((t) => t.id == taskId);
   const updatedTask = collectTaskData();
   updatedTask.id = taskId;
-  updatedTask.status = task.status; // Preserve current status
+  updatedTask.status = task.status;
 
   await fetch(`${BASE_URL}tasks/${taskId}.json`, {
     method: 'PUT',
@@ -240,7 +233,6 @@ async function saveEditedTask(taskId) {
 
   showToast("Task updated", "./assets/img/board.png");
 
-  // Reload and re-open the updated task
   await loadTasksFromFirebase();
   const updated = tasks.find(t => t.id == taskId);
   if (updated) {
@@ -280,7 +272,7 @@ async function saveTaskEdits(taskId){
   });
 
   closeOverlay();
-  await loadTasksFromFirebase(); // Re-render
+  await loadTasksFromFirebase();
 }
 
 /**

@@ -1,6 +1,5 @@
 let tasks = [];
 let users = [];
-let currentDraggedElement = null;
 
 window.onclick =  (event) =>{
 if (event.target.id === "overlay") {
@@ -291,43 +290,6 @@ function showSearchPlaceholders(statusIds, taskClass) {
       container.appendChild(placeholder);
     }
   });
-}
-
-/**
- * Sets the currently dragged task element for drag and drop
- * @param {string} taskId - ID of the task being dragged
- */
-function startDragging(taskId) {
-  currentDraggedElement = parseInt(taskId, 10);
-}
-
-/**
- * Prevents default behavior to allow drop operations
- * @param {Event} ev - The drag event
- */
-function allowDrop(ev) {
-  ev.preventDefault();
-}
-
-/**
- * Moves a task to a new status column via drag and drop
- * @param {string} newStatus - The new status to assign to the task
- */
-async function moveTo(newStatus) {
-  if (!currentDraggedElement && currentDraggedElement !== 0) {
-    return;
-  }
-  const task = tasks.find((t) => Number(t.id) === currentDraggedElement);
-  if (!task) {
-    return;
-  }
-  task.status = newStatus;
-  await fetch(`${BASE_URL}tasks/${currentDraggedElement}.json`, {
-    method: "PUT",
-    body: JSON.stringify(task),
-  });
-  await loadTasksFromFirebase();
-  currentDraggedElement = null;
 }
 
 /**

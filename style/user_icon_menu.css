@@ -1,4 +1,3 @@
-
 .dropdown_container {
     position: absolute;
     top: 0;
@@ -86,8 +85,6 @@ a {
     pointer-events: auto;
     align-items: center;
 }
-
-
 
 .dropdown_menu.active {
     display: block;

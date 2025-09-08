@@ -25,7 +25,7 @@
  * document.getElementById('toDoContainer').innerHTML += cardHTML;
  */
 function getKanbanTemplate(task, assignedUsersHTML, index) {
-  return `    <div class="task_container hover" data-task-id="${task.id}" data-task-index="${index}" draggable="true" ondragstart="startDragging('${task.id}')">
+  return `    <div class="task_container hover" data-task-id="${task.id}" data-task-index="${index}" draggable="true" ondragstart="startDragging('${task.id}', event)">
                     
                     <div class="task">
                         <div class="task_category ${task.categoryClass}">${task.category}</div>

@@ -99,7 +99,7 @@
 
         <div class="search_task_container">
           <div class="search_container">
-            <input type="text" placeholder="Find task" class="search_input"/>
+            <input type="text" id="search-task" name="search-task" placeholder="Find task" class="search_input"/>
             <div class="search_separator"></div>
             <img src="./assets/icons/search.png" class="search_icon hover" />
           </div>
@@ -118,48 +118,64 @@
           class="kanban_section"
           ondrop="moveTo('toDo')"
           ondragover="allowDrop(event)"
+          ondragleave="hideDropPlaceholder(event)"
         >
           <div class="section_header">
             <h3>To do</h3>
             <button onclick="addNewTask()" class="add_task_btn hover">+</button>
           </div>
 
-          <div id="toDoContainer"></div>
+          <div id="toDoContainer">
+            <div class="drop-placeholder"></div>
+          </div>
+          
         </div>
         <div
           class="kanban_section"
           ondrop="moveTo('inProgress')"
           ondragover="allowDrop(event)"
+          ondragleave="hideDropPlaceholder(event)"
         >
           <div class="section_header">
             <h3>In progress</h3>
             <button onclick="addNewTask()" class="add_task_btn hover">+</button>
           </div>
 
-          <div id="inProgressContainer"></div>
+          <div id="inProgressContainer">
+            <div class="drop-placeholder"></div>
+          </div>
+          
         </div>
         <div
           class="kanban_section"
           ondrop="moveTo('awaitFeedback')"
           ondragover="allowDrop(event)"
+          ondragleave="hideDropPlaceholder(event)"
         >
           <div class="section_header">
             <h3>Await feedback</h3>
             <button onclick="addNewTask()" class="add_task_btn hover">+</button>
           </div>
 
-          <div id="awaitFeedbackContainer"></div>
+          <div id="awaitFeedbackContainer">
+            <div class="drop-placeholder"></div>
+          </div>
+          
         </div>
         <div
           class="kanban_section"
           ondrop="moveTo('done')"
           ondragover="allowDrop(event)"
+          ondragleave="hideDropPlaceholder(event)"
         >
           <div class="section_header">
             <h3>Done</h3>
           </div>
 
-          <div id="doneContainer"></div>
+          <div id="doneContainer">
+            <div class="drop-placeholder"></div>
+          </div>
+          
         </div>
       </div>
     </div>
@@ -238,4 +254,5 @@
   <script src="./script/board.js"></script>
   <script src="./script/board_templates.js"></script>
   <script src="./script/board_overlay.js"></script>
+  <script src="./script/board_drag&drop.js"></script>
 </html>

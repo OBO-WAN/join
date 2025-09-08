@@ -64,7 +64,7 @@
   object-fit: contain;
   width: 24px;
   height: 24px;
-  margin-right: 16px;
+  margin-left: 10px;
 }
 
 .add_task_headline {
@@ -339,4 +339,49 @@ h3 {
 
 .Board_headline_responsive {
   display: none;
+}
+
+.tilt-task {
+  transform: rotate(3deg);
+  transition: transform 0.2s ease-in-out;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.drop-placeholder {
+  display: none;
+  height: 80px;
+  margin-top: 10px;
+  border: 2px dashed #1baefd;
+  border-radius: 12px;
+  background-color: rgba(27, 174, 253, 0.05);
+  transition: all 0.2s ease-in-out;
+}
+
+.task_container.dragging-swing {
+  animation: swing 0.3s ease-in-out infinite alternate;
+  opacity: 0.9;
+  z-index: 2000;
+}
+
+.task_container.invisible-during-drag {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.invisible-during-drag {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.kanban_section.drag-over {
+  background-color: rgba(27, 174, 253, 0.05);
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(2deg);
+  }
 }
