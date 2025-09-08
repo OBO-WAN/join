@@ -326,6 +326,13 @@ h3 {
   color: #2a3647;
 }
 
+.form-footer-edit {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 20px;
+}
+
 .add_task_headline_responsive {
   display: none;
 }

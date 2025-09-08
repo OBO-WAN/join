@@ -257,14 +257,14 @@ function getEditTaskOverlay() {
         <form id="taskForm" class="\${formClass}">
           <!-- Linke Spalte -->
           <div class="form-left">
-            <label for="title">Title <span class="required-marker">*</span></label>
+            <label for="title">Title</label>
             <input type="text" id="title" name="title" placeholder="Enter a title" required>
             <div class="field-error-message" id="error-title">This field is required</div>
 
             <label for="description">Description</label>
             <textarea id="description" name="description" rows="4" placeholder="Enter a Description"></textarea>
 
-            <label for="due-date">Due Date <span class="required-marker">*</span></label>
+            <label for="due-date">Due Date</label>
             <input type="date" id="due-date" name="due-date" required>
             <div class="field-error-message" id="error-due-date">This field is required</div>
           </div>
@@ -299,7 +299,7 @@ function getEditTaskOverlay() {
               <div class="selected-assignee-avatars" id="selected-assignee-avatars"></div>
             </div>
 
-            <label>Category <span class="required-marker">*</span></label>
+            <label>Category</label>
             <div class="custom-category-select">
               <div class="category-select-header" onclick="toggleCategoryDropdown()">
                 <span id="selected-category-placeholder">Select category</span>
@@ -323,10 +323,7 @@ function getEditTaskOverlay() {
         </form>
 
         <!-- Footer -->
-        <div class="form-footer">
-          <div class="form-hint">
-            <span class="required-marker">*</span>This field is required
-          </div>
+        <div class="form-footer-edit">
           <div class="task-buttons">
             <button type="reset" class="clear-btn" id="clear-btn">
               Clear <span class="x-icon">X</span>
