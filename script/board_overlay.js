@@ -123,12 +123,8 @@ function showEditOverlay(task) {
   const overlay = document.getElementById("overlay");
   overlay.innerHTML = "";
   overlay.classList.remove("d-none");
-  overlay.innerHTML = getAddTaskOverlay("edit");
+  overlay.innerHTML = getEditTaskOverlay();
 
-  document.querySelector(".add-task-title h2").textContent = "Edit Task";
-  document.querySelector(
-    ".create-btn"
-  ).innerHTML = `Save <img src="./assets/icons/check.png" alt="Save Icon">`;
 }
 
 /**

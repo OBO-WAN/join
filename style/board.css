@@ -23,7 +23,7 @@
 }
 
 .search_container {
-  position:relative;
+  position: relative;
   display: flex;
   align-items: center;
   border: 1px solid #a8a8a8;
@@ -38,7 +38,7 @@
 }
 
 .search_container:focus-within {
-  border-color: #44AFFF;
+  border-color: #44afff;
 }
 .search_input {
   border: none;
@@ -85,7 +85,7 @@
   background-color: #2a3647;
 }
 
-.add_new_task_btn{
+.add_new_task_btn {
   z-index: 1;
 }
 
@@ -242,22 +242,22 @@ h3 {
 }
 
 .user_initials_group {
-    display: flex;
-    gap: 6px;
-    align-items: center;
+  display: flex;
+  gap: 6px;
+  align-items: center;
 }
 
 .user_initials_circle {
-    width: 32px;
-    height: 32px;
-    font-size: 12px;
-    font-weight: 400;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    margin-left: -10px;
-    box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  font-size: 12px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-left: -10px;
+  box-sizing: border-box;
 }
 
 .priority_high {
@@ -281,7 +281,7 @@ h3 {
   width: 100%;
   justify-content: center;
   align-items: center;
-  display:flex;
+  display: flex;
   top: 0;
 }
 
@@ -311,10 +311,25 @@ h3 {
   cursor: pointer;
 }
 
+.add-task-container-overlay {
+  position: relative;
+}
+
+.close_button_edit {
+  position: absolute;
+  top: 12px;
+  right: 24px;
+  padding-top: 12px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  color: #2a3647;
+}
+
 .add_task_headline_responsive {
   display: none;
 }
 
-.Board_headline_responsive{
+.Board_headline_responsive {
   display: none;
 }

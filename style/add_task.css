@@ -53,11 +53,18 @@
     flex-direction: column;
 }
 
-.form-left,
+.form-left {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-bottom: 32px;
+    width: 440px;
+}
+
 .form-right {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 16px;
     width: 440px;
 }
 
