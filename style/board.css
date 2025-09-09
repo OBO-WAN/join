@@ -105,6 +105,7 @@ h3 {
   width: 100%;
   overflow-x: hidden;
   flex-wrap: wrap;
+  padding-bottom: 150px;
 }
 
 .kanban_section {
@@ -358,11 +359,6 @@ h3 {
 
 .kanban_section.drag-over {
   padding-bottom: 90px;
-}
-
-.task-list {
-  display: flex;
-  flex-direction: column;
 }
 
 .drop-placeholder {
