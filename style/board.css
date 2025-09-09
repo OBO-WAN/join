@@ -347,14 +347,22 @@ h3 {
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
 }
 
+.kanban_section.drag-over {
+  padding-bottom: 90px;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+}
+
 .drop-placeholder {
   display: none;
-  height: 80px;
-  margin-top: 10px;
-  border: 2px dashed #1baefd;
+  height: 244px;
+  width: 250px;
+  margin-top: 12px;
+  border: 2px dashed #A8A8A8;
   border-radius: 12px;
-  background-color: rgba(27, 174, 253, 0.05);
-  transition: all 0.2s ease-in-out;
 }
 
 .task_container.dragging-swing {
@@ -364,17 +372,12 @@ h3 {
 }
 
 .task_container.invisible-during-drag {
-  opacity: 0;
   pointer-events: none;
 }
 
 .invisible-during-drag {
   opacity: 0;
   pointer-events: none;
-}
-
-.kanban_section.drag-over {
-  background-color: rgba(27, 174, 253, 0.05);
 }
 
 @keyframes swing {
