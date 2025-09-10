@@ -66,7 +66,6 @@ function renderCurrentTasks() {
 
   setTimeout(() => {
     attachTaskEventHandlers();
-    bindTouchEventsToTasks();
   }, 0);
 }
 
