@@ -1,4 +1,7 @@
 let currentDraggedElement = null;
+let touchedTask = null;
+let touchStartX = 0;
+let touchStartY = 0;
 
 /**
  *  Cleans up drag effects by removing classes and hiding drop placeholders after a drag ends. */
@@ -14,8 +17,8 @@ document.addEventListener("dragend", () => {
     document.querySelectorAll(".drop-placeholder").forEach(p =>
       p.style.display = "none"
     );
-  });
-  
+});
+
 /**
 * Sets the currently dragged task element and applies styles for animation
 * @param {string} taskId - ID of the dragged task
@@ -95,4 +98,64 @@ async function moveTo(newStatus) {
     });
   
     await loadTasksFromFirebase();
+}
+
+function handleTouchStart(event) {
+    const touch = event.touches[0];
+    touchedTask = event.currentTarget;
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+  
+    document.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('touchend', handleTouchEnd);
+}
+  
+function handleTouchMove(event) {
+    event.preventDefault(); // ✅ wichtig!
+    if (!touchedTask) return;
+  
+    const touch = event.touches[0];
+    touchedTask.style.position = 'absolute';
+    touchedTask.style.left = `${touch.clientX - touchedTask.offsetWidth / 2}px`;
+    touchedTask.style.top = `${touch.clientY - touchedTask.offsetHeight / 2}px`;
+    touchedTask.style.zIndex = 1000;
+}
+  
+function bindTouchEventsToTasks() {
+    document.querySelectorAll('.task_container').forEach(task => {
+      task.addEventListener('touchstart', handleTouchStart, { passive: false });
+    });
+}
+
+function handleTouchEnd(event) {
+    if (!touchedTask) return;
+  
+    const touch = event.changedTouches[0];
+    const dropTargets = document.querySelectorAll('.kanban_section');
+  
+    dropTargets.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (
+        touch.clientX >= rect.left &&
+        touch.clientX <= rect.right &&
+        touch.clientY >= rect.top &&
+        touch.clientY <= rect.bottom
+      ) {
+        const newStatus = section.getAttribute('ondrop')?.match(/moveTo\('(.+)'\)/)?.[1];
+        if (newStatus) {
+          const taskId = touchedTask.dataset.taskId;
+          startDragging(taskId); 
+          moveTo(newStatus);
+        }
+      }
+    });
+
+    touchedTask.style.position = '';
+    touchedTask.style.left = '';
+    touchedTask.style.top = '';
+    touchedTask.style.zIndex = '';
+    touchedTask = null;
+  
+    document.removeEventListener('touchmove', handleTouchMove);
+    document.removeEventListener('touchend', handleTouchEnd);
 }

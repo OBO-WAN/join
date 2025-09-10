@@ -64,9 +64,9 @@ function renderCurrentTasks() {
 
   showStatusPlaceholder(statusCounts, statusContainers);
 
-  // Attach events after DOM paint (once)
   setTimeout(() => {
     attachTaskEventHandlers();
+    bindTouchEventsToTasks();
   }, 0);
 }
 
