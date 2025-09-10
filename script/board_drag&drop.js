@@ -47,14 +47,12 @@ function startDragging(taskId, event) {
 */
 function allowDrop(ev) {
     ev.preventDefault();
-    console.log("[DragDrop] allowDrop triggered");
   
     const section = ev.currentTarget;
     section.classList.add("drag-over");
   
     const placeholder = section.querySelector(".drop-placeholder");
     if (placeholder) {
-      console.log("[DragDrop] Drop placeholder found:", placeholder);
       placeholder.style.display = "block";
     } else {
       console.warn("[DragDrop] Kein Platzhalter gefunden!");
