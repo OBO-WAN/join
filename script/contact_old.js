@@ -17,51 +17,37 @@ async function getContacts(){
 }
 
 function updateContacts(){
-
 }
 
-//ContactList
 function renderContacts(){
-    
 }
 
-function sortContacts(){
-    
+function sortContacts(){ 
 }
 
-function getFirstLetter(){
-    
+function getFirstLetter(){ 
 }
 
-//Change Contacts
 function addContact(){
-
 }
 
 function editContact(){
-
 }
 
 function deleteContact(){
-
 }
 
-//Viewcard
+
 function renderViewCard(){
-    
 }
 
-//Dialog
 function openContactDialog(){
     document.getElementById("add_new_contact_ov_section").style.display = "flex";
 }
 
 function closeContactDialog(){
     document.getElementById("add_new_contact_ov_section").style.display = "none";
-
 }
 
-//contat avatar collor
 function avatarColor(){
-
 }

@@ -174,10 +174,6 @@ function saveEditedContact(id, KindOfDlg_pc, name, mail, phone, viewMode){
         renderViewCard(id);
         closeContactDialog();
     } else if (viewMode === 2) {
-        /*      renderContacts(Contacts);
-                renderViewCard(id);
-                closeContactDialog();
-        */
         renderViewCard(id);
         closeContactDialogMobile();
     } else if (viewMode === 3) {

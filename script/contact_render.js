@@ -1,8 +1,6 @@
-
 window.addEventListener("resize", () => {
     handleWindowResize();
 });
-
 
 /**
  * tea window resize events and updates the UI accordingly.
@@ -12,7 +10,7 @@ function handleWindowResize() {
     getViewMode();
     switchoffMenu();
     switch (getViewMode()) {
-        case 1: // 1 = desktop big     | >= 1100
+        case 1: 
             clearTabletViewCard();
 
             if(!checkIfTabletViewCardActive()) {
@@ -26,17 +24,17 @@ function handleWindowResize() {
             addNewContactSectionState_pc(true);
             break;
 
-        case 2: // 2 = desktop small   | < 1100
+        case 2: 
             goBacktoContacts();
             addNewContactSectionState_pc(false);
             break;
 
-        case 3: // 3 = tablet          | < 825
+        case 3:
             goBacktoContacts();
             MobileVievCard(idx);
             addNewContactSectionState_pc(false);
             break;
-        case 4: // 4 = mobile          | < 560
+        case 4:
             goBacktoContacts();
             MobileVievCard(idx);
             break;
@@ -44,7 +42,6 @@ function handleWindowResize() {
             break;
     }
 }
-
 
 /**
  * Checks if the tablet view card header is currently active (visible).
@@ -55,7 +52,6 @@ function checkIfTabletViewCardActive() {
     let tabletViewCardHeader = document.getElementById("tablate_view_card_header");
     return tabletViewCardHeader && tabletViewCardHeader.style.display !== "none";
 }
-
 
 /**
  * Removes all null or undefined elements from the given contacts array in place.
@@ -69,8 +65,6 @@ function deletAllNullElementsFromArray(contacts){
         }
     }
 }
-
-
 
 /**
  * Renders the list of contacts in the UI.
@@ -86,9 +80,9 @@ function renderContacts(contacts) {
     switchoffMenu();
     scrollEnable();
 
-    deletAllNullElementsFromArray(contacts); // Entfernt null-Elemente aus dem Array
+    deletAllNullElementsFromArray(contacts);
 
-    sortContacts(contacts); // Kontakte sortieren
+    sortContacts(contacts); 
 
     let contactsListElem = document.getElementById("contacts_list");
     if (contactsListElem) {
@@ -104,7 +98,6 @@ function renderContacts(contacts) {
     }
 }
 
-
 /**
  * Renders the contact view card for mobile view.
  * - Hides the contacts list and add new contact section.
@@ -116,8 +109,6 @@ function renderContacts(contacts) {
 function MobileVievCard(index) {
     switchoffMenu();
     if (index >= 0) {
-        //let contact = Contacts[index];
-        //let initials = getInitials(contact.name);
         let color = getColor(index);
         let contactsListElem = document.getElementById("contacts_list");
         if (contactsListElem) {
@@ -137,7 +128,6 @@ function MobileVievCard(index) {
     }
 }
 
-
 /**
  * Renders the header for the tablet view card.
  */
@@ -148,7 +138,6 @@ function getTabletViewCardHeader() {
     );
     tabletViewCardHeaderId.innerHTML = tabletViewCardHeader;
 }
-
 
 /**
  * Renders the contact view card for tablet view.
@@ -172,7 +161,6 @@ function renderTabletVievCard(index) {
     hideContactsList();
 }
 
-
 /**
  * Renders the container for the tablet view card.
  * @param {number} index - The contact index.
@@ -184,11 +172,9 @@ function renderTabletCardContainer(index, color) {
     TabletViewContainer.style.display = "flex";
     TabletViewContainer.innerHTML = getTabletViewCardTemplate(index, color);
 
-    // Header einfügen
     const tabletViewCardHeaderId = document.getElementById("Tablet_view_card_header");
     tabletViewCardHeaderId.innerHTML = getTabletViewCardHeaderTemplate();
 }
-
 
 /**
  * Fills the tablet card fields with contact data.
@@ -207,7 +193,6 @@ function fillTabletCardFields(contact) {
         contact.phone || "No phone number available";
 }
 
-
 /**
  * Hides the contacts list in the UI.
  */
@@ -215,7 +200,6 @@ function hideContactsList() {
     const contactsListElem = document.getElementById("contacts_list");
     if (contactsListElem) contactsListElem.style.display = "none";
 }
-
 
 /**
  * Clears the tablet view card container.
@@ -230,7 +214,6 @@ function clearTabletViewCard() {
         tabletViewCardContainer.style.display = "none";
     }
 }
-
 
 /**
  * Clears the contact view card based on view mode.
@@ -253,7 +236,6 @@ function clearViewCard() {
 
     setActualContactIndex(-1);
 }
-
 
 /**
  * Renders the contact view card for desktop view.
@@ -278,21 +260,19 @@ function renderViewCard(index) {
     }
 }
 
-
 /**
  * Generates HTML for all contact cards, grouped by first letter.
  * @param {Array} contacts - The contacts array.
  * @returns {string} The HTML string for contact cards.
  */
 function generateContactsCards(contacts) {
-    let oldLetter = ""; // Speichert den vorherigen Buchstaben
+    let oldLetter = "";
     let contactCards = "";
     for (let index = 0; index < contacts.length; index++) {
         let contact = contacts[index];
         let initials = getInitials(contact.name);
 
-        let firstLetter = contact.name.charAt(0).toUpperCase(); // Erster Buchstabe des Namens
-        // Wenn der Buchstabe wechselt, füge eine neue Überschrift hinzu
+        let firstLetter = contact.name.charAt(0).toUpperCase();
         if (oldLetter !== firstLetter) {
             contactCards += `
                 <div class="contacts_section_header">
@@ -312,12 +292,10 @@ function generateContactsCards(contacts) {
     return contactCards;
 }
 
-
 /**
  * Returns to the contacts list view and resets UI.
  */
 function goBacktoContacts() {
-
     switchoffMenu();
     let tablet_additional_div = "";
     let addNewContact = "";
@@ -341,7 +319,6 @@ function goBacktoContacts() {
     clearViewCard();
 }
 
-
 /**
  * Renders the appropriate contact view based on the current version.
  * @param {number} index - The contact index.
@@ -351,17 +328,16 @@ function proofVersion(index) {
     let version = getViewMode();
 
     switch (version) {
-        case 1: //  1 = desktop big     | >= 1100
+        case 1:
             renderViewCard(index);
             break;
 
-        case 2: // 2 = desktop small   | < 1100
-        // 3 = tablet          | < 825
+        case 2: 
         case 3:
             renderTabletVievCard(index);
             break;
 
-        case 4: // 4 = mobile          | < 560
+        case 4:
             MobileVievCard(index);
             break;
 
@@ -369,7 +345,6 @@ function proofVersion(index) {
             break;
     }
 }
-
 
 /**
  * Handles clicks outside the mobile menu to close it.
@@ -382,16 +357,23 @@ function handleOutsideClickForMobileMenu(event) {
     }
 }
 
-
+/**
+ * Activates click handlers for all contact cards.
+ * When a contact card is clicked, it is highlighted by adding
+ * the "active" class while removing the class from all other cards.
+ *
+ * This ensures that only one contact card is active at a time.
+ */
 function activateContactCardClick() {
     document.querySelectorAll('.contact_card').forEach(card => {
         card.addEventListener('click', function() {
-            document.querySelectorAll('.contact_card').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.contact_card').forEach(c => 
+                c.classList.remove('active')
+            );
             this.classList.add('active');
         });
     });
 }
-
 
 /**
  * Enables scrolling for the contacts list container by setting its overflow style to "scroll".
@@ -402,7 +384,6 @@ function scrollEnable() {
         contactListContainer.style.overflow = "scroll";
     }
 }
-
 
 /**
  * Disables scrolling for the contacts list container by setting its overflow style to "hidden".

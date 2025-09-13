@@ -306,7 +306,7 @@ function handleSubtaskKey(event) {
 function setMinDateToday() {
     const dateInput = document.getElementById("due-date");
     if (dateInput) {
-      const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+      const today = new Date().toISOString().split("T")[0];
       dateInput.min = today;
     }
 }

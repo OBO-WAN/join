@@ -44,7 +44,6 @@ function toggleMenu(){
     } else {
         menu.style.zIndex = "4000";
         menu.style.display = "flex";
-       // boardAddTaskBtnResp.style.position = "relative";
         
         if( goBackBtn ){
           goBackBtn.style.display = "none";
@@ -67,8 +66,6 @@ function toggleMenu(){
         }
     }
 }
-
-
 
 function switchoffMenu(){
     let goBackBtn = document.getElementById("go_back_btn_container");
@@ -97,7 +94,6 @@ function toHrefFocus(targetHref, anchor) {
   window.location.href = targetHref;
 }
 
-
 /**
  * Renders the user's initials in the avatar icon if logged in,
  * otherwise sets a default initial.
@@ -122,7 +118,6 @@ function setUserInitials() {
   }
 }
 
-
 /**
  * Logs out the user by clearing session storage and redirecting to login page.
  */
@@ -131,6 +126,4 @@ function logOut() {
   window.location.href = 'login.html';
 }
 
-
-// Set user initials when the DOM content is loaded
 window.addEventListener('DOMContentLoaded', setUserInitials);

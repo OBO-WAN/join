@@ -213,7 +213,6 @@ function logOut() {
   window.showButtonLinksSidebar = false;
   sessionStorage.setItem('linksSidebarBoolienKey', window.showButtonLinksSidebar);
 
-  // Remove all relevant user session keys
   sessionStorage.removeItem('loggedIn');
   sessionStorage.removeItem('loggedInUserId');
   sessionStorage.removeItem('activePage');

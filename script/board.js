@@ -31,7 +31,7 @@ async function init() {
   await loadUsersFromFirebase();
   await loadTasksFromFirebase();
   
-let index = 0; // Beispiel: erster User
+let index = 0;
 let userColor = users[index]?.color;
   showCurrentBoard();
 }
@@ -115,7 +115,6 @@ function proofSubtasks(task, index) {
   );
 
   if (subtaskContainer) {
-    // Fortschritt berechnen (hier: 0 erledigt, kann angepasst werden)
     const total = task.subTasks.length;
     const done = task.subTasks.filter((t) => t.done === true).length;
     const percent = Math.round((done / total) * 100) || 0;
@@ -171,15 +170,12 @@ function attachTaskEventHandlers() {
     if (!task) return;
 
     const taskData = prepareTaskForTemplate(task);
-    // Build avatars with de-dup + +N overflow (use raw names)
     const assignedUsersHTML = buildAssignedUsersHTML(task.assignedTo);
 
-    // Open details overlay on click
     container.addEventListener("click", () => {
       openTask(taskData, assignedUsersHTML, index);
     });
 
-    // Support drag start (template also has ondragstart; keeping for robustness)
     container.addEventListener("dragstart", () => {
       startDragging(task.id);
     });
@@ -204,7 +200,7 @@ function prepareTaskForTemplate(task) {
 
     let color = "#2A3647";
     if (user) {
-      color = getColor(initials); // uses add_task.js palette
+      color = getColor(initials);
     }
     return { initials, color };
   });
@@ -351,7 +347,6 @@ document.addEventListener("keydown", function (event) {
  * @returns {string} HTML string containing user avatar circles and an optional overflow counter.
  *
  * @example
- * // Returns HTML for up to 4 user avatars and a "+2" counter if there are 6 assignees
  * buildAssignedUsersHTML(['Alice Smith', 'Bob Jones', 'Carol Lee', 'Dan Wu', 'Eve Kim', 'Frank Li']);
  */
 function buildAssignedUsersHTML(assignedTo, maxVisible = 4) {
@@ -361,7 +356,7 @@ function buildAssignedUsersHTML(assignedTo, maxVisible = 4) {
 
   const avatars = visible.map(name => {
     const initials = name.split(" ").map(n => n[0]).join("").toUpperCase();
-    const color = getColor(initials[0]); // from add_task.js
+    const color = getColor(initials[0]);
     return `<div class="user_initials_circle" style="background-color:${color};color:white;">${initials}</div>`;
   }).join("");
 

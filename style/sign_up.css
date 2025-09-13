@@ -337,19 +337,3 @@ button[disabled]:hover {
     display: flex;
   }
 }
-
-/* @media only screen and (max-width: 375px){
-  .arrow-left-sign-up {
-    position: absolute;
-    top: 20px;
-  }
-
-  .arrow-left-sign-up {
-    width: 32px;
-  }
-  
-  .arrow-left-sign-up img {
-    width: 19px;
-  }
-
-} */

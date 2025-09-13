@@ -24,9 +24,9 @@ function configEditDlgBox(id) {
 
             let oldContactData = Contacts[id];
 
-            document.getElementById("name_input" + KindOfDlg_pc).value = oldContactData.name; // Contacts[id].name;
-            document.getElementById("mail_input" + KindOfDlg_pc).value = oldContactData.mail; //Contacts[id].mail;
-            document.getElementById("phone_input" + KindOfDlg_pc).value = oldContactData.phone; //Contacts[id].phone;
+            document.getElementById("name_input" + KindOfDlg_pc).value = oldContactData.name; 
+            document.getElementById("mail_input" + KindOfDlg_pc).value = oldContactData.mail; 
+            document.getElementById("phone_input" + KindOfDlg_pc).value = oldContactData.phone;
 
             let avatarColor = getColor(id);
 
@@ -70,7 +70,6 @@ function configEditDlgBox(id) {
 
 }
 
-
 /**
  * Prepares the dialog for creating a new contact.
  * @param {string} KindOfDlg_pc - Dialog suffix.
@@ -97,15 +96,12 @@ function createContactDialog(KindOfDlg_pc) {
   }
 }
 
-
 /**
  * Opens the contact dialog for editing or creating a contact.
  * @param {number} id - The contact index or -1 for new contact.
  */
 function openContactDialog(id) {
     switchoffMenu();
-    //index > 0 entspricht Contacs editieren
-    //index <0 entspricht neuen Kontakt erstellen
     let addNewContactButton = document.getElementById("add_new_contact_button");
 
     if (addNewContactButton) {
@@ -124,7 +120,6 @@ function openContactDialog(id) {
     addNewContactSectionState_pc(true);
     configEditDlgBox(id);
 }
-
 
 /**
  * Closes the contact dialog and clears input fields.
@@ -148,7 +143,6 @@ function closeContactDialog() {
         addNewSection.innerHTML = "";
         addNewContainer.style.display = "none";
     }
-
 }
 
 window.onclick =  (event) =>{
@@ -171,7 +165,6 @@ function openContactDialogMobile(id) {
     event.preventDefault()
 });
 }
-
 
 /**
  * Closes the contact dialog for mobile view.
@@ -206,7 +199,6 @@ function editContactsMobileMenuOn() {
     document.addEventListener("mousedown", handleOutsideClickForMobileMenu);
 }
 
-
 /**
  * Hides the mobile menu for editing contacts.
  */
@@ -217,7 +209,6 @@ function editContactsMobileMenuOff() {
         document.removeEventListener("mousedown", handleOutsideClickForMobileMenu);
     }
 }
-
 
 /**
  * Sets the display state of the add new contact section for desktop.
@@ -250,7 +241,6 @@ function addNewContactSectionState_pc(state) {
         section.style.display = stateStr;
     }
 }
-
 
 /**
  * Sets the display state of the add new contact section for mobile/tablet.

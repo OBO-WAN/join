@@ -191,8 +191,6 @@ function validateEmail(inputField, isSignUp) {
   }
 }
 
-
-
 /**
  * 
  * @function clearEmailValidationErrors
@@ -532,7 +530,6 @@ async function onLoginSuccess(userId, user) {
 }
 
 function loginSuccessful() {
-  // Redirect to main App page
   window.location.href = "summary.html";
 }
 
@@ -609,7 +606,6 @@ async function ifParameterFalse(parameter, user, userId) {
   return false; 
 }
 
-
 function showLoginError() {
   const {
     errorMessageLogInRef,
@@ -629,7 +625,7 @@ function showLoginError() {
   }
 }
 
-  /**
+/**
  * 
  * @function removeLoginError
  * @description Retrieves references to the login error message, email input, and password input elements using `getIdRefs()`.
@@ -641,14 +637,12 @@ function removeLoginError(){
     errorMessageLogInRef.classList.remove('d-flex');
     emailLogInRef.classList.remove('not-valide-error');
     passwordLogInRef.classList.remove('not-valide-error');
-  }
+}
 
-
-  function isErrorVisible(el) {
+function isErrorVisible(el) {
   if (!el) return false;
-  // Works for both of your styles: .d-flex (some places) and .show-error (email/password validators)
   if (el.classList.contains('d-flex') || el.classList.contains('show-error')) return true;
-  // Fallback for any CSS that sets display directly
+
   const cs = window.getComputedStyle(el);
   return cs.display !== 'none' && cs.visibility !== 'hidden' && cs.opacity !== '0';
 }
