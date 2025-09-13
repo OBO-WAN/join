@@ -42,31 +42,20 @@ let userColor = users[index]?.color;
  * - Caps visible avatars at 4 and shows a +N counter
  */
 function renderCurrentTasks() {
-  const statusContainers = proofStatus();
-  const statusCounts = proofStatusCounts();
+  const statusContainers = proofStatus(), statusCounts = proofStatusCounts();
 
-  for (let i = 0; i < tasks.length; i++) {
-    const task = tasks[i];
-    const taskData = prepareTaskForTemplate(task);
-
-    const assignedUsersHTML = buildAssignedUsersHTML(task.assignedTo);
-
-    const container = statusContainers[task.status];
+  tasks.forEach((task, i) => {
+    const data = prepareTaskForTemplate(task), users = buildAssignedUsersHTML(task.assignedTo),
+          container = statusContainers[task.status];
     if (container) {
-      container.innerHTML += getKanbanTemplate(taskData, assignedUsersHTML, i);
+      container.innerHTML += getKanbanTemplate(data, users, i);
       statusCounts[task.status] = (statusCounts[task.status] || 0) + 1;
     }
-
-    setTimeout(() => {
-      proofSubtasks(task, i);
-    }, 0);
-  }
+    setTimeout(() => proofSubtasks(task, i), 0);
+  });
 
   showStatusPlaceholder(statusCounts, statusContainers);
-
-  setTimeout(() => {
-    attachTaskEventHandlers();
-  }, 0);
+  setTimeout(attachTaskEventHandlers, 0);
 }
 
 /**
@@ -161,48 +150,26 @@ function showSubtasks() {
  * - Uses the same avatar builder as the board card so the overlay matches
  */
 function attachTaskEventHandlers() {
-  const containers = document.querySelectorAll(".task_container");
-
-  containers.forEach((container) => {
-    const id = container.dataset.taskId;
-    const index = parseInt(container.dataset.taskIndex, 10);
-    const task = tasks.find((t) => t.id == id);
+  document.querySelectorAll(".task_container").forEach(c => {
+    const id = c.dataset.taskId, idx = +c.dataset.taskIndex, task = tasks.find(t => t.id == id);
     if (!task) return;
 
-    const taskData = prepareTaskForTemplate(task);
-    const assignedUsersHTML = buildAssignedUsersHTML(task.assignedTo);
-
-    container.addEventListener("click", () => {
-      openTask(taskData, assignedUsersHTML, index);
-    });
-
-    container.addEventListener("dragstart", () => {
-      startDragging(task.id);
-    });
+    const data = prepareTaskForTemplate(task), users = buildAssignedUsersHTML(task.assignedTo);
+    c.addEventListener("click", () => openTask(data, users, idx));
+    c.addEventListener("dragstart", () => startDragging(task.id));
   });
 }
 
 /**
- * Prepares task data for template rendering with formatted properties
- * @param {Object} task - Raw task object from Firebase
- * @returns {Object} Formatted task object ready for template rendering
- */
+* Prepares task data for template rendering with formatted properties
+* @param {Object} task - Raw task object from Firebase
+* @returns {Object} Formatted task object ready for template rendering
+*/
 function prepareTaskForTemplate(task) {
-  const uniqueAssigned = [...new Set(task.assignedTo || [])];
-
-  const assignedTo = uniqueAssigned.map((name) => {
-    const user = Object.values(Contacts).find((u) => u.name === name);
-    const initials = name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase();
-
-    let color = "#2A3647";
-    if (user) {
-      color = getColor(initials);
-    }
-    return { initials, color };
+  const assignedTo = [...new Set(task.assignedTo || [])].map(name => {
+    const user = Object.values(Contacts).find(u => u.name === name);
+    const initials = name.split(" ").map(n => n[0]).join("").toUpperCase();
+    return { initials, color: user ? getColor(initials) : "#2A3647" };
   });
 
   return {
@@ -214,7 +181,7 @@ function prepareTaskForTemplate(task) {
     description: task.description || "",
     assignedTo,
     priority: (task.priority || "low").toLowerCase(),
-    subTasks: task.subTasks || [],
+    subTasks: task.subTasks || []
   };
 }
 
@@ -234,33 +201,25 @@ async function loadUsersFromFirebase() {
   users = data || [];
 }
 
-  /**
-   * A live HTMLCollection of all elements with the class "task_container hover".
-   * Used to access and manipulate all task container elements currently present in the DOM.
-   * 
-   * @type {HTMLCollectionOf<Element>}
-   */
-window.addEventListener("DOMContentLoaded", function () {
-  var searchInput = document.getElementsByClassName("search_input")[0];
-  var taskElements = document.getElementsByClassName("task_container hover"); 
-  searchInput.addEventListener("input", function () {
-    var searchTerm = searchInput.value.toLowerCase();
-    for (var i = 0; i < taskElements.length; i++) {
-      var task = taskElements[i];
-      var titleElements = task.getElementsByClassName("task_title");
-      var detailElements = task.getElementsByClassName("task_details");
-      var title = titleElements.length
-        ? titleElements[0].textContent.toLowerCase()
-        : "";
-      var details = detailElements.length
-        ? detailElements[0].textContent.toLowerCase()
-        : "";
-      var match = title.includes(searchTerm) || details.includes(searchTerm);
-      task.style.display = match ? "block" : "none";
-    }
-    var statusIds = ["toDoContainer", "inProgressContainer", "awaitFeedbackContainer", "doneContainer"];
-    showSearchPlaceholders(statusIds, "task_container");
-  });
+/**
+* A live HTMLCollection of all elements with the class "task_container hover".
+* Used to access and manipulate all task container elements currently present in the DOM.
+* 
+* @type {HTMLCollectionOf<Element>}
+*/
+window.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.querySelector(".search_input");
+    const taskElements = document.querySelectorAll(".task_container.hover");
+  
+    searchInput.addEventListener("input", () => {
+      const term = searchInput.value.toLowerCase();
+      taskElements.forEach(task => {
+        const title = task.querySelector(".task_title")?.textContent.toLowerCase() || "";
+        const details = task.querySelector(".task_details")?.textContent.toLowerCase() || "";
+        task.style.display = (title.includes(term) || details.includes(term)) ? "block" : "none";
+      });
+      showSearchPlaceholders(["toDoContainer","inProgressContainer","awaitFeedbackContainer","doneContainer"], "task_container");
+    });
 });
 
 /**

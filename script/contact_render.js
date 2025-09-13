@@ -6,40 +6,15 @@ window.addEventListener("resize", () => {
  * tea window resize events and updates the UI accordingly.
  */
 function handleWindowResize() {
-    let idx = getActualContactIndex();
-    getViewMode();
-    switchoffMenu();
+    const idx = getActualContactIndex(); switchoffMenu();
     switch (getViewMode()) {
-        case 1: 
-            clearTabletViewCard();
-
-            if(!checkIfTabletViewCardActive()) {
-                goBacktoContacts();
-            }
-            addNewContact = getAddNewContactTemplate();
-            document.getElementById("add_new_contact_section").innerHTML = addNewContact;
-
-            renderContacts(Contacts);
-            renderViewCard(idx);
-            addNewContactSectionState_pc(true);
-            break;
-
-        case 2: 
-            goBacktoContacts();
-            addNewContactSectionState_pc(false);
-            break;
-
-        case 3:
-            goBacktoContacts();
-            MobileVievCard(idx);
-            addNewContactSectionState_pc(false);
-            break;
-        case 4:
-            goBacktoContacts();
-            MobileVievCard(idx);
-            break;
-        default:
-            break;
+      case 1:
+        clearTabletViewCard(); if (!checkIfTabletViewCardActive()) goBacktoContacts();
+        document.getElementById("add_new_contact_section").innerHTML = getAddNewContactTemplate();
+        renderContacts(Contacts); renderViewCard(idx); addNewContactSectionState_pc(true); break;
+      case 2: goBacktoContacts(); addNewContactSectionState_pc(false); break;
+      case 3: goBacktoContacts(); MobileVievCard(idx); addNewContactSectionState_pc(false); break;
+      case 4: goBacktoContacts(); MobileVievCard(idx); break;
     }
 }
 
@@ -77,25 +52,15 @@ function deletAllNullElementsFromArray(contacts){
  * @param {Array<Object>} contacts - The array of contact objects to render.
  */
 function renderContacts(contacts) {
-    switchoffMenu();
-    scrollEnable();
-
+    switchoffMenu(); scrollEnable();
     deletAllNullElementsFromArray(contacts);
-
-    sortContacts(contacts); 
-
-    let contactsListElem = document.getElementById("contacts_list");
-    if (contactsListElem) {
-        contactsListElem.style.display = "flex";
-    }
-
-    let contactCards = generateContactsCards(contacts);
-    let contactCardSection = document.getElementById("contact_card_section");
-
-    if (contactCardSection) {
-        contactCardSection.innerHTML = contactCards;
-         activateContactCardClick();
-    }
+    sortContacts(contacts);
+  
+    document.getElementById("contacts_list")?.style && (document.getElementById("contacts_list").style.display = "flex");
+  
+    const cards = generateContactsCards(contacts);
+    const section = document.getElementById("contact_card_section");
+    if (section) { section.innerHTML = cards; activateContactCardClick(); }
 }
 
 /**
@@ -108,24 +73,14 @@ function renderContacts(contacts) {
  */
 function MobileVievCard(index) {
     switchoffMenu();
-    if (index >= 0) {
-        let color = getColor(index);
-        let contactsListElem = document.getElementById("contacts_list");
-        if (contactsListElem) {
-            contactsListElem.style.display = "none";
-        }
-        let addNewContactSectionElem = document.getElementById(
-            "add_new_contact_section"
-        );
-        if (addNewContactSectionElem) {
-            addNewContactSectionElem.style.display = "none";
-        }
-        let viewCardTemp = getMobileViewCardTemplate(index, color);
-        let contactsContainer = document.getElementById("contactslist_container");
-        contactsContainer.innerHTML = viewCardTemp;
-        renderViewCard(index);
-        document.getElementById("contactslist_container").style.overflow = "hidden";
-    }
+    if (index < 0) return;
+    const color = getColor(index);
+    document.getElementById("contacts_list")?.style && (document.getElementById("contacts_list").style.display = "none");
+    document.getElementById("add_new_contact_section")?.style && (document.getElementById("add_new_contact_section").style.display = "none");
+    const container = document.getElementById("contactslist_container");
+    container.innerHTML = getMobileViewCardTemplate(index, color);
+    renderViewCard(index);
+    container.style.overflow = "hidden";
 }
 
 /**
@@ -157,7 +112,6 @@ function renderTabletVievCard(index) {
         renderTabletCardContainer(index, color);
         fillTabletCardFields(contact);
     }
-
     hideContactsList();
 }
 
@@ -266,57 +220,33 @@ function renderViewCard(index) {
  * @returns {string} The HTML string for contact cards.
  */
 function generateContactsCards(contacts) {
-    let oldLetter = "";
-    let contactCards = "";
-    for (let index = 0; index < contacts.length; index++) {
-        let contact = contacts[index];
-        let initials = getInitials(contact.name);
-
-        let firstLetter = contact.name.charAt(0).toUpperCase();
-        if (oldLetter !== firstLetter) {
-            contactCards += `
-                <div class="contacts_section_header">
-                    <p class="contacts_section_letter">${firstLetter}</p>
-                </div>`;
-            oldLetter = firstLetter;
-        }
-        let color = getColor(index);
-        contactCards += getContactCardTamplate(
-            contact.name,
-            contact.mail,
-            initials,
-            index,
-            color
-        );
-    }
-    return contactCards;
+    let oldLetter = "", cards = "";
+    contacts.forEach((c, i) => {
+      const initials = getInitials(c.name), first = c.name[0].toUpperCase();
+      if (oldLetter !== first) {
+        cards += `<div class="contacts_section_header"><p class="contacts_section_letter">${first}</p></div>`;
+        oldLetter = first;
+      }
+      cards += getContactCardTamplate(c.name, c.mail, initials, i, getColor(i));
+    });
+    return cards;
 }
 
 /**
  * Returns to the contacts list view and resets UI.
  */
 function goBacktoContacts() {
-    switchoffMenu();
-    let tablet_additional_div = "";
-    let addNewContact = "";
-    let viewMode = getViewMode();
-    if (viewMode === 2 || viewMode === 3) {
-        tablet_additional_div = `
-            <div id="tablate_view_card_container" class="tablate_view_card_container"></div>
-            `;
-        let contactsListElem = document.getElementById("contacts_list");
-        if (contactsListElem) contactsListElem.style.display = "flex";
+    switchoffMenu(); let tabletDiv = "", viewMode = getViewMode();
+    if ([2,3].includes(viewMode)) {
+      tabletDiv = `<div id="tablate_view_card_container" class="tablate_view_card_container"></div>`;
+      document.getElementById("contacts_list")?.style && (document.getElementById("contacts_list").style.display = "flex");
     }
-
-    let contactsContainer = document.getElementById("contactslist_container");
-    if (contactsContainer) {
-        contactsContainer.innerHTML = getGoBackTemplate(tablet_additional_div);
-        contorlAddNewContactSection(viewMode);
+    const container = document.getElementById("contactslist_container");
+    if (container) {
+      container.innerHTML = getGoBackTemplate(tabletDiv);
+      contorlAddNewContactSection(viewMode);
     }
-
-    renderContacts(Contacts);
-    setActualContactIndex(-1);
-    clearViewCard();
+    renderContacts(Contacts); setActualContactIndex(-1); clearViewCard();
 }
 
 /**
@@ -325,24 +255,11 @@ function goBacktoContacts() {
  */
 function proofVersion(index) {
     setActualContactIndex(index);
-    let version = getViewMode();
-
-    switch (version) {
-        case 1:
-            renderViewCard(index);
-            break;
-
-        case 2: 
-        case 3:
-            renderTabletVievCard(index);
-            break;
-
-        case 4:
-            MobileVievCard(index);
-            break;
-
-        default:
-            break;
+    switch (getViewMode()) {
+      case 1:  return renderViewCard(index);
+      case 2:
+      case 3: return renderTabletVievCard(index);
+      case 4: return MobileVievCard(index);
     }
 }
 

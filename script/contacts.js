@@ -67,12 +67,12 @@ function createContact() {
  * @returns {Object|null} The contact object or null if validation fails.
  */
 function buildContactFromForm() {
-    let KindOfDlg_pc = "";
-    if (getViewMode() === 1) KindOfDlg_pc = "_pc";
+    let kindOfDlgPc = "";
+    if (getViewMode() === 1) kindOfDlgPc = "_pc";
 
-    let name = document.getElementById("name_input" + KindOfDlg_pc)?.value.trim();
-    let mail = document.getElementById("mail_input" + KindOfDlg_pc)?.value.trim();
-    let phone = document.getElementById("phone_input" + KindOfDlg_pc)?.value.trim();
+    let name = document.getElementById("name_input" + kindOfDlgPc)?.value.trim();
+    let mail = document.getElementById("mail_input" + kindOfDlgPc)?.value.trim();
+    let phone = document.getElementById("phone_input" + kindOfDlgPc)?.value.trim();
 
     if (!name || !mail || !phone || !emailIsValid(mail)) {
         console.warn("Invalid form input", { name, mail, phone });
@@ -124,16 +124,16 @@ function findContactNewIndex(contact) {
  * @param {number} id - The contact index.
  */
 function editContact(id) {
-    let KindOfDlg_pc = "";
+    let kindOfDlgPc = "";
     let viewMode = getViewMode();
     if (viewMode === 1) {
-        KindOfDlg_pc = "_pc";
+        kindOfDlgPc = "_pc";
     }
 
-    let name = document.getElementById("name_input" + KindOfDlg_pc).value.trim();
-    let mail = document.getElementById("mail_input" + KindOfDlg_pc).value.trim();
+    let name = document.getElementById("name_input" + kindOfDlgPc).value.trim();
+    let mail = document.getElementById("mail_input" + kindOfDlgPc).value.trim();
     let phone = document
-        .getElementById("phone_input" + KindOfDlg_pc)
+        .getElementById("phone_input" + kindOfDlgPc)
         .value.trim();
 
     if (!name || !mail || !phone) {
@@ -143,45 +143,29 @@ function editContact(id) {
         return;
     }
 
-   saveEditedContact(id, KindOfDlg_pc, name, mail, phone, viewMode)
+   saveEditedContact(id, kindOfDlgPc, name, mail, phone, viewMode)
 }
 
 /**
  * Saves the edited contact and updates the UI based on view mode.
  * @param {number} id - The contact index.
- * @param {string} KindOfDlg_pc - Dialog suffix.
+ * @param {string} kindOfDlgPc - Dialog suffix.
  * @param {string} name - The contact name.
  * @param {string} mail - The contact email.
  * @param {string} phone - The contact phone.
  * @param {number} viewMode - The current view mode.
  */
-function saveEditedContact(id, KindOfDlg_pc, name, mail, phone, viewMode){
-     name = document.getElementById("name_input" + KindOfDlg_pc).value.trim();
-    name = capitalizeWords(name);
-
-    let newContact = {
-        mail: mail,
-        name: name,
-        phone: phone || "No phone number available",
-    };
-
-    Contacts[id] = newContact;
-    updateDatabase(Contacts);
+function saveEditedContact(id, dlgType, name, mail, phone, viewMode) {
+    name = capitalizeWords(document.getElementById("name_input" + dlgType).value.trim());
+    const newContact = { mail, name, phone: phone || "No phone number available" };
+    Contacts[id] = newContact; updateDatabase(Contacts);
     id = findContactNewIndex(newContact);
-
-    if (viewMode === 1) {
-        renderContacts(Contacts);
-        renderViewCard(id);
-        closeContactDialog();
-    } else if (viewMode === 2) {
-        renderViewCard(id);
-        closeContactDialogMobile();
-    } else if (viewMode === 3) {
-        closeContactDialogMobile();
-        renderTabletVievCard(id);
-    } else if (viewMode === 4) {
-        MobileVievCard(id);
-        closeContactDialogMobile();
+  
+    switch (viewMode) {
+      case 1: renderContacts(Contacts); renderViewCard(id); closeContactDialog(); break;
+      case 2: renderViewCard(id); closeContactDialogMobile(); break;
+      case 3: closeContactDialogMobile(); renderTabletVievCard(id); break;
+      case 4: MobileVievCard(id); closeContactDialogMobile(); break;
     }
 }
 
@@ -227,7 +211,6 @@ function configAvatar_pc(contact, avatarColor) {
                 <p class="contact_view_avatar_initials" id="add_new_contact_avatar_1">${test[0].toUpperCase()}</p>
                 <p class="contact_view_avatar_initials" id="add_new_contact_avatar_2">${test[1].toUpperCase()}</p>
             `;
-
         AddNewcontactAvatar.style.backgroundColor = avatarColor;
         AddNewcontactAvatar.style.color = "#FFFFFF";
     }
@@ -242,14 +225,12 @@ function configAvatar_mobile(contact, avatarColor) {
     let AddNewcontactAvatar_mobile = document.getElementById(
         "add_new_contact_avatar_mobile"
     );
-
     if (AddNewcontactAvatar_mobile) {
         let test = getInitials(contact.name);
         AddNewcontactAvatar_mobile.innerHTML = `
                 <p class="contact_view_avatar_initials" id="add_new_contact_avatar_mob_1">${test[0].toUpperCase()}</p>
                 <p class="contact_view_avatar_initials" id="add_new_contact_avatar_mob_2">${test[1].toUpperCase()}</p>
             `;
-
         AddNewcontactAvatar_mobile.style.backgroundColor = avatarColor;
         AddNewcontactAvatar_mobile.style.color = "#FFFFFF";
     }
@@ -310,20 +291,15 @@ function getFirstLetter(name, oldLetter, change) {
  *   4 - Mobile (window width < 560)
  */
 function getViewMode() {
-    let viewMode = 1;
-
-    if (window.innerWidth < 1100) {
-        viewMode = 2;
-    }
-
-    if (window.innerWidth < 825) {
-        viewMode = 3;
-    }
     if (window.innerWidth < 560) {
-        viewMode = 4;
+      return 4;
+    } else if (window.innerWidth < 825) {
+      return 3;
+    } else if (window.innerWidth < 1100) {
+      return 2;
+    } else {
+      return 1;
     }
-
-    return viewMode;
 }
 
 /**

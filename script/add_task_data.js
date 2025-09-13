@@ -20,61 +20,69 @@ async function submitTask() {
 /**
  * Collects and formats all task-related input data from the task form.
  *
- * @returns {Object} The compiled task data object, ready to be saved or submitted.
- * @returns {string} return.title - The task title.
- * @returns {string} return.description - The task description.
- * @returns {string} return.dueDate - The formatted due date (DD-MM-YYYY).
- * @returns {string} return.category - The mapped category label.
- * @returns {string|null} return.priority - The capitalized priority level, or null if none selected.
- * @returns {string[]} return.assignedTo - A unique array of selected contact names.
- * @returns {{task: string}[]} return.subTasks - A list of subtasks, each as an object with a task string.
- * @returns {string} return.status - Default task status (e.g., "toDo").
+ * @typedef {Object} Task
+ * @property {string} title - The task title.
+ * @property {string} description - The task description.
+ * @property {string} dueDate - The formatted due date (DD-MM-YYYY).
+ * @property {string} category - The mapped category label.
+ * @property {string|null} priority - The capitalized priority level, or null if none selected.
+ * @property {string[]} assignedTo - A unique array of selected contact names.
+ * @property {{task: string}[]} subTasks - A list of subtasks, each as an object with a task string.
+ * @property {string} status - The default task status (e.g., "toDo").
+ *
+ * @returns {Task} The compiled task data object, ready to be saved or submitted.
  */
 function collectTaskData() {
-  const title = document.getElementById("title").value.trim();
-  const description = document.getElementById("description").value.trim();
-  const dueDateRaw = document.getElementById("due-date").value;
+  const title = v("title"), description = v("description"), dueDate = formatDate(v("due-date"));
+  const category = mapCategory(v("category"));
+  const priority = formatPriority(document.querySelector("input[name='priority']:checked")?.value);
+  const assignedTo = getCheckedValues('#assignee-dropdown input[type="checkbox"]:checked');
+  const subTasks = getSubtasks();
 
-  let dueDate = "";
-  if (dueDateRaw) {
-    const [year, month, day] = dueDateRaw.split("-");
-    dueDate = `${day}-${month}-${year}`;
-  }
-
-  const categoryValue = document.getElementById("category").value;
-  const priorityRaw = document.querySelector("input[name='priority']:checked")?.value;
-
-  const categoryMap = {
-    "technical-task": "Technical Task",
-    "user-story": "User Story",
-  };
-  const category = categoryMap[categoryValue] || categoryValue;
-
-  const priority = priorityRaw
-    ? priorityRaw.charAt(0).toUpperCase() + priorityRaw.slice(1).toLowerCase()
-    : null;
-
-  const checkboxElements = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]:checked');
-  const assignees = Array.from(checkboxElements).map((cb) => cb.value);
-  const uniqueAssignees = [...new Set(assignees)];
-
-  const subtaskItems = document.querySelectorAll("#subtask-list li");
-  const subTasks = Array.from(subtaskItems).map((item) => {
-    const raw = item.textContent.trim();
-    return { task: raw.replace(/^•+\s*/, "") };
-  });
-
-  return {
-    title,
-    description,
-    dueDate,
-    category,
-    priority,
-    assignedTo: uniqueAssignees,
-    subTasks,
-    status: "toDo",
-  };
+  return { title, description, dueDate, category, priority, assignedTo, subTasks, status: "toDo" };
 }
+
+/**
+ * Gets and trims the value of an input field by its ID.
+ * @param {string} id - The ID of the input element.
+ * @returns {string} The trimmed input value.
+ */
+const v = id => document.getElementById(id).value.trim();
+
+/**
+ * Formats a date string from "YYYY-MM-DD" to "DD-MM-YYYY".
+ * @param {string} d - The raw date string.
+ * @returns {string} The formatted date or an empty string if invalid.
+ */
+const formatDate = d => d ? d.split("-").reverse().join("-") : "";
+
+/**
+ * Maps a category key to its display label.
+ * @param {string} v - The raw category value.
+ * @returns {string} The mapped category label.
+ */
+const mapCategory = v => ({ "technical-task": "Technical Task", "user-story": "User Story" }[v] || v);
+
+/**
+ * Formats the priority string (capitalizes first letter).
+ * @param {string|null} p - The raw priority value.
+ * @returns {string|null} The formatted priority or null if not provided.
+ */
+const formatPriority = p => p ? p[0].toUpperCase() + p.slice(1).toLowerCase() : null;
+
+/**
+ * Collects checked checkbox values and ensures they are unique.
+ * @param {string} sel - The CSS selector for the checkboxes.
+ * @returns {string[]} An array of unique selected values.
+ */
+const getCheckedValues = sel => [...new Set([...document.querySelectorAll(sel)].map(cb => cb.value))];
+
+/**
+ * Collects all subtasks from the subtask list in the DOM.
+ * @returns {{task: string}[]} An array of subtasks as objects.
+ */
+const getSubtasks = () => [...document.querySelectorAll("#subtask-list li")]
+  .map(i => ({ task: i.textContent.trim().replace(/^•+\s*/, "") }));
 
 /**
  * 
@@ -115,49 +123,65 @@ function getNextTaskId(tasks) {
  * Saves a task object to Firebase under the given task ID.
  *
  * @async
- * @function
  * @param {Object} task - The task object to be saved.
- * @param {string} id - The unique ID under which the task will be stored in Firebase.
- *
- * @returns {Promise<void>} A promise that resolves when the operation is complete.
- *
- * @throws {Error} Logs a warning if the request fails or another error occurs during execution.
+ * @param {string|number} id - The unique ID under which the task will be stored in Firebase.
+ * @returns {Promise<void>} Resolves when the task is successfully saved or logs an error if it fails.
  */
 async function saveTaskToFirebase(task, id) {
   try {
-    if (!Array.isArray(task.assignedTo)) {
-      task.assignedTo = Object.values(task.assignedTo || {});
-    }
-
-    const res = await fetch(`${BASE_URL}tasks/${id}.json`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(task),
-    });
+    normalizeAssignedTo(task);
+    const res = await putTaskToFirebase(task, id);
 
     if (res.ok) {
-      showToast("Task added to Board", "./assets/img/board.png");
-      resetForm();
-
-      if (document.getElementById("overlay")) {
-        closeOverlay();
-      }
-
-      if (typeof loadTasksFromFirebase === "function") {
-        await loadTasksFromFirebase();
-      }
-
-      setTimeout(() => {
-        window.location.href = "board.html";
-      }, 1000);
+      handleSuccessfulSave();
     }
   } catch (error) {
-    console.warn("⚠️ Fehler beim Speichern der Aufgabe:", error);
+    console.warn("⚠️ Error saving task:", error);
   }
 }
 
+/**
+ * Normalizes the "assignedTo" field of a task.
+ * Ensures that the field is always an array, converting objects if necessary.
+ *
+ * @param {Object} task - The task object whose "assignedTo" field is being normalized.
+ */
+function normalizeAssignedTo(task) {
+  if (!Array.isArray(task.assignedTo)) {
+    task.assignedTo = Object.values(task.assignedTo || {});
+  }
+}
 
+/**
+ * Sends a PUT request to Firebase to store a task.
+ *
+ * @param {Object} task - The task object to save.
+ * @param {string|number} id - The ID under which the task will be saved in Firebase.
+ * @returns {Promise<Response>} The fetch response object.
+ */
+function putTaskToFirebase(task, id) {
+  return fetch(`${BASE_URL}tasks/${id}.json`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(task),
+  });
+}
 
+/**
+ * Handles all actions after a successful task save.
+ * Shows a toast message, resets the form, closes the overlay if present,
+ * reloads tasks from Firebase, and redirects to the board page.
+ *
+ * @async
+ * @returns {Promise<void>} Resolves once all post-save actions are complete.
+ */
+async function handleSuccessfulSave() {
+  showToast("Task added to Board", "./assets/img/board.png");
+  resetForm();
+  if (document.getElementById("overlay")) closeOverlay();
+  if (typeof loadTasksFromFirebase === "function") await loadTasksFromFirebase();
+  setTimeout(() => (window.location.href = "board.html"), 1000);
+}
 /**
  * Special validation function for the custom category select component.
  * Checks if a category has been selected and handles error styling.
@@ -180,7 +204,6 @@ function validateCategory() {
     return true;
   }
 }
-
 
 /**
  * Loads the contact list from Firebase and updates the global `Contacts` array.

@@ -135,34 +135,22 @@ function addSubtaskDeleteHandler(li) {
 * @param {HTMLElement} li - The subtask list item element
 */
 function enterEditMode(li) {
-    const textSpan = li.querySelector(".subtask-text");
-    const inputField = li.querySelector(".subtask-edit-input");
-  
-    inputField.value = textSpan.textContent.replace(/^•\s*/, "");
-    textSpan.style.display = "none";
-    inputField.classList.remove("d-none");
-    inputField.focus();
+    const text = li.querySelector(".subtask-text");
+    const input = li.querySelector(".subtask-edit-input");
+    input.value = text.textContent.replace(/^•\s*/, "");
+    text.style.display = "none"; input.classList.remove("d-none"); input.focus();
   
     const save = () => {
-      const newValue = inputField.value.trim();
-      if (newValue) {
-        textSpan.textContent = `• ${newValue}`;
-        inputField.classList.add("d-none");
-        textSpan.style.display = "inline";
-      }
-      removeEditListeners();
+      const val = input.value.trim();
+      if (val) text.textContent = `• ${val}`;
+      input.classList.add("d-none"); text.style.display = "inline";
+      input.removeEventListener("keydown", onEnter);
+      input.removeEventListener("blur", save);
     };
   
-    const onEnter = (e) => e.key === "Enter" && save();
-    const onBlur = () => save();
-  
-    function removeEditListeners() {
-      inputField.removeEventListener("keydown", onEnter);
-      inputField.removeEventListener("blur", onBlur);
-    }
-  
-    inputField.addEventListener("keydown", onEnter);
-    inputField.addEventListener("blur", onBlur);
+    const onEnter = e => e.key === "Enter" && save();
+    input.addEventListener("keydown", onEnter);
+    input.addEventListener("blur", save);
 }
   
 /**
@@ -204,28 +192,11 @@ function updateAssigneePlaceholder() {
     const checkboxes = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]');
     if (!avatars || !placeholder) return;
   
-    const selected = Array.from(checkboxes).filter(cb => {
-      const label = cb.closest(".checkbox-label");
-      label?.classList.toggle("selected", cb.checked);
-      return cb.checked;
-    }).map(cb => cb.value);
+    const selected = [...checkboxes].filter(cb => { cb.closest(".checkbox-label")?.classList.toggle("selected", cb.checked); return cb.checked; }).map(cb => cb.value);
   
-    avatars.innerHTML = "";
-    placeholder.textContent = "Select contacts";
-  
-    selected.slice(0, 4).forEach(name => {
-      const initials = getInitials(name);
-      const color = getColor(initials[0]);
-      avatars.innerHTML += `
-        <div class="avatar" style="background-color: ${color};">${initials}</div>
-      `;
-    });
-  
-    if (selected.length > 4) {
-      avatars.innerHTML += `
-        <div class="avatar" style="background-color: #2a3647;">+${selected.length - 4}</div>
-      `;
-    }
+    avatars.innerHTML = ""; placeholder.textContent = "Select contacts";
+    selected.slice(0, 4).forEach(n => { const i = getInitials(n), c = getColor(i[0]); avatars.innerHTML += `<div class="avatar" style="background-color:${c};">${i}</div>`; });
+    if (selected.length > 4) avatars.innerHTML += `<div class="avatar" style="background-color:#2a3647;">+${selected.length - 4}</div>`;
 }
   
 /**
@@ -246,7 +217,6 @@ document.addEventListener("click", function (event) {
         header: document.querySelector(".category-select-header"),
       },
     ];
-  
     dropdowns.forEach(({ dropdown, header }) => {
       if (!dropdown || !header) return;
       if (!dropdown.contains(event.target) && !header.contains(event.target)) {
@@ -344,31 +314,20 @@ function closeOverlay() {
 function resetForm() {
     document.getElementById("taskForm").reset();
     document.getElementById("subtask-list").innerHTML = "";
-  
-    const checkboxes = document.querySelectorAll('#assignee-dropdown input[type="checkbox"]');
-    checkboxes.forEach(cb => cb.checked = false);
+    document.querySelectorAll('#assignee-dropdown input[type="checkbox"]').forEach(cb => cb.checked = false);
     updateAssigneePlaceholder();
   
-    const inputs = document.querySelectorAll("#taskForm input, #taskForm textarea");
-    inputs.forEach(input => {
-        input.classList.remove("input-error");
-        input.setCustomValidity?.("");
+    document.querySelectorAll("#taskForm input, #taskForm textarea").forEach(el => {
+      el.classList.remove("input-error");
+      el.setCustomValidity?.("");
     });
   
-    const errorMessages = document.querySelectorAll(".field-error-message");
-    errorMessages.forEach(error => error.classList.remove("active"));
+    document.querySelectorAll(".field-error-message").forEach(e => e.classList.remove("active"));
   
-    const categoryInput = document.getElementById("category");
-    const categoryPlaceholder = document.getElementById("selected-category-placeholder");
-    const categoryHeader = document.querySelector(".category-select-header");
-    const categoryError = document.getElementById("error-category");
+    const cat = document.getElementById("category"), ph = document.getElementById("selected-category-placeholder"),
+          head = document.querySelector(".category-select-header"), err = document.getElementById("error-category");
   
-    if (categoryInput && categoryPlaceholder && categoryHeader && categoryError) {
-        categoryInput.value = "";
-        categoryPlaceholder.textContent = "Select category";
-        categoryHeader.classList.remove("input-error");
-        categoryError.classList.remove("active");
-    }
+    if (cat && ph && head && err) { cat.value = ""; ph.textContent = "Select category"; head.classList.remove("input-error"); err.classList.remove("active"); }
 }
 
 /**

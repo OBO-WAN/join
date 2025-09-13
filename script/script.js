@@ -2,69 +2,25 @@
  * Toggles the visibility of the dropdown menu and go back button section
  * for mobile view.
  */
-function toggleMenu(){
-    let goBackBtn = document.getElementById("go_back_btn_container");
-    let arrowLeft = document.getElementById("arrow-left");
-    let headlineImageContainer = document.getElementById("headline-img-container");
-    let contactViewCardMobile = document.getElementById("mobile_view_card_header");
-    let contactViewCardTablate = document.getElementById("Tablet_view_card_header");
-    const boardAddTaskBtnResp = document.getElementById("add_task_headline_responsive");
-    const boardAddTaskBtn = document.getElementById("add_task_headline");
-    const menu = document.getElementById("dropdown_menu");
- 
+function toggleMenu() {
+  const menu = document.getElementById("dropdown_menu");
+  const goBackBtn = document.getElementById("go_back_btn_container");
+  const arrowLeft = document.getElementById("arrow-left");
+  const contactMobile = document.getElementById("mobile_view_card_header");
+  const contactTablet = document.getElementById("Tablet_view_card_header");
+  const addTaskResp = document.getElementById("add_task_headline_responsive");
+  const addTask = document.getElementById("add_task_headline");
+  const open = menu.style.display === "flex";
 
-    if (menu.style.display == "flex") {
-       
-        menu.style.display = "none";
-        menu.style.zIndex = "1";
-       
-      
-        
-        if( goBackBtn ) {
-            goBackBtn.style.display = "flex";
-        }
-        if (arrowLeft) {
-            arrowLeft.style.display = "flex";
-        }
+  menu.style.display = open ? "none" : "flex";
+  menu.style.zIndex = open ? "1" : "4000";
 
-        if ( contactViewCardMobile || contactViewCardTablate  ) {
-           goBackBtn.style.display = "flex"; 
-        }  
-        if (headlineImageContainer && menu.style.display == "none") {
-            arrowLeft.style.display = "flex";      
-        }
-        if (boardAddTaskBtnResp) {
-            boardAddTaskBtnResp.style.zIndex = "3";
-            boardAddTaskBtnResp.style.display = "flex";
-        }
-        if (boardAddTaskBtnResp) {
-            boardAddTaskBtn.style.zIndex = "3";
-        }
-
-    } else {
-        menu.style.zIndex = "4000";
-        menu.style.display = "flex";
-        
-        if( goBackBtn ){
-          goBackBtn.style.display = "none";
-        } 
-        if (arrowLeft) {
-          arrowLeft.style.display = "none";
-        }
-        if (contactViewCardMobile|| contactViewCardTablate){
-          goBackBtn.style.display = "none";
-        }
-         if (headlineImageContainer){
-          arrowLeft.style.display = "none";
-        }
-        if (boardAddTaskBtnResp) {
-            boardAddTaskBtnResp.style.zIndex = "3";
-            boardAddTaskBtnResp.style.display = "none";
-        }
-         if (boardAddTaskBtnResp) {
-            boardAddTaskBtn.style.zIndex = "1";
-        }
-    }
+  if (goBackBtn) goBackBtn.style.display = open ? "flex" : "none";
+  if (arrowLeft) arrowLeft.style.display = open ? "flex" : "none";
+  if (contactMobile || contactTablet) if (goBackBtn) goBackBtn.style.display = open ? "flex" : "none";
+  if (open && addTaskResp) { addTaskResp.style.zIndex = "3"; addTaskResp.style.display = "flex"; }
+  if (!open && addTaskResp) { addTaskResp.style.zIndex = "3"; addTaskResp.style.display = "none"; }
+  if (addTask) addTask.style.zIndex = open ? "3" : "1";
 }
 
 function switchoffMenu(){

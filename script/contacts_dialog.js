@@ -1,84 +1,71 @@
-/** * Configures the dialog box for editing or creating a contact.
- * @param {number} id - The index of the contact to edit, or -1 for creating a new contact.
- * This function sets the dialog box's title, button text, and function name based on the
- * provided index. It also populates the input fields with the existing contact data if editing.
- * If creating a new contact, it clears the input fields and sets default values.
- *  * It also configures the avatar display based on the contact's initials and color.
- * The dialog box is displayed in either desktop or mobile view mode based on the current window width*/
+/**
+ * @function configEditDlgBox
+ * @description Configures the contact dialog box depending on whether a contact is being created or edited.
+ * Determines the view mode (desktop or mobile/tablet) and delegates to the appropriate setup function.
+ * Always adds validation listeners for form inputs.
+ * 
+ * @param {number} id - The index of the contact to edit. If `id < 0`, a new contact will be created.
+ */
 function configEditDlgBox(id) {
-    let kindOFEdit = "editContact";
-    if (id < 0) kindOFEdit = "createContact";
-    let btnText = "";
-    let KindOfDlg_pc = "";
-    let viewMode = getViewMode();
-    if (viewMode === 1) { KindOfDlg_pc = "_pc"; }
-
-    switch (kindOFEdit) {
-        case "editContact":
-            document.getElementById("Kind_Of_Dlg" + KindOfDlg_pc).innerHTML =
-                "Edit contact";
-            btnText = "Save";
-            document.getElementById("id_Edit_Btn" + KindOfDlg_pc).onclick = function () {
-                    editContact(id);
-            };
-
-            let oldContactData = Contacts[id];
-
-            document.getElementById("name_input" + KindOfDlg_pc).value = oldContactData.name; 
-            document.getElementById("mail_input" + KindOfDlg_pc).value = oldContactData.mail; 
-            document.getElementById("phone_input" + KindOfDlg_pc).value = oldContactData.phone;
-
-            let avatarColor = getColor(id);
-
-            configAvatar_pc(oldContactData, avatarColor);
-            configAvatar_mobile(oldContactData, avatarColor);
-
-            break;
-    
-        case "createContact":
-
-            document.getElementById("id_Edit_Btn" + KindOfDlg_pc).onclick = function () {
-                    createContact(id);
-            };
-
-            createContactDialog(KindOfDlg_pc);
-            btnText = "Create";
-            break;
-
-        default:
-            break;
-    }
-    document.getElementById("id_Edit_Btn_Text" + KindOfDlg_pc).innerText = btnText;
-
-        const contactFormPc = document.getElementById("contact_form_pc");
-        if (contactFormPc){
-            contactFormPc.addEventListener("keyup", (e) => {
-                validateName(e);
-                validateMail(e);
-                validatePhone(e);
-            });
-        }
-
-          const contactFormMobile = document.getElementById("contact_form_mobile");
-        if (contactFormMobile){
-            contactFormMobile.addEventListener("keyup", (e) => {
-                validateNameMobile(e);
-                validateMailMobile(e);
-                validatePhoneMobile(e);
-            });
-        }
-
+    const dlg = getViewMode() === 1 ? "_pc" : "";
+    const kind = id < 0 ? "createContact" : "editContact";
+    kind === "editContact" ? setupEditContactDialog(id, dlg) : setupCreateContactDialog(id, dlg);
+    addValidationListeners();
+}
+  
+/**
+* @function setupEditContactDialog
+* @description Prepares the dialog for editing an existing contact. 
+* Populates form fields, sets the save button, and updates the contact avatar(s).
+* 
+* @param {number} id - The index of the contact in the global `Contacts` array.
+* @param {string} dlg - Dialog suffix used to target PC (`"_pc"`) or other modes (`""`).
+*/
+function setupEditContactDialog(id, dlg) {
+    document.getElementById("Kind_Of_Dlg" + dlg).innerHTML = "Edit contact";
+    document.getElementById("id_Edit_Btn" + dlg).onclick = () => editContact(id);
+    document.getElementById("id_Edit_Btn_Text" + dlg).innerText = "Save";
+    const c = Contacts[id]; ["name","mail","phone"].forEach(f => document.getElementById(f+"_input"+dlg).value = c[f]);
+    [configAvatar_pc, configAvatar_mobile].forEach(fn => fn(c, getColor(id)));
+}
+  
+/**
+* @function setupCreateContactDialog
+* @description Prepares the dialog for creating a new contact. 
+* Configures the button and dialog elements for contact creation.
+* 
+* @param {number} id - Always negative here, indicating a new contact.
+* @param {string} dlg - Dialog suffix used to target PC (`"_pc"`) or other modes (`""`).
+*/
+function setupCreateContactDialog(id, dlg) {
+    document.getElementById("id_Edit_Btn" + dlg).onclick = () => createContact(id);
+    createContactDialog(dlg);
+    document.getElementById("id_Edit_Btn_Text" + dlg).innerText = "Create";
+}
+  
+/**
+* @function addValidationListeners
+* @description Attaches real-time validation listeners to both PC and mobile contact forms.
+* Runs validation functions for name, email, and phone fields on each keyup event.
+*/
+function addValidationListeners() {
+    document.getElementById("contact_form_pc")?.addEventListener("keyup", e => { 
+      validateName(e); validateMail(e); validatePhone(e); 
+    });
+    document.getElementById("contact_form_mobile")?.addEventListener("keyup", e => { 
+      validateNameMobile(e); validateMailMobile(e); validatePhoneMobile(e); 
+    });
 }
 
 /**
  * Prepares the dialog for creating a new contact.
- * @param {string} KindOfDlg_pc - Dialog suffix.
+ * @param {string} kindOfDlgPc - Dialog suffix.
  */
-function createContactDialog(KindOfDlg_pc) {
+function createContactDialog(kindOfDlgPc) {
   let AddNewcontactAvatar = document.getElementById("add_new_contact_avatar");
   let AddNewcontactAvatar_mobile = document.getElementById("add_new_contact_avatar_mobile");
 
-  const dlgHeadline = document.getElementById("Kind_Of_Dlg" + KindOfDlg_pc);
+  const dlgHeadline = document.getElementById("Kind_Of_Dlg" + kindOfDlgPc);
   if (dlgHeadline) dlgHeadline.innerHTML = "Add contact";
 
   if (AddNewcontactAvatar) {
