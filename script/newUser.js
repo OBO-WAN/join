@@ -16,9 +16,9 @@ function setIdRefValueTrimSignUp() {
       password: document.getElementById('password_sign_up').value.trim(),
       confirmPassword: document.getElementById('confirm_sign_up').value.trim(),
     };
-  }
+}
 
-  /**
+/**
  * 
  * @async
  * @function handleSignUp
@@ -40,9 +40,9 @@ async function handleSignUp() {
     } catch (error) {
       console.error('Error creating user', error);
     }
-  }
+}
 
-  /**
+/**
  * 
  * @function checkNamePartsLength
  * @description Checks if the provided array of name parts contains exactly two elements (first name and last name).
@@ -59,9 +59,9 @@ function checkNamePartsLength(nameParts) {
       return false;
     }
     return true;
-  }
+}
 
-  /**
+/**
  *
  * @function getNameInputData
  * @description Extracts the name value from the provided input field, trims any leading or trailing whitespace,
@@ -79,7 +79,7 @@ function getNameInputData(nameInputField) {
     return { name, trimmedName, nameParts };
   }
 
-  /**
+/**
  *
  * @function validateName
  * @description Validates the name input field. It checks if the trimmed name is not empty and consists of exactly two parts (first and last name).
@@ -106,9 +106,9 @@ function validateName(nameInputField) {
       nameSignUpRef.classList.remove('not-valide-error');
       return true;
     }
-  }
+}
 
-  /**
+/**
  * 
  * @function createUserProfileDataFromParts
  * @description **This function is called by `handleSignUp` to generate user profile data.**
@@ -123,9 +123,9 @@ async function createUserProfileDataFromParts(nameParts){
     const randomColor = await getRandomColor();
     const initials = firstName[0].toUpperCase() + lastName[0].toUpperCase();
     return { firstName, lastName, randomColor, initials };
-  }
+}
 
-  /**  TO BE ACTUALIZED
+/**  TO BE ACTUALIZED
  * 
  * @function handleSignUpSuccess
  * @description **This function is called by `handleSignUp` after a successful user creation.**
@@ -135,7 +135,6 @@ async function createUserProfileDataFromParts(nameParts){
 
 function handleSignUpSuccess(profileData){
     showPupupOverlaySignUp();
-    // Store initials and names for UI use
     sessionStorage.setItem('userInitials', profileData.initials);
     sessionStorage.setItem('firstName', profileData.firstName);
     sessionStorage.setItem('lastName', profileData.lastName);
@@ -143,7 +142,7 @@ function handleSignUpSuccess(profileData){
     delayedRedirectAndReset();
 }
 
-  /**
+/**
  * 
  * @function createUser
  * @description Asynchronously sends user data to the '/user' endpoint using the `postData` function.
@@ -162,9 +161,9 @@ async function createUser(firstname, lastname, email, password, randomColor, ini
     } catch (error) {
       console.error('Error posting data', error);
     }
-  }
+}
 
-  /**
+/**
  * 
  * @function toggleCheckbox
  * @description Toggles the state of a checkbox and updates its visual representation by changing the source and alt text of a custom checkmark image.
@@ -184,9 +183,9 @@ function toggleCheckbox(element = false) {
       customCheckmarkRef.alt = 'Checkbox not Checked';
     }
     enableOrDisableSignUpButton();
-  }
+}
 
-  /**
+/**
  * 
  * @async
  * @function enableOrDisableSignUpButton
@@ -208,9 +207,9 @@ async function enableOrDisableSignUpButton() {
     } else {
       signUpButtonRef.disabled = true;
     }
-  }
+}
 
-  /**
+/**
  * 
  * @function validateSignUpInputs
  * @description Retrieves references to the sign-up input fields and performs individual validation checks for name, email, password,
@@ -236,18 +235,18 @@ function validateSignUpInputs() {
       isConfirmValid,
       isCheckboxChecked,
     };
-  }
+}
 
-  /**
- * 
- * @function removeLoginError
- * @description Retrieves references to the login error message, email input, and password input elements using `getIdRefs()`.
- * It then removes the 'd-flex' class from the error message to hide it and the 'not-valide-error' class from both the email and password input fields to remove the error indication.
- *
- */
+/**
+* 
+* @function removeLoginError
+* @description Retrieves references to the login error message, email input, and password input elements using `getIdRefs()`.
+* It then removes the 'd-flex' class from the error message to hide it and the 'not-valide-error' class from both the email and password input fields to remove the error indication.
+*
+*/
 function removeLoginError(){
     const { errorMessageLogInRef, passwordLogInRef, emailLogInRef } = getIdRefs();
     errorMessageLogInRef.classList.remove('d-flex');
     emailLogInRef.classList.remove('not-valide-error');
     passwordLogInRef.classList.remove('not-valide-error');
-  }
+}

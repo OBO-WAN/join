@@ -49,18 +49,15 @@ async function runIntroAnimation() {
 
     if (overlay) overlay.style.pointerEvents = 'none';
 
-    // Reveal content with fade
     revealElement(loginMain);
     revealElement(footerLogin);
     revealElement(animationFinished);
 }
 
-// Utility: Delay using Promise
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// Utility: Show and fade in an element
 function revealElement(element) {
     if (element) {
         
@@ -77,9 +74,7 @@ function login() {
 }
 
 function guestLogin() {
-    // Store user mode in local storage if needed
     localStorage.setItem("isGuest", "true");
-    // Redirect to your app's main page
     window.location.href = "summary.html";
 }
 
@@ -207,17 +202,17 @@ function validatePasswordLogin(inputField) {
   }
 }
   
-  /**
-   *
-   * @function handleGenericLoginErrorDisplay
-   * @description Controls the visibility of the generic login error message based on the visibility states
-   * of the specific email and password error messages. It displays the generic error message only if neither
-   * the email nor the password error messages are currently visible.
-   * @param {HTMLElement | null} errorMessageLogInRef - The HTML element representing the generic login error message.
-   * @param {boolean} isEmailErrorVisible - A boolean indicating if the email error message is currently visible (has the 'd-flex' class).
-   * @param {boolean} isPasswordErrorVisible - A boolean indicating if the password error message is currently visible (has the 'd-flex' class).
-   */
-  function handleGenericLoginErrorDisplay(errorMessageLogInRef, isEmailErrorVisible, isPasswordErrorVisible) {
+/**
+*
+* @function handleGenericLoginErrorDisplay
+* @description Controls the visibility of the generic login error message based on the visibility states
+* of the specific email and password error messages. It displays the generic error message only if neither
+* the email nor the password error messages are currently visible.
+* @param {HTMLElement | null} errorMessageLogInRef - The HTML element representing the generic login error message.
+* @param {boolean} isEmailErrorVisible - A boolean indicating if the email error message is currently visible (has the 'd-flex' class).
+* @param {boolean} isPasswordErrorVisible - A boolean indicating if the password error message is currently visible (has the 'd-flex' class).
+*/
+function handleGenericLoginErrorDisplay(errorMessageLogInRef, isEmailErrorVisible, isPasswordErrorVisible) {
     if (errorMessageLogInRef) {
       if (!isEmailErrorVisible && !isPasswordErrorVisible) {
         errorMessageLogInRef.classList.add('d-flex');
@@ -225,5 +220,4 @@ function validatePasswordLogin(inputField) {
         errorMessageLogInRef.classList.remove('d-flex');
       }
     }
-  }
-
+}

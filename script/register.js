@@ -152,46 +152,23 @@ function getEmailInputData(emailInputField, isSignUp) {
 
 /**
  * @function validateEmail
- * @description Validates the email input field by trimming its value and testing it against a standard email pattern.
- * Displays or hides the appropriate error message depending on whether the input is for the sign-up or login form.
- * Also adds or removes the 'not-valide-error' class to reflect input validity.
+ * @description Validates an email input, shows/hides the correct error message,
+ * and toggles the 'not-valide-error' class.
  *
  * @param {HTMLInputElement} inputField - The email input element to be validated.
- * @param {boolean} isSignUp - Indicates whether the validation context is for the sign-up form (`true`) or the login form (`false`).
- * 
- * @returns {boolean} - Returns `true` if the email is valid, otherwise `false`.
+ * @param {boolean} isSignUp - True for sign-up form, false for login form.
+ * @returns {boolean} True if valid, otherwise false.
  */
 function validateEmail(inputField, isSignUp) {
-  const value = inputField.value.trim();
-  const {
-    errorMessageEmailNotValideSignUpRef,
-    errorMessageEmailNotValideLoginRef
-  } = getIdRefs();
+  const v = inputField.value.trim();
+  const { errorMessageEmailNotValideSignUpRef: sign, errorMessageEmailNotValideLoginRef: login } = getIdRefs();
+  const ref = isSignUp ? sign : login, valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
-  const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  inputField.classList.toggle("not-valide-error", !valid);
+  if (ref) ref.classList.toggle("d-flex", !valid);
 
-  if (!isValid) {
-    inputField.classList.add('not-valide-error');
-    if (isSignUp && errorMessageEmailNotValideSignUpRef) {
-      errorMessageEmailNotValideSignUpRef.classList.add('d-flex');
-    }
-    if (!isSignUp && errorMessageEmailNotValideLoginRef) {
-      errorMessageEmailNotValideLoginRef.classList.add('d-flex');
-    }
-    return false;
-  } else {
-    inputField.classList.remove('not-valide-error');
-    if (isSignUp && errorMessageEmailNotValideSignUpRef) {
-      errorMessageEmailNotValideSignUpRef.classList.remove('d-flex');
-    }
-    if (!isSignUp && errorMessageEmailNotValideLoginRef) {
-      errorMessageEmailNotValideLoginRef.classList.remove('d-flex');
-    }
-    return true;
-  }
+  return valid;
 }
-
-
 
 /**
  * 
@@ -532,7 +509,6 @@ async function onLoginSuccess(userId, user) {
 }
 
 function loginSuccessful() {
-  // Redirect to main App page
   window.location.href = "summary.html";
 }
 
@@ -609,7 +585,6 @@ async function ifParameterFalse(parameter, user, userId) {
   return false; 
 }
 
-
 function showLoginError() {
   const {
     errorMessageLogInRef,
@@ -629,7 +604,7 @@ function showLoginError() {
   }
 }
 
-  /**
+/**
  * 
  * @function removeLoginError
  * @description Retrieves references to the login error message, email input, and password input elements using `getIdRefs()`.
@@ -641,14 +616,12 @@ function removeLoginError(){
     errorMessageLogInRef.classList.remove('d-flex');
     emailLogInRef.classList.remove('not-valide-error');
     passwordLogInRef.classList.remove('not-valide-error');
-  }
+}
 
-
-  function isErrorVisible(el) {
+function isErrorVisible(el) {
   if (!el) return false;
-  // Works for both of your styles: .d-flex (some places) and .show-error (email/password validators)
   if (el.classList.contains('d-flex') || el.classList.contains('show-error')) return true;
-  // Fallback for any CSS that sets display directly
+
   const cs = window.getComputedStyle(el);
   return cs.display !== 'none' && cs.visibility !== 'hidden' && cs.opacity !== '0';
 }

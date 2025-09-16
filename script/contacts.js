@@ -1,6 +1,6 @@
 let Contacts = [];
 let actualContactIndex = 0;
-
+let contactToDelete = null;
 
 let colorsArray = [
   "#FF6B6B", "#FF8C42", "#FFA500", "#FFD700", "#FFE600", "#B4FF00", "#4CAF50", "#00C853", "#00E5FF", "#00B8D4",
@@ -8,7 +8,6 @@ let colorsArray = [
   "#FF4081", "#F50057", "#EC407A", "#FF1744", "#FF5252", "#D500F9", "#9C27B0", "#BA68C8", "#E91E63", "#FFB300",
   "#FFC400", "#FF9100", "#FF7043", "#F06292", "#FF6E40", "#C51162", "#8E24AA", "#651FFF", "#00BFA5", "#76FF03"
 ];
-
 
 /**
  * Fetches contacts from the remote database and renders them.
@@ -30,7 +29,6 @@ function getContacts(data) {
     /*versionHandling();*/
     return data;
 }
-
 
 /**
  * Updates the remote database with the provided contacts data.
@@ -54,30 +52,27 @@ function updateDatabase(data) {
         });
 }
 
-
 /**
  * Creates a new contact from the form and updates the UI.
  */
 function createContact() {
     let newContact = buildContactFromForm();
-    if (!newContact) return; // Falls Validierung fehlschlägt
+    if (!newContact) return;
 
     addContactAndUpdateUI(newContact);
 }
-
 
 /**
  * Builds a contact object from the form inputs.
  * @returns {Object|null} The contact object or null if validation fails.
  */
-
 function buildContactFromForm() {
-    let KindOfDlg_pc = "";
-    if (getViewMode() === 1) KindOfDlg_pc = "_pc";
+    let kindOfDlgPc = "";
+    if (getViewMode() === 1) kindOfDlgPc = "_pc";
 
-    let name = document.getElementById("name_input" + KindOfDlg_pc)?.value.trim();
-    let mail = document.getElementById("mail_input" + KindOfDlg_pc)?.value.trim();
-    let phone = document.getElementById("phone_input" + KindOfDlg_pc)?.value.trim();
+    let name = document.getElementById("name_input" + kindOfDlgPc)?.value.trim();
+    let mail = document.getElementById("mail_input" + kindOfDlgPc)?.value.trim();
+    let phone = document.getElementById("phone_input" + kindOfDlgPc)?.value.trim();
 
     if (!name || !mail || !phone || !emailIsValid(mail)) {
         console.warn("Invalid form input", { name, mail, phone });
@@ -101,12 +96,10 @@ function addContactAndUpdateUI(contact) {
     renderContacts(Contacts);
 
     const index = findContactNewIndex(contact);
-    //renderViewCard(index); *it shows the view card wihtout clicking if the scre becomes biger
 
     closeContactDialog();
     closeContactDialogMobile();
 }
-
 
 /**
  * Finds the new index of a contact after sorting the contacts array by name.
@@ -126,80 +119,55 @@ function findContactNewIndex(contact) {
     return -1;
 }
 
-
 /**
  * Edits an existing contact with new data from the form.
  * @param {number} id - The contact index.
  */
 function editContact(id) {
-    let KindOfDlg_pc = "";
+    let kindOfDlgPc = "";
     let viewMode = getViewMode();
     if (viewMode === 1) {
-        KindOfDlg_pc = "_pc";
+        kindOfDlgPc = "_pc";
     }
 
-    let name = document.getElementById("name_input" + KindOfDlg_pc).value.trim();
-    let mail = document.getElementById("mail_input" + KindOfDlg_pc).value.trim();
+    let name = document.getElementById("name_input" + kindOfDlgPc).value.trim();
+    let mail = document.getElementById("mail_input" + kindOfDlgPc).value.trim();
     let phone = document
-        .getElementById("phone_input" + KindOfDlg_pc)
+        .getElementById("phone_input" + kindOfDlgPc)
         .value.trim();
 
     if (!name || !mail || !phone) {
-        //alert("EDIT: Bitte fülle die Felder Name, Mail und Pohne aus.");
         return;
     }
     if (emailIsValid(mail) == false) {
-        //alert("Pleas wiret a valid email address.");
         return;
     }
 
-   saveEditedContact(id, KindOfDlg_pc, name, mail, phone, viewMode)
+   saveEditedContact(id, kindOfDlgPc, name, mail, phone, viewMode)
 }
-
 
 /**
  * Saves the edited contact and updates the UI based on view mode.
  * @param {number} id - The contact index.
- * @param {string} KindOfDlg_pc - Dialog suffix.
+ * @param {string} kindOfDlgPc - Dialog suffix.
  * @param {string} name - The contact name.
  * @param {string} mail - The contact email.
  * @param {string} phone - The contact phone.
  * @param {number} viewMode - The current view mode.
  */
-function saveEditedContact(id, KindOfDlg_pc, name, mail, phone, viewMode){
-     name = document.getElementById("name_input" + KindOfDlg_pc).value.trim();
-    name = capitalizeWords(name);
-
-    let newContact = {
-        mail: mail,
-        name: name,
-        phone: phone || "No phone number available",
-    };
-
-    Contacts[id] = newContact;
-    updateDatabase(Contacts);
+function saveEditedContact(id, dlgType, name, mail, phone, viewMode) {
+    name = capitalizeWords(document.getElementById("name_input" + dlgType).value.trim());
+    const newContact = { mail, name, phone: phone || "No phone number available" };
+    Contacts[id] = newContact; updateDatabase(Contacts);
     id = findContactNewIndex(newContact);
-
-    if (viewMode === 1) {
-        renderContacts(Contacts);
-        renderViewCard(id);
-        closeContactDialog();
-    } else if (viewMode === 2) {
-        /*      renderContacts(Contacts);
-                renderViewCard(id);
-                closeContactDialog();
-        */
-        renderViewCard(id);
-        closeContactDialogMobile();
-    } else if (viewMode === 3) {
-        closeContactDialogMobile();
-        renderTabletVievCard(id);
-    } else if (viewMode === 4) {
-        MobileVievCard(id);
-        closeContactDialogMobile();
+  
+    switch (viewMode) {
+      case 1: renderContacts(Contacts); renderViewCard(id); closeContactDialog(); break;
+      case 2: renderViewCard(id); closeContactDialogMobile(); break;
+      case 3: closeContactDialogMobile(); renderTabletVievCard(id); break;
+      case 4: MobileVievCard(id); closeContactDialogMobile(); break;
     }
 }
-
 
 /**
  * Validates an email address.
@@ -209,7 +177,6 @@ function saveEditedContact(id, KindOfDlg_pc, name, mail, phone, viewMode){
 function emailIsValid(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
-
 
 /**
  * Deletes a contact by index after confirmation.
@@ -228,9 +195,7 @@ function deleteContact(id) {
         renderContacts(Contacts);
     }
     goBacktoContacts();
- 
 }
-
 
 /**
  * Configures the avatar for the desktop dialog.
@@ -246,12 +211,10 @@ function configAvatar_pc(contact, avatarColor) {
                 <p class="contact_view_avatar_initials" id="add_new_contact_avatar_1">${test[0].toUpperCase()}</p>
                 <p class="contact_view_avatar_initials" id="add_new_contact_avatar_2">${test[1].toUpperCase()}</p>
             `;
-
         AddNewcontactAvatar.style.backgroundColor = avatarColor;
         AddNewcontactAvatar.style.color = "#FFFFFF";
     }
 }
-
 
 /**
  * Configures the avatar for the mobile dialog.
@@ -262,19 +225,16 @@ function configAvatar_mobile(contact, avatarColor) {
     let AddNewcontactAvatar_mobile = document.getElementById(
         "add_new_contact_avatar_mobile"
     );
-
     if (AddNewcontactAvatar_mobile) {
         let test = getInitials(contact.name);
         AddNewcontactAvatar_mobile.innerHTML = `
                 <p class="contact_view_avatar_initials" id="add_new_contact_avatar_mob_1">${test[0].toUpperCase()}</p>
                 <p class="contact_view_avatar_initials" id="add_new_contact_avatar_mob_2">${test[1].toUpperCase()}</p>
             `;
-
         AddNewcontactAvatar_mobile.style.backgroundColor = avatarColor;
         AddNewcontactAvatar_mobile.style.color = "#FFFFFF";
     }
 }
-
 
 /**
  * Gets the initials from a name string.
@@ -291,17 +251,14 @@ function getInitials(name) {
     return initials.length >= 2 ? initials.slice(0, 2) : ['?', '?'];
 }
 
-
 /**
  * Sorts the contacts array by name.
  * @param {Array} contacts - The contacts array.
  */
 function sortContacts(contacts) {
-    //sort contacts by name
     contacts.sort((a, b) => a.name.localeCompare(b.name));
     Contacts = contacts;
 }
-
 
 /**
  * Gets the first letter of a name and checks if it changed.
@@ -311,7 +268,6 @@ function sortContacts(contacts) {
  * @returns {string} The first letter.
  */
 function getFirstLetter(name, oldLetter, change) {
-    //get first letter of name
 
     let firstLetter = name.charAt(0);
 
@@ -325,7 +281,6 @@ function getFirstLetter(name, oldLetter, change) {
     return firstLetter;
 }
 
-
 /**
  * Determines the current view mode based on the window's width.
  *
@@ -336,22 +291,16 @@ function getFirstLetter(name, oldLetter, change) {
  *   4 - Mobile (window width < 560)
  */
 function getViewMode() {
-    let viewMode = 1;
-
-    if (window.innerWidth < 1100) {
-        viewMode = 2;
-    }
-
-    if (window.innerWidth < 825) {
-        viewMode = 3;
-    }
     if (window.innerWidth < 560) {
-        viewMode = 4;
+      return 4;
+    } else if (window.innerWidth < 825) {
+      return 3;
+    } else if (window.innerWidth < 1100) {
+      return 2;
+    } else {
+      return 1;
     }
-
-    return viewMode;
 }
-
 
 /**
  * Gets a color from the colors array based on index.
@@ -361,12 +310,11 @@ function getViewMode() {
 function getColor(index) {
     let idx = index;
     if (idx < 0) {
-        idx = 0; // Fallback to the first color if index is out of bounds
+        idx = 0;
     }
 
     return colorsArray[idx % colorsArray.length];
 }
-
 
 /**
  * Gets a color from the colors array based on the first letter.
@@ -382,7 +330,6 @@ function getColorFromFirstLetter(firstLetter) {
     return colorsArray[colorIndex];
 }
 
-
 /**
  * Capitalizes the first letter of each word in a sentence.
  * @param {string} Sentence - The sentence.
@@ -394,7 +341,6 @@ function capitalizeWords(Sentence) {
     );
 }
 
-
 /**
  * Sets the actual contact index.
  * @param {number} index - The index.
@@ -405,7 +351,6 @@ function setActualContactIndex(index) {
     return actualContactIndex;
 }
 
-
 /**
  * Gets the actual contact index.
  * @returns {number} The actual contact index.
@@ -413,7 +358,6 @@ function setActualContactIndex(index) {
 function getActualContactIndex() {
     return actualContactIndex;
 }
-
 
 /**
  * Controls the display state of the add new contact section based on view mode.
@@ -433,36 +377,48 @@ function contorlAddNewContactSection(viewMode) {
         }
 }
 
-
+/**
+ * Handles the submission of the mobile contact form.
+ * Prevents the default submit action, validates the form,
+ *
+ * @param {SubmitEvent} event - The submit event triggered by the form
+ */
 function handleMobileContactSubmit(event) {
-  event.preventDefault(); 
-  if (event.target.checkValidity()) {
-    //createContact(); 
-  } else {
-    event.target.reportValidity();
-  }
+    event.preventDefault(); 
+    if (event.target.checkValidity()) {
+    } else {
+      event.target.reportValidity();
+    }
 }
 
-// Modal Window before deleting contacts
-
-let contactToDelete = null;
-
+/**
+ * Opens the delete confirmation overlay for a specific contact.
+ *
+ * @param {number} id - The index of the contact in the Contacts array to be deleted
+ */
 function promptDeleteContact(id) {
-  contactToDelete = id;
-  document.getElementById("deleteConfirmOverlay").classList.remove("hidden");
+    contactToDelete = id;
+    document.getElementById("deleteConfirmOverlay").classList.remove("hidden");
 }
-
+  
+/**
+* Closes the delete confirmation overlay and resets the pending delete contact.
+*/
 function closeDeleteConfirm() {
-  document.getElementById("deleteConfirmOverlay").classList.add("hidden");
-  contactToDelete = null;
+    document.getElementById("deleteConfirmOverlay").classList.add("hidden");
+    contactToDelete = null;
 }
-
+  
+/**
+* Confirms the deletion of the selected contact.
+* re-renders the contact list, clears the view card, and closes the overlay.
+*/
 function confirmDeleteContact() {
-  if (contactToDelete !== null) {
-    Contacts.splice(contactToDelete, 1); 
-    updateDatabase(Contacts); // <--- Datenbank aktualisieren!
-    renderContacts(Contacts); 
-    clearViewCard();
-    closeDeleteConfirm();
-  }
+    if (contactToDelete !== null) {
+      Contacts.splice(contactToDelete, 1); 
+      updateDatabase(Contacts);
+      renderContacts(Contacts); 
+      clearViewCard();
+      closeDeleteConfirm();
+    }
 }

@@ -3,7 +3,7 @@
   width: 100%;
   background-color: var(--light-gray-bg);
   overflow-x: hidden;
-  overflow-y: auto; /* enables scroll only when necessary */
+  overflow-y: auto;
 }
 
 .body-summary::-webkit-scrollbar {

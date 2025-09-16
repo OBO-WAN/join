@@ -4,20 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join | Board</title>
-    <link rel="icon" href="./assets/img/favicon.png" />
-    <link rel="stylesheet" href="style/style.css" />
-    <link rel="stylesheet" href="style/board.css" />
-    <link rel="stylesheet" href="style/board_taskoverlay.css" />
-    <link rel="stylesheet" href="style/nav_mobile.css" />
-    <link rel="stylesheet" href="style/add_task.css" />
+    <link rel="icon" href="./assets/img/favicon.png"/>
+    <link rel="stylesheet" href="style/style.css"/>
+    <link rel="stylesheet" href="style/board.css"/>
+    <link rel="stylesheet" href="style/board_responsive.css"/>
+    <link rel="stylesheet" href="style/board_taskoverlay.css"/>
+    <link rel="stylesheet" href="style/nav_mobile.css"/>
+    <link rel="stylesheet" href="style/add_task.css"/>
     <link rel="stylesheet" href="style/add_task_board_responsive.css">
-    <link rel="stylesheet" href="style/user_icon_menu.css" />
+    <link rel="stylesheet" href="style/user_icon_menu.css"/>
   </head>
   <body onload="init(); setUserInitials();">
     <header>
       <div class="hl_logo_section">
         <h1>Kanban Project Management Tool</h1>
-        <img class="header_logo" src="./assets/img/loginLogo.svg" alt="logo" />
+        <img class="header_logo" src="./assets/img/loginLogo.svg" alt="logo"/>
       </div>
       <div class="dropdown_container">
         <div class="icon_header_section">
@@ -98,7 +99,7 @@
 
         <div class="search_task_container">
           <div class="search_container">
-            <input type="text" placeholder="Find task" class="search_input"/>
+            <input type="text" id="search-task" name="search-task" placeholder="Find task" class="search_input"/>
             <div class="search_separator"></div>
             <img src="./assets/icons/search.png" class="search_icon hover" />
           </div>
@@ -113,59 +114,50 @@
     
 
       <div class="kanban_container">
-        <div
-          class="kanban_section"
-          ondrop="moveTo('toDo')"
-          ondragover="allowDrop(event)"
-        >
+        <div class="kanban_section" data-status="toDo" ondrop="moveTo('toDo')" ondragover="allowDrop(event)" ondragleave="hideDropPlaceholder(event)">
           <div class="section_header">
             <h3>To do</h3>
             <button onclick="addNewTask()" class="add_task_btn hover">+</button>
           </div>
-
-          <div id="toDoContainer"></div>
+          <div id="toDoContainer">
+           
+          </div>
+          <div class="drop-placeholder"></div>
         </div>
-        <div
-          class="kanban_section"
-          ondrop="moveTo('inProgress')"
-          ondragover="allowDrop(event)"
-        >
+        <div class="kanban_section" data-status="inProgress" ondrop="moveTo('inProgress')" ondragover="allowDrop(event)" ondragleave="hideDropPlaceholder(event)">
           <div class="section_header">
             <h3>In progress</h3>
             <button onclick="addNewTask()" class="add_task_btn hover">+</button>
           </div>
 
-          <div id="inProgressContainer"></div>
+          <div id="inProgressContainer">
+          </div>
+          <div class="drop-placeholder"></div>
         </div>
-        <div
-          class="kanban_section"
-          ondrop="moveTo('awaitFeedback')"
-          ondragover="allowDrop(event)"
-        >
+        <div class="kanban_section" data-status="awaitFeedback" ondrop="moveTo('awaitFeedback')" ondragover="allowDrop(event)" ondragleave="hideDropPlaceholder(event)"> 
           <div class="section_header">
             <h3>Await feedback</h3>
             <button onclick="addNewTask()" class="add_task_btn hover">+</button>
           </div>
 
-          <div id="awaitFeedbackContainer"></div>
+          <div id="awaitFeedbackContainer">
+          </div>
+          <div class="drop-placeholder"></div>
         </div>
-        <div
-          class="kanban_section"
-          ondrop="moveTo('done')"
-          ondragover="allowDrop(event)"
-        >
+        <div class="kanban_section" data-status="done" ondrop="moveTo('done')" ondragover="allowDrop(event)" ondragleave="hideDropPlaceholder(event)">
           <div class="section_header">
             <h3>Done</h3>
           </div>
 
-          <div id="doneContainer"></div>
+          <div id="doneContainer">
+          </div>
+          <div class="drop-placeholder"></div>
         </div>
       </div>
     </div>
 
     <div id="overlay" class="overlay d-none"></div>
 
-    <!-- Responsive Menu -->
     <ul class="nav-links">
       <li class="link-button hide-before-log-in">
         <a
@@ -221,7 +213,6 @@
       </li>
     </ul>
 
-    <!-- Confirmation Modal  -->
     <div id="confirm-modal" class="d-none">
       <div class="modal-backdrop"></div>
       <div class="modal-content">
@@ -233,10 +224,11 @@
       </div>
     </div>
   </body>
-  <script src="./script/config.js"></script>
   <script src="./script/script.js"></script>
-  <script src="./script/add_task.js"></script>
+  <script src="./script/add_task_data.js"></script>
+  <script src="./script/add_task_form.js"></script>
   <script src="./script/board.js"></script>
   <script src="./script/board_templates.js"></script>
   <script src="./script/board_overlay.js"></script>
+  <script src="./script/board_drag&drop.js"></script>
 </html>

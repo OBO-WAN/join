@@ -1,17 +1,25 @@
-let masegeName = []
-let masegeMail = []
-let masegePhone = []
+let masegeName = [];
+let masegeMail = [];
+let masegePhone = [];
 const contactFormPc = document.getElementById("contact_form_pc");
 
+/**
+ * Prevents default submission for the PC contact form
+ * until validation is handled.
+ */
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById("contact_form_pc");
     if (form) {
         form.addEventListener("submit", function(event) {
-            event.preventDefault(); // Verhindert das Neuladen der Seite!
+            event.preventDefault();
         });
     }
 });
 
+/**
+ * Prevents default submission for the mobile contact form
+ * until validation is handled.
+ */
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById("contact_form_mobile");
     if (form) {
@@ -21,7 +29,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-function validateName(){
+/**
+ * Validates the name input for the PC contact form.
+ * Displays an error if the name is missing or incomplete.
+ */
+function validateName() {
     const name = document.getElementById("name_input_pc");
     const nameError = document.getElementById("form_name_erro_pc");
     let msgName = "Please enter your first and last name";
@@ -29,15 +41,17 @@ function validateName(){
     if (validateName_LowLevel(name.value)) {
         nameError.innerHTML = "";
         name.style.borderColor = "#DBDBDB";
-    }
-    else
-    {
+    } else {
         nameError.innerHTML = msgName;
         name.style.borderColor = "red";
     }
 }
 
-function validateNameMobile(){
+/**
+ * Validates the name input for the mobile contact form.
+ * Displays an error if the name is missing or incomplete.
+ */
+function validateNameMobile() {
     const name = document.getElementById("name_input");
     const nameError = document.getElementById("form_name_erro_mobile");
     let msgName = "Please enter your first and last name";
@@ -45,17 +59,22 @@ function validateNameMobile(){
     if (validateName_LowLevel(name.value)) {
         nameError.innerHTML = "";
         name.style.borderColor = "#DBDBDB";
-    } 
-    else
-    {
+    } else {
         nameError.innerHTML = msgName;
         name.style.borderColor = "red";
     }   
 }
 
-function validateName_LowLevel(name){
-
-    let test  = name.split(" ");
+/**
+ * Low-level validation for names.
+ * Ensures the input contains at least two words,
+ * each at least 2 characters long, and total length >= 5.
+ *
+ * @param {string} name - The full name input value
+ * @returns {boolean} True if the name is valid, otherwise false
+ */
+function validateName_LowLevel(name) {
+    let test = name.split(" ");
     let result = false;
 
     let length_1 = test[0].length;
@@ -66,33 +85,35 @@ function validateName_LowLevel(name){
 
     if (name.length >= 5 && test.length >= 2 && length_1 >= 2 && length_2 >= 2) {
         result = true;
-    }
-    else
-    {
+    } else {
         result = false;
     }
     return result;
 }
 
-/*Validate mail*/ 
-function validateMail(){
+/**
+ * Validates the email input for the PC contact form.
+ * Displays an error if the email format is invalid.
+ */
+function validateMail() {
     const mail = document.getElementById("mail_input_pc");
     const mailError = document.getElementById("form_mail_erro_pc");
     let msgMail = "A valid email address is required";
 
-
     if (validateMail_LowLevel(mail.value)) {
         mailError.innerHTML = "";
         mail.style.borderColor = "#DBDBDB";
-    }
-    else 
-    {
+    } else {
         mailError.innerHTML = msgMail;
         mail.style.borderColor = "red";
     }
 }
 
-function validateMailMobile(){
+/**
+ * Validates the email input for the mobile contact form.
+ * Displays an error if the email format is invalid.
+ */
+function validateMailMobile() {
     const mail = document.getElementById("mail_input");
     const mailError = document.getElementById("form_mail_erro_mobile");
     let msgMail = "A valid email address is required";
@@ -100,28 +121,34 @@ function validateMailMobile(){
     if (validateMail_LowLevel(mail.value)) {
         mailError.innerHTML = "";
         mail.style.borderColor = "#DBDBDB";
-    }
-    else 
-    {
+    } else {
         mailError.innerHTML = msgMail;
         mail.style.borderColor = "red";
     }
 }
 
-function validateMail_LowLevel(mail){
+/**
+ * Low-level validation for email addresses.
+ * Uses a simple regex to check for basic email format.
+ *
+ * @param {string} mail - The email input value
+ * @returns {boolean} True if the email format is valid, otherwise false
+ */
+function validateMail_LowLevel(mail) {
     let result = false;
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) {
         result = true;
-    }
-    else
-    {
+    } else {
         result = false;
     }
     return result;
 }
 
-/*Validate phone*/
-function validatePhone(){
+/**
+ * Validates the phone number input for the PC contact form.
+ * Displays an error if the number is invalid.
+ */
+function validatePhone() {
     const phone = document.getElementById("phone_input_pc");
     const phoneError = document.getElementById("form_phone_erro_pc");
     let msgPhone = "A Valid phone number is required";
@@ -129,17 +156,17 @@ function validatePhone(){
     if (validatePhone_LowLevel(phone.value)) {
         phoneError.innerHTML = "";
         phone.style.borderColor = "#DBDBDB";
-    }
-    else 
-    {
+    } else {
         phoneError.innerHTML = msgPhone;
         phone.style.borderColor = "red";
     }
-
 }
 
-
-function validatePhoneMobile(){
+/**
+ * Validates the phone number input for the mobile contact form.
+ * Displays an error if the number is invalid.
+ */
+function validatePhoneMobile() {
     const phone = document.getElementById("phone_input");
     const phoneError = document.getElementById("form_phone_erro_mobile");
     let msgPhone = "A Valid phone number is required";
@@ -147,21 +174,25 @@ function validatePhoneMobile(){
     if (validatePhone_LowLevel(phone.value)) {
         phoneError.innerHTML = "";
         phone.style.borderColor = "#DBDBDB";
-    }
-    else 
-    {
+    } else {
         phoneError.innerHTML = msgPhone;
         phone.style.borderColor = "red";
     }
 }
 
-function validatePhone_LowLevel(phone){
+/**
+ * Low-level validation for phone numbers.
+ * Accepts only digits (and an optional leading '+') 
+ * with a minimum length of 7.
+ *
+ * @param {string} phone - The phone input value
+ * @returns {boolean} True if the phone number is valid, otherwise false
+ */
+function validatePhone_LowLevel(phone) {
     let result = false;
     if (/^(\+)?[0-9]{7,}$/.test(phone)) {
         result = true;
-    }
-    else
-    {
+    } else {
         result = false;
     }
     return result;

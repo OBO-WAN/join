@@ -1,3 +1,7 @@
+/**
+ * Updates the greeting text (Good Morning/Afternoon/Evening) 
+ * based on the current time of day.
+ */
 function updateGreeting() {
   const greetingElements = document.querySelectorAll('.good');
   if (!greetingElements) return;
@@ -6,6 +10,13 @@ function updateGreeting() {
   greetingElements.forEach(el => el.textContent = greetingText);
 }
 
+/**
+ * Updates the displayed user name in the greeting section.
+ *
+ * @param {Object} user - The user object
+ * @param {string} [user.firstname] - The user's first name
+ * @param {string} [user.lastname] - The user's last name
+ */
 function greetingName(user) {
   const nameElements = document.querySelectorAll('.name');
   if (nameElements && user) {
@@ -14,6 +25,10 @@ function greetingName(user) {
   }
 }
 
+/**
+ * Updates the current date in the summary view.
+ * Uses a localized long format (e.g., "September 13, 2025").
+ */
 function updateDate() {
   const dateElement = document.querySelector('.date');
   if (dateElement) {
@@ -22,16 +37,34 @@ function updateDate() {
   }
 }
 
+/**
+ * Fetches all tasks from the backend database.
+ *
+ * @async
+ * @returns {Promise<Object>} A promise that resolves to the task data object
+ * @throws {Error} If the request fails
+ */
 async function fetchTaskData() {
   const response = await fetch(`${BASE_URL}/tasks.json`);
   if (!response.ok) throw new Error(`Error fetching data: ${response.status}`);
   return (await response.json()) || {};
 }
 
+/**
+ * Initializes the statistics object with default counters.
+ *
+ * @returns {Object} An object with counters for different task categories
+ */
 function initializeStats() {
   return { todo: 0, done: 0, urgent: 0, tasksInBoard: 0, tasksInProgress: 0, awaitingFeedback: 0 };
 }
 
+/**
+ * Updates the statistics object based on a single task's status and priority.
+ *
+ * @param {Object} task - The task object
+ * @param {Object} stats - The statistics object to update
+ */
 function updateStatsFromTask(task, stats) {
   stats.tasksInBoard++;
   switch (task.status) {
@@ -43,6 +76,12 @@ function updateStatsFromTask(task, stats) {
   if (task.priority?.toLowerCase() === 'urgent') stats.urgent++;
 }
 
+/**
+ * Computes aggregated task statistics from a task dataset.
+ *
+ * @param {Object} tasks - The tasks object retrieved from the database
+ * @returns {Object} The aggregated statistics object
+ */
 function computeTaskStats(tasks) {
   const stats = initializeStats();
   Object.values(tasks).forEach(task => {
@@ -53,6 +92,11 @@ function computeTaskStats(tasks) {
   return stats;
 }
 
+/**
+ * Updates the summary section in the UI with task statistics.
+ *
+ * @param {Object} stats - The statistics object
+ */
 function updateTaskSummaryDisplay(stats) {
   document.querySelector('.summarynmb.todo').textContent = stats.todo;
   document.querySelector('.summarynmb.done').textContent = stats.done;
@@ -63,6 +107,11 @@ function updateTaskSummaryDisplay(stats) {
   if (taskNumbers[2]) taskNumbers[2].textContent = stats.awaitingFeedback;
 }
 
+/**
+ * Loads task data, computes statistics, and updates the UI.
+ *
+ * @async
+ */
 async function updateTaskData() {
   try {
     const tasks = await fetchTaskData();
@@ -73,6 +122,9 @@ async function updateTaskData() {
   }
 }
 
+/**
+ * Adds click events to summary elements for redirection to the board page.
+ */
 function addClickEvents() {
   const redirectToBoard = () => window.location.href = 'board.html';
   const tasksElement = document.querySelector('.tasks');
@@ -82,18 +134,36 @@ function addClickEvents() {
   document.querySelectorAll('.pencil').forEach(el => el.onclick = redirectToBoard);
 }
 
+/**
+ * Adds a hover effect to an icon by swapping its source.
+ *
+ * @param {HTMLElement} container - The container element that triggers the hover
+ * @param {HTMLImageElement} imgElement - The image element to change
+ * @param {string} defaultSrc - The default image source
+ * @param {string} hoverSrc - The hover image source
+ */
 function addHoverEffect(container, imgElement, defaultSrc, hoverSrc) {
   if (!container || !imgElement) return;
   container.onmouseover = () => imgElement.src = hoverSrc;
   container.onmouseout = () => imgElement.src = defaultSrc;
 }
 
+/**
+ * Initializes summary-related data, including greeting the user
+ * and updating task data.
+ *
+ * @async
+ */
 async function initializeSummaryData() {
   const user = await loadUserData();
   greetingName(user);
   updateTaskData();
 }
 
+/**
+ * Sets up the summary page UI elements, including greeting, date,
+ * task updates, and event bindings.
+ */
 function setupSummaryUI() {
   updateGreeting();
   updateDate();
@@ -102,6 +172,9 @@ function setupSummaryUI() {
   addClickEvents();
 }
 
+/**
+ * Sets up hover effects for summary page icons (e.g., pencil and done icons).
+ */
 function setupHoverIcons() {
   const pencilContainer = document.querySelector('.pencil:first-child');
   const pencilImg = pencilContainer?.querySelector('img');
@@ -111,6 +184,12 @@ function setupHoverIcons() {
   addHoverEffect(doneContainer, doneImg, 'assets/icons/done.svg', 'assets/icons/donehover.svg');
 }
 
+/**
+ * Initializes the entire summary page, including data, UI setup,
+ * and hover effects.
+ *
+ * @async
+ */
 async function initializeSummaryPage() {
   try {
     await initializeSummaryData();
@@ -121,6 +200,10 @@ async function initializeSummaryPage() {
   }
 }
 
+/**
+ * Checks if the mobile greeting animation should be shown.
+ * Displays it once per session on mobile devices, then hides it.
+ */
 function checkAndShowAnimationSummary() {
   const overlay = document.getElementById('mobile_view_greetin_overlay');
   const animationShown = sessionStorage.getItem('animationShownSummary');

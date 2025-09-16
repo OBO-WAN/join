@@ -1,50 +1,22 @@
-
 window.addEventListener("resize", () => {
     handleWindowResize();
 });
-
 
 /**
  * tea window resize events and updates the UI accordingly.
  */
 function handleWindowResize() {
-    let idx = getActualContactIndex();
-    getViewMode();
-    switchoffMenu();
+    const idx = getActualContactIndex(); switchoffMenu();
     switch (getViewMode()) {
-        case 1: // 1 = desktop big     | >= 1100
-            clearTabletViewCard();
-
-            if(!checkIfTabletViewCardActive()) {
-                goBacktoContacts();
-            }
-            addNewContact = getAddNewContactTemplate();
-            document.getElementById("add_new_contact_section").innerHTML = addNewContact;
-
-            renderContacts(Contacts);
-            renderViewCard(idx);
-            addNewContactSectionState_pc(true);
-            break;
-
-        case 2: // 2 = desktop small   | < 1100
-            goBacktoContacts();
-            addNewContactSectionState_pc(false);
-            break;
-
-        case 3: // 3 = tablet          | < 825
-            goBacktoContacts();
-            MobileVievCard(idx);
-            addNewContactSectionState_pc(false);
-            break;
-        case 4: // 4 = mobile          | < 560
-            goBacktoContacts();
-            MobileVievCard(idx);
-            break;
-        default:
-            break;
+      case 1:
+        clearTabletViewCard(); if (!checkIfTabletViewCardActive()) goBacktoContacts();
+        document.getElementById("add_new_contact_section").innerHTML = getAddNewContactTemplate();
+        renderContacts(Contacts); renderViewCard(idx); addNewContactSectionState_pc(true); break;
+      case 2: goBacktoContacts(); addNewContactSectionState_pc(false); break;
+      case 3: goBacktoContacts(); MobileVievCard(idx); addNewContactSectionState_pc(false); break;
+      case 4: goBacktoContacts(); MobileVievCard(idx); break;
     }
 }
-
 
 /**
  * Checks if the tablet view card header is currently active (visible).
@@ -55,7 +27,6 @@ function checkIfTabletViewCardActive() {
     let tabletViewCardHeader = document.getElementById("tablate_view_card_header");
     return tabletViewCardHeader && tabletViewCardHeader.style.display !== "none";
 }
-
 
 /**
  * Removes all null or undefined elements from the given contacts array in place.
@@ -70,8 +41,6 @@ function deletAllNullElementsFromArray(contacts){
     }
 }
 
-
-
 /**
  * Renders the list of contacts in the UI.
  * - Enables scrolling for the contacts list container.
@@ -83,27 +52,16 @@ function deletAllNullElementsFromArray(contacts){
  * @param {Array<Object>} contacts - The array of contact objects to render.
  */
 function renderContacts(contacts) {
-    switchoffMenu();
-    scrollEnable();
-
-    deletAllNullElementsFromArray(contacts); // Entfernt null-Elemente aus dem Array
-
-    sortContacts(contacts); // Kontakte sortieren
-
-    let contactsListElem = document.getElementById("contacts_list");
-    if (contactsListElem) {
-        contactsListElem.style.display = "flex";
-    }
-
-    let contactCards = generateContactsCards(contacts);
-    let contactCardSection = document.getElementById("contact_card_section");
-
-    if (contactCardSection) {
-        contactCardSection.innerHTML = contactCards;
-         activateContactCardClick();
-    }
+    switchoffMenu(); scrollEnable();
+    deletAllNullElementsFromArray(contacts);
+    sortContacts(contacts);
+  
+    document.getElementById("contacts_list")?.style && (document.getElementById("contacts_list").style.display = "flex");
+  
+    const cards = generateContactsCards(contacts);
+    const section = document.getElementById("contact_card_section");
+    if (section) { section.innerHTML = cards; activateContactCardClick(); }
 }
-
 
 /**
  * Renders the contact view card for mobile view.
@@ -115,28 +73,15 @@ function renderContacts(contacts) {
  */
 function MobileVievCard(index) {
     switchoffMenu();
-    if (index >= 0) {
-        //let contact = Contacts[index];
-        //let initials = getInitials(contact.name);
-        let color = getColor(index);
-        let contactsListElem = document.getElementById("contacts_list");
-        if (contactsListElem) {
-            contactsListElem.style.display = "none";
-        }
-        let addNewContactSectionElem = document.getElementById(
-            "add_new_contact_section"
-        );
-        if (addNewContactSectionElem) {
-            addNewContactSectionElem.style.display = "none";
-        }
-        let viewCardTemp = getMobileViewCardTemplate(index, color);
-        let contactsContainer = document.getElementById("contactslist_container");
-        contactsContainer.innerHTML = viewCardTemp;
-        renderViewCard(index);
-        document.getElementById("contactslist_container").style.overflow = "hidden";
-    }
+    if (index < 0) return;
+    const color = getColor(index);
+    document.getElementById("contacts_list")?.style && (document.getElementById("contacts_list").style.display = "none");
+    document.getElementById("add_new_contact_section")?.style && (document.getElementById("add_new_contact_section").style.display = "none");
+    const container = document.getElementById("contactslist_container");
+    container.innerHTML = getMobileViewCardTemplate(index, color);
+    renderViewCard(index);
+    container.style.overflow = "hidden";
 }
-
 
 /**
  * Renders the header for the tablet view card.
@@ -148,7 +93,6 @@ function getTabletViewCardHeader() {
     );
     tabletViewCardHeaderId.innerHTML = tabletViewCardHeader;
 }
-
 
 /**
  * Renders the contact view card for tablet view.
@@ -168,10 +112,8 @@ function renderTabletVievCard(index) {
         renderTabletCardContainer(index, color);
         fillTabletCardFields(contact);
     }
-
     hideContactsList();
 }
-
 
 /**
  * Renders the container for the tablet view card.
@@ -184,11 +126,9 @@ function renderTabletCardContainer(index, color) {
     TabletViewContainer.style.display = "flex";
     TabletViewContainer.innerHTML = getTabletViewCardTemplate(index, color);
 
-    // Header einfügen
     const tabletViewCardHeaderId = document.getElementById("Tablet_view_card_header");
     tabletViewCardHeaderId.innerHTML = getTabletViewCardHeaderTemplate();
 }
-
 
 /**
  * Fills the tablet card fields with contact data.
@@ -207,7 +147,6 @@ function fillTabletCardFields(contact) {
         contact.phone || "No phone number available";
 }
 
-
 /**
  * Hides the contacts list in the UI.
  */
@@ -215,7 +154,6 @@ function hideContactsList() {
     const contactsListElem = document.getElementById("contacts_list");
     if (contactsListElem) contactsListElem.style.display = "none";
 }
-
 
 /**
  * Clears the tablet view card container.
@@ -230,7 +168,6 @@ function clearTabletViewCard() {
         tabletViewCardContainer.style.display = "none";
     }
 }
-
 
 /**
  * Clears the contact view card based on view mode.
@@ -253,7 +190,6 @@ function clearViewCard() {
 
     setActualContactIndex(-1);
 }
-
 
 /**
  * Renders the contact view card for desktop view.
@@ -278,69 +214,40 @@ function renderViewCard(index) {
     }
 }
 
-
 /**
  * Generates HTML for all contact cards, grouped by first letter.
  * @param {Array} contacts - The contacts array.
  * @returns {string} The HTML string for contact cards.
  */
 function generateContactsCards(contacts) {
-    let oldLetter = ""; // Speichert den vorherigen Buchstaben
-    let contactCards = "";
-    for (let index = 0; index < contacts.length; index++) {
-        let contact = contacts[index];
-        let initials = getInitials(contact.name);
-
-        let firstLetter = contact.name.charAt(0).toUpperCase(); // Erster Buchstabe des Namens
-        // Wenn der Buchstabe wechselt, füge eine neue Überschrift hinzu
-        if (oldLetter !== firstLetter) {
-            contactCards += `
-                <div class="contacts_section_header">
-                    <p class="contacts_section_letter">${firstLetter}</p>
-                </div>`;
-            oldLetter = firstLetter;
-        }
-        let color = getColor(index);
-        contactCards += getContactCardTamplate(
-            contact.name,
-            contact.mail,
-            initials,
-            index,
-            color
-        );
-    }
-    return contactCards;
+    let oldLetter = "", cards = "";
+    contacts.forEach((c, i) => {
+      const initials = getInitials(c.name), first = c.name[0].toUpperCase();
+      if (oldLetter !== first) {
+        cards += `<div class="contacts_section_header"><p class="contacts_section_letter">${first}</p></div>`;
+        oldLetter = first;
+      }
+      cards += getContactCardTamplate(c.name, c.mail, initials, i, getColor(i));
+    });
+    return cards;
 }
-
 
 /**
  * Returns to the contacts list view and resets UI.
  */
 function goBacktoContacts() {
-
-    switchoffMenu();
-    let tablet_additional_div = "";
-    let addNewContact = "";
-    let viewMode = getViewMode();
-    if (viewMode === 2 || viewMode === 3) {
-        tablet_additional_div = `
-            <div id="tablate_view_card_container" class="tablate_view_card_container"></div>
-            `;
-        let contactsListElem = document.getElementById("contacts_list");
-        if (contactsListElem) contactsListElem.style.display = "flex";
+    switchoffMenu(); let tabletDiv = "", viewMode = getViewMode();
+    if ([2,3].includes(viewMode)) {
+      tabletDiv = `<div id="tablate_view_card_container" class="tablate_view_card_container"></div>`;
+      document.getElementById("contacts_list")?.style && (document.getElementById("contacts_list").style.display = "flex");
     }
-
-    let contactsContainer = document.getElementById("contactslist_container");
-    if (contactsContainer) {
-        contactsContainer.innerHTML = getGoBackTemplate(tablet_additional_div);
-        contorlAddNewContactSection(viewMode);
+    const container = document.getElementById("contactslist_container");
+    if (container) {
+      container.innerHTML = getGoBackTemplate(tabletDiv);
+      contorlAddNewContactSection(viewMode);
     }
-
-    renderContacts(Contacts);
-    setActualContactIndex(-1);
-    clearViewCard();
+    renderContacts(Contacts); setActualContactIndex(-1); clearViewCard();
 }
-
 
 /**
  * Renders the appropriate contact view based on the current version.
@@ -348,28 +255,13 @@ function goBacktoContacts() {
  */
 function proofVersion(index) {
     setActualContactIndex(index);
-    let version = getViewMode();
-
-    switch (version) {
-        case 1: //  1 = desktop big     | >= 1100
-            renderViewCard(index);
-            break;
-
-        case 2: // 2 = desktop small   | < 1100
-        // 3 = tablet          | < 825
-        case 3:
-            renderTabletVievCard(index);
-            break;
-
-        case 4: // 4 = mobile          | < 560
-            MobileVievCard(index);
-            break;
-
-        default:
-            break;
+    switch (getViewMode()) {
+      case 1:  return renderViewCard(index);
+      case 2:
+      case 3: return renderTabletVievCard(index);
+      case 4: return MobileVievCard(index);
     }
 }
-
 
 /**
  * Handles clicks outside the mobile menu to close it.
@@ -382,16 +274,23 @@ function handleOutsideClickForMobileMenu(event) {
     }
 }
 
-
+/**
+ * Activates click handlers for all contact cards.
+ * When a contact card is clicked, it is highlighted by adding
+ * the "active" class while removing the class from all other cards.
+ *
+ * This ensures that only one contact card is active at a time.
+ */
 function activateContactCardClick() {
     document.querySelectorAll('.contact_card').forEach(card => {
         card.addEventListener('click', function() {
-            document.querySelectorAll('.contact_card').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.contact_card').forEach(c => 
+                c.classList.remove('active')
+            );
             this.classList.add('active');
         });
     });
 }
-
 
 /**
  * Enables scrolling for the contacts list container by setting its overflow style to "scroll".
@@ -402,7 +301,6 @@ function scrollEnable() {
         contactListContainer.style.overflow = "scroll";
     }
 }
-
 
 /**
  * Disables scrolling for the contacts list container by setting its overflow style to "hidden".

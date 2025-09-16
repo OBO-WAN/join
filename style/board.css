@@ -4,12 +4,6 @@
   flex-direction: column;
 }
 
-@media (max-width: 768px) {
-  .board_container {
-    padding-left: 16px;
-  }
-}
-
 .headline {
   color: black;
   font-size: 50px;
@@ -29,7 +23,7 @@
 }
 
 .search_container {
-  position:relative;
+  position: relative;
   display: flex;
   align-items: center;
   border: 1px solid #a8a8a8;
@@ -44,7 +38,7 @@
 }
 
 .search_container:focus-within {
-  border-color: #44AFFF;
+  border-color: #44afff;
 }
 .search_input {
   border: none;
@@ -70,7 +64,7 @@
   object-fit: contain;
   width: 24px;
   height: 24px;
-  margin-right: 16px;
+  margin-left: 10px;
 }
 
 .add_task_headline {
@@ -91,9 +85,8 @@
   background-color: #2a3647;
 }
 
-.add_new_task_btn{
+.add_new_task_btn {
   z-index: 1;
-
 }
 
 .add_icon {
@@ -112,6 +105,7 @@ h3 {
   width: 100%;
   overflow-x: hidden;
   flex-wrap: wrap;
+  padding-bottom: 150px;
 }
 
 .kanban_section {
@@ -202,6 +196,15 @@ h3 {
   font-size: 16px;
   font-weight: 400;
   color: #c1c1c1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 3.2em;
+  display: box;
+  box-orient: vertical;
+  line-clamp: 2;
 }
 
 .progress_container {
@@ -249,22 +252,22 @@ h3 {
 }
 
 .user_initials_group {
-    display: flex;
-    gap: 6px;
-    align-items: center;
+  display: flex;
+  gap: 6px;
+  align-items: center;
 }
 
 .user_initials_circle {
-    width: 32px;
-    height: 32px;
-    font-size: 12px;
-    font-weight: 400;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    margin-left: -10px;
-    box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  font-size: 12px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-left: -10px;
+  box-sizing: border-box;
 }
 
 .priority_high {
@@ -288,7 +291,7 @@ h3 {
   width: 100%;
   justify-content: center;
   align-items: center;
-  display:flex;
+  display: flex;
   top: 0;
 }
 
@@ -316,117 +319,92 @@ h3 {
 
 .hover {
   cursor: pointer;
-  
+}
+
+.add-task-container-overlay {
+  position: relative;
+}
+
+.close_button_edit {
+  position: absolute;
+  top: 12px;
+  right: 24px;
+  padding-top: 12px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  color: #2a3647;
+}
+
+.form-footer-edit {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 20px;
 }
 
 .add_task_headline_responsive {
   display: none;
 }
 
-.Board_headline_responsive{
+.Board_headline_responsive {
   display: none;
 }
-/* ===== Responsive Fixes for Board Page ===== */
 
-@media (min-width: 451px) and (max-width: 1024px) {
-  .overlay {
-    padding: 16px;
-    align-items: flex-start;
-    justify-content: center;
-    overflow-y: auto;
-  }
+.tilt-task {
+  transform: rotate(3deg);
+  transition: transform 0.2s ease-in-out;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
 }
 
-@media(max-width: 1013px){
-  .board_container {
-    padding-right: 50px;
-  }
-
-  .headline_container {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    width: 100%;
-    z-index: 3;
-  }
-
-  .Board_headline_responsive{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
-  }
-
-  .search_task_container {
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-  }
-
-  .search_container{
-    width: 100%;
-  }
-
-  .add_task_headline{
-    display: none;
-  }
-
-
-  .headline_responsive{
-     color: black;
-    font-size: 50px;
-    font-weight: bold;
-  }
-
-  .headline{
-    display: none;
-  }
-
-  .add_task_headline_responsive {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #2a3647;
-    border-radius: 10px;
-    overflow: hidden;
-    width: 45px;
-    height: 45px;
-    background-color: #2a3647;
-    color: white;
-    z-index: 3;
-    position: relative;
-  }
-
- 
-
-  .add_icon_responsive {
-    height: 25px;
-    width: 25px;
-  }
+.kanban_section.drag-over {
+  padding-bottom: 90px;
 }
 
-@media (max-width: 768px) {
-  .board_container {
-    padding: 100px 16px 16px 16px; /* top space for fixed header */
-  }
-
-
-  .kanban_container {
-    overflow-x: auto;
-    flex-wrap: wrap;
-    padding-bottom: 20px;
-  }
-
-  .kanban_section {
-    min-width: 280px;
-    flex: 0 0 auto;
-  }
-
-  .task_information {
-    width: 100%;
-  }
+.drop-placeholder {
+  display: none;
+  height: 244px;
+  width: 250px;
+  margin-top: 12px;
+  border: 2px dashed #A8A8A8;
+  border-radius: 12px;
+  pointer-events: none;
 }
 
+body.no-scroll { 
+  touch-action: none; 
+  overscroll-behavior: contain; 
+}
 
+.task_container.dragging-swing {
+  animation: swing 0.3s ease-in-out infinite alternate;
+  opacity: 0.9;
+  z-index: 2000;
+}
+
+.task-list {
+  position: relative;
+}
+
+.task_container.invisible-during-drag {
+  pointer-events: none;
+}
+
+.invisible-during-drag {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dragging-touch {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border-radius: 12px;
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(2deg);
+  }
+}

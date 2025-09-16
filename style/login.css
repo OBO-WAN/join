@@ -97,8 +97,6 @@
   }
 }
 
-/* --- LOGO STATES --- */
-/* Desktop default: no animation */
 .logo-white {
   opacity: 0;
   animation: none;
@@ -106,19 +104,18 @@
 }
 
 .logo-gray {
-  opacity: 1;      /* show gray logo immediately on desktop */
-  animation: none; /* avoid delayed fade on desktop */
+  opacity: 1;   
+  animation: none; 
   z-index: 1;
 }
 
-/* Mobile (<= 768px): run the crossfade */
 @media (max-width: 768px) {
   .logo-white {
-    opacity: 1; /* start visible so it can fade out */
+    opacity: 1; 
     animation: fadeOutLogo 0.7s ease forwards 1s;
   }
   .logo-gray {
-    opacity: 0; /* start hidden and fade in */
+    opacity: 0; 
     animation: fadeInLogo 0.7s ease forwards 1s;
   }
 
