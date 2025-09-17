@@ -67,7 +67,6 @@ function getAddTaskOverlay(type = "add") {
         </div>
         <form id="taskForm" class="${formClass}">
 
-          <!-- Linke Spalte -->
           <div class="form-left">
             <label for="title">Title <span class="required-marker">*</span></label>
             <input type="text" id="title" name="title" placeholder="Enter a title" required>
@@ -81,7 +80,6 @@ function getAddTaskOverlay(type = "add") {
             <div class="field-error-message" id="error-due-date">This field is required</div>
           </div>
 
-          <!-- Rechte Spalte -->
           <div class="form-right">
             <label>Priority</label>
             <div class="priority-options">
@@ -134,7 +132,6 @@ function getAddTaskOverlay(type = "add") {
           </div>
         </form>
 
-        <!-- Footer -->
         <div class="form-footer">
           <div class="form-hint">
             <span class="required-marker">*</span>This field is required
@@ -255,7 +252,7 @@ function getEditTaskOverlay() {
       <div class="add-task-container-overlay">
       <button onclick="closeOverlay()" class="close_button_edit hover">X</button>
         <form id="taskForm" class="\${formClass}">
-          <!-- Linke Spalte -->
+
           <div class="form-left">
             <label for="title">Title</label>
             <input type="text" id="title" name="title" placeholder="Enter a title" required>
@@ -269,7 +266,6 @@ function getEditTaskOverlay() {
             <div class="field-error-message" id="error-due-date">This field is required</div>
           </div>
 
-          <!-- Rechte Spalte -->
           <div class="form-right">
             <label>Priority</label>
             <div class="priority-options">
@@ -322,7 +318,6 @@ function getEditTaskOverlay() {
           </div>
         </form>
 
-        <!-- Footer -->
         <div class="form-footer-edit">
           <div class="task-buttons">
             <button type="reset" class="clear-btn" id="clear-btn">
@@ -338,4 +333,3 @@ function getEditTaskOverlay() {
     </div>
   `;
 }
-
