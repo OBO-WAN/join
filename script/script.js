@@ -59,7 +59,7 @@ function setUserInitials() {
   const lastInitial = document.getElementById('last_icon_initials');
   let firstName = sessionStorage.getItem('firstName');
   let lastName = sessionStorage.getItem('lastName');
-  let prooofLokedIn = sessionStorage.getItem("loggedIn");
+  let prooofLokedIn = sessionStorage.getItem("isUser");
 
   if (prooofLokedIn == "true" && firstName && lastName) {
     firstInitial.textContent = firstName[0].toUpperCase();

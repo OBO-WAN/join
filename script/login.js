@@ -70,12 +70,14 @@ function revealElement(element) {
 
 function login() {
     console.log("Login function triggered");
-    checkUserIsPresent(false);
+
+    sessionStorage.setItem("isUser", "true");
 }
 
 function guestLogin() {
     localStorage.setItem("isGuest", "true");
     window.location.href = "summary.html";
+    sessionStorage.setItem("isUser", "false");
 }
 
 function togglePasswordVisibility(inputId, iconElement) {
