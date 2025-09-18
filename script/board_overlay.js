@@ -2,6 +2,13 @@
  * Opens the Add Task overlay with form and functionality
  */
 function addNewTask() {
+
+   if (window.matchMedia("(max-width: 768px)").matches) {
+    // Mobile → direkt auf Unterseite weiterleiten
+    window.location.href = "add_task.html";
+    return;
+  }
+
   const overlay = document.getElementById("overlay");
   overlay.innerHTML = "";
   overlay.innerHTML = getAddTaskOverlay();
@@ -43,6 +50,7 @@ function openTask(task, assignedUsersHTML, index) {
     subtasksHTML
   );
   overlay.classList.remove("d-none");
+
 }
 
 /**
@@ -122,8 +130,12 @@ function showEditOverlay(task) {
   const overlay = document.getElementById("overlay");
   overlay.innerHTML = "";
   overlay.classList.remove("d-none");
-  overlay.innerHTML = getEditTaskOverlay();
+  overlay.innerHTML = getAddTaskOverlay();
 
+  document.querySelector(".add-task-title h2").textContent = "Edit Task";
+  document.querySelector(
+    ".create-btn"
+  ).innerHTML = `Save <img src="./assets/icons/check.png" alt="Save Icon">`;
 }
 
 /**
@@ -131,18 +143,57 @@ function showEditOverlay(task) {
  * @param {Object} task - Task object containing data to prefill
  */
 function prefillEditForm(task) {
-  const t = document.getElementById("title"), d = document.getElementById("description"), due = document.getElementById("due-date"),
-        cat = document.getElementById("category"), ph = document.getElementById("selected-category-placeholder");
-  if (t) t.value = task.task || task.title || "";
-  if (d) d.value = task.description || "";
-  if (due) due.value = formatDateForInput(task.dueDate); else console.warn("⚠️ 'due-date' input not found.");
-  if (cat && ph) { cat.value = task.category; ph.textContent = task.category; }
+  const titleInput = document.getElementById("title");
+  const descInput = document.getElementById("description");
+  const dueInput = document.getElementById("due-date");
+  const categoryInput = document.getElementById("category");
+  const categoryPlaceholder = document.getElementById("selected-category-placeholder");
 
-  if (task.priority) { const v = task.priority.toLowerCase(), p = document.querySelector(`input[name="priority"][value="${v}"]`); p ? p.checked = true : console.warn("⚠️ Priority input not found:", v); }
+  if (titleInput) {
+    titleInput.value = task.task || task.title || "";
+  }
+  
+  if (descInput) {
+    descInput.value = task.description || "";
+  }
 
-  if (Array.isArray(task.subTasks)) { const list = document.getElementById("subtask-list"); 
-    if (list) { list.innerHTML = ""; task.subTasks.forEach(s => list.appendChild(createSubtaskElement(s.task || s))); } 
-    else console.warn("⚠️ Subtask list not found."); }
+  if (dueInput) {
+    const formattedDueDate = formatDateForInput(task.dueDate);
+    dueInput.value = formattedDueDate;
+  } else {
+    console.warn("⚠️ 'due-date' input not found in the DOM.");
+  }
+  
+  if (categoryInput && categoryPlaceholder) {
+    categoryInput.value = task.category;
+    categoryPlaceholder.textContent = task.category;
+  }
+  
+  if (task.priority) {
+    const priorityValue = task.priority.toLowerCase();
+    const priorityInput = document.querySelector(
+      `input[name="priority"][value="${priorityValue}"]`
+    );
+    if (priorityInput) {
+      priorityInput.checked = true;
+    } else {
+      console.warn("⚠️ Priority input not found for value:", priorityValue);
+    }
+  }
+
+  if (task.subTasks && Array.isArray(task.subTasks)) {
+    const subtaskList = document.getElementById("subtask-list");
+    if (subtaskList) {
+      subtaskList.innerHTML = "";
+      for (const sub of task.subTasks) {
+        const subText = sub.task || sub;
+        const li = createSubtaskElement(subText);
+        subtaskList.appendChild(li);
+      }
+    } else {
+      console.warn("⚠️ Subtask list container not found.");
+    }
+  }
 }
 
 /**
@@ -185,15 +236,28 @@ function setupEditFormSubmit(taskId) {
  * @param {string} taskId - ID of the task to save
  */
 async function saveEditedTask(taskId) {
-  const task = tasks.find(t => t.id == taskId), updatedTask = { ...collectTaskData(), id: taskId, status: task.status };
+  const task = tasks.find((t) => t.id == taskId);
+  const updatedTask = collectTaskData();
+  updatedTask.id = taskId;
+  updatedTask.status = task.status; // Preserve current status
 
-  await fetch(`${BASE_URL}tasks/${taskId}.json`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(updatedTask) });
-  showToast("Task updated", "./assets/img/board.png"); await loadTasksFromFirebase();
+  await fetch(`${BASE_URL}tasks/${taskId}.json`, {
+    method: 'PUT',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatedTask)
+  });
 
+  showToast("Task updated", "./assets/img/board.png");
+
+  await loadTasksFromFirebase();
   const updated = tasks.find(t => t.id == taskId);
   if (updated) {
+    const taskData = prepareTaskForTemplate(updated);
     const index = tasks.findIndex(t => t.id == taskId);
-    openTask(prepareTaskForTemplate(updated), buildAssignedUsersHTML(updated.assignedTo), index);
+
+    const assignedUsersHTML = buildAssignedUsersHTML(updated.assignedTo);
+
+    openTask(taskData, assignedUsersHTML, index);
   }
 }
 
@@ -201,19 +265,30 @@ async function saveEditedTask(taskId) {
  * Saves task edits to Firebase (legacy function)
  * @param {string} taskId - ID of the task to save
  */
-async function saveTaskEdits(taskId) {
-  const task = tasks.find(t => t.id == taskId); if (!task) return;
-  const title = document.getElementById("edit-title").value.trim();
-  const details = document.getElementById("edit-details").value.trim();
-  const due = document.getElementById("edit-dueDate").value;
-  const priority = document.getElementById("edit-priority").value;
+async function saveTaskEdits(taskId){
+  const task = tasks.find((t) => t.id == taskId);
+  if (!task) return;
 
-  const [y, m, d] = due.split("-"); Object.assign(task, {
-    task: title, description: details, dueDate: `${d}-${m}-${y}`, priority
+  const newTitle = document.getElementById("edit-title").value.trim();
+  const newDetails = document.getElementById("edit-details").value.trim();
+  const newDueDate = document.getElementById("edit-dueDate").value;
+  const newPriority = document.getElementById("edit-priority").value;
+
+  const [year, month, day] = newDueDate.split("-");
+  const formattedDate = `${day}-${month}-${year}`;
+
+  task.task = newTitle;
+  task.description = newDetails;
+  task.dueDate = formattedDate;
+  task.priority = newPriority;
+
+  await fetch(`${BASE_URL}tasks/${taskId}.json`, {
+    method: "PUT",
+    body: JSON.stringify(task),
   });
 
-  await fetch(`${BASE_URL}tasks/${taskId}.json`, { method: "PUT", body: JSON.stringify(task) });
-  closeOverlay(); await loadTasksFromFirebase();
+  closeOverlay();
+  await loadTasksFromFirebase(); // Re-render
 }
 
 /**
@@ -222,17 +297,24 @@ async function saveTaskEdits(taskId) {
  * @param {string} taskId - ID of the parent task
  * @param {number} subtaskIndex - Index of the subtask within the task
  */
-async function toggleSubtaskCheckbox(el, taskId, subIdx) {
-  const task = tasks.find(t => t.id == taskId); 
-  if (!task?.subTasks?.[subIdx]) return;
-
-  const st = task.subTasks[subIdx]; st.done = !st.done;
-  el.querySelector("img").src = `assets/icons/${st.done ? "checkbox-checked" : "checkbox-empty"}.svg`;
-
-  await fetch(`${BASE_URL}tasks/${taskId}.json`, { method: "PUT", body: JSON.stringify(task) });
-
-  const c = document.getElementById(`subtask_container_${tasks.indexOf(task)}`);
-  if (c) proofSubtasks(task, tasks.indexOf(task));
+async function toggleSubtaskCheckbox(element, taskId, subtaskIndex) {
+  const task = tasks.find((t) => t.id == taskId);
+  if (!task || !task.subTasks || !task.subTasks[subtaskIndex]) return;
+  task.subTasks[subtaskIndex].done = !task.subTasks[subtaskIndex].done;
+  const img = element.querySelector("img");
+  img.src = `assets/icons/${
+    task.subTasks[subtaskIndex].done ? "checkbox-checked" : "checkbox-empty"
+  }.svg`;
+  await fetch(`${BASE_URL}tasks/${taskId}.json`, {
+    method: "PUT",
+    body: JSON.stringify(task),
+  });
+  const progressContainer = document.getElementById(
+    `subtask_container_${tasks.indexOf(task)}`
+  );
+  if (progressContainer) {
+    proofSubtasks(task, tasks.indexOf(task));
+  }
 }
 
 /**
@@ -280,15 +362,31 @@ function generateSubtasksHTML(subtasks = [], taskId) {
  * @returns {Promise<boolean>} Promise that resolves to true if confirmed, false if cancelled
  */
 function showConfirmation(message = "Are you sure?") {
-  return new Promise(resolve => {
-    const modal = document.getElementById("confirm-modal"),
-          msg = document.getElementById("confirm-message"),
-          yes = document.getElementById("confirm-yes"),
-          no = document.getElementById("confirm-no");
+  return new Promise((resolve) => {
+    const modal = document.getElementById("confirm-modal");
+    const msg = document.getElementById("confirm-message");
+    const yesBtn = document.getElementById("confirm-yes");
+    const noBtn = document.getElementById("confirm-no");
 
-    msg.textContent = message; modal.classList.remove("d-none");
-    const cleanUp = () => { modal.classList.add("d-none"); yes.replaceWith(yes.cloneNode(true)); no.replaceWith(no.cloneNode(true)); };
-    yes.addEventListener("click", () => { cleanUp(); resolve(true); });
-    no.addEventListener("click", () => { cleanUp(); resolve(false); });
+    msg.textContent = message;
+    modal.classList.remove("d-none");
+
+    const cleanUp = () => {
+      modal.classList.add("d-none");
+      yesBtn.removeEventListener("click", onYes);
+      noBtn.removeEventListener("click", onNo);
+    };
+
+    const onYes = () => {
+      cleanUp();
+      resolve(true);
+    };
+    const onNo = () => {
+      cleanUp();
+      resolve(false);
+    };
+
+    yesBtn.addEventListener("click", onYes);
+    noBtn.addEventListener("click", onNo);
   });
 }
