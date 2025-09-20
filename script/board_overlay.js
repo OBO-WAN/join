@@ -131,11 +131,7 @@ function showEditOverlay(task) {
   overlay.innerHTML = "";
   overlay.classList.remove("d-none");
   overlay.innerHTML = getAddTaskOverlay();
-
-  document.querySelector(".add-task-title h2").textContent = "Edit Task";
-  document.querySelector(
-    ".create-btn"
-  ).innerHTML = `Save <img src="./assets/icons/check.png" alt="Save Icon">`;
+  overlay.innerHTML = getEditTaskOverlay();
 }
 
 /**
