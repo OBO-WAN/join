@@ -208,7 +208,7 @@ function loginSuccessful() {
 
 function logOut() {
 
-  goToUrl('login.html');
+  goToUrl('index.html');
 
   window.showButtonLinksSidebar = false;
   sessionStorage.setItem('linksSidebarBoolienKey', window.showButtonLinksSidebar);

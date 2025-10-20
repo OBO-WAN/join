@@ -77,7 +77,7 @@ function togglePasswordVisibility(inputId, iconElement) {
  */
 function delayedRedirectAndReset(){
  setTimeout(() => {
-      goToUrl('login.html');
+      goToUrl('index.html');
       toggleCheckbox(true);
     }, 500);
 }
