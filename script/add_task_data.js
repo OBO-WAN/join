@@ -1,4 +1,4 @@
-const BASE_URL = "https://joinstorage-ef266-default-rtdb.europe-west1.firebasedatabase.app/";
+const BASE_URL = 'https://join-1ae7f-default-rtdb.europe-west1.firebasedatabase.app/'; // Updated Database
 
 let Contacts = [];
 
