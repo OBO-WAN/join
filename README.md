@@ -2,8 +2,6 @@
 
 Join is a browser-based task management app inspired by Kanban workflows. It includes user registration and login, contact management, task creation, drag-and-drop board updates, and a live summary dashboard.
 
-![Join app flow](docs/images/app-flow.svg)
-
 ## Features
 
 - **Authentication flow**: sign up, log in, guest log in, and remembered session state.
