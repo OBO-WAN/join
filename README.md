@@ -1,6 +1,8 @@
 # Join – Kanban Task Manager
 
-Join is a browser-based task management app inspired by Kanban workflows. It includes user registration/login, contact management, task creation, drag-and-drop board updates, and a live summary dashboard.
+Join is a browser-based task management app inspired by Kanban workflows. It includes user registration and login, contact management, task creation, drag-and-drop board updates, and a live summary dashboard.
+
+![Join app flow](docs/images/app-flow.svg)
 
 ## Features
 
@@ -8,8 +10,28 @@ Join is a browser-based task management app inspired by Kanban workflows. It inc
 - **Task management**: create, edit, delete, assign contacts, define priorities, due dates, and subtasks.
 - **Kanban board**: tasks grouped by status (`toDo`, `inProgress`, `awaitFeedback`, `done`) with drag-and-drop movement.
 - **Search & filtering behavior** on board cards.
-- **Summary dashboard**: live counters for key metrics (to-do, done, urgent, in progress, awaiting feedback).
+- **Summary dashboard**: live counters for key metrics, including to-do, done, urgent, in progress, and awaiting feedback.
 - **Contacts area**: create and maintain assignable contacts.
+
+## Visual Overview
+
+### App Flow
+
+The app starts with authentication, then leads users into the dashboard, task creation, board management, and contact maintenance.
+
+![Join app flow](docs/images/app-flow.svg)
+
+### Kanban Workflow
+
+Tasks move through the board from **To do** to **In progress**, **Await feedback**, and finally **Done**.
+
+![Kanban workflow](docs/images/kanban-workflow.svg)
+
+### Data Flow
+
+The frontend uses plain JavaScript modules, browser storage for session/UI state, and Firebase Realtime Database requests through `fetch`.
+
+![Application data flow](docs/images/data-flow.svg)
 
 ## Tech Stack
 
@@ -28,7 +50,8 @@ Join is a browser-based task management app inspired by Kanban workflows. It inc
 ├── contacts.html             # Contact management
 ├── script/                   # Application logic (auth, board, summary, contacts, Firebase access)
 ├── style/                    # Page and component styles
-└── assets/                   # Icons, images, fonts
+├── assets/                   # Icons, images, fonts
+└── docs/images/              # README visuals
 ```
 
 ## Run Locally
